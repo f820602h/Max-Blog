@@ -102,3 +102,6 @@ deploy:
 
 server:
   compress: true 
+
+# Disqus 
+disqus_shortname: f820602h

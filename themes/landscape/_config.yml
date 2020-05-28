@@ -1,7 +1,7 @@
 # Header
 menu:
   Home: /
-  Archives: /archives
+  Article: /archives
 rss: /atom.xml
 
 # Content
@@ -35,3 +35,6 @@ twitter:
 google_plus:
 fb_admins:
 fb_app_id:
+
+# Disqus 
+disqus_shortname: f820602h

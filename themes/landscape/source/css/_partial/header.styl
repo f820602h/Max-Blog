@@ -46,6 +46,8 @@
   align-items: center
 
 #header-avatar
+  display: block
+  flex-shrink: 0
   width 60px
   height 60px
   border-radius: 50%
@@ -55,6 +57,7 @@
   margin-right: 20px
   filter: contrast(130%)
   box-shadow: 1px 1px 8px #000;
+  cursor pointer
 
 
 #header-title
@@ -69,6 +72,7 @@ $logo-text
 
 #logo
   @extend $logo-text
+  white-space: nowrap;
   font-size: logo-size
   line-height: logo-size
   letter-spacing: 2px

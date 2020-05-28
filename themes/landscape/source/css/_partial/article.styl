@@ -1,11 +1,18 @@
 .article
-  margin: block-margin 0
+  margin: 0 -20px 
+  &.index-list
+    margin: 20px 0
+  @media mq-normal
+    margin: block-margin 0
 
 .article-excerpt 
-  display: flex
+  
   justify-content: space-between
-  align-items: flex-end
-  padding: 18px article-padding 40px
+  align-items: center
+  padding: 18px 16px 24px
+  @media mq-normal
+    display: flex
+    padding: 18px article-padding 40px
   .excerpt
     color: color-default
     line-height: line-height
@@ -14,6 +21,7 @@
 .article-inner
   @extend $block
   overflow: hidden
+  box-shadow: 1px 1px 8px #ddd
 
 .article-meta
   clearfix()
@@ -41,9 +49,11 @@
     margin-right: 8px
 
 .article-header
-  margin: article-padding article-padding 0
+  margin: 24px 16px 0
   padding-bottom: 18px
   border-bottom: 1px solid #ddd
+  @media mq-normal
+    margin: article-padding article-padding 0
 
 .article-header-wrap
   @media mq-normal
@@ -54,11 +64,13 @@
 
 .article-title
   text-decoration: none
-  font-size: 2em
+  font-size: 28px
   font-weight: bold
   color: #35495E
   line-height: line-height-title
   transition: color 0.2s
+  @media mq-normal
+    font-size: 2em
   a&:hover
     color: #42b983
 
@@ -66,7 +78,9 @@
   @extend $base-style
   clearfix()
   color: color-default
-  padding: 0px article-padding article-padding
+  padding: 0px 16px article-padding
+  @media mq-normal
+    padding: 0px article-padding article-padding
   p, table
     line-height: line-height
     margin: 16px 0
@@ -147,7 +161,11 @@
       margin-top: 0
 
 .article-more-link 
+  flex-shrink: 0
+  display: none 
   text-align: right
+  @media mq-normal
+   display: block 
   :after
     content: "\f101"
     font-family: font-icon
@@ -169,20 +187,23 @@
   @extend $block
   display flex
   justify-content: space-between
+  align-items: center
   font-size: 0.85em
   line-height: line-height
-  padding: 16px article-padding
+  padding: 16px 16px
   margin: 12px 0
+  box-shadow: 1px 1px 8px #ddd;
+  @media mq-normal
+    padding: 16px 40px
   a
-    color: color-grey
+    transition: 0.25s
     text-decoration: none
-    &:hover
-      color: color-default
   .article-tag-list
     margin-top: 0
 
 .article-tag-list
   display: flex
+  flex-wrap: wrap
 
 .article-tag-list-item
   margin-right: 10px
@@ -193,6 +214,7 @@
   display block
   color: #6B8793
   padding 4px 8px
+  margin 4px 0
   border-radius: 6px
   font-size 14px
   line-height 18px
@@ -213,9 +235,12 @@
     padding-right: 8px
 
 .article-share-link
+  flex-shrink: 0
   cursor: pointer
-  // float: right
   margin-left: 20px
+  color: color-default
+  &:hover
+    color: #42b983
   &:before
     content: "\f064"
     font-family: font-icon
@@ -223,15 +248,21 @@
 
 #article-nav
   clearfix()
-  position: relative
+  display: flex
+  margin: 48px 0 0 0
+  padding: 0 16px
+
+  @media mq-mobile
+    display none
+  
   @media mq-normal
-    margin: block-margin 0
-    &:before
-      absolute-center(8px)
-      content: ""
-      border-radius: 50%
-      background: color-border
-      box-shadow: 0 1px 2px #fff
+    padding: 0 40px
+    // &:before
+    //   absolute-center(8px)
+    //   content: ""
+    //   border-radius: 50%
+    //   background: color-border
+    //   box-shadow: 0 1px 2px #fff
 
 .article-nav-link-wrap
   text-decoration: none
@@ -241,37 +272,37 @@
   margin-top: block-margin
   text-align: center
   display: block
+  width: 50%
+  margin-top: 0
   &:hover
     color: color-default
-  @media mq-normal
-    width: 50%
-    margin-top: 0
+    
 
 #article-nav-newer
-  @media mq-normal
-    float: left
-    text-align: right
-    padding-right: 20px
+  text-align: right
 
 #article-nav-older
-  @media mq-normal
-    float: right
-    text-align: left
-    padding-left: 20px
+  text-align: left
 
 .article-nav-caption
   text-transform: uppercase
   letter-spacing: 2px
-  color: color-border
+  color: #555
   line-height: 1em
   font-weight: bold
   #article-nav-newer &
     margin-right: -2px
 
 .article-nav-title
-  font-size: 0.85em
-  line-height: line-height
+  display block
+  font-size: 16px
+  font-weight normal
+  text-decoration: none
+  line-height: 24px
   margin-top: 0.5em
+  color: #6b8793
+  &:hover
+    color: #42b983
 
 .article-share-box
   position: absolute
