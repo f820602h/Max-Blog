@@ -3,6 +3,7 @@ title: JS地下城 - 井字遊戲
 date: 2019/12/01 20:46:25
 tags: [javascript,JS地下城]
 ---
+> 本篇為六角學院-JS地下城攻略文
 
 [Github](https://github.com/f820602h/OXGame/) | [Demo](https://f820602h.github.io/OXGame/)
 
@@ -16,28 +17,27 @@ tags: [javascript,JS地下城]
   
 **基本上都不是太複雜的條件，唯有判斷勝負可能需要花點時間來思考。**
 
+---
+## 解題攻略
+
 </br>
 
-## 畫面處理
-
-秉持專業原則：「設計稿給什麼，網頁就出什麼」，叉叉中間可以利用偽元素蓋掉多餘的線條，製造出中空的效果。
+#### # 畫面處理
+秉持專業原則：「設計稿給什麼，畫面就出什麼」，叉叉中間可以利用偽元素蓋掉多餘的線條，製造出中空的效果。
 文字部分用 text-shadow 或 -webkit-text-stroke 就可以搞定。
-
-![](https://cdn-images-1.medium.com/max/5208/1*3uprjW3Qc2fTBbzFDeH3KA.png)
-
-![](https://cdn-images-1.medium.com/max/4268/1*JlxlNuoF5OPvRfsv7Rpr2g.png)
-
 ```css
 .text{
   text-shadow: 2px 2px white, -2px -2px white, 2px -2px white, -2px 2px white;
   -webkit-text-stroke: 2px white;
 }
 ```
+![](https://cdn-images-1.medium.com/max/5208/1*3uprjW3Qc2fTBbzFDeH3KA.png) ![](https://cdn-images-1.medium.com/max/4268/1*JlxlNuoF5OPvRfsv7Rpr2g.png)
 
-</br>
 
-## 遊戲進行
-畫面完成後，來處理遊戲的勝負判斷吧，這種有順序性的資料可以使用陣列來儲存管理。
+</br></br>
+
+#### # 初始化遊戲
+畫面完成後，來處理遊戲流程吧，我們可以使用陣列來儲存每個格子中的圈叉。
 * 事先為每個格子加一個 `data-num` 屬性，`value` 從 `0~8` 剛好對應九宮格位置，也對應陣列 `gamePlay` 的 `index`。
 * `circleTurn` 是表示玩家回合的變數，如果為 `true` 就是圈圈的回合，反之為叉叉的回合。
 * 每次點擊空格都會由 `circleTurn` 告訴我們該將 `1 (圈)` 或 `-1 (叉)` 加入 `gamePlay` 陣列中，並且切換回合。
@@ -54,28 +54,29 @@ let boxes = document.querySelectorAll(".box");
 boxes.forEach( box => {
   box.addEventListener("click", function() {
     let index = this.getAttribute("data-num");
-    if (gamePlay[index] != undefined) {
-      return;
-    } else {
-      gamePlay[index] = circleTurn ? 1 : -1;
-    } 
+    // 如果格子已經被佔領過，不作動
+    if (gamePlay[index] != undefined) return;
+    // 反之根據回合填入1或-1
+    gamePlay[index] = circleTurn ? 1 : -1;
+    // 切換回合
+    circleTurn = !circleTurn;
   });
 });
 ```
 
-</br>
+</br></br>
 
-## 勝負判斷
+#### # 勝負判斷
 
-![](https://cdn-images-1.medium.com/max/2332/1*Ju3g4F4JSt21DCM_XE-HDA.png)
+![](ooxx.png)
 
-我們為格子加上編號，然後看看成功連線有什麼規律：
-
+我們前面已經利用 `data-num` 屬性爲格子加上編號了，現在來看看成功連線有什麼規律：
 1. **橫排：012、345、678 - 可以歸類為 3n、3n+1、3n+2。**
 2. **直排：036、147、258 - 可以歸類為 n、n+3、n+6。**
 3. **斜角：048、246**
 
-現在我們知道規律了，所以…
+我們按照找到的規律去把格子裡的 `±1` 給相加，如果絕對值等於 `3`，就代表分出勝負了，那我們就返回其中一個格子的值 `(1 或 -1)`。
+如果是 `1` 代表圈圈獲勝，如果是 `-1` 代表叉叉獲勝，知道誰獲勝後就可以處理勝負的畫面跟計分了。
 ```javascript
 let whoWin = function() {
   // 左上至右下的斜角
@@ -102,12 +103,10 @@ let whoWin = function() {
   return null
 };
 ```
-我們按照找到的規律去把格子裡的 `±1` 給相加，如果絕對值等於 `3`，就代表分出勝負了，那我們就返回其中一個格子的值 `(1 或 -1)`。
-如果是 `1` 代表圈圈獲勝，如果是 `-1` 代表叉叉獲勝，知道誰獲勝後就可以處理勝負的畫面跟計分了。
 
-</br>
+</br></br>
 
-## 平手狀況
+#### # 平手狀況
 
 不過我們還有平手的狀況要處理，先利用變數幫我們紀錄目前的回合數，如果已經達到 `9`，`whoWin()` 回傳的卻還是 `null` 那就表示沒有分出勝負。
 

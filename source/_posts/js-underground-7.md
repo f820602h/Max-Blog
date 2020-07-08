@@ -3,20 +3,24 @@ title: JS地下城 - Canvas
 date: 2019/11/01 20:46:25
 tags: [javascript,canvas,JS地下城]
 ---
+> 本篇為六角學院-JS地下城攻略文
+
 原本認為自己應該不太會應用到 Canvas，所以一直沒有把它排進我的學習清單中，不過之後發現 Canvas 的應用其實蠻豐富的。
 剛好在地下城遇到了，就來紀錄一下解題過程吧。
 
 [Github](https://github.com/f820602h/Canvas) | [Demo](https://f820602h.github.io/Canvas/)
 
+---
+## 解題攻略
+
 </br>
 
-## 起手式
+#### # 準備畫布
 先查查 MDN，發現原來要先建構 `<canvas>` 的渲染環境，用`getContext('2d')` 來取得2D的繪圖環境，這樣後面才能使用相關的繪圖方法。
 
 ```html
 <canvas id="draw"></canvas>
 ```
-</br>
 
 ```javascript
 let canvas = document.querySelector("#draw");
@@ -52,9 +56,9 @@ ctx.stroke();
 
 ![](https://cdn-images-1.medium.com/max/6240/1*Os7N1DpSdK-2o7IxTLERww.png)
 
-</br>
+</br></br>
 
-## 只有鉛筆嗎？
+#### # 畫筆設定
 
 成功畫出第一筆後卻發現只有一條細細醜醜的黑線，來試著改變畫筆的顏色粗細吧。
 
@@ -63,13 +67,13 @@ ctx.strokeStyle = '#FFA500';
 ctx.lineWidth = 10;
 ctx.lineCap = 'round';
 ```
+</br>
 
 ![](https://cdn-images-1.medium.com/max/6288/1*Mtx3i8B45xDlW3cqikDc2A.png)
 
-</br>
+</br></br>
 
-## 互動的開始
-
+#### # 繪畫互動
 畫筆、畫布都有了，但為了讓使用者可以利用滑鼠來繪圖，必須要把上面的畫直線方法來跟滑鼠事件連動。
 
 ```javascript
@@ -110,21 +114,25 @@ draw.addEventListener("mousedown", downHandler)
 ```
 
 透過鼠標的事件綁定，就可以做到類似小畫家的繪圖功能，而實際上畫出來的線條，其實是無數條 `１pixel` 的直線所串連起來的。
-
 簡單來說就是利用滑鼠移動的事件來不斷取得新座標，並且把座標丟進 moveTo() 和 lineTo() 之中，而滑鼠按下和放開只是啟動和關閉的作用。
-
-![](https://cdn-images-1.medium.com/max/5876/1*nh08sP6qPOrNvnRh-23sNg.png)
 
 </br>
 
-## 進階功能
+![](https://cdn-images-1.medium.com/max/5876/1*nh08sP6qPOrNvnRh-23sNg.png)
+
+</br></br>
+
+#### # 進階功能
 
 有了基本的繪圖功能，來思考該如何達到「復原」和「重做」吧。
 看了看文件，發現 `Path2D Object` 和 `save()` `restore()` 好像蠻符合我們要的概念的。
 
-* Path2D Object 是利用 `MyPath = new Path2D()` 來建立一個路徑物件，可以事先存取路徑再利用 `ctx.stroke(MyPath)` 畫出來，但這個物件只能存取路徑卻無法存取畫筆顏色和樣式。
+</br>
 
+**不過仔細研究會發現：**
+* Path2D Object 是利用 `MyPath = new Path2D()` 來建立一個路徑物件，可以事先存取路徑再利用 `ctx.stroke(MyPath)` 畫出來，但這個物件只能存取路徑卻無法存取畫筆顏色和樣式。
 * 而 `save()` `restore()` 可以存取畫布狀態並重新呼叫，但一次只能存取一個狀態到 stack 中，看來也不是我們需要的。
+
 </br>
 
 後來找到 `toDataURL()`，它可以幫我們把畫布狀態編碼為 `base64` 的字串，這樣就可以存取了。
@@ -176,10 +184,9 @@ let undo = function(){
 ```
 這樣復原就完成了，而重做的概念剛好就是相反的囉。而其實裡面也藏了清除畫布的方法 `ctx.clearRect(0,0,canvasWidth,canvasHeight)`，這樣清除畫布的功能也一起做好了。
 
+</br></br>
 
-</br>
-
-## 保存美好
+#### # 保存作品
 
 實現復原重做後，保存其實也是一樣道理。
 ```javascript
@@ -193,9 +200,9 @@ save.addEventListener("click", function() {
 ```
 在按下保存後，把畫布狀態利用 `toDataURL()` 編碼並設定在連結中，這樣可以下載了。
 
-</br>
+---
 
-## 番外篇
+## 加分功能
 
 另外也可以增加替換顏色的功能，先用陣列來管理顏色再利用 `forEach()` 來生成元素。
 
