@@ -63,28 +63,47 @@
 
 #page-nav
   clearfix()
-  margin: block-margin auto
-  background: #fff
-  box-shadow: 1px 2px 3px #ddd
-  border: 1px solid color-border
-  border-radius: 3px
+  position: relative
+  margin: 0 auto 30px auto
   text-align: center
   color: color-grey
-  overflow: hidden
+
   a, span
+    display block
     padding: 10px 20px
-    line-height: 1
-    height: 2ex
+    line-height: 20px
+    font-size 16px
+
   a
-    color: color-grey
+    color: #6b8793
     text-decoration: none
     &:hover
-      background: color-grey
-      color: #fff
+      color: #42b983
+  
   .prev
-    float: left
+    font-weight bold
+    position absolute
+    letter-spacing 5px
+    top: -2px
+    left: 0px
+    &:before
+      content: "\f0d9"
+      font-family: FontAwesome
+      font-size 18px
+      margin-right: 4px 
+    
   .next
-    float: right
+    font-weight bold
+    position absolute
+    letter-spacing 5px
+    top: -2px
+    right: 0px
+    &:after
+      content: "\f0da"
+      font-family: FontAwesome
+      font-size 18px
+      margin-left: 4px 
+    
   .page-number
     display: inline-block
     @media mq-mobile
