@@ -105,3 +105,7 @@ server:
 
 # Disqus 
 disqus_shortname: f820602h
+
+#Sitemap
+sitemap:
+  path: sitemap.xml
