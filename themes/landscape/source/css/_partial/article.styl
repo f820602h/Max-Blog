@@ -37,14 +37,43 @@
     text-align: right
     margin: 0
 
+.post-cate
+  display: flex
+  align-items: center
+
+.article-tag-list
+  display: flex
+  flex-wrap: wrap
+
+.article-tag-list-item
+  margin-right: 10px
+  :before
+    content:"#"
+
+.article-tag-list-link
+  display block
+  color: #6B8793
+  padding 4px 8px
+  margin 4px 0
+  border-radius: 6px
+  font-size 14px
+  line-height 18px
+  text-decoration: none
+  background-color #E8EFF2
+  transition: 0.2s
+  cursor pointer
+  &:hover 
+    background: #42b983
+    color: #fff
+
 .article-category
   font-size 14px
   line-height 18px
   color: #999
-  text-shadow: 0 1px #fff
 
 .article-category-link
-  @extend $block-caption
+  // @extend $block-caption
+  color: #999
   margin-left: 0px
   :not(:last-child)
     margin-right: 8px
@@ -208,33 +237,6 @@
   .article-tag-list
     margin-top: 0
 
-.article-tag-list
-  display: flex
-  flex-wrap: wrap
-
-.article-tag-list-item
-  margin-right: 10px
-  :before
-    content:"#"
-
-.article-tag-list-link
-  display block
-  color: #6B8793
-  padding 4px 8px
-  margin 4px 0
-  border-radius: 6px
-  font-size 14px
-  line-height 18px
-  text-decoration: none
-  background-color #E8EFF2
-  transition: 0.2s
-  cursor pointer
-
-  &:hover 
-    background: #42b983
-    color: #fff
-  
-
 .article-comment-link
   &:before
     content: "\f075"
@@ -388,56 +390,56 @@ $article-share-link
     background: color-google
     text-shadow: 0 1px darken(color-google, 20%)
 
-.article-gallery
-  background: #000
-  position: relative
+// .article-gallery
+//   background: #000
+//   position: relative
 
-.article-gallery-photos
-  position: relative
-  overflow: hidden
+// .article-gallery-photos
+//   position: relative
+//   overflow: hidden
 
-.article-gallery-img
-  display: none
-  max-width: 100%
-  &:first-child
-    display: block
-  &.loaded
-    position: absolute
-    display: block
-  img
-    display: block
-    max-width: 100%
-    margin: 0 auto
-/*
-$article-gallery-ctrl
-  position: absolute
-  top: 0
-  height: 100%
-  width: 60px
-  color: #fff
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3)
-  opacity: 0.3
-  transition: opacity 0.2s
-  cursor: pointer
-  &:hover
-    opacity: 0.8
-  &:before
-    font-size: 30px
-    font-family: font-icon
-    position: absolute
-    top: 50%
-    margin-top: @font-size * -0.5
+// .article-gallery-img
+//   display: none
+//   max-width: 100%
+//   &:first-child
+//     display: block
+//   &.loaded
+//     position: absolute
+//     display: block
+//   img
+//     display: block
+//     max-width: 100%
+//     margin: 0 auto
 
-.article-gallery-prev
-  @extend $article-gallery-ctrl
-  left: 0
-  &:before
-    content: "\f053"
-    left: 15px
+// $article-gallery-ctrl
+//   position: absolute
+//   top: 0
+//   height: 100%
+//   width: 60px
+//   color: #fff
+//   text-shadow: 0 0 3px rgba(0, 0, 0, 0.3)
+//   opacity: 0.3
+//   transition: opacity 0.2s
+//   cursor: pointer
+//   &:hover
+//     opacity: 0.8
+//   &:before
+//     font-size: 30px
+//     font-family: font-icon
+//     position: absolute
+//     top: 50%
+//     margin-top: @font-size * -0.5
 
-.article-gallery-next
-  @extend $article-gallery-ctrl
-  right: 0
-  &:before
-    content: "\f054"
-    right: 15px*/
+// .article-gallery-prev
+//   @extend $article-gallery-ctrl
+//   left: 0
+//   &:before
+//     content: "\f053"
+//     left: 15px
+
+// .article-gallery-next
+//   @extend $article-gallery-ctrl
+//   right: 0
+//   &:before
+//     content: "\f054"
+//     right: 15px*/

@@ -13,8 +13,8 @@ sidebar: null
 widgets:
 - category
 - tag
-- tagcloud
-- archive
+# - tagcloud
+# - archive
 - recent_posts
 
 # display widgets at the bottom of index pages (pagination == 2)

@@ -16,7 +16,10 @@
     <% } %>
     
         <div class="article-excerpt" itemprop="articleBody">
-          <%- partial('post/tag') %>
+          <div class="post-cate">
+            <%- partial('post/tag') %>
+            <%- partial('post/category') %>
+          </div>
           <% if (index && theme.excerpt_link){ %>
             <p class="article-more-link">
               <a href="<%- url_for(post.path) %>#more"><%= theme.excerpt_link %></a>

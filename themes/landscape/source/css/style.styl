@@ -41,7 +41,8 @@ body
   column(columns)
 
 #main
-  min-height: calc(100vh - 455px)
+  position relative
+  min-height: calc(100vh - 447px)
 
 .left, .alignleft
   float: left
@@ -89,6 +90,7 @@ if sidebar is left
 @import "_partial/footer"
 @import "_partial/highlight"
 @import "_partial/mobile"
+@import "_partial/notFound"
 
 if sidebar
   @import "_partial/sidebar"
