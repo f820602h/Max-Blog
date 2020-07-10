@@ -109,3 +109,12 @@ disqus_shortname: f820602h
 #Sitemap
 sitemap:
   path: sitemap.xml
+
+#RSS
+plugin:
+- hexo-generator-feed
+#Feed Atom
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
