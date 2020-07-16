@@ -77,12 +77,17 @@
       color: #42b983
 
 .archive-article-title
+  display: block
+  width: 100%
   text-decoration: none
   font-size: 18px 
   font-weight: bold
   color: color-default
   transition: color 0.2s
   line-height: line-height
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
 
 .archive-article-footer
@@ -93,6 +98,7 @@
   text-decoration: none
   font-size: 0.85em
   line-height: 1em
+  letter-spacing: 0.5px;
   margin-bottom: 0.5em
   display: block
 

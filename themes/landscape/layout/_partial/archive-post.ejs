@@ -2,7 +2,7 @@
   <button class="archive-article-inner" onclick="location.href='<%- url_for(post.path) %>'">
     <header class="archive-article-header">
       <%- partial('post/title', {class_name: 'archive-article-title'}) %>
-      <%- partial('post/date', {class_name: 'archive-article-date', date_format: 'MMM D'}) %>
+      <%- partial('post/date', {class_name: 'archive-article-date', date_format: 'YYYY-MM-DD'}) %>
     </header>
   </button>
 </article>
