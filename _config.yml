@@ -101,7 +101,11 @@ deploy:
   type: ''
 
 server:
-  compress: true 
+  compress: true
+  serveStatic:
+    cacheControl: false
+    etag: false
+    maxAge: -1
 
 # Disqus 
 disqus_shortname: f820602h
