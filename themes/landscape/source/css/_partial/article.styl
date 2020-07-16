@@ -21,8 +21,8 @@
 
 .article-inner
   @extend $block
+  @extend $base-shadow
   overflow: hidden
-  box-shadow: 1px 1px 8px #ddd
 
 .article-meta
   clearfix()
@@ -47,8 +47,6 @@
 
 .article-tag-list-item
   margin-right: 10px
-  :before
-    content:"#"
 
 .article-tag-list-link
   display block
@@ -62,6 +60,8 @@
   background-color #E8EFF2
   transition: 0.2s
   cursor pointer
+  &:before
+    content:"#"
   &:hover 
     background: #42b983
     color: #fff
@@ -90,6 +90,9 @@
     display flex
     justify-content space-between
     align-items center
+  > div 
+    flex-shrink: 0
+    margin-left: 8px
   
 
 .article-title
@@ -228,7 +231,7 @@
   line-height: line-height
   padding: 16px 16px
   margin: 12px 0
-  box-shadow: 1px 1px 8px #ddd;
+  @extend $base-shadow
   @media mq-normal
     padding: 16px 40px
   a
@@ -266,12 +269,6 @@
   
   @media mq-normal
     padding: 0 40px
-    // &:before
-    //   absolute-center(8px)
-    //   content: ""
-    //   border-radius: 50%
-    //   background: color-border
-    //   box-shadow: 0 1px 2px #fff
 
 .article-nav-link-wrap
   text-decoration: none

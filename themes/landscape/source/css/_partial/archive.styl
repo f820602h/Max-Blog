@@ -1,15 +1,50 @@
+.archive-tag-list
+  .tag-list
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    max-width: 800px
+    margin: 50px auto 0 
+
+    .tag-list-item
+      margin-right: 10px
+
+    .tag-list-link
+      display block
+      color: #6B8793
+      padding 4px 8px
+      margin 4px 0
+      border-radius: 6px
+      font-size 14px
+      line-height 18px
+      text-decoration: none
+      background-color #E8EFF2
+      transition: 0.2s
+      cursor pointer
+      box-shadow: 1px 1px 6px #999
+      &:before
+        content:"#"
+      &:hover 
+        background: #42b983
+        color: #fff
+        box-shadow: none
+        box-shadow: 1px 1px 3px #359368 inset
+      &.active
+        background: #42b983
+        color: #fff
+        cursor: default
+        box-shadow: 1px 1px 3px #359368 inset
+
+
 .archives-wrap
   margin: block-margin 0
-
-.archives
-  clearfix()
 
 .archive-year-wrap
   margin-bottom: 1em
 
 .archive-year
   @extend $block-caption
-  color: #42b983
+  color: #555
 
 .archives
   display: flex
@@ -37,7 +72,7 @@
   &:hover
     top: -1px
     left: -1px
-    box-shadow: 1px 1px 8px #ddd
+    @extend $base-shadow
     .archive-article-title
       color: #42b983
 

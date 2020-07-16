@@ -3,26 +3,68 @@
     <%- partial('article', {post: post, index: true}) %>
   <% }) %>
 <% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
+
+  <% if (site.tags.length){ %>
+    <div class="archive-tag-list">
+      <ul class="tag-list">
+        <li class="tag-list-item">
+          <% if(is_archive()){ %>
+            <div class="tag-list-link active">全部文章</div>
+          <% } else { %>
+            <a class="tag-list-link" href="<%= url_for(theme.menu.Article) %>">全部文章</a>
+          <% } %>
+        </li>
+        <% site.tags.each((tag, i)=>{ %>
+          <li class="tag-list-item">
+            <% if(is_current(`${tag.path}index.html`)){ %>
+              <div class="tag-list-link active"><%= tag.name %></div>
+            <% } else { %>
+              <a class="tag-list-link" href="<%= url_for(tag.path) %>"><%= tag.name %></a>
+            <% } %>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <!-- 在 Tag 頁 -->
+  <% if (is_tag()){ %>
+    <section class="archives-wrap">
+      <div class="archives">
+        <% page.posts.each(function(post, i){ %>
+          <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+        <% }) %>
+      </div>
+    </section>
+
+  <!-- 在 Archives 頁 -->
+  <% } else {%>
+    <% var last; %>
+    <% page.posts.each(function(post, i){ %>
+      <% var year = post.date.year(); %>
+
+      <% if (last != year){ %>
+        <% if (last != null){ %>
+          </div></section>
+        <% } %>
+        <% last = year; %>
+        <section class="archives-wrap">
+          <div class="archive-year-wrap">
+            <div class="archive-year"><%= year %></div>
+          </div>
+          <div class="archives">
       <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
+
+      <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+    <% }) %>
+
+    <% if (page.posts.length){ %>
+      </div></section>
     <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
+
   <% } %>
 <% } %>
+
 <% if (page.total > 1){ %>
   <nav id="page-nav">
     <% var prev_text = "上一頁";var next_text = "下一頁"%>
