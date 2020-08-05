@@ -1,11 +1,9 @@
 ---
 title: JS地下城 - Canvas
 date: 2019/11/01 20:46:25
-tags: [javascript,canvas,JS地下城]
+tags: [JavaScript,Canvas,JS地下城]
 ---
-> 本篇為六角學院 - JS地下城攻略文
-
-[Github](https://github.com/f820602h/Canvas) | [Demo](https://f820602h.github.io/Canvas/)
+> 本篇為六角學院 - JS地下城攻略文　[Github](https://github.com/f820602h/Canvas)｜[Demo](https://f820602h.github.io/Canvas/)
 
 </br>
 
@@ -81,6 +79,7 @@ ctx.lineCap = 'round';
 </br></br>
 
 #### # 繪畫互動
+
 畫筆、畫布都有了，但為了讓使用者可以利用滑鼠來繪圖，必須要把上面的畫直線方法來跟滑鼠事件連動。
 
 ```javascript
@@ -211,13 +210,15 @@ save.addEventListener("click", function() {
 
 ## 加分功能
 
+</br>
+
 另外也可以增加替換顏色的功能，先用陣列來管理顏色再利用 `forEach()` 來生成元素。
 
 ```javascript
 let brushColor = ['#ffffff','#000000','#9BFFCD','#00CC99','#01936F'];
 ```
 
-![](https://cdn-images-1.medium.com/max/2000/1*CRsyLansWBzkmkgbf4IXQQ.png)
+![](color1.png)
 
 不過顏色有深有淺，若打勾圖示固定是黑色的，那在較深的顏色上就會不清楚，所以我們要來判斷目前所選的顏色是深是淺。
 
@@ -236,4 +237,4 @@ let isDark = function(color) {
 
 先把16進位色碼拆開並轉為10進位數字，然後透過公式就能知道這個顏色是深是淺，也就能給予對應顏色的打勾圖示了。
 
-![](https://cdn-images-1.medium.com/max/2000/1*yfs6rfwzvXh3w0tKZronsg.png)
+![](color2.png)

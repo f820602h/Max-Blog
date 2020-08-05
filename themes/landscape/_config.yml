@@ -38,3 +38,8 @@ fb_app_id:
 
 # Disqus 
 disqus_shortname: f820602h
+
+# Emoji 
+emoji:
+  enable: true
+  className: github-emoji

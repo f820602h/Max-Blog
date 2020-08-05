@@ -1,7 +1,7 @@
 ---
 title: 用 Axios Instance 管理 API
 date: 2020/5/27 20:46:25
-tags: [vus.js,axios]
+tags: [Vus.js,Axios]
 ---
 > 自從用前端框架開始開發後，就沒在用 JQuery Ajax 了，取而代之的是 Axios
 

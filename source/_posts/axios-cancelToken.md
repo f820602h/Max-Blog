@@ -1,7 +1,7 @@
 ---
 title: 透過 CancelToken 解析 Axios 原始碼
 date: 2020/7/7 15:23:00
-tags: [vus.js,axios]
+tags: [Vus.js,Axios]
 ---
 > 本篇會藉由設計「取消重複請求機制」來解析 axios 的原始碼，篇幅較長請耐心閱讀，如果要直接看實作可以點 [這裡](#實際運用)
 
@@ -22,6 +22,7 @@ tags: [vus.js,axios]
 ---
 
 ## 發送請求與攔截器
+
 <br/>
 
 #### # Class Axios
@@ -348,6 +349,9 @@ module.exports = function xhrAdapter(config) {
 ---
 
 ## 實際運用
+
+</br>
+
 了解整個 axios 架構以及 CancelToken 後，終於可以來實踐取消請求的功能了，先來釐清我們的需求。
 
 > 每次發送請求要判斷是否已經存在相同的請求，若存在就取消前一次請求，只保留最新的

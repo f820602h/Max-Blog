@@ -1,15 +1,14 @@
 ---
 title: JS地下城 - 幸運輪盤
 date: 2020/01/14 20:46:25
-tags: [javascript,JS地下城]
+tags: [JavaScript,JS地下城]
 ---
-> 本篇為六角學院 - JS地下城攻略文
-
-[Github](https://github.com/f820602h/Lucky-Wheel/) | [Demo](https://f820602h.github.io/Lucky-Wheel/)
+> 本篇為六角學院 - JS地下城攻略文　[Github](https://github.com/f820602h/Lucky-Wheel/)｜[Demo](https://f820602h.github.io/Lucky-Wheel/)
 
 </br>
 
 ## 確認需求
+
 * 根據資料產生畫面
 * 抽獎機率需考慮獎項數量而非種類
 * 輪盤指針的旋轉角度
@@ -58,9 +57,42 @@ tags: [javascript,JS地下城]
 
 首先要做的第一步就是資料管理，而一般網頁上最常見的資料格式就是 `JSON`，我們可以把獎品清單整理成以下格式：
 
-![](https://cdn-images-1.medium.com/max/2000/1*Pc3rdAILaoJUYmDcaj2IYg.jpeg)
+```json
+[
+  {
+    "text": "Movie",
+    "icon": "<i class='material.icons'>movie_filter</i>",
+    "num": 0
+  },
+  {
+    "text": "Wish",
+    "icon": "<i class='material.icons'>cake</i>",
+    "num": 5
+  },
+  {
+    "text": "Anything",
+    "icon": "<i class='material.icons'>star</i>",
+    "num": 5
+  },
+  {
+    "text": "Child",
+    "icon": "<i class='material.icons'>child_care</i>",
+    "num": 4
+  },
+  {
+    "text": "Flight",
+    "icon": "<i class='material.icons'>flight</i>",
+    "num": 1
+  },
+  {
+    "text": "wifi",
+    "icon": "<i class='material.icons'>wifi</i>",
+    "num": 5
+  },
+]
+```
 
-你可以把 `JSON` 資料存成 `.json` 檔，然後再用 `AJAX` 去取得資料。
+接著把 `JSON` 資料存成 `.json` 檔，然後再用 `AJAX` 去取得資料。
 
 ```javascript
 let data;

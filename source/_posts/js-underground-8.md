@@ -1,11 +1,9 @@
 ---
 title: JS地下城 - 井字遊戲
 date: 2019/12/01 20:46:25
-tags: [javascript,JS地下城]
+tags: [JavaScript,JS地下城]
 ---
-> 本篇為六角學院 - JS地下城攻略文
-
-[Github](https://github.com/f820602h/OXGame/) | [Demo](https://f820602h.github.io/OXGame/)
+> 本篇為六角學院 - JS地下城攻略文　[Github](https://github.com/f820602h/OXGame/)｜[Demo](https://f820602h.github.io/OXGame/)
 
 </br>
 
@@ -23,6 +21,7 @@ tags: [javascript,JS地下城]
 </br>
 
 #### # 畫面處理
+
 秉持專業原則：「設計稿給什麼，畫面就出什麼」，叉叉中間可以利用偽元素蓋掉多餘的線條，製造出中空的效果。
 文字部分用 text-shadow 或 -webkit-text-stroke 就可以搞定。
 ```css
@@ -37,14 +36,13 @@ tags: [javascript,JS地下城]
 </br></br>
 
 #### # 初始化遊戲
+
 畫面完成後，來處理遊戲流程吧，我們可以使用陣列來儲存每個格子中的圈叉。
 * 事先為每個格子加一個 `data-num` 屬性，`value` 從 `0~8` 剛好對應九宮格位置，也對應陣列 `gamePlay` 的 `index`。
 * `circleTurn` 是表示玩家回合的變數，如果為 `true` 就是圈圈的回合，反之為叉叉的回合。
 * 每次點擊空格都會由 `circleTurn` 告訴我們該將 `1 (圈)` 或 `-1 (叉)` 加入 `gamePlay` 陣列中，並且切換回合。
 
 陣列成功存進資料後，剩下就是判定啦！
-
-</br>
 
 ```javascript
 let gamePlay = [];

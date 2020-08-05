@@ -1,9 +1,12 @@
 ---
 title: 在 Vue 聰明使用 SVG-Icon
 date: 2020/5/18 20:46:25
-tags: [vus.js,svg,webpack]
+tags: [Vus.js,SVG,Webpack]
 ---
 > 一般來說我們在Vue的專案裡使用SVG，會有兩種比較簡單的方式。
+
+</br>
+
 #### 第一種：Using SVG as an ＜img＞
 利用 `<img>` 標籤來引入，此時 SVG 被視為一個圖檔載入，最大的缺點就是無法利用 CSS 來改變 SVG 的樣式。
 但不幸的是如果你的 icon 會有改變顏色的需求，你就需要兩張不同顏色的圖檔，兩個 `<img>` 標籤，然後用 `display` 來控制，非常繁瑣。
@@ -24,9 +27,10 @@ tags: [vus.js,svg,webpack]
 ```
 ---
 ## SVG Sprites
-SVG Sprites 是一種對於 SVG 中 `use` 元素的應用，可以像是蓋印章一樣，不斷復用已經定義好的 SVG 圖形，而在 Vue 專案中，我們可以透過 `webpack` 的 `loader` 以及一些設定來達到同樣的效果。
 
 </br>
+
+SVG Sprites 是一種對於 SVG 中 `use` 元素的應用，可以像是蓋印章一樣，不斷復用已經定義好的 SVG 圖形，而在 Vue 專案中，我們可以透過 `webpack` 的 `loader` 以及一些設定來達到同樣的效果。
 
 首先建立資料夾路徑 `src/assets/icon`，之後的 `.svg` 檔都會放在這裡。
 再來要安裝今天的主角 `svg-sprite-loader`，他就是這次要使用的 Webpack Loader。
@@ -85,6 +89,9 @@ import "@/src/assets/icon/target.svg";
 
 ---
 ## 全域引入與全域元件
+
+</br>
+
 雖然已經解決了改變icon顏色以及程式碼雜亂的問題，但每當要使用icon時，都必須在元件中引入對應的 `.svg` 檔，也是增添不少管理上的麻煩，這時候一樣可以透過 `webpack` 幫我們處理。
 
 在 `main.js` 中，利用 `webpack` 的 `require.context` 可以一次性的引入檔案。 [官方說明](https://webpack.js.org/guides/dependency-management/#require-context)
