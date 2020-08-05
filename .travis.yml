@@ -9,15 +9,15 @@ cache:
         - node_modules
 
 before_install:
-  - echo 安装hexo環境...
+  - echo install hexo
 
 install:
   - npm install
 
 before_script:
-  - echo 正在清空靜態文件...
+  - echo clean old file
   - hexo clean
-  - echo 正在生成靜態文件...
+  - echo create new file
   - hexo g
   - cd ./public
   - ls -l
