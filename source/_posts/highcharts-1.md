@@ -13,7 +13,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 當然，要是圖表一個一個手刻，那網站還沒做好你可能都想轉職了，不過幸虧 JavaScript 的視覺化函式庫五花八門，像是龐大的 D3.js 或小巧簡單的 Chart.js，都可以幫助我們快速將資料轉換成易讀性高的圖表。
 
-如果你感興趣的話，[這裡](https://en.wikipedia.org/wiki/Comparison_of_JavaScript_charting_libraries) 可以看到所有知名的 JavaScript 圖表庫及他們之間比較。
+如果你感興趣的話，[這裡](https://en.wikipedia.org/wiki/Comparison_of_JavaScript_charting_libraries) 可以看到所有知名的 JavaScript 圖表庫及它們之間的比較。
 
 ---
 
@@ -23,7 +23,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 而這次想跟大家介紹的是 Highcharts，它是一套純 JavaScript 的圖表庫，採用 SVG 渲染。
 
-不過似乎是使用人數較少的關係，國內的相關文章寥寥可數，加上官方文件的中翻文本也是較舊的版號，所以這次希望能以一個使用過 Highcharts 的開發者角度來跟各位介紹它，希望以我的使用經驗可以讓大家認識 Highcharts 的強大功能與應用，那我們就先來了解他的優點與特性吧！
+不過似乎是使用人數較少的關係，國內的相關文章寥寥可數，加上官方文件的中翻文本也是較舊的版號，所以這次希望能以一個使用過 Highcharts 的開發者角度來跟各位介紹它，希望以我的使用經驗可以讓大家認識 Highcharts 的強大功能與應用，那就先來看看它的優點與特性吧！
 
 <br/>
 
@@ -74,4 +74,4 @@ Highcharts 的圖表有多個元素區塊，我會跟各位介紹各區塊的用
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙]() -
+\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/users/20125431/ironman/3458) -
