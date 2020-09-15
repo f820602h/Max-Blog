@@ -73,7 +73,6 @@
   color: #999
 
 .article-category-link
-  // @extend $block-caption
   color: #999
   margin-left: 0px
   :not(:last-child)
@@ -142,16 +141,32 @@
   iframe
     border: none
   table
+    table-layout:fixed
     width: 100%
     border-collapse: collapse
     border-spacing: 0
+    background #f9f9f9
+  tr:last-child td
+    border-bottom: none
+  th,td 
+    &[align="right"]  
+      text-align right
+    &[align="left"]  
+      text-align left
+    &[align="center"]  
+      text-align center
   th
     font-weight: bold
-    border-bottom: 3px solid color-border
-    padding-bottom: 0.5em
-  td
+    border-right: 1px solid color-border
     border-bottom: 1px solid color-border
     padding: 10px 0
+    background #6b8793
+    color: white
+  td
+    border-right: 1px solid color-border
+    border-bottom: 1px solid color-border
+    padding: 10px 0
+    background rgba(119,152,191,0.15)
   blockquote
     font-family: font-serif
     font-size: 16px 
@@ -267,7 +282,8 @@
   padding: 0 16px
 
   @media mq-mobile
-    display none
+    display block
+    margin: 24px 0
   
   @media mq-normal
     padding: 0 40px
@@ -287,10 +303,18 @@
     
 
 #article-nav-newer
+  width 100%
   text-align: right
 
+  @media mq-mobile
+    margin: 8px 0 
+
 #article-nav-older
+  width 100%
   text-align: left
+
+  @media mq-mobile
+    margin: 8px 0 
 
 .article-nav-caption
   text-transform: uppercase

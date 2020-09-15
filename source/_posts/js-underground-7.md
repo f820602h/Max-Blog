@@ -21,7 +21,7 @@ tags: [JavaScript,Canvas,JS地下城]
 </br>
 
 #### # 準備畫布
-先查查 MDN，發現原來要先建構 `<canvas>` 的渲染環境，用`getContext('2d')` 來取得2D的繪圖環境，這樣後面才能使用相關的繪圖方法。
+先查查 MDN，發現原來要先建構 `<canvas>` 的渲染環境，用 `getContext('2d')` 來取得2D的繪圖環境，這樣後面才能使用相關的繪圖方法。
 
 ```html
 <canvas id="draw"></canvas>
@@ -68,9 +68,9 @@ ctx.stroke();
 成功畫出第一筆後卻發現只有一條細細醜醜的黑線，來試著改變畫筆的顏色粗細吧。
 
 ```javascript
-ctx.strokeStyle = '#FFA500';
+ctx.strokeStyle = "#FFA500";
 ctx.lineWidth = 10;
-ctx.lineCap = 'round';
+ctx.lineCap = "round";
 ```
 </br>
 
@@ -91,7 +91,7 @@ let downHandler = function(e){
   lastPointY = e.offsetY;
   // 並且為Canvas綁定mousemove和mouseup的事件
   draw.addEventListener("mousemove", moveHandler);
-  draw.addEventListener('mouseup', upHandler);
+  draw.addEventListener("mouseup", upHandler);
 };
 
 let moveHandler = function(e) {
@@ -199,7 +199,7 @@ let undo = function(){
 let save = document.querySelector("#save");
 
 save.addEventListener("click", function() {
-  let link = canvas.toDataURL('image/png');
+  let link = canvas.toDataURL("image/png");
   this.setAttribute("href", link);
   this.setAttribute("download", "canvas.png");
 })
@@ -215,7 +215,7 @@ save.addEventListener("click", function() {
 另外也可以增加替換顏色的功能，先用陣列來管理顏色再利用 `forEach()` 來生成元素。
 
 ```javascript
-let brushColor = ['#ffffff','#000000','#9BFFCD','#00CC99','#01936F'];
+let brushColor = ["#ffffff","#000000","#9BFFCD","#00CC99","#01936F"];
 ```
 
 ![](color1.png)
