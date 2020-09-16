@@ -74,4 +74,4 @@ Highcharts 的圖表有多個元素區塊，我會跟各位介紹各區塊的用
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/users/20125431/ironman/3458) -
+\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
