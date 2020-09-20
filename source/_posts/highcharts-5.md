@@ -18,7 +18,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 主標題可以點出圖表所呈現的資料主題，甚至有些圖表如果沒有標題，你都未必知道它在呈現什麼資料，所以主標題算是圖表中非常重要的說明文字。
 
 ```javascript
-Highcharts.chart(container, {
+var myChart = Highcharts.chart(container, {
   title: {} // 主標題設定
 });
 ```
@@ -129,7 +129,7 @@ title: {
 副標題可以用來補充說明主標題的主旨，預設是沒有副標題的，而它的屬性幾乎跟主標題一樣，只有以下設定只有預設值不同而已。
 
 ```javascript
-Highcharts.chart(container, {
+var myChart = Highcharts.chart(container, {
   subtitle: {} // 副標題設定
 });
 ```
@@ -155,7 +155,7 @@ Highcharts.chart(container, {
 圖表說明可以詳細說明圖表的內容或是資料來源等等內容，它的屬性也是預設值跟主標題稍微不一樣而已。
 
 ```javascript
-Highcharts.chart(container, {
+var myChart = Highcharts.chart(container, {
   caption: {} // 圖表說明設定
 });
 ```
@@ -188,7 +188,7 @@ Highcharts.chart(container, {
 或是有需要的話你也可以利用這個位置來說明圖表的資料來源、呈現自己網站的網址名稱等等。
 
 ```javascript
-Highcharts.chart(container, {
+var myChart = Highcharts.chart(container, {
   credits: {} // 版權標籤設定
 });
 ```

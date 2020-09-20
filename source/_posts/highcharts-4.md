@@ -20,7 +20,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 圖表整體設定主要是一些調整圖表外觀或是整體呈現的屬性，而且這些屬性會大大影響其他區塊的設定內容，像是如果你用 `chart.type` 屬性把圖表設定為圓餅圖，那之後的座標軸設定你肯定就用不到了，所以它算是整個圖表的基底及前置。
 
 ```javascript
-Highcharts.chart(container, {
+var myChart = Highcharts.chart(container, {
   chart: {} // 圖表整體設定
 });
 ```
