@@ -1,6 +1,6 @@
 ---
 title: 資視就是力量 - Highcharts / 提示框設定
-date: 2020/9/20 09:39:00
+date: 2020/9/21 09:39:00
 tags: [JavaScript,Highcharts,12th鐵人賽]
 ---
 
