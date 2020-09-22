@@ -17,7 +17,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 <br/>
 
-本次系列我們只會提到平面圖表，所以最多只會有Ｘ座標軸和Ｙ座標軸，而座標軸中又由刻度、標籤、隔線等等...元素所組成，而在 Highcharts 中你都可以為這些元素做樣式的微調。
+本次系列我們只會提到平面圖表，所以最多只會有Ｘ座標軸和Ｙ座標軸，而座標軸中又由刻度、標籤、隔線等等...元素所組成，在 Highcharts 中你都可以為這些元素做樣式的微調。
 
 ![](axis.png)
 
@@ -48,7 +48,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.minorTicks
 `型別: Boolean` `預設: false`
 
-決定是否要顯示座標軸中的副刻度及副格線，另外要注意「類別座標軸」是不能開啟此屬性的。
+你可以決定是否要顯示座標軸中的副刻度及副格線，另外要注意「類別座標軸」是無法開啟此屬性的。
 <p style="font-size:12px; line-height:1.5;">注：類別座標即以「類別」作為座標刻度，在下篇文章中會介紹。</p>
 
 <br/>
@@ -57,7 +57,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.tickWidth / Axis.minorTickWidth
 `型別: Number` `預設: 請見表格`
 
-這兩屬性分別是調整主刻度／副刻度的粗細，單位為 `px`，設為 `0` 的話則會隱藏。
+這兩個屬性分別是調整主刻度／副刻度的粗細，單位為 `px`，設為 `0` 的話則會隱藏。
 
 座標軸|tickWidth|minorTickWidth|
 :-:|:-:|:-:|
@@ -71,7 +71,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.tickLength / Axis.minorTickLength
 `型別: Number` `預設: 10 / 2`
 
-這兩屬性分別是調整主刻度／副刻度的長度，單位為 `px`，設為 `0` 的話則會隱藏。
+除了粗細之外，主刻度／副刻度的長度也可以調整，單位為 `px`，設為 `0` 的話則會隱藏。
 
 <br/>
 <br/>
@@ -79,7 +79,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.tickColor / Axis.minorTickColor
 `型別: String` `預設: "ccd6eb" / "#999999"`
 
-這兩屬性分別是調整主刻度／副刻度的顏色，先前提過的顏色格式都是適用的。
+顏色的部分也是可以主刻度／副刻度個別調整，先前提過的顏色格式都是適用的。
 
 <br/>
 <br/>
@@ -96,7 +96,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.tickmarkPlacement
 `型別: String` `預設: "between"`
 
-這兩個屬性是專屬於「類別座標軸」的，與「線性座標軸」不同的是，它的刻度標籤並不會與主刻度對齊，而是夾在兩個刻度之間，因此你可以透過這個屬性來調整，可接受的值有 `between`、`on`。
+這個屬性是專屬於「類別座標軸」的，與「線性座標軸」不同的是，它的刻度標籤並不會與主刻度對齊，而是夾在兩個刻度之間，因此你可以透過這個屬性來調整，可接受的值有 `between`、`on`。
 
 ![](tickmarkPlacement.png)
 
@@ -118,7 +118,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.lineColor / Axis.gridLineColor / Axis.minorGridLineColor
 `型別: String` `預設: "ccd6eb" / "#e6e6e6" / "#f2f2f2"`
 
-這三屬性分別是調整軸線／主格線／副格線的顏色，先前提過的顏色格式都是適用的。
+軸線／主格線／副格線的線條顏色也可以透過這三個屬性做個別設定，先前提過的顏色格式都是適用的。
 
 <br/>
 <br/>
@@ -126,7 +126,7 @@ var myChart = Highcharts.chart(container, {
 #### # Axis.gridLineDashStyle / Axis.minorGridLineDashStyle
 `型別: String` `預設: "Solid"`
 
-主格線和副格線的線條樣式是能夠調整的，想看所有類型的話可以看這個**[官方範例](https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-dashstyle-all/)**。
+主格線和副格線的線條樣式是能夠調整的，除了實線外，有各種類的虛線可以選擇。想看所有類型的話可以看這個**[官方範例](https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-dashstyle-all/)**。
 
 
 ---
