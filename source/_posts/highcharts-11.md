@@ -9,7 +9,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 昨天我們才介紹完數據列設定，而數據列其實就是一個個數據點所組成的一系列資料。講簡單一點，數據點就是折線圖裡的一個個點，圓餅圖裡的一個個扇形，而 Highcharts 的設定就是細到這樣的顆粒度，讓你每個點都能微調。
 
-![](point.png)
+<img src="point.png" style="max-width: 800px; margin: 16px auto 0;" />
 
 ---
 
