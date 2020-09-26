@@ -179,4 +179,4 @@ var myChart = Highcharts.chart(container, {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙]() -
+\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10244400) -
