@@ -1,6 +1,6 @@
 ---
 title: 資視就是力量 - Highcharts / 顏色屬性
-date: 2020/9/27 11:00s:00
+date: 2020/9/27 11:00:00
 tags: [JavaScript,Highcharts,12th鐵人賽]
 ---
 
