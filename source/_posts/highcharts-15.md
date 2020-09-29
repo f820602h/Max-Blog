@@ -1,6 +1,6 @@
 ---
 title: 資視就是力量 - Highcharts / 日期座標軸&語言設定
-date: 2020/9/29 20:22:00
+date: 2020/9/29 12:30:00
 tags: [JavaScript,Highcharts,12th鐵人賽]
 ---
 
@@ -246,4 +246,4 @@ var myChart = Highcharts.chart(container, {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙]() -
+\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10246182) -
