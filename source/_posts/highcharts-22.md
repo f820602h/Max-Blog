@@ -4,7 +4,7 @@ date: 2020/10/6 14:15:00
 tags: [JavaScript,Highcharts,12th鐵人賽]
 ---
 
-> 本章節範例：**https://codepen.io/max-lee/pen/JjXqYyz**
+> 本章節範例：**https://codepen.io/max-lee/pen/vYGqGJj**
 
 今天要延續昨天「公司部門年齡分佈與人數佔比」的主題，把昨天需要點擊柱狀圖才能看到的「年齡佔比圓餅圖」和「部門人數佔比圓餅圖」合併在同一張圖表裡。
 
