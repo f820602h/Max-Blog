@@ -1,6 +1,6 @@
 ---
 title: 資視就是力量 - Highcharts / Vue 建立圖表
-date: 2020/10/10 20:22:00
+date: 2020/10/10 14:20:00
 tags: [JavaScript,Highcharts,12th鐵人賽]
 ---
 
