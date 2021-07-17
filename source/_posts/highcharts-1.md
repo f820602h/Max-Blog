@@ -11,7 +11,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 <img src="data.png" style="max-width: 500px; margin: 16px auto 0;" />
 
-當然，要是圖表一個個手刻，那網站還沒做好你可能都想轉職了，不過幸虧 JavaScript 的視覺化函式庫五花八門，像是龐大的 D3.js 或小巧簡單的 Chart.js，都可以幫助我們快速將資料轉換成易讀性高的圖表。
+當然，要是圖表一個一個手刻，那網站還沒做好你可能都想轉職了，不過幸虧 JavaScript 的視覺化函式庫五花八門，像是龐大的 D3.js 或小巧簡單的 Chart.js，都可以幫助我們快速將資料轉換成易讀性高的圖表。
 
 如果你感興趣的話，[這裡](https://en.wikipedia.org/wiki/Comparison_of_JavaScript_charting_libraries) 可以看到所有知名的 JavaScript 圖表庫及它們之間的比較。
 
