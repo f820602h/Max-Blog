@@ -23,7 +23,7 @@ before_script:
   - ls -l
 
 script:
-  - echo 开始部署...
+  - echo 開始部署...
   - git init
   - git config --global user.name "f820602h"
   - git config --global user.email "f820602h@gmail.com"
