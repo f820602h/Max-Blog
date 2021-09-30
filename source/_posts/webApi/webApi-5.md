@@ -1,8 +1,9 @@
 ---
 title: 那些被忽略但很好用的 Web API / FullScreen
 date: 2021/9/18 14:38:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > 一起來延伸視野，迎接更大的畫面吧！
 
 今天要介紹的 FullScreen API 會被忽略的原因可能是因會需要使用到它的情境比較少，但如果你撰寫網站的經驗有累積到一定程度的話，應該或多或少還是有需要它的可能性。雖然使用度沒有那麼高，不過我們還是把它整理到我們的系列文章中一起分享給大家吧。
@@ -34,20 +35,21 @@ const enabled = document.fullscreenEnabled;
 這也是一個唯讀屬性，用來確認目前的頁面是否正處於全螢幕模式。
 
 ```javascript
-console.log(document.fullscreen)
+console.log(document.fullscreen);
 ```
 
 <br/><br/>
 
 #### # Element.requestFullscreen
+
 這個的話就是主要用來開啟全螢幕的 API 了，這裡的 Element 代表的是 DOM 元素，所以看到這裡可以發現 FullScreen API 並沒有提供一個全域物件，FullScreen API 反而是多個不同 methods 的總稱。
 
 要使用的話就是先選定要全螢幕的元素，然後呼叫：
 
 ```javascript
 const images = document.querySelectorAll("img");
-images.forEach(img => {
-  img.addEventListener("click", function(){
+images.forEach((img) => {
+  img.addEventListener("click", function () {
     this.requestFullscreen();
   });
 });
@@ -59,9 +61,9 @@ images.forEach(img => {
 
 ```javascript
 const images = document.querySelectorAll("img");
-images.forEach(img => {
-  img.addEventListener("click", function(){
-    this.requestFullscreen().then(()=>{
+images.forEach((img) => {
+  img.addEventListener("click", function () {
+    this.requestFullscreen().then(() => {
       this.src = "ugly.jpg";
     });
   });
@@ -73,13 +75,15 @@ images.forEach(img => {
 <br/><br/>
 
 #### # Document.exitFullscreen
+
 有開啟全螢幕，自然就會有關閉的部分，基本上使用者可以自己按 ESC 鍵離開全螢幕模式，不過你也可以透過 `exitFullscreen` 來觸發這件事，例如讓 Enter 鍵也可以關閉：
 
 ```javascript
-document.addEventListener("keydown", function(e) {
-  if (e.keyCode == 13) document.exitFullscreen().then(()=>{
-    alert(document.fullscreen)
-  });
+document.addEventListener("keydown", function (e) {
+  if (e.keyCode == 13)
+    document.exitFullscreen().then(() => {
+      alert(document.fullscreen);
+    });
 });
 ```
 
@@ -88,12 +92,13 @@ document.addEventListener("keydown", function(e) {
 <br/><br/>
 
 #### # Document.fullscreenElement
+
 `fullscreenElement` 是一個唯讀的屬性，它會指向目前正在全螢幕模式的元素。
 
 ```javascript
 const images = document.querySelector("img");
-images.addEventListener("click", function(){
-  this.requestFullscreen().then(()=>{
+images.addEventListener("click", function () {
+  this.requestFullscreen().then(() => {
     console.log(this === document.fullscreenElement); // true
   });
 });
@@ -102,13 +107,12 @@ images.addEventListener("click", function(){
 <br/><br/>
 
 #### # 瀏覽器支援度
+
 看完今天的介紹後，你可能覺得全螢幕是一個非常基本的功能，但其實 FullScreen API 在瀏覽器中的支援度還不是非常完整，所以當我們想要使用的時候可能要做一些額外的處理：
 
 ```javascript
-document.fullscreenEnabled = 
-  document.fullscreenEnabled ||
-  document.mozFullScreenEnabled ||
-  document.documentElement.webkitRequestFullScreen;
+document.fullscreenEnabled =
+  document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen;
 
 function requestFullscreen(element) {
   if (element.requestFullscreen) {
@@ -129,4 +133,4 @@ if (document.fullscreenEnabled) {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10268620) -

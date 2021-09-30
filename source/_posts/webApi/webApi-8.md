@@ -1,8 +1,9 @@
 ---
 title: 那些被忽略但很好用的 Web API / DesignMode
 date: 2021/9/21 21:38:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > DesignMode 讓整個網站都是你的 textarea。
 
 今天要介紹的 API 非常簡單明瞭，簡單到有點偷懶的嫌疑了，但其實等我們連同後面兩天的內容介紹完後，今天的 DesignMode 才可以發揮它的真正實力，今天我們就先簡單暸解一下它的效果就好。
@@ -20,7 +21,7 @@ DesignMode 翻譯成中文就是設計模式，但要設計什麼呢？設計整
 今天最主要的 API 就這麼一個，也沒有什麼技巧可言，就是這麼一行簡單的 code：
 
 ```javascript
-document.designMode = "on" // 關閉則設定成 "off"
+document.designMode = "on"; // 關閉則設定成 "off"
 ```
 
 你可以試著打開 devTool 的 Console 面板並執行上面這段指令，你就會發現你能夠自由編輯目前畫面中的所有東西，剪下、貼上、刪除、新增等等都不是問題。但你可能會想：「這到底可以幹嘛？」。
@@ -34,6 +35,7 @@ document.designMode = "on" // 關閉則設定成 "off"
 另外，DesignMode 也不是只能運用在目前的頁面，你也可以針對頁面中的 iframe 來設定：
 
 **◾ iframe.html**
+
 ```html
 <h1>I am Max.</h1>
 <p>DesignMode is very fun.</p>
@@ -42,19 +44,20 @@ document.designMode = "on" // 關閉則設定成 "off"
 <br/>
 
 **◾ index.html**
+
 ```html
 <iframe src="./iframe.html"></iframe>
 <button onClick="getHtml()">Get HTML</button>
 <script>
   window.onload = function () {
-    const iframeDocument = document.querySelector('iframe').contentDocument;
-    iframeDocument.designMode = 'on';
+    const iframeDocument = document.querySelector("iframe").contentDocument;
+    iframeDocument.designMode = "on";
   };
 
   function getHtml() {
-    const iframeDocument = document.querySelector('iframe').contentDocument;
+    const iframeDocument = document.querySelector("iframe").contentDocument;
     console.log(iframeDocument.body.innerHTML);
-  };
+  }
 </script>
 ```
 
@@ -80,8 +83,8 @@ document.designMode = "on" // 關閉則設定成 "off"
 
 <br/><br/>
 
-其實我們已經在文章中點出了 DesignMode 的真實實力該如何發揮了，那就是透過一些手法，讓我們可以對編輯中的文字進行一些樣式的設定，如此以來 DesignMode 就會是名副其實的設計模式了。而這樣的工具，我們會在認識Selection 與 Clipboard 之後，再來動手寫寫看。
+其實我們已經在文章中點出了 DesignMode 的真實實力該如何發揮了，那就是透過一些手法，讓我們可以對編輯中的文字進行一些樣式的設定，如此以來 DesignMode 就會是名副其實的設計模式了。而這樣的工具，我們會在認識 Selection 與 Clipboard 之後，再來動手寫寫看。
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10270710) -

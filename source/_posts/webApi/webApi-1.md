@@ -1,8 +1,9 @@
 ---
 title: 那些被忽略但很好用的 Web API / 前言
 date: 2021/9/14 09:29:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > Web API -- Application Programming Interface for The Web，翻譯成中文就是「給網頁使用的應用程序介面」
 
 相信對於開發網頁的前端工程師來說，Web API 是在熟悉不過，就算你沒聽過或不曉得 Web API 是什麼，你也絕對使用過它。
@@ -22,6 +23,7 @@ tags: [JavaScript,WebApi,13th鐵人賽]
 <img src="web-api.png" style="max-width: 500px; margin: 24px auto;" />
 
 #### # 尷尬的痛點
+
 由於 `window` 是瀏覽器提供給我們的，所以當中的內容完全取決於使用者所使用的瀏覽器。不幸的是，Web API 其實必沒有被統一標準化，有些甚至還在實踐階段，或是有一些還有裝置的限制，也因為如此，並非所有瀏覽器都會把全部的 Web API 實踐出來，所以在我們使用之前可以先去看看 **[瀏覽器的支援度](https://caniuse.com/)** 。
 
 ---
@@ -68,4 +70,4 @@ tags: [JavaScript,WebApi,13th鐵人賽]
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10265151) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10265151) -

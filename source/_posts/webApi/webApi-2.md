@@ -1,8 +1,9 @@
 ---
 title: 那些被忽略但很好用的 Web API / Console
 date: 2021/9/15 09:38:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > 雖然一招 `console.log` 就能打遍天下無敵手，但你其實有更好的選擇。
 
 我知道我知道，這次的主題是「被忽略」的 Web API，Console 顯然不會是那個被大家忽略的，它可是各位 debug 的好夥伴，但你知道 Console 底下其實可不是只有 `console.log` 而已，還有很多更方便的 API 可以使用。
@@ -20,6 +21,7 @@ Console 這個物件提供了我們操作瀏覽器中除錯控制台（debugging
 <br/>
 
 #### # console.count
+
 顧名思義，`count` 當然是拿來計數的，每當我們呼叫一次 `console.count` 就會進行一次計數。
 
 ```javascript
@@ -33,9 +35,9 @@ console.count(); // default: 3
 另外可以發現上面印出的內容除了數字不斷增加之外，還多了一個 `default` 的字串，這是因為 `console.count` 可以傳入一個參數來區隔不同的計數器，而這個參數預設值為 `default`。
 
 ```javascript
-console.count();      // default: 1
+console.count(); // default: 1
 console.count("foo"); // foo: 1
-console.count();      // default: 2
+console.count(); // default: 2
 console.count("bar"); // bar: 1
 console.count("foo"); // foo: 2
 ```
@@ -44,9 +46,9 @@ console.count("foo"); // foo: 2
 
 ```javascript
 let zoo = ["lion", "tiger", "zebra", "lion", "zebra"];
-for(let i = 0; i < zoo.length; i++) {
+for (let i = 0; i < zoo.length; i++) {
   console.count(zoo[i]);
-};
+}
 // lion: 1
 // tiger: 1
 // zebra: 1
@@ -93,15 +95,15 @@ setTimeout(() => {
 
 ```javascript
 console.group("level_1"); // 開啟 group level_1
-console.log("1-1");       // 在 level_1 中打印  1-1
-console.group("level_2"); // 在 level_1 中開啟 group level_2 
-console.log("2-1");       // 在 level_2 中打印  2-1
-console.group("level_3"); // 在 level_2 中開啟 group level_3 
-console.log("3-1");       // 在 level_3 中打印  3-1 
-console.groupEnd();       // 關閉 level_3
-console.log("2-2");       // 在 level_2 中打印  2-2 
-console.groupEnd();       // 關閉 level_2
-console.log("1-2");       // 在 level_1 中打印  1-2 
+console.log("1-1"); // 在 level_1 中打印  1-1
+console.group("level_2"); // 在 level_1 中開啟 group level_2
+console.log("2-1"); // 在 level_2 中打印  2-1
+console.group("level_3"); // 在 level_2 中開啟 group level_3
+console.log("3-1"); // 在 level_3 中打印  3-1
+console.groupEnd(); // 關閉 level_3
+console.log("2-2"); // 在 level_2 中打印  2-2
+console.groupEnd(); // 關閉 level_2
+console.log("1-2"); // 在 level_1 中打印  1-2
 ```
 
 <img src="console-group.png" style="margin: 24px auto;" />
@@ -109,17 +111,17 @@ console.log("1-2");       // 在 level_1 中打印  1-2
 透過上面的程式碼打印出的結果就會像是這樣，當你開啟了一個 `group` 後，之後的打印內容都會歸類在該 `group` 底下，並且你可以進行收合，讓 Console 面板的訊息可以更乾淨更有系統。例如下面這段程式碼，相比直接印出來，在前後進行 `group` 的操作，應該是更能看出程式順序。
 
 ```javascript
-for(let i = 1; i <= 5; i++) {
-  for(let j = 1; j <= 3; j++) {
+for (let i = 1; i <= 5; i++) {
+  for (let j = 1; j <= 3; j++) {
     console.log(j);
-  };
-};
+  }
+}
 // this is better
-for(let i = 1; i <= 3; i++) {
-  console.group("level"+i);
-  for(let j = 1; j <= 3; j++) {
+for (let i = 1; i <= 3; i++) {
+  console.group("level" + i);
+  for (let j = 1; j <= 3; j++) {
     console.log(j);
-  };
+  }
   console.groupEnd();
 }
 ```
@@ -135,7 +137,7 @@ for(let i = 1; i <= 3; i++) {
 ```javascript
 let badminton_scoring = {
   taiwan: 21,
-  china: 12
+  china: 12,
 };
 console.table(badminton_scoring);
 ```
@@ -143,7 +145,11 @@ console.table(badminton_scoring);
 <img src="console-table.png" style="margin: 24px auto;" />
 
 ```javascript
-let olympics = [["gold", 2], ["silver", 4], ["copper", 6]];
+let olympics = [
+  ["gold", 2],
+  ["silver", 4],
+  ["copper", 6],
+];
 console.table(olympics);
 ```
 
@@ -159,4 +165,4 @@ console.table(olympics);
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10265898) -

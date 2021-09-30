@@ -1,12 +1,12 @@
 ---
 title: 那些被忽略但很好用的 Web API / Battery
 date: 2021/9/19 14:38:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > 低電量～低～低～電量～ 呂士軒-低電量
 
 今天要分享的也是一個使用情境偏少的 API，但如果你有想要做移動端的應用的話，或許可以嘗試使用看看。
-
 
 ---
 
@@ -21,8 +21,8 @@ Battery API 是一個與使用者的裝置電池相關的 API，我們可以透�
 裝置電池的資訊會被包裹在一個叫做 BatteryManager 的物件中，要取得該物件的話，我們必須要透過呼叫 `navigator.getBattery` 來取得：
 
 ```javascript
-navigator.getBattery().then(battery =>  {
-  console.log(battery) // BatteryManager
+navigator.getBattery().then((battery) => {
+  console.log(battery); // BatteryManager
 });
 ```
 
@@ -42,6 +42,7 @@ navigator.getBattery().then(battery =>  {
   level: 0.86                 // 目前的電量 （乘上100，即為百分比）
 }
 ```
+
 其中比較特別的是 `chargingTime` 和 `dischargingTime`，若是目前裝置正在充電，那 `dischargingTime` 必為 `Infinity`，反之為充電時 `chargingTime` 必為 `Infinity`。
 
 而除了上面這四個屬性之外呢，你還會看到四個事件屬性，讓你可以監聽不同的電量事件：
@@ -55,7 +56,7 @@ navigator.getBattery().then(battery =>  {
 }
 ```
 
-只要像下面這樣撰寫的話就可以在電池狀態有變更的時候觸發 Callback: 
+只要像下面這樣撰寫的話就可以在電池狀態有變更的時候觸發 Callback:
 
 ```javascript
 navigator.getBattery().then(battery =>  {
@@ -79,20 +80,20 @@ navigator.getBattery().then(battery =>  {
 ```
 
 ```javascript
-const batteryLevel = document.querySelector(".battery-level")
-const batteryWrap = document.querySelector(".battery-wrap")
+const batteryLevel = document.querySelector(".battery-level");
+const batteryWrap = document.querySelector(".battery-wrap");
 
-navigator.getBattery().then(battery => {
-  const count = Math.floor(battery.level / 0.20);
-  const callback = function() {
+navigator.getBattery().then((battery) => {
+  const count = Math.floor(battery.level / 0.2);
+  const callback = function () {
     batteryLevel.textContent = battery.level * 100 + "%";
     batteryWrap.innerHTML = "";
-    for(let i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       const batteryLevel = document.createElement("div");
       batteryLevel.setAttribute("class", "battery");
       batteryWrap.appendChild(batteryLevel);
     }
-  }
+  };
   battery.onlevelchange = callback;
   callback();
 });
@@ -106,4 +107,4 @@ navigator.getBattery().then(battery => {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10269328) -

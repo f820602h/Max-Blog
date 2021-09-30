@@ -38,8 +38,8 @@ console.log(board); // Clipboard 物件
 ```html
 <button>Get Clipboard</button>
 <script>
-  const button = document.querySelector('button');
-  button.addEventListener('click', function () {
+  const button = document.querySelector("button");
+  button.addEventListener("click", function () {
     navigator.clipboard.readText().then((text) => {
       console.log(text); // 剪貼簿中的文本內容
     });
@@ -73,13 +73,13 @@ console.log(board); // Clipboard 物件
 ```html
 <button>Set Clipboard</button>
 <script>
-  const button = document.querySelector('button');
-  button.addEventListener('click', function () {
-    const text = '你複製的東西被我變成這段文字了';
+  const button = document.querySelector("button");
+  button.addEventListener("click", function () {
+    const text = "你複製的東西被我變成這段文字了";
     navigator.clipboard
       .writeText(text)
-      .then(() => alert('success'))
-      .catch(() => alert('fail'));
+      .then(() => alert("success"))
+      .catch(() => alert("fail"));
   });
 </script>
 ```
@@ -100,11 +100,11 @@ console.log(board); // Clipboard 物件
 
 ```javascript
 // 讓整個網頁可以進行編輯，這樣才能觸發貼上事件
-document.designMode = 'on';
+document.designMode = "on";
 // getData 通常搭配 paste 事件，在 cut、copy 事件中使用會拿不到東西
-document.addEventListener('paste', function (e) {
-  const clipboardText = e.clipboardData.getData('text/plain');
-  console.log('使用者貼上了文字：' + clipboardText);
+document.addEventListener("paste", function (e) {
+  const clipboardText = e.clipboardData.getData("text/plain");
+  console.log("使用者貼上了文字：" + clipboardText);
 });
 ```
 
@@ -118,12 +118,12 @@ document.addEventListener('paste', function (e) {
 
 ```javascript
 // setData 通常搭配 cut、copy 事件，在 paste 事件中使用會沒有效果
-document.addEventListener('copy', function (e) {
+document.addEventListener("copy", function (e) {
   // 利用昨天認識的 Selection API 取得使用者反白的文字
   const selectionText = window.getSelection().toString();
-  const extraText = '\n注意：你複製的這段文字屬於 Max';
+  const extraText = "\n注意：你複製的這段文字屬於 Max";
   e.preventDefault(); // 阻止使用者本來要執行的「複製」動作
-  e.clipboardData.setData('text/plain', selectionText + extraText);
+  e.clipboardData.setData("text/plain", selectionText + extraText);
 });
 ```
 
@@ -137,4 +137,4 @@ document.addEventListener('copy', function (e) {
 
 ---
 
-\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10271977) -

@@ -1,8 +1,9 @@
 ---
 title: 那些被忽略但很好用的 Web API / ImageCapture
 date: 2021/9/20 11:38:00
-tags: [JavaScript,WebApi,13th鐵人賽]
+tags: [JavaScript, WebApi, 13th鐵人賽]
 ---
+
 > 疫情時代，視訊串流當頭，用視訊鏡頭來做個線上攝影吧！
 
 自從疫情爆發後，各行各業也開始進行居家辦公，使得視訊軟體及相關技術開始受重視，身為前端，我們也可以拿視訊鏡頭來做些好玩有趣的東西，而 ImageCapture 就是其中一個可以運用在這裡的 API。
@@ -20,11 +21,12 @@ tags: [JavaScript,WebApi,13th鐵人賽]
 而我們要取得 MediaStream 的手段就是要先向使用者獲取設備的授權，這時候就要使用 `getUserMedia`：
 
 ```javascript
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(mediaStream => {
+navigator.mediaDevices
+  .getUserMedia({ video: true })
+  .then((mediaStream) => {
     /* use the stream */
   })
-  .catch(err => {
+  .catch((err) => {
     /* handle the error */
   });
 ```
@@ -40,12 +42,13 @@ navigator.mediaDevices.getUserMedia({ video: true })
 當我們取得 MediaStream 後，我們還需要再取得當中的 Track，之後才可以透過 ImageCapture 來操作，這時候就需要使用 MediaStream 自身的 method `getVideoTracks`。
 
 ```javascript
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(mediaStream => {
+navigator.mediaDevices
+  .getUserMedia({ video: true })
+  .then((mediaStream) => {
     const videoTrack = mediaStream.getVideoTracks()[0];
   })
-  .catch(err => {
-    console.log(err)
+  .catch((err) => {
+    console.log(err);
   });
 ```
 
@@ -64,24 +67,26 @@ const imageCapture = new ImageCapture(videoTrack);
 <br/>
 
 #### # ImageCapture.takePhoto
+
 當我們為一個 ImageCapture 綁定了 VideoTrack 後，我們就可以透過 ImageCapture 底下的 methods 來進行圖像擷取了：
 
 ```javascript
 let imageCapture;
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(mediaStream => {
+navigator.mediaDevices
+  .getUserMedia({ video: true })
+  .then((mediaStream) => {
     const videoTrack = mediaStream.getVideoTracks()[0];
     imageCapture = new ImageCapture(videoTrack);
   })
-  .catch(err => {
-    console.log(err)
+  .catch((err) => {
+    console.log(err);
   });
 
-document.querySelector("button").addEventListener("click", function() {
-  imageCapture.takePhoto().then(blob => {
-    console.log(blob)
+document.querySelector("button").addEventListener("click", function () {
+  imageCapture.takePhoto().then((blob) => {
+    console.log(blob);
   });
-})
+});
 ```
 
 呼叫 `takePhoto` 後，它會回傳 Promise，並且我們能在 `then` 的 Callback 中取得截圖的 Blob 物件。
@@ -89,15 +94,16 @@ document.querySelector("button").addEventListener("click", function() {
 <br/><br/>
 
 #### # ImageCapture.grabFrame
+
 再來要介紹的則是 `grabFrame`，它和 `takePhoto` 一樣是擷取 videoTrack 的影像，差別在於它回傳的是 ImageBitmap 物件，而這種物件的好處是可以直接拿來畫在 Canvas 上。
 
 ```javascript
-imageCapture.takePhoto().then(blob => {
-  console.log(blob)
+imageCapture.takePhoto().then((blob) => {
+  console.log(blob);
 });
 
-imageCapture.grabFrame().then(imageBitmap => {
-  console.log(imageBitmap)
+imageCapture.grabFrame().then((imageBitmap) => {
+  console.log(imageBitmap);
 });
 ```
 
@@ -106,6 +112,7 @@ imageCapture.grabFrame().then(imageBitmap => {
 <br/><br/>
 
 ## 實際運用
+
 那最後我們就透過今天認識的 API 來實際做個視訊截圖攝影吧，首先先準備幾個按鈕以及 `video` 和 `canvas`。
 
 ```html
@@ -117,12 +124,12 @@ imageCapture.grabFrame().then(imageBitmap => {
 <canvas></canvas>
 ```
 
-再來是在 `openCamera` 的時候使用 `getUserMedia` 及 `getVideoTracks` 來取得 MediaStreamTrack 並建立 ImageCapture。處此之外，我們還設定了 `video.srcObject`，如此一來我們就可以夠過 `<video>` 標籤來預覽視訊畫面。 
+再來是在 `openCamera` 的時候使用 `getUserMedia` 及 `getVideoTracks` 來取得 MediaStreamTrack 並建立 ImageCapture。處此之外，我們還設定了 `video.srcObject`，如此一來我們就可以夠過 `<video>` 標籤來預覽視訊畫面。
 
 ```javascript
-var video = document.querySelector('video');
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
+var video = document.querySelector("video");
+var canvas = document.querySelector("canvas");
+var context = canvas.getContext("2d");
 var videoTrack;
 var imageCapture;
 
@@ -147,16 +154,16 @@ function openCamera() {
 function capture() {
   imageCapture
     .takePhoto()
-    .then(blob => {
+    .then((blob) => {
       // 將 Blob 轉成 ImageBitmap
-      return createImageBitmap(blob)
+      return createImageBitmap(blob);
     })
-    .then(imageBitmap => {
+    .then((imageBitmap) => {
       // 繪製在 canvas 上
       const { width, height } = imageBitmap;
       const ratio = video.videoWidth / width;
-      canvas.setAttribute('width', width * ratio);
-      canvas.setAttribute('height', height * ratio);
+      canvas.setAttribute("width", width * ratio);
+      canvas.setAttribute("height", height * ratio);
       context.drawImage(imageBitmap, 0, 0, width * ratio, height * ratio);
     });
 }
@@ -172,4 +179,4 @@ function capture() {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10236987) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10270021) -
