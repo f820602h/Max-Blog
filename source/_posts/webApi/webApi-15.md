@@ -16,7 +16,7 @@ tags: [JavaScript, WebApi, 13th鐵人賽]
 
 > 雖然 PostMessage 可以跨域溝通，不過當然也要對方願意且有撰寫對應的機制程式碼，要不然世界就大亂了 XD
 
-<br/>
+<br/><br/>
 
 #### # otherWindow.postMessage
 

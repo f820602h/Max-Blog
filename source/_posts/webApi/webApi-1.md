@@ -51,13 +51,13 @@ tags: [JavaScript, WebApi, 13th鐵人賽]
 11. SessionStorage
 12. CustomEvent
 13. PostMessage
-14. Channel Message
-15. Broadcast Channel
+14. MessageChannel
+15. BroadcastChannel
 16. RequestIdleCallback
 17. MutationObserver
 18. GetBoundingClientRect
-19. Resize Observer
-20. InterSection Observer
+19. ResizeObserver
+20. InterSectionObserver
 21. ScrollIntoView
 22. Drag & Drop
 23. Share
