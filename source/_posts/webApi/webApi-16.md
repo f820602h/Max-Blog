@@ -100,7 +100,7 @@ console.log(msgChannel.port2);
 
 ```html
 <!-- 這裡是 pageB.html -->
-<div id="output">default content</div>
+<div class="output">default content</div>
 <script>
   let messagePort;
   const output = document.querySelector(".output");
@@ -144,7 +144,7 @@ console.log(msgChannel.port2);
 ```html
 <!-- 這裡是 pageB.html -->
 <button onclick="sendMessage()">send message</button>
-<div id="output">default content</div>
+<div class="output">default content</div>
 <script>
   let messagePort;
   // ... 省略其他 code
