@@ -55,8 +55,8 @@ tags: [JavaScript, WebApi, 13th鐵人賽]
 15. BroadcastChannel
 16. RequestIdleCallback
 17. MutationObserver
-18. GetBoundingClientRect
-19. ResizeObserver
+18. ResizeObserver
+19. GetBoundingClientRect
 20. InterSectionObserver
 21. ScrollIntoView
 22. Drag & Drop

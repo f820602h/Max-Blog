@@ -1,8 +1,9 @@
 ---
 title: 資視就是力量 - Highcharts / 圖表的意義
 date: 2020/9/16 09:25:00
-tags: [JavaScript,Highcharts,12th鐵人賽]
+tags: [JavaScript, Highcharts, 12th鐵人賽]
 ---
+
 > 資料視覺化是一門藝術也是一門科學，它藉由人類喜愛以視覺理解資訊的特性來增強我們資料處理的效率。
 
 上一篇文章裡已經知道資料視覺化大大影響現在網頁開發的趨勢，而今天就要正式使用 Highcharts 來將資料做成圖表，同時也讓大家了解為何圖表對於資料的理解有非常大的幫助。
@@ -15,15 +16,15 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 如果把資料比喻成故事，那視覺化就是我們說故事的手法，由此可知「資料」其實才是資料視覺化中的主角，而為了讓我們的資料更有實際意義，我幫大家模擬了一個情境：
 
-***假設公司的人資想透過員工資料來統計公司內部的年齡分佈，他經過一連串的計算後給了你下面的表格，並請你幫他生成柱狀圖表，你會怎麼做？***
+**_假設公司的人資想透過員工資料來統計公司內部的年齡分佈，他經過一連串的計算後給了你下面的表格，並請你幫他生成柱狀圖表，你會怎麼做？_**
 
-18-24歲|25-29歲|30-34歲|35-39歲|
-:-:|:-:|:-:|:-:|
-12人|18人|22人|25人|
+| 18-24 歲 | 25-29 歲 | 30-34 歲 | 35-39 歲 |
+| :------: | :------: | :------: | :------: |
+|  12 人   |  18 人   |  22 人   |  25 人   |
 
-40-44歲|45-49歲|50-54歲|55歲+|
-:-:|:-:|:-:|:-:|
-32人|35人|26人|18人|
+| 40-44 歲 | 45-49 歲 | 50-54 歲 | 55 歲+ |
+| :------: | :------: | :------: | :----: |
+|  32 人   |  35 人   |  26 人   | 18 人  |
 
 ~~其實你可以請他自己用 PowerPoint 做~~，喂～不是啦，我們要幫這位人資利用 Highcharts 來將這些數據繪製成圖表並顯示在網頁上。
 
@@ -52,7 +53,7 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 然後你需要一個容器來放置你的圖表，你可以給它設定寬度以免圖表佔滿整個畫面。
 
 ```html
-<div id="container" style="width: 600px;"></div>
+<div id="container" style="max-width: 600px;"></div>
 ```
 
 <br/>
@@ -70,8 +71,8 @@ const data = {
   "40-44歲": 32,
   "45-49歲": 35,
   "50-54歲": 26,
-  "55歲+": 18
-}
+  "55歲+": 18,
+};
 ```
 
 <br/>
@@ -84,19 +85,21 @@ const data = {
 ```javascript
 const container = document.querySelector("#container");
 const xAxisCate = Object.keys(data);
-const seriesData = xAxisCate.map(key => data[key]);
+const seriesData = xAxisCate.map((key) => data[key]);
 
 var myChart = Highcharts.chart(container, {
   chart: { type: "column" },
   title: { text: "公司員工年齡分佈" },
   xAxis: { categories: xAxisCate },
   yAxis: {
-    title: { text: "人數" }
+    title: { text: "人數" },
   },
-  series: [{
-    name: "XX公司員工",
-    data: seriesData
-  }]
+  series: [
+    {
+      name: "XX公司員工",
+      data: seriesData,
+    },
+  ],
 });
 ```
 
@@ -116,4 +119,4 @@ var myChart = Highcharts.chart(container, {
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10237584) -
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10237584) -
