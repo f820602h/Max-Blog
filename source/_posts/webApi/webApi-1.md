@@ -57,7 +57,7 @@ tags: [JavaScript, WebApi, 13th鐵人賽]
 17. MutationObserver
 18. ResizeObserver
 19. GetBoundingClientRect
-20. InterSectionObserver
+20. IntersectionObserver
 21. ScrollIntoView
 22. Drag & Drop
 23. Share

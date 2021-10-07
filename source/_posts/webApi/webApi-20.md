@@ -22,7 +22,7 @@ ResizeObserver： 一樣是一個建構函式，所以需要使用 `new` 關鍵�
 
 <br/>
 
-- ResizeObserverEntry 該物件中會有一些屬性，讓我們可以取得一些有關元素的「大小」、「位置」資訊，後面會再詳細介紹。
+- **ResizeObserverEntry**： 該物件中會有一些屬性，讓我們可以取得一些有關元素的「大小」、「位置」資訊，後面會再詳細介紹。
 
 <br/>
 
@@ -40,8 +40,8 @@ const observer = new ResizeObserver(function (entries) {
 
 <br/>
 
-- target： 一個要受到觀察的 Element 元素。
-- options：這是一個可選的參數，用來初始化觀測的設定選項，目前只有一個屬性：
+- **target**： 一個要受到觀察的 Element 元素。
+- **options**：這是一個可選的參數，用來初始化觀測的設定選項，目前只有一個屬性：
   - box: 這個屬性會決定要觀測元素的哪一種「盒模型(Box Model)」。可接受的值有 `content-box` 和 `border-box` 兩種，預設為 `content-box`。（其實有第三種，但使用度很低）
 
 > 如果對盒模型不太熟悉的朋友可以看[這裡](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model#%E4%BB%80%E4%B9%88%E6%98%AFcss_%E7%9B%92%E6%A8%A1%E5%9E%8B)瞭解一下

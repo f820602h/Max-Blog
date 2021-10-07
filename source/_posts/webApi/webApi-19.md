@@ -22,8 +22,8 @@ MutationObserver 本身是建構函式，所以我們需要用 `new` 關鍵字�
 
 <br/>
 
-- MutationRecords： 這個陣列會存放 MutationRecord 物件，該物件記錄著 DOM 變動的相關資訊，後面再詳細介紹。
-- MutationObserver： 呼叫此 Callback Function 的 MutationObserver 實體，其實就等於該 Function 的 `this`。
+- **MutationRecords**： 這個陣列會存放 MutationRecord 物件，該物件記錄著 DOM 變動的相關資訊，後面再詳細介紹。
+- **MutationObserver**： 呼叫此 Callback Function 的 MutationObserver 實體，其實就等於該 Function 的 `this`。
 
 <br/>
 
@@ -41,8 +41,8 @@ const observer = new MutationObserver(function (mutations, owner) {
 
 <br/>
 
-- target： 一個要受到觀察的 DOM 節點。
-- options：一個初始化設定物件，用來指定 DOM 節點的哪些項目需要被觀察等相關設定。
+- **target**： 一個要受到觀察的 DOM 節點。
+- **options**：一個初始化設定物件，用來指定 DOM 節點的哪些項目需要被觀察等相關設定。
 
 |         屬性          |                  解釋                  |     型別、預設值     |
 | :-------------------: | :------------------------------------: | :------------------: |
