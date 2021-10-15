@@ -1,7 +1,7 @@
 ---
 title: 資視就是力量 - Highcharts / 尾聲
 date: 2020/10/14 13:20:00
-tags: [JavaScript,Highcharts,12th鐵人賽]
+tags: [JavaScript, Highcharts, 12th鐵人賽]
 ---
 
 終於，花了一個月的時間，我們從零開始認識 Highcharts 到現在已經能夠配合 Vue.js 一同運用，希望這次的系列文章能幫助到各位，如果內容與實際使用上有出入也歡迎大家幫忙指正，那今天的章節就讓我花點時間說說自己的參賽感言吧。
@@ -36,15 +36,13 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 <img src="write.png" style="max-width: 400px; margin: 16px auto 0;" />
 
-> 本次系列文章中的所有範例列表：[https://codepen.io/max-lee/pens/public](https://codepen.io/max-lee/pens/public)
-
 ---
 
 ## 未來期許
 
 <br/>
 
-其實 Highcharts 不只有這次系列文章中介紹的基本圖表，還有很多特殊種類、3D圖表等等，甚至還有股票專用的 Highcharts Stock、繪製甘特圖的 Highcharts Gantt 以及繪製地圖的 Highcharts Maps，這些延伸模組目前也都在學習摸索中，也希望自己可以在熟悉了之後二次參賽並向大家介紹。
+其實 Highcharts 不只有這次系列文章中介紹的基本圖表，還有很多特殊種類、3D 圖表等等，甚至還有股票專用的 Highcharts Stock、繪製甘特圖的 Highcharts Gantt 以及繪製地圖的 Highcharts Maps，這些延伸模組目前也都在學習摸索中，也希望自己可以在熟悉了之後二次參賽並向大家介紹。
 
 ![](map.png)
 
@@ -56,6 +54,4 @@ tags: [JavaScript,Highcharts,12th鐵人賽]
 
 ---
 
-\- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 [iT邦幫忙](https://ithelp.ithome.com.tw/articles/10253136) -
-
-
+\- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 [iT 邦幫忙](https://ithelp.ithome.com.tw/articles/10253136) -
