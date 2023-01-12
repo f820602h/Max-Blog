@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 圖表的組成 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="圖表的種類非常多，呈現方式各有不同，但幾乎都有幾個固定的元素內容，能夠使圖表的易讀性提昇  昨天我們成功做出了一個 Highcharts 的圖表，今天要重新說明一下我們到底寫了些什麼，另外也要讓大家知道，其實圖表是由很多重要的元素所組成的，它們扮演了重要的角色，使觀看者能更快速的理解圖表。  前情回顧  const container &#x3D; document.querySelector(&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 圖表的組成">
+<meta property="og:url" content="https://maxleebk.com/2020/09/17/highchart/highcharts-3/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="圖表的種類非常多，呈現方式各有不同，但幾乎都有幾個固定的元素內容，能夠使圖表的易讀性提昇  昨天我們成功做出了一個 Highcharts 的圖表，今天要重新說明一下我們到底寫了些什麼，另外也要讓大家知道，其實圖表是由很多重要的元素所組成的，它們扮演了重要的角色，使觀看者能更快速的理解圖表。  前情回顧  const container &#x3D; document.querySelector(&amp;quot">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/17/highchart/highcharts-3/element.png">
+<meta property="article:published_time" content="2020-09-17T01:24:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.863Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/17/highchart/highcharts-3/element.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 圖表的組成
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-17T01:24:00.000Z" itemprop="datePublished">2020-09-17</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>圖表的種類非常多，呈現方式各有不同，但幾乎都有幾個固定的元素內容，能夠使圖表的易讀性提昇</p>
+</blockquote>
+<p>昨天我們成功做出了一個 Highcharts 的圖表，今天要重新說明一下我們到底寫了些什麼，另外也要讓大家知道，其實圖表是由很多重要的元素所組成的，它們扮演了重要的角色，使觀看者能更快速的理解圖表。</p>
+<hr>
+<h2 id="前情回顧"><a href="#前情回顧" class="headerlink" title="前情回顧"></a>前情回顧</h2><br/>
+
+<pre><code class="javascript">const container = document.querySelector(&quot;#container&quot;);
+const xAxisCate = Object.keys(data);
+const seriesData = xAxisCate.map(key =&gt; data[key]);
+
+var myChart = Highcharts.chart(container, {
+  chart: { type: &quot;column&quot; },
+  title: { text: &quot;公司員工年齡分佈&quot; },
+  xAxis: { categories: xAxisCate },
+  yAxis: {
+    title: { text: &quot;人數&quot; }
+  },
+  series: [{
+    name: &quot;XX公司員工&quot;,
+    data: seriesData
+  }]
+});</code></pre>
+<p>昨天這段程式碼，大家比較陌生的應該是 <code>Highcharts.chart</code> 這一段，而它其實就是 Highcharts 最主要的初始化函式。</p>
+<pre><code class="javascript">Highcharts.chart(element, options);</code></pre>
+<p>當你要創建一個新的圖表時，就必須使用這個函式，並且傳入兩個參數，第一個是 DOM 元素容器，第二個是圖表設定，在昨天的案例中 DOM 元素很明顯是 <code>#container</code> 這個容器，而圖表設定是這一大包物件。</p>
+<pre><code class="javascript">{
+  chart: { type: &quot;column&quot; },
+  title: { text: &quot;公司員工年齡分佈&quot; },
+  xAxis: { categories: xAxisCate },
+  yAxis: {
+    title: { text: &quot;人數&quot; }
+  },
+  series: [{
+    name: &quot;XX公司員工&quot;,
+    data: seriesData
+  }]
+}</code></pre>
+<p>不過目前我們不會去探究裡面的屬性到底做了些什麼，那是後面幾天會著墨的內容，今天會先用圖表的組成來理解這個 <code>options</code> 物件的結構。</p>
+<hr>
+<h2 id="圖表中的元素"><a href="#圖表中的元素" class="headerlink" title="圖表中的元素"></a>圖表中的元素</h2><p>其實圖表是由許多元素所組合而成的，Highcharts 的圖表也不例外，以昨天的 <a href="https://codepen.io/max-lee/pen/BaKwdyN" target="_blank" rel="noopener">範例</a> 來說的話，它包含了以下內容：</p>
+<p><img src="element.png" alt=""></p>
+<p>透過上面的示意圖可以發現，Highcharts 圖表可以粗略的分成這七個主要區塊加上一個整體設定，並且在 <code>options</code> 物件中都有對應的屬性，不過如果圖表不會太複雜，Highcharts 本身都有預設設定，就未必每個區塊都要額外修改，像是我們的範例就沒有去調整圖例和提示框。</p>
+<pre><code class="javascript">{
+  chart: {},      // 圖表整體設定
+  title: {},      // 標題設定
+  xAxis: [{}],    // Ｘ座標軸設定
+  yAxis: [{}],    // Ｙ座標軸設定
+  legend: {},     // 圖例設定
+  tooltip: {},    // 提示框設定
+  series: [{}],   // 數據列設定
+  plotOptions: {} // 繪圖區設定
+  // ...還有更多更多更多更多
+}</code></pre>
+<p>另外 Highcharts 其實還有更多特殊的圖表元素可以進行設定，而且許多屬性底下還能再分成更細緻的區塊做調整，使得圖表的設定屬性數量非常可觀，所以後面我會把重點放在比較實用與常見的屬性上，而剩餘的就留給各位慢慢摸索了。</p>
+<br/>
+
+<p>豐富的圖表設定是 Highcharts 這個圖表庫強大的特點之一，你可以先偷偷到 <a href="https://api.highcharts.com/highcharts/" target="_blank" rel="noopener">官方文件</a> 感受一下所謂的數量可觀。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10238356" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/17/highchart/highcharts-3/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/17/highchart/highcharts-3/" data-id="clcsdp5lf002ineqw21yie8xx" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/16/highchart/highcharts-2/" class="article-nav-title">資視就是力量 - Highcharts / 圖表的意義</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/18/highchart/highcharts-4/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 圖表整體設定
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/17/highchart/highcharts-3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

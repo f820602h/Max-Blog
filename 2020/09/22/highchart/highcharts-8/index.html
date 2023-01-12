@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 座標軸設定 - 外觀樣式 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;abNqLjX避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  雖然有部分圖表類型（如圓餅圖、文字雲）並不會用到座標軸，但大多數常見的圖表都是需要座標軸來輔助的，座標軸提供的是一個絕對值尺標，讓觀看者可以得到確切的資料數值，而非只是觀察資料間的相對關係。 由於座標軸的屬性較多，將會以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 座標軸設定 - 外觀樣式">
+<meta property="og:url" content="https://maxleebk.com/2020/09/22/highchart/highcharts-8/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;abNqLjX避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  雖然有部分圖表類型（如圓餅圖、文字雲）並不會用到座標軸，但大多數常見的圖表都是需要座標軸來輔助的，座標軸提供的是一個絕對值尺標，讓觀看者可以得到確切的資料數值，而非只是觀察資料間的相對關係。 由於座標軸的屬性較多，將會以">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/22/highchart/highcharts-8/axis.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/22/highchart/highcharts-8/tickPosition.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/22/highchart/highcharts-8/tickmarkPlacement.png">
+<meta property="article:published_time" content="2020-09-22T05:15:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.875Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/22/highchart/highcharts-8/axis.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 座標軸設定 - 外觀樣式
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-22T05:15:00.000Z" itemprop="datePublished">2020-09-22</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/abNqLjX" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/abNqLjX</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>雖然有部分圖表類型（如圓餅圖、文字雲）並不會用到座標軸，但大多數常見的圖表都是需要座標軸來輔助的，座標軸提供的是一個絕對值尺標，讓觀看者可以得到確切的資料數值，而非只是觀察資料間的相對關係。</p>
+<p>由於座標軸的屬性較多，將會以屬性性質的不同分為「外觀樣式」與「座標刻度」兩篇文章來介紹。</p>
+<hr>
+<h2 id="座標軸設定-外觀樣式相關"><a href="#座標軸設定-外觀樣式相關" class="headerlink" title="座標軸設定 - 外觀樣式相關"></a>座標軸設定 - 外觀樣式相關</h2><br/>
+
+<p>本次系列我們只會提到平面圖表，所以最多只會有Ｘ座標軸和Ｙ座標軸，而座標軸中又由刻度、標籤、隔線等等…元素所組成，在 Highcharts 中你都可以為這些元素做樣式的微調。</p>
+<p><img src="axis.png" alt=""></p>
+<p><strong>特別注意，座標軸的設定其實是傳入陣列，因為圖表是可以有多Ｘ軸或多Ｙ軸的，但如果確定只有單個的話，你可以省略陣列的中括號。</strong></p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  xAxis: [{}], // Ｘ座標軸設定
+  yAxis: [{}]  // Ｙ座標軸設定
+});</code></pre>
+<br/>
+
+<blockquote>
+<p>以下以 Axis 同時表示 xAxis 及 yAxis</p>
+</blockquote>
+<br/>
+
+<h4 id="Axis-title"><a href="#Axis-title" class="headerlink" title="# Axis.title"></a># Axis.title</h4><p>座標軸標題與圖表標題的設定非常相像，這邊就不多花篇幅介紹，有興趣可以看看 <strong><a href="https://api.highcharts.com/highcharts/xAxis.title" target="_blank" rel="noopener">官方文件</a></strong>。</p>
+<p>需要注意的是Ｘ軸預設是沒有標題的，但Ｙ軸會有一個預設的 <code>&quot;Values&quot;</code> 標題。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-minorTicks"><a href="#Axis-minorTicks" class="headerlink" title="# Axis.minorTicks"></a># Axis.minorTicks</h4><p><code>型別: Boolean</code> <code>預設: false</code></p>
+<p>你可以決定是否要顯示座標軸中的副刻度及副格線，另外要注意「類別座標軸」是無法開啟此屬性的。</p>
+<p style="font-size:12px; line-height:1.5;">注：類別座標即以「類別」作為座標刻度，在下篇文章中會介紹。</p>
+
+<br/>
+<br/>
+
+<h4 id="Axis-tickWidth-Axis-minorTickWidth"><a href="#Axis-tickWidth-Axis-minorTickWidth" class="headerlink" title="# Axis.tickWidth / Axis.minorTickWidth"></a># Axis.tickWidth / Axis.minorTickWidth</h4><p><code>型別: Number</code> <code>預設: 請見表格</code></p>
+<p>這兩個屬性分別是調整主刻度／副刻度的粗細，單位為 <code>px</code>，設為 <code>0</code> 的話則會隱藏。</p>
+<table>
+<thead>
+<tr>
+<th align="center">座標軸</th>
+<th align="center">tickWidth</th>
+<th align="center">minorTickWidth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ｘ軸</td>
+<td align="center">預設值：1</td>
+<td align="center">預設值：0</td>
+</tr>
+<tr>
+<td align="center">Ｙ軸</td>
+<td align="center">預設值：0</td>
+<td align="center">預設值：0</td>
+</tr>
+<tr>
+<td align="center">類別座標軸</td>
+<td align="center">預設值：0</td>
+<td align="center">無</td>
+</tr>
+</tbody></table>
+<br/>
+<br/>
+
+<h4 id="Axis-tickLength-Axis-minorTickLength"><a href="#Axis-tickLength-Axis-minorTickLength" class="headerlink" title="# Axis.tickLength / Axis.minorTickLength"></a># Axis.tickLength / Axis.minorTickLength</h4><p><code>型別: Number</code> <code>預設: 10 / 2</code></p>
+<p>除了粗細之外，主刻度／副刻度的長度也可以調整，單位為 <code>px</code>，設為 <code>0</code> 的話則會隱藏。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-tickColor-Axis-minorTickColor"><a href="#Axis-tickColor-Axis-minorTickColor" class="headerlink" title="# Axis.tickColor / Axis.minorTickColor"></a># Axis.tickColor / Axis.minorTickColor</h4><p><code>型別: String</code> <code>預設: &quot;ccd6eb&quot; / &quot;#999999&quot;</code></p>
+<p>顏色的部分也是可以主刻度／副刻度個別調整，先前提過的顏色格式都是適用的。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-tickPosition-Axis-minorTickPosition"><a href="#Axis-tickPosition-Axis-minorTickPosition" class="headerlink" title="# Axis.tickPosition / Axis.minorTickPosition"></a># Axis.tickPosition / Axis.minorTickPosition</h4><p><code>型別: String</code> <code>預設: &quot;outside&quot;</code></p>
+<p>這兩個屬性是調整主刻度／副刻度要在軸線以內或以外，但並不包括刻度標籤，可接受的值有 <code>outside</code>、<code>inside</code>。</p>
+<p><img src="tickPosition.png" alt=""></p>
+<br/>
+
+<h4 id="Axis-tickmarkPlacement"><a href="#Axis-tickmarkPlacement" class="headerlink" title="# Axis.tickmarkPlacement"></a># Axis.tickmarkPlacement</h4><p><code>型別: String</code> <code>預設: &quot;between&quot;</code></p>
+<p>這個屬性是專屬於「類別座標軸」的，與「線性座標軸」不同的是，它的刻度標籤並不會與主刻度對齊，而是夾在兩個刻度之間，因此你可以透過這個屬性來調整，可接受的值有 <code>between</code>、<code>on</code>。</p>
+<p><img src="tickmarkPlacement.png" alt=""></p>
+<br/>
+
+<h4 id="Axis-lineWidth-Axis-gridLineWidth-Axis-minorGridLineWidth"><a href="#Axis-lineWidth-Axis-gridLineWidth-Axis-minorGridLineWidth" class="headerlink" title="# Axis.lineWidth / Axis.gridLineWidth / Axis.minorGridLineWidth"></a># Axis.lineWidth / Axis.gridLineWidth / Axis.minorGridLineWidth</h4><p><code>型別: Number</code> <code>預設: 請見表格</code></p>
+<p>這三屬性分別是調整軸線／主格線／副格線的粗細，單位為 <code>px</code>，設為 <code>0</code> 的話則會隱藏。</p>
+<table>
+<thead>
+<tr>
+<th align="center">座標軸</th>
+<th align="center">lineWidth</th>
+<th align="center">gridLineWidth</th>
+<th align="center">minorGridLineWidth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ｘ軸</td>
+<td align="center">預設值：1</td>
+<td align="center">預設值：0</td>
+<td align="center">預設值：0</td>
+</tr>
+<tr>
+<td align="center">Ｙ軸</td>
+<td align="center">預設值：0</td>
+<td align="center">預設值：1</td>
+<td align="center">預設值：0</td>
+</tr>
+</tbody></table>
+<br/>
+<br/>
+
+<h4 id="Axis-lineColor-Axis-gridLineColor-Axis-minorGridLineColor"><a href="#Axis-lineColor-Axis-gridLineColor-Axis-minorGridLineColor" class="headerlink" title="# Axis.lineColor / Axis.gridLineColor / Axis.minorGridLineColor"></a># Axis.lineColor / Axis.gridLineColor / Axis.minorGridLineColor</h4><p><code>型別: String</code> <code>預設: &quot;ccd6eb&quot; / &quot;#e6e6e6&quot; / &quot;#f2f2f2&quot;</code></p>
+<p>軸線／主格線／副格線的線條顏色也可以透過這三個屬性做個別設定，先前提過的顏色格式都是適用的。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-gridLineDashStyle-Axis-minorGridLineDashStyle"><a href="#Axis-gridLineDashStyle-Axis-minorGridLineDashStyle" class="headerlink" title="# Axis.gridLineDashStyle / Axis.minorGridLineDashStyle"></a># Axis.gridLineDashStyle / Axis.minorGridLineDashStyle</h4><p><code>型別: String</code> <code>預設: &quot;Solid&quot;</code></p>
+<p>主格線和副格線的線條樣式是能夠調整的，除了實線外，有各種類的虛線可以選擇。想看所有類型的話可以看這個<strong><a href="https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-dashstyle-all/" target="_blank" rel="noopener">官方範例</a></strong>。</p>
+<hr>
+<h2 id="Axis-labels-刻度標籤"><a href="#Axis-labels-刻度標籤" class="headerlink" title="Axis.labels 刻度標籤"></a>Axis.labels 刻度標籤</h2><br/>
+
+<p>座標軸的刻度標籤設定也是一包不小的物件，所以我們往裡面深入一個層級來看看刻度標籤中又有哪些屬性。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  xAxis: [{
+    labels: {} // Ｘ軸刻度標籤設定
+  }],
+  yAxis: [{
+    labels: {} // Ｙ軸刻度標籤設定
+  }]
+});</code></pre>
+<br/>
+
+<h4 id="xAxis-labels-style"><a href="#xAxis-labels-style" class="headerlink" title="# xAxis.labels.style"></a># xAxis.labels.style</h4><p><code>型別: Object</code> <code>預設: { color: &quot;#666666&quot;, fontSize: &quot;11px&quot; }</code></p>
+<p>樣式屬性在前面已經介紹過蠻多次了，如果需要複習的話可以 <strong><a href="/2020/09/18/highcharts-5/#title-style">按這邊</a></strong>，這裡就不再多做介紹。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-align"><a href="#Axis-labels-align" class="headerlink" title="# Axis.labels.align"></a># Axis.labels.align</h4><p><code>型別: String</code> <code>預設: 見清單</code></p>
+<p>這次跟前面的「水平位置」就不一樣了，這次代表的就真的是「文字對齊」了，一樣有 <code>left</code>、<code>center</code>、<code>right</code>可以設定。</p>
+<ul>
+<li>Ｘ座標軸預設值：<code>center</code></li>
+<li>Ｙ座標軸預設值：<code>right</code></li>
+</ul>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-reserveSpace"><a href="#Axis-labels-reserveSpace" class="headerlink" title="# Axis.labels.reserveSpace"></a># Axis.labels.reserveSpace</h4><p><code>型別: Boolean</code> <code>預設: undefined</code></p>
+<p>決定是否要為刻度標籤保留空間，一般來說它會是啟動的，但下面兩個狀況會取消，所以記得要特別設定，不然標籤會跟標題擠在一起或超出畫布。</p>
+<ol>
+<li><code>labels.align</code> 設定為 <code>right</code> 的右側Ｙ軸。</li>
+<li><code>labels.align</code> 設定為 <code>left</code> 的左側Ｙ軸。</li>
+</ol>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-x-Axis-labels-y"><a href="#Axis-labels-x-Axis-labels-y" class="headerlink" title="# Axis.labels.x / Axis.labels.y"></a># Axis.labels.x / Axis.labels.y</h4><p><code>型別: Number</code> <code>預設: 見清單</code></p>
+<p>調整刻度標籤的偏移量，用法在之前都有介紹過，單位為<code>px</code>。</p>
+<ul>
+<li>Ｘ座標軸預設值：<code>x: 0</code> <code>y: 0</code></li>
+<li>Ｙ座標軸預設值：<code>x: -8</code> <code>y: 3</code></li>
+</ul>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-rotation"><a href="#Axis-labels-rotation" class="headerlink" title="# Axis.labels.rotation"></a># Axis.labels.rotation</h4><p><code>型別: Number</code> <code>預設: 0</code></p>
+<p>你可以設定刻度標籤的旋轉角度，這在刻度較多或圖表較窄的時候非常實用。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-autoRotation"><a href="#Axis-labels-autoRotation" class="headerlink" title="# Axis.labels.autoRotation"></a># Axis.labels.autoRotation</h4><p><code>型別: Array[Number]</code> <code>預設: [-45]</code></p>
+<p>如果你希望標籤的旋轉角度可以是漸進式的，那你可以提供這個屬性一組度數的陣列，Highcharts 會自動在陣列中找一個最合適的角度來設定，很適合用在「自適應」的區塊。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-labels-format-Axis-labels-formatter"><a href="#Axis-labels-format-Axis-labels-formatter" class="headerlink" title="# Axis.labels.format / Axis.labels.formatter"></a># Axis.labels.format / Axis.labels.formatter</h4><p>我們前面在圖例和提示框都有看到「格式化屬性」，而座標軸的刻度標籤也能夠自訂文字格式，不過我們一樣等到之後獨立章節再來詳細介紹吧，今天先跳過。</p>
+<hr>
+<h2 id="Axis-plotLines-標註線"><a href="#Axis-plotLines-標註線" class="headerlink" title="Axis.plotLines 標註線"></a>Axis.plotLines 標註線</h2><br/>
+
+<p>標註線主要是用來特別標註某個特殊的值，例如在業績統計表中標註目標，或收支圖中標註預算等等，文章中我們只介紹重點屬性，其餘請見 <strong><a href="https://api.highcharts.com/highcharts/xAxis.plotLines" target="_blank" rel="noopener">官方文件</a></strong>。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  xAxis: [{
+    plotLines: [{}] // Ｘ軸標註線設定
+  }],
+  yAxis: [{
+    plotLines: [{}] // Ｙ軸標註線設定
+  }]
+});</code></pre>
+<br/>
+
+<h4 id="Axis-plotLines-value"><a href="#Axis-plotLines-value" class="headerlink" title="# Axis.plotLines.value"></a># Axis.plotLines.value</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p>標註線中最重要的屬性，也就是你要標示在哪個數值刻度上。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-plotLines-color"><a href="#Axis-plotLines-color" class="headerlink" title="# Axis.plotLines.color"></a># Axis.plotLines.color</h4><p><code>型別: String</code> <code>預設: &quot;#999999</code></p>
+<p>標註線的線條顏色，前面提過的顏色格式都適用。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-plotLines-width"><a href="#Axis-plotLines-width" class="headerlink" title="# Axis.plotLines.width"></a># Axis.plotLines.width</h4><p><code>型別: Number</code> <code>預設: &quot;2</code></p>
+<p>標註線的粗細，單位為 <code>px</code>，設為 <code>0</code> 則會消失。</p>
+<hr>
+<h2 id="Axis-plotBands-標註帶"><a href="#Axis-plotBands-標註帶" class="headerlink" title="Axis.plotBands 標註帶"></a>Axis.plotBands 標註帶</h2><br/>
+
+<p>標註帶用途與標註線相，不過由單一數據變為數據區間，例如可以在有時間座標的圖表中標註某段特殊時間，文章中我們只介紹重點屬性，其餘請見 <strong><a href="https://api.highcharts.com/highcharts/xAxis.plotBands" target="_blank" rel="noopener">官方文件</a></strong>。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  xAxis: [{
+    plotBands: [{}] // Ｘ軸標註帶設定
+  }],
+  yAxis: [{
+    plotBands: [{}] // Ｙ軸標註帶設定
+  }]
+});</code></pre>
+<br/>
+
+<h4 id="Axis-plotLines-from-Axis-plotLines-to"><a href="#Axis-plotLines-from-Axis-plotLines-to" class="headerlink" title="# Axis.plotLines.from / # Axis.plotLines.to"></a># Axis.plotLines.from / # Axis.plotLines.to</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p>標註帶中最重要的兩個屬性，用來設定數值範圍的起點與終點，兩點間距將產生標註帶。</p>
+<br/>
+<br/>
+
+<h4 id="Axis-plotLines-color-1"><a href="#Axis-plotLines-color-1" class="headerlink" title="# Axis.plotLines.color"></a># Axis.plotLines.color</h4><p><code>型別: String</code> <code>預設: &quot;#e6ebf5</code></p>
+<p>標註帶的區塊顏色，前面提過的顏色格式都適用。</p>
+<p><br/><br/></p>
+<p>那今天就把座標軸中與外觀相關的設定介紹完了，但希望大家還沒有感到疲乏，因為明天還有另一半與「座標刻度」有關的設定在等著我們，撐住啊！！</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10241866" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/22/highchart/highcharts-8/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/22/highchart/highcharts-8/" data-id="clcsdp5lj002uneqw2a22fy19" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/21/highchart/highcharts-7/" class="article-nav-title">資視就是力量 - Highcharts / 提示框設定</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/23/highchart/highcharts-9/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 座標軸設定 - 座標刻度
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/22/highchart/highcharts-8/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

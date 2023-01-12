@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 數據點設定 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;rNevgYm避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  昨天我們才介紹完數據列設定，而數據列其實就是一個個數據點所組成的一系列資料。講簡單一點，數據點就是折線圖裡的一個個點，圓餅圖裡的一個個扇形，而 Highcharts 的設定就是細到這樣的顆粒度，讓你每個點都能微調。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 數據點設定">
+<meta property="og:url" content="https://maxleebk.com/2020/09/25/highchart/highcharts-11/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;rNevgYm避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  昨天我們才介紹完數據列設定，而數據列其實就是一個個數據點所組成的一系列資料。講簡單一點，數據點就是折線圖裡的一個個點，圓餅圖裡的一個個扇形，而 Highcharts 的設定就是細到這樣的顆粒度，讓你每個點都能微調。">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/25/highchart/highcharts-11/point.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/25/highchart/highcharts-11/sliced.png">
+<meta property="article:published_time" content="2020-09-25T01:50:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.715Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/25/highchart/highcharts-11/point.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 數據點設定
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-25T01:50:00.000Z" itemprop="datePublished">2020-09-25</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/rNevgYm" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/rNevgYm</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>昨天我們才介紹完數據列設定，而數據列其實就是一個個數據點所組成的一系列資料。講簡單一點，數據點就是折線圖裡的一個個點，圓餅圖裡的一個個扇形，而 Highcharts 的設定就是細到這樣的顆粒度，讓你每個點都能微調。</p>
+<img src="point.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<hr>
+<h2 id="數據點設定-基本介紹"><a href="#數據點設定-基本介紹" class="headerlink" title="數據點設定 - 基本介紹"></a>數據點設定 - 基本介紹</h2><br/>
+
+<p>數據點其實就是透過數據列的 <code>data</code> 屬性設定的，也就是說數據列與數據點是相依相存的，而且就算只有一個數據點依然能稱為一個數據列。</p>
+<p>而既然數據列設定的屬性會受到圖表類型影響，理所當然數據點就也會，甚至連設定方式都會有所改變。而且每一種圖表類型的數據點方式還不只一種，所以常常讓人搞得霧煞煞，不過今天就讓我幫大家統整歸納一下吧！</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  series: [{
+    data: [] // 數據點設定
+  }]
+});</code></pre>
+<p><code>series.data</code> 能夠接受的型別是陣列，其中陣列裡每個項目所代表的就是一個一個的數據點（point），每個數據點又能以數字、陣列、或物件這三種型別來表示，至於要用哪一種取決於<strong>每個數據點之間的差異程度</strong>。</p>
+<hr>
+<h2 id="數據點設定-數值設定法"><a href="#數據點設定-數值設定法" class="headerlink" title="數據點設定 - 數值設定法"></a>數據點設定 - 數值設定法</h2><br/>
+
+<pre><code class="javascript">series: [{
+  data: [0, 5, 3, 5] // 數據點設定-數字型別
+}]</code></pre>
+<p>若以數字設定數據點，則這個數字會被 Highcharts 解析為數據點的Ｙ軸數值，Ｘ軸數值則會根據你的 <code>xAxis.type</code> 自動計算，如下。</p>
+<ul>
+<li>線性座標軸：從 <code>0</code> 開始，每個數據點依序增加 <code>1</code></li>
+<li>類別座標軸：從 <code>xAxis.categories[0]</code> 開始，每個數據點依序拉出項目</li>
+<li>日期座標軸：從 <code>1970/1/1 00:00</code> 開始，每個數據點依序增加一毫秒</li>
+</ul>
+<br/>
+
+<p><strong>而當你用數值設定法來設定數據點，就可以下方兩個數據列屬性來調整上述規則。</strong></p>
+<h4 id="series-pointStart"><a href="#series-pointStart" class="headerlink" title="# series.pointStart"></a># series.pointStart</h4><p><code>型別: Number</code> <code>預設: 0</code> </p>
+<p>這個屬性設定的是你數據列中第一個數據點的Ｘ軸起始數值。</p>
+<br/>
+<br/>
+
+<h4 id="series-pointInterval"><a href="#series-pointInterval" class="headerlink" title="# series.pointInterval"></a># series.pointInterval</h4><p><code>型別: Number</code> <code>預設: 1</code></p>
+<p>這個屬性設定的是你數據列中每個數據點之間相隔多少Ｘ軸數值。如果不太理解這兩個屬性的話，可以看看我準備的 <strong><a href="https://codepen.io/max-lee/pen/XWdqNmR" target="_blank" rel="noopener">範例</a></strong>。</p>
+<br/>
+<br/>
+
+<blockquote>
+<p>只要數據點本身沒有指定的Ｘ軸數值就很適合用這種設定方式，缺點是這種設定方式不能對數據點進行額外的屬性設定，所以要是希望各別數據點能有不一樣的外觀或特性的話，就不太適用了。</p>
+</blockquote>
+<p><span class="emoji" alias="exclamation" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png?v8">&#x2757;</span> <strong>提醒：</strong>圓餅圖的數據點雖然也可以用這個方式法設定，但會缺失數據點名稱。</p>
+<hr>
+<h2 id="數據點設定-陣列設定法"><a href="#數據點設定-陣列設定法" class="headerlink" title="數據點設定 - 陣列設定法"></a>數據點設定 - 陣列設定法</h2><br/>
+
+<pre><code class="javascript">series: [{
+  // 數據點設定-陣列型別[Number,Number]
+  data: [[0, 5], [3, 5], [6, 12]]
+}]</code></pre>
+<p>若以陣列來設定數據點的話，這個陣列就必須要有兩個型別為「數字」的值，其一會被 Highcharts 解析為數據點的Ｘ軸數值，其二為Ｙ軸數值。</p>
+<blockquote>
+<p>如果數據點需要有指定Ｘ數值的話，就必須採用這個設定方式，例如散佈圖或是加速度圖這種類的圖表，不過缺點依然是無法對數據點進行額外的屬性設定。</p>
+</blockquote>
+<br/>
+<br/>
+
+<pre><code class="javascript">series: [{
+  // 數據點設定-陣列型別[String,Number]
+  data: [[&quot;數據點1&quot;, 5], [&quot;數據點3&quot;, 5], [&quot;數據點3&quot;, 12]] 
+}]</code></pre>
+<p>或是你也可以將第一個值改為字串，這樣 Highcharts 就會把第一個值解析為該數據點的名稱，而第二個值依然是Ｙ軸數值。</p>
+<blockquote>
+<p>這種設定方式雖然和「數值設定法」很像，就只是多了一個名稱的字串而已，但卻是圓餅圖很常用的數據點設定方式。</p>
+</blockquote>
+<hr>
+<h2 id="數據點設定-物件設定法"><a href="#數據點設定-物件設定法" class="headerlink" title="數據點設定 - 物件設定法"></a>數據點設定 - 物件設定法</h2><br/>
+
+<pre><code class="javascript">series: [{
+  // 數據點設定-物件型別
+  data: [
+    { x:5, y: 5, name: &quot;Point1&quot; },
+    { x:8, y: 8, name: &quot;Point2&quot; }
+  ] 
+}]</code></pre>
+<p>如果以物件型別來設定數據點，那靈活性就非常高了，因為每個數據點（物件）內部又有不少屬性可以個別設定，也就代表每個數據點都可以有不同的外觀或特性。</p>
+<p>但其實數據點大部分的屬性在數據列都有，只不過數據列設定是一次改變所有數據點，而數據點設定就單單只是改變它自身，下面的話我們就只介紹數據點才有的屬性，要看全部到話就到 <strong><a href="https://api.highcharts.com/highcharts/series.line.data" target="_blank" rel="noopener">官方文件</a></strong> 吧。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-x-series-data-y"><a href="#series-data-x-series-data-y" class="headerlink" title="# series.data.x / series.data.y"></a># series.data.x / series.data.y</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p><strong>特別注意，這裡的Ｘ和Ｙ不再是調整偏移量了，它們設定的是數據點的Ｘ軸數值以及Ｙ軸數值。</strong></p>
+<p>Ｘ軸數值並非必要屬性是可以省略的，甚至某些圖表也不會有 <code>x</code> 屬性（如圓餅圖），但Ｙ軸數值就是必須的了，如果沒設定就等同沒有數據，沒有數據就畫不出數據點。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-name"><a href="#series-data-name" class="headerlink" title="# series.data.name"></a># series.data.name</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
+<p>這個屬性可以對數據點設定名稱，如果有設定的話提示框還會以名稱來取代Ｘ軸刻度標籤，另外這個屬性對圓餅圖來說也很重要，因為圓餅圖的圖例、數據標籤顯示的都是「數據點名稱」，而非數據列名稱或數值。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-className"><a href="#series-data-className" class="headerlink" title="# series.data.className"></a># series.data.className</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
+<p>顧名思義，這個屬性是用來增加數據點在 HTML 中的 Class Attribute 的，好處是我們可以更針對性地選取到某個數據點，可以方便日後進行圖表互動。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-legendIndex"><a href="#series-data-legendIndex" class="headerlink" title="# series.data.legendIndex"></a># series.data.legendIndex</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p>前面有說圓餅圖的圖例顯示的是「數據點名稱」，而這個屬性就是讓圓餅圖數據點可以調整圖例順序的，用法和 <code>series.legendIndex</code> 一樣。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-sliced"><a href="#series-data-sliced" class="headerlink" title="# series.data.sliced"></a># series.data.sliced</h4><p><code>型別: Boolean</code> <code>預設: undefined</code></p>
+<p>這個屬性也是圓餅圖的數據點才有，讓你可以決定某塊扇形是否要向外突出。而突出的偏移量你可以用數據列的 <code>series.slicedOffset</code> 屬性來調整。</p>
+<img src="sliced.png" style="max-width: 600px; margin: 12px auto;" alt="特別突顯25-29歲" />
+
+<blockquote>
+<p>物件設定法適用於所有圖表類型，而且非常適合各數據點差異性大的情況。</p>
+</blockquote>
+<hr>
+<h2 id="數據點設定-混合"><a href="#數據點設定-混合" class="headerlink" title="數據點設定 - 混合"></a>數據點設定 - 混合</h2><br/>
+
+<pre><code class="javascript">series: [{
+  data: [[0, 5, {y: 3, name: &quot;數據點&quot;}, 5]] // 數字混物件
+}]</code></pre>
+<pre><code class="javascript">series: [{
+  data: [[0, 5], {x: 3, y: 5, name: &quot;數據點&quot;}, [6, 12]] // 陣列混物件
+}]</code></pre>
+<p>是的沒錯，以上這三種設定法還可以混用，讓你的數據點設定更加彈性輕鬆，不過數字搭陣列的效果不是很優，所以大部分都是用物件去搭配另外兩種。</p>
+<blockquote>
+<p>這種混和的設定方法，很適合用在你想要為某幾個特定的數據點進行額外設定時使用。</p>
+</blockquote>
+<hr>
+<h2 id="數據點設定-陣列搭配Keys設定法"><a href="#數據點設定-陣列搭配Keys設定法" class="headerlink" title="數據點設定 - 陣列搭配Keys設定法"></a>數據點設定 - 陣列搭配Keys設定法</h2><br/>
+
+<pre><code class="javascript">series: [{
+  keys: [&quot;y&quot;, &quot;name&quot;, &quot;className&quot;],
+  data: [
+    [13, &quot;數據點一&quot;, &quot;point-1&quot;],
+    [21, &quot;數據點二&quot;, &quot;point-2&quot;]
+  ]
+}]</code></pre>
+<p>這種設定方式比較特別，它和陣列設定法一樣是以陣列設定數據點，但卻能放進不只兩個項目，而且沒有順序的限制。不過這樣的彈性，使得 Highcharts 不知道如何解析陣列裡的數值，此時就需要借助 <code>keys</code> 的幫忙。</p>
+<br/>
+
+<h4 id="series-keys"><a href="#series-keys" class="headerlink" title="# series.keys"></a># series.keys</h4><p><code>型別: Array[String]</code> <code>預設: undefined</code> </p>
+<p>這個屬性融合了陣列設定法與物件設定法，讓你能用陣列設定數據點卻又可以加入額外屬性，而使用方式是提供 <code>keys</code> 一組陣列，陣列項目為想設定的<strong>數據點屬性名稱</strong>，接下來你只要按這個陣列的順序來設定數據點，Highcharts 就會以這個順序去解析你的 <code>data</code> 項目。</p>
+<br/>
+
+<blockquote>
+<p>如果你想調整的數據點屬性僅僅只有一兩個，那就很適合使用這種設定方式，不用像物件法一樣搞得很冗長，卻又能設定少量的額外屬性。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>恭喜各位，我們已經把最重要的數據列與數據點介紹完了，雖然後面還有一部分的設定技巧和屬性，但基本上到這裡你就可以很順利的將 Highcharts 導入專案中了，那明天我們要介紹的是「繪圖區」，雖然它是圖表中占比不小的元素區塊，但它其實不僅沒有額外屬性，還能為我們省很多事。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10243702" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/25/highchart/highcharts-11/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/25/highchart/highcharts-11/" data-id="clcsdp5k2001dneqwc96s2b8w" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/24/highchart/highcharts-10/" class="article-nav-title">資視就是力量 - Highcharts / 數據列設定</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/26/highchart/highcharts-12/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 繪圖區設定
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/25/highchart/highcharts-11/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

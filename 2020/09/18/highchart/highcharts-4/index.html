@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 圖表整體設定 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;BaKwdyN避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  接下來的幾天，將陸續介紹 Highcharts 圖表設定裡五花八門的屬性，所以之後每個章節的開頭我都會準備一個線上範例，建議大家利用範例來玩玩看當天介紹的屬性。 相信大家都有接觸過線上遊戲，在遊戲開始時總是會創建角色並決">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 圖表整體設定">
+<meta property="og:url" content="https://maxleebk.com/2020/09/18/highchart/highcharts-4/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;BaKwdyN避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  接下來的幾天，將陸續介紹 Highcharts 圖表設定裡五花八門的屬性，所以之後每個章節的開頭我都會準備一個線上範例，建議大家利用範例來玩玩看當天介紹的屬性。 相信大家都有接觸過線上遊戲，在遊戲開始時總是會創建角色並決">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/18/highchart/highcharts-4/inverted.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/18/highchart/highcharts-4/plot.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/18/highchart/highcharts-4/margin.png">
+<meta property="article:published_time" content="2020-09-18T02:05:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.871Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/18/highchart/highcharts-4/inverted.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 圖表整體設定
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-18T02:05:00.000Z" itemprop="datePublished">2020-09-18</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/BaKwdyN" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/BaKwdyN</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>接下來的幾天，將陸續介紹 Highcharts 圖表設定裡五花八門的屬性，所以之後每個章節的開頭我都會準備一個線上範例，建議大家利用範例來玩玩看當天介紹的屬性。</p>
+<p>相信大家都有接觸過線上遊戲，在遊戲開始時總是會創建角色並決定初始樣貌以及職業，而「圖表整體設定」正是為圖表做這些初始設定。</p>
+<hr>
+<h2 id="圖表整體設定"><a href="#圖表整體設定" class="headerlink" title="圖表整體設定"></a>圖表整體設定</h2><br/>
+
+<p>圖表整體設定主要是一些調整圖表外觀或是整體呈現的屬性，而且這些屬性會大大影響其他區塊的設定內容，像是如果你用 <code>chart.type</code> 屬性把圖表設定為圓餅圖，那之後的座標軸設定你肯定就用不到了，所以它算是整個圖表的基底及前置。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  chart: {} // 圖表整體設定
+});</code></pre>
+<br/>
+
+<h4 id="chart-type"><a href="#chart-type" class="headerlink" title="# chart.type"></a># chart.type</h4><p><code>型別: String</code> <code>預設: &quot;line&quot;</code></p>
+<p>這個算是比較重要的屬性，它決定了這張圖表要採用的類型是哪一種，我們的範例中設定的是 <code>column</code> 長條圖，如果沒特別設定的話，則預設會是折線圖。想知道所有圖表類型的話，可以到 <strong><a href="https://api.highcharts.com/highcharts/series" target="_blank" rel="noopener">官方文件</a></strong> 查看。</p>
+<br/>
+<br/>
+
+<h4 id="chart-inverted"><a href="#chart-inverted" class="headerlink" title="# chart.inverted"></a># chart.inverted</h4><p><code>型別: Boolean</code> <code>預設: false</code></p>
+<p>這個屬性比較特別，如果你設為 <code>true</code> 的話，它會將你的座標軸給交換，這會導致圖表的方向性改變，像是用在柱狀圖的話它就會變成橫條圖，或是下面的折線圖改為由上而下繪製。</p>
+<p><img src="inverted.png" alt=""></p>
+<h4 id="chart-width-chart-height"><a href="#chart-width-chart-height" class="headerlink" title="# chart.width / chart.height"></a># chart.width / chart.height</h4><p><code>型別: String|Number|null</code> <code>預設: null</code></p>
+<p>寬高就是非常基本的屬性了，兩者都可以用數字或字串來做設定，並且支援所有 CSS 的長度單位，如果沒特別設定的話會是預設值 <code>null</code>，不過 <code>null</code> 並非為零，而是寬度部分會自動填滿與容器，高度則預設為 <code>400px</code>。</p>
+<br/>
+<br/>
+
+<h4 id="chart-reflow"><a href="#chart-reflow" class="headerlink" title="# chart.reflow"></a># chart.reflow</h4><p><code>型別: Boolean</code> <code>預設: true</code></p>
+<p>前面提到過，當你沒有為圖表設定寬度時，它會主動填滿容器元素，但若你的容器會根據視窗大小和縮放時，圖表就會跟著一起變寬變窄，而 <code>reflow</code> 可以讓你決定要不要讓圖表一起縮放。</p>
+<br/>
+<br/>
+
+<h4 id="chart-backgroundColor-chart-plotBackgroundColor"><a href="#chart-backgroundColor-chart-plotBackgroundColor" class="headerlink" title="# chart.backgroundColor / chart.plotBackgroundColor"></a># chart.backgroundColor / chart.plotBackgroundColor</h4><p><code>型別: String|Object|null</code> <code>預設: &quot;#ffffff&quot;</code></p>
+<p>這兩個都是調整背景顏色，可以使用16進制的色碼、顏色名以及 <code>rgba()</code> 的顏色設定，若設為 <code>null</code> 的話則取消背景。那為何背景色要分成兩個設定呢？因為調整的區塊其實不太一樣，一個是設定整個圖表 (chart) 的背景，另一個則是設定繪圖區 (plot) 的背景。</p>
+<p><img src="plot.png" alt=""></p>
+<p>另外也可以設定漸層色，不過寫法稍微複雜，必須用一個物件來設定，其中 <code>linearGradient</code> 屬性是調整漸層方向的，而 <code>stops</code> 則是設定顏色的，說明寫在註解了，你可以試著寫寫看。</p>
+<pre><code class="javascript">chart: {
+  backgroundColor: {
+    //x1:0, x2:1 為水平漸層，y1:0, y2:1 為垂直的漸層，以此邏輯便能調整出斜向或反向漸層
+    linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 }, 
+    //第一個值為顏色位置(0~1)，第二個值為顏色
+    stops: [ [0, &#39;pink&#39;], [0.5, &#39;red&#39;], [1, &#39;orange&#39;] ]
+  }
+}</code></pre>
+<br/>
+<br/>
+
+<h4 id="chart-borderWidth-chart-plotBorderWidth"><a href="#chart-borderWidth-chart-plotBorderWidth" class="headerlink" title="# chart.borderWidth / chart.plotBorderWidth"></a># chart.borderWidth / chart.plotBorderWidth</h4><p><code>型別: Number</code> <code>預設: 0</code></p>
+<p>同樣地，圖表與繪圖區的邊框寬度都可以各自設定，如果不設定則沒有邊框。另外也可以用 <code>chart.borderRadius</code> 設定圖表的邊框圓角，繪圖區則沒有圓角設定。</p>
+<br/>
+<br/>
+
+<h4 id="chart-borderColor-chart-plotBorderColor"><a href="#chart-borderColor-chart-plotBorderColor" class="headerlink" title="# chart.borderColor / chart.plotBorderColor"></a># chart.borderColor / chart.plotBorderColor</h4><p><code>型別: String</code> <code>預設: &quot;#335cad&quot; / &quot;#cccccc&quot;</code></p>
+<p>邊框顏色的設定方式和背景色一樣，要注意的是圖表與繪圖區的邊框色預設值不一樣，圖表是深藍色 <code>#335cad</code>，繪圖區則是淺灰色 <code>#cccccc</code>。</p>
+<br/>
+<br/>
+
+<h4 id="chart-spacing"><a href="#chart-spacing" class="headerlink" title="# chart.spacing"></a># chart.spacing</h4><p><code>型別: Array[Number]</code> <code>預設: [10, 10, 15, 10]</code></p>
+<p>這個屬性如同圖表的 <code>padding</code>，代表的是圖表 (chart) 內容與邊框之間的內間距，設定方式是四個數字的陣列，順序和 CSS 一樣是上右下左，若你想要個別設定可以用 <code>spacingTop</code>、<code>spacingBottom</code>、<code>spacingRight</code>、<code>spacingLeft</code>，它們會覆蓋掉 <code>spacing</code>。</p>
+<br/>
+<br/>
+
+<h4 id="chart-margin"><a href="#chart-margin" class="headerlink" title="# chart.margin"></a># chart.margin</h4><p><code>型別: Array[Number]</code> <code>預設: undefined</code></p>
+<p>這是一個容易被混淆的屬性，你可能會以為它與 <code>spacing</code> 相對，不過它調整可不是圖表的外間距，他調整的是<strong>繪圖區 (plot) 與圖表 (chart) 邊框的距離</strong>，我覺得這算是一個蠻大的地雷，如果沒有仔細理解肯定會被搞糊塗。</p>
+<p><img src="margin.png" alt=""></p>
+<p>灰色區域是兩者各自代表的間距，可以發現 <code>margin</code> 的距離其實是包含 <code>spacing</code> 的。另外當你沒有設定 <code>margin</code> 的時候，間距並不為零，而是 Highcharts 會去計算圖表的其他區塊(標題、座標軸等..)，並調整成能夠避開它們的間距。</p>
+<p>當然，<code>margin</code> 也有 <code>marginTop</code>、<code>marginBottom</code>、<code>marginRight</code>、<code>marginLeft</code> 的版本可以使用。</p>
+<p><br/><br/></p>
+<p>那麼以上就是「圖表整體設定」中比較常會使用到的屬性了，明天會介紹的是標題、說明等文字性質的圖表元素。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10239103" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/18/highchart/highcharts-4/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/18/highchart/highcharts-4/" data-id="clcsdp5lg002mneqw0atv47y8" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/17/highchart/highcharts-3/" class="article-nav-title">資視就是力量 - Highcharts / 圖表的組成</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/19/highchart/highcharts-5/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 說明文字設定
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/18/highchart/highcharts-4/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

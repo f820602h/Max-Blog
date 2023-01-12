@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 圖例設定 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;gOroOjd避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  有時候圖表上的數據列（series）未必只有一組，會使得我們必須協助觀看者分辨每一組數據列所代表的身份或資料內容，以我們員工年齡分佈的案例來說，假如人資想要與其他公司的資料進行比較時，那我們的圖表就必須要加上圖例。  圖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 圖例設定">
+<meta property="og:url" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;gOroOjd避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  有時候圖表上的數據列（series）未必只有一組，會使得我們必須協助觀看者分辨每一組數據列所代表的身份或資料內容，以我們員工年齡分佈的案例來說，假如人資想要與其他公司的資料進行比較時，那我們的圖表就必須要加上圖例。  圖">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/layout.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/gutter.png">
+<meta property="article:published_time" content="2020-09-20T02:26:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.875Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/layout.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 圖例設定
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-20T02:26:00.000Z" itemprop="datePublished">2020-09-20</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/gOroOjd" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/gOroOjd</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>有時候圖表上的數據列（series）未必只有一組，會使得我們必須協助觀看者分辨每一組數據列所代表的身份或資料內容，以我們員工年齡分佈的案例來說，假如人資想要與其他公司的資料進行比較時，那我們的圖表就必須要加上圖例。</p>
+<hr>
+<h2 id="圖例設定"><a href="#圖例設定" class="headerlink" title="圖例設定"></a>圖例設定</h2><br/>
+
+<p>在有兩組以上數據例的圖表中，會利用不同的顏色或符號來區分不同的數據列，而圖例的功能就是負責說明各個顏色或符號代表的是哪一組數據列。</p>
+<p>另外 Highcharts 的圖例有一些基本的特性：</p>
+<ul>
+<li><strong>圖例的順序與你設定的數據列在陣列裡的索引值有關</strong></li>
+<li><strong>圖例是可以點擊的，用途是將對應的數據列進行顯示或隱藏</strong></li>
+</ul>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  legend: {} // 圖例設定
+});</code></pre>
+<br/>
+
+<h4 id="legend-enabled"><a href="#legend-enabled" class="headerlink" title="# legend.enabled"></a># legend.enabled</h4><p><code>型別: Boolean</code> <code>預設: undefined</code></p>
+<p>你可以利用這個屬性將圖例顯示/隱藏，另外要特別注意，假如你已經將 <code>enabled</code> 設為 <code>true</code> 卻沒顯示圖例，這是因為 <code>series.showInLegend</code> 這個屬性在某些圖表類型（例如圓餅圖）中預設是 <code>false</code>，必須要同時把這個屬性打開，圖例才會出現。</p>
+<br/>
+<br/>
+
+<h4 id="legend-align"><a href="#legend-align" class="headerlink" title="# legend.align"></a># legend.align</h4><p><code>型別: String</code> <code>預設: &quot;center&quot;</code></p>
+<p>決定圖例在圖表中的水平位置，可以輸入 <code>left</code>、<code>center</code>、<code>right</code>。</p>
+<br/>
+<br/>
+
+<h4 id="legend-verticalAlign"><a href="#legend-verticalAlign" class="headerlink" title="# legend.verticalAlign"></a># legend.verticalAlign</h4><p><code>型別: String</code> <code>預設: &quot;bottom&quot;</code></p>
+<p>決定圖例在圖表中的垂直位置，可以輸入 <code>top</code>、<code>middle</code>、<code>bottom</code>。</p>
+<br/>
+<br/>
+
+<h4 id="legend-layout"><a href="#legend-layout" class="headerlink" title="# legend.layout"></a># legend.layout</h4><p><code>型別: String</code> <code>預設: &quot;horizontal&quot;</code></p>
+<p>前兩個屬性，相信大家已經很熟了，但圖例多了一個 <code>layout</code> 屬性來和它們搭配，是用來調整圖例的水平或垂直排列的，如此一來圖例就可以有很多呈現的方式。</p>
+<p>可以設定的值有 <code>&quot;horizontal&quot;</code> 和 <code>&quot;vertical&quot;</code>。</p>
+<p><img src="layout.png" alt=""></p>
+<br/>
+
+<h4 id="legend-floating"><a href="#legend-floating" class="headerlink" title="# legend.floating"></a># legend.floating</h4><p><code>型別: Boolean</code> <code>預設: false</code></p>
+<p>這也是昨天在標題就提過的屬性，可以讓圖例浮動在圖表之上。</p>
+<br/>
+<br/>
+
+<h4 id="legend-x-legend-y"><a href="#legend-x-legend-y" class="headerlink" title="# legend.x / legend.y"></a># legend.x / legend.y</h4><p><code>型別: Number</code> <code>預設: 0</code></p>
+<p>一樣的，圖例也有 <code>x</code> 和 <code>y</code> 的屬性讓你調整元素的偏移位置。</p>
+<br/>
+<br/>
+
+<h4 id="legend-backgroundColor"><a href="#legend-backgroundColor" class="headerlink" title="# legend.backgroundColor"></a># legend.backgroundColor</h4><p><code>型別: String|Object</code> <code>預設: undefined</code></p>
+<p>背景色的設定方式與 <code>chart.backgroundColor</code> 一樣，可以按 <strong><a href="/2020/09/17/highcharts-4/#chart-backgroundColor-chart-plotBackgroundColor">這裡</a></strong> 複習。</p>
+<br/>
+<br/>
+
+<h4 id="legend-border系列"><a href="#legend-border系列" class="headerlink" title="# legend.border系列"></a># legend.border系列</h4><p>因為 <code>border</code> 的相關設定在 <strong><a href="/2020/09/17/highcharts-4/#chart-borderWidth-chart-plotBorderWidth">圖表整體設定</a></strong> 提過了，所以這邊就只放預設值給大家參考。</p>
+<pre><code class="javascript">legend: {
+  borderWidth: 0,         // Number
+  borderRadius: 0,        // Number
+  borderColor: &quot;#999999&quot;  // String
+}</code></pre>
+<br/>
+<br/>
+
+<h4 id="legend-margin"><a href="#legend-margin" class="headerlink" title="# legend.margin"></a># legend.margin</h4><p><code>型別: Number</code> <code>預設: 12</code></p>
+<p>若圖例的垂直位置靠下，那圖例的 <code>margin</code> 是調整圖例與 <strong>座標軸</strong> 的間距，垂直對齊靠上則是與 <strong>繪圖區</strong> 的間距。</p>
+<br/>
+<br/>
+
+<h4 id="legend-padding"><a href="#legend-padding" class="headerlink" title="# legend.padding"></a># legend.padding</h4><p><code>型別: Number</code> <code>預設: 8</code></p>
+<p>所有圖例會全部包在一個容器裡，你可以調整容器的內間距，這個屬性在有設定背景色或邊框時會比較看得出來。</p>
+<br/>
+<br/>
+
+<h4 id="legend-itemDistance"><a href="#legend-itemDistance" class="headerlink" title="# legend.itemDistance"></a># legend.itemDistance</h4><p><code>型別: Number</code> <code>預設: 8</code></p>
+<p>這個屬性只有在 <code>legend.layout</code> 是水平配置的情況下才會有效，調整的是個別圖例之間的水平間距。</p>
+<br/>
+<br/>
+
+<h4 id="legend-itemMarginTop-legend-itemMarginBottom"><a href="#legend-itemMarginTop-legend-itemMarginBottom" class="headerlink" title="# legend.itemMarginTop / legend.itemMarginBottom"></a># legend.itemMarginTop / legend.itemMarginBottom</h4><p><code>型別: Number</code> <code>預設: 0</code></p>
+<p>這兩個屬性剛好相對於 <code>itemDistance</code>，它們調整的是個別圖例之間的垂直間距，不過不管是水平配置或垂直配置下都可以使用。</p>
+<p>為了讓大家更好理解，我做了下面這張圖來標出這些跟間距有關的屬性所調整的區塊。</p>
+<p><img src="gutter.png" alt=""></p>
+<br/>
+
+<h4 id="legend-itemStyle-legend-itemHoverStyle-legend-itemHiddenStyle"><a href="#legend-itemStyle-legend-itemHoverStyle-legend-itemHiddenStyle" class="headerlink" title="# legend.itemStyle / legend.itemHoverStyle / legend.itemHiddenStyle"></a># legend.itemStyle / legend.itemHoverStyle / legend.itemHiddenStyle</h4><p><code>型別: Object</code> <code>預設: 如下顯示</code></p>
+<pre><code class="javascript">legend: {
+  itemStyle: {
+    color: &quot;#333333&quot;,
+    cursor: &quot;pointer&quot;,
+    fontSize: &quot;12px&quot;,
+    fontWeight: &quot;bold&quot;,
+    textOverflow: &quot;ellipsis&quot;
+  },
+  itemHoverStyle: {
+    color: &quot;#000000&quot;
+  },
+  itemHiddenStyle: {
+    color: &quot;#cccccc&quot;
+  }
+}</code></pre>
+<p>圖例本身有 <code>normal</code>、<code>hover</code>、<code>hidden</code> 三種狀態，而這三種狀態下的樣式你都可以作調整，剛好對應的就是這三個屬性，用法和之前介紹的樣式屬性都一樣，如果需要複習的話可以 <strong><a href="/2020/09/18/highcharts-5//#title-style">按這邊</a></strong>。</p>
+<br/>
+<br/>
+
+<h4 id="legend-symbolWidth-legend-symbolHeight"><a href="#legend-symbolWidth-legend-symbolHeight" class="headerlink" title="# legend.symbolWidth / legend.symbolHeight"></a># legend.symbolWidth / legend.symbolHeight</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p>你可以透過這兩個屬性調整圖例符號（symbol）的寬高，在沒有設定時會自動去抓 <code>itemStyle.fontSize</code> 的大小。</p>
+<br/>
+<br/>
+
+<h4 id="legend-squareSymbol"><a href="#legend-squareSymbol" class="headerlink" title="# legend.squareSymbol"></a># legend.squareSymbol</h4><p><code>型別: Boolean</code> <code>預設: true</code></p>
+<p>這個屬性會大大影響圖例符號的寬高設定，它會決定是否要讓符號維持寬高相等，所以如果你需要長方形/橢圓形的符號，記得關閉這個設定。</p>
+<br/>
+<br/>
+
+<h4 id="legend-symbolRadius"><a href="#legend-symbolRadius" class="headerlink" title="# legend.symbolRadius"></a># legend.symbolRadius</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
+<p>這個屬性決定了圖例符號的倒圓角，不設定的話會自動計算為 <code>symbolHeight</code> 的一半，這也是為什麼預設會是圓形的原因。</p>
+<br/>
+<br/>
+
+<h4 id="legend-symbolPadding"><a href="#legend-symbolPadding" class="headerlink" title="# legend.symbolPadding"></a># legend.symbolPadding</h4><p><code>型別: Number</code> <code>預設: 5</code></p>
+<p>圖例符號與圖例文字之間的間距可以透過這個屬性調整，預設有 <code>5px</code> 的距離。</p>
+<br/>
+<br/>
+
+<h4 id="legend-labelFormat-legend-labelFormatter"><a href="#legend-labelFormat-legend-labelFormatter" class="headerlink" title="# legend.labelFormat / legend.labelFormatter"></a># legend.labelFormat / legend.labelFormatter</h4><p>這兩個屬性在「圖例設定」中算是比較重要也比較實用的，它們可以用來調整圖例標籤的「文字格式」，不過它們的使用方式比較複雜度，所以之後會用獨立的章節來特別介紹「格式化屬性」，今天我們就暫時先跳過。</p>
+<p><br/><br/></p>
+<p>經過三天的設定介紹，目前累積屬性也不少，但其實可以發現同樣概念的屬性不斷在重複，所以應該大家應還消化得了吧？那圖例設定的部分就到這裡，而明天要介紹的圖表元素是「提示框」。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10240463" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/20/highchart/highcharts-6/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/20/highchart/highcharts-6/" data-id="clcsdp5li002qneqw5krs3mce" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/19/highchart/highcharts-5/" class="article-nav-title">資視就是力量 - Highcharts / 說明文字設定</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/21/highchart/highcharts-7/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 提示框設定
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/20/highchart/highcharts-6/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / MessageChannel | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="熱線你和我，這是一條情感的線路，屬於你和我。  昨天我們認識了 PostMessage，它可以讓我們在兩個頁面之間傳遞訊息，只要有地址(Domain Origin)，就可以送信給對方，而對方只要有收信的機制就能夠獲得訊息，甚至可以回信。但這有個壞處，也就是當我們建立了收信機制後，可能會有來自四面八方的訊息寄過來，那就必須要做一個過濾的動作。但今天的 MessageChannel 卻可以解決這個問">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; MessageChannel">
+<meta property="og:url" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="熱線你和我，這是一條情感的線路，屬於你和我。  昨天我們認識了 PostMessage，它可以讓我們在兩個頁面之間傳遞訊息，只要有地址(Domain Origin)，就可以送信給對方，而對方只要有收信的機制就能夠獲得訊息，甚至可以回信。但這有個壞處，也就是當我們建立了收信機制後，可能會有來自四面八方的訊息寄過來，那就必須要做一個過濾的動作。但今天的 MessageChannel 卻可以解決這個問">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/channel.png">
+<meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/post.gif">
+<meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/post2.gif">
+<meta property="article:published_time" content="2021-09-29T09:15:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/channel.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-16" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / MessageChannel
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-29T09:15:00.000Z" itemprop="datePublished">2021-09-29</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>熱線你和我，這是一條情感的線路，屬於你和我。</p>
+</blockquote>
+<p>昨天我們認識了 PostMessage，它可以讓我們在兩個頁面之間傳遞訊息，只要有地址(Domain Origin)，就可以送信給對方，而對方只要有收信的機制就能夠獲得訊息，甚至可以回信。但這有個壞處，也就是當我們建立了收信機制後，可能會有來自四面八方的訊息寄過來，那就必須要做一個過濾的動作。但今天的 MessageChannel 卻可以解決這個問題。</p>
+<p><strong>有些 Package 或 Library 有可能會使用 PostMessage 在你的網頁文件中執行訊息傳遞，這些訊息也是需要過濾的。</strong></p>
+<hr>
+<h2 id="MessageChannel"><a href="#MessageChannel" class="headerlink" title="MessageChannel"></a>MessageChannel</h2><p>MessageChannel 就像是在兩個頁面中建立一個熱線系統，這樣就不會再那些不想收到訊息，只有綁定的雙方可以透過 MessageChannel 來進行溝通，就像是一個專屬的頻道。如果以圖像來表示整個頻道建立的過程的話，會像是下圖這樣：</p>
+<img src="channel.png" style="margin: 24px auto;" />
+
+<br/>
+
+<h4 id="建立頻道"><a href="#建立頻道" class="headerlink" title="# 建立頻道"></a># 建立頻道</h4><p>先來看第一步「建立頻道」，<code>MessageChannel</code> 本身是一個 <code>Class</code>，所以我們用關鍵字 <code>new</code> 來創建一個新的 MessageChannel 物件，就這麼簡單明瞭，而且也不需要傳入任何參數。</p>
+<pre><code class="javascript">const msgChannel = new MessageChannel();</code></pre>
+<p>而當 MessageChannel 建立後，它底下就會有兩個唯讀屬性可以取得，分別是 <code>port1</code> 和 <code>port2</code>，也就是圖片中的兩部手機：</p>
+<pre><code class="javascript">console.log(msgChannel.port1);
+console.log(msgChannel.port2);</code></pre>
+<p><br/><br/></p>
+<h4 id="交付權限"><a href="#交付權限" class="headerlink" title="# 交付權限"></a># 交付權限</h4><p>在建立頻道之後，目前兩部手機(Port)都還是由目前的頁面所掌控，我們需要將其中一部手機(Port)傳遞給我們想建立通訊的另一個頁面中。</p>
+<pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
+&lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  let messagePort;
+  const iframe = document.querySelector(&quot;iframe&quot;);
+
+  iframe.addEventListener(&quot;load&quot;, function () {
+    // 建立頻道，並取得 port1、port2
+    const { port1, port2 } = new MessageChannel();
+
+    // 將 port1 存在全域變數中
+    messagePort = port1;
+
+    // 將 port2 送給 pageB
+    const msg = &quot;這是 pageA 送來的手機&quot;;
+    iframe.contentWindow.postMessage(msg, location.origin, [port2]);
+  });
+&lt;/script&gt;</code></pre>
+<p>雖然已經建立了 MessageChannel，但「送手機」的這一步還是要靠一般的方式送過去，而手機(Port)的部分必須放在之前介紹 <code>postMessage</code> 時沒說的第三個參數中：</p>
+<ul>
+<li>transfer： 這個參數必須是一個陣列，當中要放的是由 MessageChannel 所產生的 <code>port</code>，藉此產生兩個頁面的訊息通道。</li>
+</ul>
+<br/>
+
+<p>再來，pageA 還需要先做好準備，才不會漏接了 pageB 傳過來的訊息，也就是要監聽 <code>message</code> 事件，但是這次不再是用 <code>window</code> 監聽了，而是使用 <code>port1.onmessage</code>:</p>
+<pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
+&lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  let messagePort;
+  const iframe = document.querySelector(&quot;iframe&quot;);
+
+  iframe.addEventListener(&quot;load&quot;, function () {
+    const { port1, port2 } = new MessageChannel();
+    messagePort = port1;
+
+    // 用 port1 監聽 message 事件
+    messagePort.onmessage = function (event) {
+      console.log(event.data);
+    };
+
+    const msg = &quot;這是 pageA 送來的手機&quot;;
+    iframe.contentWindow.postMessage(msg, location.origin, [port2]);
+  });
+&lt;/script&gt;</code></pre>
+<br/>
+
+<p>再來就是要在 pageB 接收這個「寄送手機」的信息，只要在傳送端有在 <code>postMessage</code> 放入 <code>transfer</code> 這個參數，接收端就可以在 Event 物件中的 <code>ports</code> 屬性取得「這部手機」。</p>
+<p>在收到這部手機(Port)後，我們可以先存起來，然後為它建立事件，以便未來在頻道中收到 pageA 時才會對應的操作。除此之外，我們還可以順勢用這部手機馬上打回去，跟 pageA 說我們已經拿到手機(Port)了。</p>
+<pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
+&lt;div class=&quot;output&quot;&gt;default content&lt;/div&gt;
+&lt;script&gt;
+  let messagePort;
+  const output = document.querySelector(&quot;.output&quot;);
+  window.addEventListener(&quot;message&quot;, function (event) {
+    if (!event.ports || !event.ports.length) return;
+    // 將訊息文字顯示在頁面上
+    output.innerHTML = event.data;
+    // 將 port2 存在全域變數中
+    messagePort = event.ports[0];
+    // 用 port2 監聽 message 事件
+    messagePort.onmessage = function (port_event) {
+      output.innerHTML = port_event.data;
+    };
+    // 用 port2 送出訊息
+    messagePort.postMessage(&quot;收到手機囉！&quot;);
+  });
+&lt;/script&gt;</code></pre>
+<img src="post.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="頻道溝通"><a href="#頻道溝通" class="headerlink" title="# 頻道溝通"></a># 頻道溝通</h4><p>前面我們已經把前置作業全部都完善了，包括建立頻道、傳送埠口(Port)、事件監聽，接下來我們就可以享受信息暢通的專屬熱線了：</p>
+<pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
+&lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
+&lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  let messagePort;
+  // ... 省略其他 code
+  function sendMessage() {
+    messagePort.postMessage(&quot;來自 pageA 的訊息&quot;);
+  }
+&lt;/script&gt;</code></pre>
+<pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
+&lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
+&lt;div class=&quot;output&quot;&gt;default content&lt;/div&gt;
+&lt;script&gt;
+  let messagePort;
+  // ... 省略其他 code
+  function sendMessage() {
+    messagePort.postMessage(&quot;來自 pageB 的訊息&quot;);
+  }
+&lt;/script&gt;</code></pre>
+<img src="post2.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<p>是不是對 PostMessage 又有新的一層認識呢？但你以為就只有這樣嗎？其實明天還會介紹 BroadcastChannel，除了可以建立專屬熱線之外，還可以建立廣播系統！</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10276002" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/29/webApi/webApi-16/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/29/webApi/webApi-16/" data-id="clcsdp5lu003fneqw8vql5ee1" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/28/webApi/webApi-15/" class="article-nav-title">那些被忽略但很好用的 Web API / PostMessage</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/30/webApi/webApi-17/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / BroadcastChannel
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/29/webApi/webApi-16/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

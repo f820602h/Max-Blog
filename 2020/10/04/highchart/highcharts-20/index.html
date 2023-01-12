@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 其他實用 Method | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Highcharts 的方法（Method）當然不止昨天介紹的「資料更新」這種類型，還有很多方便好用的 Method，而且有了它們，我們就可以在頁面的其他程式邏輯中操作圖表，讓圖表和網頁更密切的結合。  全域 Method  當我們在網頁中引入 Highcharts 時，window 底下就會被註冊一個 Highcharts 物件，裡面會有許多函式可以使用，我習慣叫它們「全域方法」，因為你不需要建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 其他實用 Method">
+<meta property="og:url" content="https://maxleebk.com/2020/10/04/highchart/highcharts-20/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="Highcharts 的方法（Method）當然不止昨天介紹的「資料更新」這種類型，還有很多方便好用的 Method，而且有了它們，我們就可以在頁面的其他程式邏輯中操作圖表，讓圖表和網頁更密切的結合。  全域 Method  當我們在網頁中引入 Highcharts 時，window 底下就會被註冊一個 Highcharts 物件，裡面會有許多函式可以使用，我習慣叫它們「全域方法」，因為你不需要建">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-10-04T03:47:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.831Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-20" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 其他實用 Method
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-04T03:47:00.000Z" itemprop="datePublished">2020-10-04</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <p>Highcharts 的方法（Method）當然不止昨天介紹的「資料更新」這種類型，還有很多方便好用的 Method，而且有了它們，我們就可以在頁面的其他程式邏輯中操作圖表，讓圖表和網頁更密切的結合。</p>
+<hr>
+<h2 id="全域-Method"><a href="#全域-Method" class="headerlink" title="全域 Method"></a>全域 Method</h2><br/>
+
+<p>當我們在網頁中引入 Highcharts 時，<code>window</code> 底下就會被註冊一個 <code>Highcharts</code> 物件，裡面會有許多函式可以使用，我習慣叫它們「全域方法」，因為你不需要建立圖表就可以在網頁中的任何位置呼叫它們，像是最重要的<code>Highcharts.chart()</code> 就是其中一個全域方法。</p>
+<pre><code class="javascript">console.log(window.Highcharts);
+Highcharts.chart(container, options); // 建立一個新的圖表
+Highcharts.setOptions(options);       // 主題設定(全域性設定)</code></pre>
+<p>而除了 <code>chart()</code>、<code>setOptions()</code> 這些核心函式外，<code>Highcharts</code> 底下其實還有很多輔助類型的函式供我們使用，像是在「格式化屬性」中介紹的 <code>numberFormat()</code> 就屬於輔助性的函式，而下面要介紹的都是屬於這類的 Method。</p>
+<p><br/><br/></p>
+<h4 id="Highcharts-arrayMax-data-Highcharts-arrayMin-data"><a href="#Highcharts-arrayMax-data-Highcharts-arrayMin-data" class="headerlink" title="# Highcharts.arrayMax(data) / Highcharts.arrayMin(data)"></a># Highcharts.arrayMax(data) / Highcharts.arrayMin(data)</h4><p><code>data: Array</code></p>
+<p>這兩個 Method 非常的方便，可以在一組陣列裡找到最大／最小的值並將它返回。</p>
+<pre><code class="javascript">console.log(Highcharts.arrayMax([3, 9, 4, 11, 2])); // 11</code></pre>
+<br/>
+<br/>
+
+<h4 id="Highcharts-fireEvent-el-event"><a href="#Highcharts-fireEvent-el-event" class="headerlink" title="# Highcharts.fireEvent(el, event)"></a># Highcharts.fireEvent(el, event)</h4><p><code>el: targetObject</code> <code>event: String</code> </p>
+<p>這個 Method 可以讓你主動觸發事件，第一個參數要傳入要觸發事件的目標，第二個參數則是事件名稱。</p>
+<pre><code class="javascript">function clickHandle() {
+  console.log(&quot;click fire&quot;);
+};
+var myChart = Highcharts.chart(container, {
+  series: [{ data: [1,2,3], events: clickHandle }]        
+});
+
+Highcharts.fireEvent(myChart.series[0], &quot;click&quot;);
+// &quot;click fire&quot;</code></pre>
+<br/>
+<br/>
+
+<h4 id="Highcharts-merge-obj-obj-…"><a href="#Highcharts-merge-obj-obj-…" class="headerlink" title="# Highcharts.merge(obj, obj,…)"></a># Highcharts.merge(obj, obj,…)</h4><p><code>obj: Object</code> </p>
+<p>你可用這個 Method 來把多個物件進行深層合併，就像主題設定、資料更新 Method 作的事情一樣。</p>
+<pre><code class="javascript">let obj1 = { a: 1, b: { x: 5, y: 10 } };
+let obj2 = { b: { z: 15 }, c: 2 };
+let obj3 = { a: 10, c: 20, d: 3 };
+
+let newObj = Highcharts.merge(obj1, obj2, obj3);
+// { a: 10, b: { x: 5, y: 10, z: 15}, c: 20, d: 3 }</code></pre>
+<br/>
+
+<blockquote>
+<p>全域方法還有不少，但這邊就介紹個功能比較實用的，想看全部可以到  <strong><a href="https://api.highcharts.com/class-reference/Highcharts#toc12" target="_blank" rel="noopener">官方文件</a></strong>。</p>
+</blockquote>
+<hr>
+<h2 id="整體圖表-Method"><a href="#整體圖表-Method" class="headerlink" title="整體圖表 Method"></a>整體圖表 Method</h2><br/>
+
+<blockquote>
+<p>整體圖表的 Method 昨天有介紹過了，必須要先用 <code>Highcharts.chart()</code> 建立一個圖表後，才能透過「圖表物件」去呼叫下面這些方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="chart-setSize-width-height"><a href="#chart-setSize-width-height" class="headerlink" title="# chart.setSize(width, height)"></a># chart.setSize(width, height)</h4><p><code>width: Number</code> <code>height: Number</code></p>
+<p>這個 Method 可以改變圖表的寬高尺寸，單純卻實用的功能。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, options);
+chart.setSize(800, 500);
+chart.setSize(800); // 只更改寬度
+chart.setSize(undefined, 800); // 只更改高度</code></pre>
+<br/>
+<br/>
+
+<h4 id="chart-setTitle-options-chart-setSubtitle-options"><a href="#chart-setTitle-options-chart-setSubtitle-options" class="headerlink" title="# chart.setTitle(options) / chart.setSubtitle(options)"></a># chart.setTitle(options) / chart.setSubtitle(options)</h4><p><code>options: Object</code></p>
+<p>這兩 Method 是用來更新主標題／副標題的設定的，只要把想更新的設定物件作為參數傳入即可。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, options);
+chart.setTitle({
+  text: &quot;新的標題文字&quot;,
+  style: { color: &quot;red&quot; }
+});</code></pre>
+<br/>
+<br/>
+
+<h4 id="chart-destroy"><a href="#chart-destroy" class="headerlink" title="# chart.destroy()"></a># chart.destroy()</h4><p>如果你想要將一整個圖表移除可以呼叫這個 Method。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, options);
+chart.destroy();</code></pre>
+<hr>
+<h2 id="數據列-Method"><a href="#數據列-Method" class="headerlink" title="數據列 Method"></a>數據列 Method</h2><br/>
+
+<blockquote>
+<p>數據列 Method 也和昨天說明的一樣，必須要取得你要操作的「數據列物件」後才能呼叫其方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="series-setVisible-visible"><a href="#series-setVisible-visible" class="headerlink" title="# series.setVisible(visible)"></a># series.setVisible(visible)</h4><p><code>visible: Boolean|undefined</code></p>
+<p>這個 Method 可以用來顯示或隱藏數據列，傳入 <code>true</code> 作為參數則顯示，傳入 <code>false</code> 則隱藏，如果不傳參就會自動進行切換。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{ data: [1, 2, 3] }]
+});
+chart.series[0].setVisible(false); // 隱藏，等同 hide()
+chart.series[0].setVisible(true); // 顯示，等同 show()
+chart.series[0].setVisible(); // 自動切換 顯示&lt;=&gt;隱藏</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-getName"><a href="#series-getName" class="headerlink" title="# series.getName()"></a># series.getName()</h4><p>一個很簡單的 Method，呼叫後可以取得該數據列的名字。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [
+    { name: &quot;數據列A&quot;, data: [1, 2, 3] },
+    { name: &quot;數據列B&quot;, data: [1, 2, 3] }
+  ]
+});
+let result = chart.series.map(series =&gt; series.getName());
+// [&quot;數據列A&quot;, &quot;數據列B&quot;]</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-is-type"><a href="#series-is-type" class="headerlink" title="# series.is(type)"></a># series.is(type)</h4><p><code>visible: String</code></p>
+<p>也是一個很單純的 Method，可以幫你判斷一組數據列的類型，例如以 <code>&quot;column&quot;</code> 作為參數，便會判斷此數據列是否為柱狀圖並回傳布林值。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  chart: { type: &quot;column&quot; }
+  series: [
+    { type: &quot;line&quot;, data: [1, 2, 3] },
+    { data: [1, 2, 3] }
+  ]
+});
+let result = chart.series.map(series =&gt; series.is(&quot;column&quot;));
+// [false, true]</code></pre>
+<hr>
+<h2 id="數據點-Method"><a href="#數據點-Method" class="headerlink" title="數據點 Method"></a>數據點 Method</h2><br/>
+
+<blockquote>
+<p>數據點 Method 也是一樣，必須要取得你要操作的「數據點物件」後才能呼叫其方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="point-getClassName"><a href="#point-getClassName" class="headerlink" title="# point.getClassName()"></a># point.getClassName()</h4><p>假如你有為數據點設定 <code>className</code> 屬性，那你就可以透過這個 Method 來得到其屬性值。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{ 
+    data: [
+      {className: &quot;point-1&quot;, y: 10},
+      {className: &quot;point-2&quot;, y: 20},
+    ] 
+  }]
+});
+let result = chart.series[0].data.map(point =&gt; point.getClassName());
+// [&quot;point-1&quot;, &quot;point-2&quot;]</code></pre>
+<br/>
+<br/>
+
+<h4 id="point-onMouseOver"><a href="#point-onMouseOver" class="headerlink" title="# point.onMouseOver()"></a># point.onMouseOver()</h4><p>這個 Method 可以主動出發數據點的 <code>mouseOver</code> 事件，而且就算你沒有設定事件屬性，依然會使數據點進入聚焦狀態。</p>
+<pre><code class="javascript">chart.series[0].data[0].onMouseOver();</code></pre>
+<br/>
+<br/>
+
+<h4 id="point-select"><a href="#point-select" class="headerlink" title="# point.select()"></a># point.select()</h4><p>這個 Method 可以使用來選取數據點，如果有設定 <code>select</code> 事件的話也會被觸發，而且可以無視 <code>allowPointSelect</code> 的設定。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{
+    allowPointSelect: false,
+    data: [1, 2, 3, 4]
+  }]
+});
+chart.series[0].data[3].select(); // 依然可以選取數據點</code></pre>
+<p><br/><br/></p>
+<p>今天介紹的 Method 其實不多，而且使用方式也不是非常複雜，所以就不特別附上範例了。</p>
+<p>隨著這個章節的結束，我們也算是掌握了 Highcharts 的核心基礎，包括圖表元素、主題、響應式設定..等「基本API」，以及事件處理、圖表操作的「進階API」。而後面幾天的時間則會開始分享一些小技巧以及進階圖表的實作，透過簡單的範例來讓大家更熟悉 Highcharts 的應用。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10248806" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/04/highchart/highcharts-20/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/04/highchart/highcharts-20/" data-id="clcsdp5ks001vneqw7mf9h3az" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/03/highchart/highcharts-19/" class="article-nav-title">資視就是力量 - Highcharts / 資料更新 Method</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/05/highchart/highcharts-21/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 圖表連動
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/04/highchart/highcharts-20/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

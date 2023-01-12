@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 圖表的意義 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="資料視覺化是一門藝術也是一門科學，它藉由人類喜愛以視覺理解資訊的特性來增強我們資料處理的效率。  上一篇文章裡已經知道資料視覺化大大影響現在網頁開發的趨勢，而今天就要正式使用 Highcharts 來將資料做成圖表，同時也讓大家了解為何圖表對於資料的理解有非常大的幫助。  使用情境  如果把資料比喻成故事，那視覺化就是我們說故事的手法，由此可知「資料」其實才是資料視覺化中的主角，而為了讓我們的資">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 圖表的意義">
+<meta property="og:url" content="https://maxleebk.com/2020/09/16/highchart/highcharts-2/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="資料視覺化是一門藝術也是一門科學，它藉由人類喜愛以視覺理解資訊的特性來增強我們資料處理的效率。  上一篇文章裡已經知道資料視覺化大大影響現在網頁開發的趨勢，而今天就要正式使用 Highcharts 來將資料做成圖表，同時也讓大家了解為何圖表對於資料的理解有非常大的幫助。  使用情境  如果把資料比喻成故事，那視覺化就是我們說故事的手法，由此可知「資料」其實才是資料視覺化中的主角，而為了讓我們的資">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/16/highchart/highcharts-2/chart.png">
+<meta property="article:published_time" content="2020-09-16T01:25:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.831Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/16/highchart/highcharts-2/chart.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 圖表的意義
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-16T01:25:00.000Z" itemprop="datePublished">2020-09-16</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>資料視覺化是一門藝術也是一門科學，它藉由人類喜愛以視覺理解資訊的特性來增強我們資料處理的效率。</p>
+</blockquote>
+<p>上一篇文章裡已經知道資料視覺化大大影響現在網頁開發的趨勢，而今天就要正式使用 Highcharts 來將資料做成圖表，同時也讓大家了解為何圖表對於資料的理解有非常大的幫助。</p>
+<hr>
+<h2 id="使用情境"><a href="#使用情境" class="headerlink" title="使用情境"></a>使用情境</h2><br/>
+
+<p>如果把資料比喻成故事，那視覺化就是我們說故事的手法，由此可知「資料」其實才是資料視覺化中的主角，而為了讓我們的資料更有實際意義，我幫大家模擬了一個情境：</p>
+<p><strong><em>假設公司的人資想透過員工資料來統計公司內部的年齡分佈，他經過一連串的計算後給了你下面的表格，並請你幫他生成柱狀圖表，你會怎麼做？</em></strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">18-24 歲</th>
+<th align="center">25-29 歲</th>
+<th align="center">30-34 歲</th>
+<th align="center">35-39 歲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">12 人</td>
+<td align="center">18 人</td>
+<td align="center">22 人</td>
+<td align="center">25 人</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">40-44 歲</th>
+<th align="center">45-49 歲</th>
+<th align="center">50-54 歲</th>
+<th align="center">55 歲+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">32 人</td>
+<td align="center">35 人</td>
+<td align="center">26 人</td>
+<td align="center">18 人</td>
+</tr>
+</tbody></table>
+<p><del>其實你可以請他自己用 PowerPoint 做</del>，喂～不是啦，我們要幫這位人資利用 Highcharts 來將這些數據繪製成圖表並顯示在網頁上。</p>
+<p>此時，你也可以試想一下要是沒有圖表的話，光看表格你能分析出這份資料的含義嗎？</p>
+<hr>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><br/>
+
+<p>如果你只是要一個簡單的圖表，沒有特別的設計與互動需求，那其實簡單幾個步驟 Highcharts 就能讓你的資料圖像化。</p>
+<h4 id="1-引入-Highcharts"><a href="#1-引入-Highcharts" class="headerlink" title="1. 引入 Highcharts"></a>1. 引入 Highcharts</h4><p>你可以用 CDN 的方式將 Highcharts 的 js 檔引入，或是到 <a href="https://www.highcharts.com/blog/download/" target="_blank" rel="noopener">官網</a> 下載放進專案裡。</p>
+<pre><code class="html">&lt;script src=&quot;http://cdn.highcharts.com.cn/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;</code></pre>
+<br/>
+
+<h4 id="2-新增圖表容器"><a href="#2-新增圖表容器" class="headerlink" title="2. 新增圖表容器"></a>2. 新增圖表容器</h4><p>然後你需要一個容器來放置你的圖表，你可以給它設定寬度以免圖表佔滿整個畫面。</p>
+<pre><code class="html">&lt;div id=&quot;container&quot; style=&quot;max-width: 600px;&quot;&gt;&lt;/div&gt;</code></pre>
+<br/>
+
+<h4 id="3-準備好你的資料"><a href="#3-準備好你的資料" class="headerlink" title="3. 準備好你的資料"></a>3. 準備好你的資料</h4><p>根據我們的情境，我們可以先把表格資料先整理成物件：</p>
+<pre><code class="javascript">const data = {
+  &quot;18-24歲&quot;: 12,
+  &quot;25-29歲&quot;: 18,
+  &quot;30-34歲&quot;: 22,
+  &quot;35-39歲&quot;: 25,
+  &quot;40-44歲&quot;: 32,
+  &quot;45-49歲&quot;: 35,
+  &quot;50-54歲&quot;: 26,
+  &quot;55歲+&quot;: 18,
+};</code></pre>
+<br/>
+
+<h4 id="4-繪製表格"><a href="#4-繪製表格" class="headerlink" title="4. 繪製表格"></a>4. 繪製表格</h4><p>接下來我們只要根據 Highcharts 制定好的方法將資料帶入並設定，圖表就完成啦！<br>若你對下面的程式碼一知半解的話先不用太在意，我們明天會好好解釋的。</p>
+<pre><code class="javascript">const container = document.querySelector(&quot;#container&quot;);
+const xAxisCate = Object.keys(data);
+const seriesData = xAxisCate.map((key) =&gt; data[key]);
+
+var myChart = Highcharts.chart(container, {
+  chart: { type: &quot;column&quot; },
+  title: { text: &quot;公司員工年齡分佈&quot; },
+  xAxis: { categories: xAxisCate },
+  yAxis: {
+    title: { text: &quot;人數&quot; },
+  },
+  series: [
+    {
+      name: &quot;XX公司員工&quot;,
+      data: seriesData,
+    },
+  ],
+});</code></pre>
+<img src="chart.png" style="max-width: 600px; margin: 24px auto;" />
+
+<h2 id="資料視覺化的意義"><a href="#資料視覺化的意義" class="headerlink" title="資料視覺化的意義"></a>資料視覺化的意義</h2><br/>
+
+<p>這麼一來我們就完成資料視覺化的任務了，而仔細一看會發現這張柱狀圖的圖峰偏右，表示員工的平均年齡偏高，若隨著員工年老退休，公司可能會面臨技術或生產力的下降，所以這位人資應該要想辦法吸引年輕的求職者來公司應徵了。</p>
+<p>想想，若光看數據表格的話你需要花多久時間看出員工年齡的趨勢，並作出上面這段結論呢？而這就是圖表存在的意義，讓我們能夠快速的看出資料背後的資訊。</p>
+<br/>
+
+<p>今日成果：<strong><a href="https://codepen.io/max-lee/pen/BaKwdyN" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/BaKwdyN</a></strong></p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10237584" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/16/highchart/highcharts-2/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/16/highchart/highcharts-2/" data-id="clcsdp5ko001tneqw3u9ta2ea" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/15/highchart/highcharts-1/" class="article-nav-title">資視就是力量 - Highcharts / 資料視覺化</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/17/highchart/highcharts-3/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 圖表的組成
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/16/highchart/highcharts-2/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

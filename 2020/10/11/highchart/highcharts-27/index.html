@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / Vue 資料綁定 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="昨天我們成功安裝 Highcharts-Vue 並繪製出一個基本的圖表，不過既然都已經使用 Vue 了，我們應該要好好運用「資料綁定」的概念，也就是當資料變動時，我們不需要再額外操作圖表，圖表就會自己動態的更新變化。  Data Binding  我們在「資料更新 Method」有說過，在網頁中資料不會總是靜態的，所以當資料變動時，我們需要透過一些 Method 的呼叫來更新圖表，不過當我們使用前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; Vue 資料綁定">
+<meta property="og:url" content="https://maxleebk.com/2020/10/11/highchart/highcharts-27/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="昨天我們成功安裝 Highcharts-Vue 並繪製出一個基本的圖表，不過既然都已經使用 Vue 了，我們應該要好好運用「資料綁定」的概念，也就是當資料變動時，我們不需要再額外操作圖表，圖表就會自己動態的更新變化。  Data Binding  我們在「資料更新 Method」有說過，在網頁中資料不會總是靜態的，所以當資料變動時，我們需要透過一些 Method 的呼叫來更新圖表，不過當我們使用前">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/11/highchart/highcharts-27/vue-chart.png">
+<meta property="og:image" content="https://maxleebk.com/2020/10/11/highchart/highcharts-27/vue-binding.gif">
+<meta property="article:published_time" content="2020-10-11T13:22:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.855Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/11/highchart/highcharts-27/vue-chart.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-27" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / Vue 資料綁定
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-11T13:22:00.000Z" itemprop="datePublished">2020-10-11</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <p>昨天我們成功安裝 Highcharts-Vue 並繪製出一個基本的圖表，不過既然都已經使用 Vue 了，我們應該要好好運用「資料綁定」的概念，也就是當資料變動時，我們不需要再額外操作圖表，圖表就會自己動態的更新變化。</p>
+<hr>
+<h2 id="Data-Binding"><a href="#Data-Binding" class="headerlink" title="Data Binding"></a>Data Binding</h2><br/>
+
+<p>我們在「資料更新 Method」有說過，在網頁中資料不會總是靜態的，所以當資料變動時，我們需要透過一些 Method 的呼叫來更新圖表，不過當我們使用前端框架後，圖表應該要可以自己響應資料的變動進而更新畫面，那下面我們就來把昨天的 <code>Chart.vue</code> 改寫一下。</p>
+<br/>
+
+<h4 id="1-資料形式調整"><a href="#1-資料形式調整" class="headerlink" title="1.資料形式調整"></a>1.資料形式調整</h4><p>首先要把資料改寫一下，照理說原始資料應該比較難像昨天那樣是已經處理過的模樣，所以我們另外用 <code>data</code> 物件來模擬從後端拿到的資料，然後將 <code>chartOptions</code> 裡面的 <code>xAxis.categories</code> 和 <code>series.data</code> 給清空，因為這兩個屬性的值應該是原始資料處理過後才拿得到的。</p>
+<pre><code class="javascript">data() {
+  return {
+    data: {
+      &quot;18-24歲&quot;: 12,
+      &quot;25-29歲&quot;: 18,
+      &quot;30-34歲&quot;: 22,
+      &quot;35-39歲&quot;: 25,
+      &quot;40-44歲&quot;: 32,
+      &quot;45-49歲&quot;: 35,
+      &quot;50-54歲&quot;: 26,
+      &quot;55歲+&quot;: 18
+    },
+    chartOptions: {
+      chart: { type: &quot;column&quot; },
+      title: { text: &quot;公司員工年齡分佈&quot; },
+      xAxis: { categories: [] },
+      yAxis: { 
+        title: { text: &quot;人數&quot; }
+      },
+      series: [{ 
+        name: &quot;XX公司員工&quot;,
+        data: []
+      }]
+    }
+  };
+}</code></pre>
+<br/>
+<br/>
+
+<h4 id="2-撰寫-computed"><a href="#2-撰寫-computed" class="headerlink" title="2.撰寫 computed"></a>2.撰寫 computed</h4><p>那因為現在原始資料的格式並不是我們要的，而且未來資料還有可能會變動，所以可以選擇用 Vue 的 <code>computed</code> 來幫我們處理資料，而且它也會在資料變動時自動更新。</p>
+<p>那其中 <code>xAxisCate</code> 和 <code>seriesData</code> 就是用來處理資料的，而 <code>options</code> 則是將資料與圖表設定進行結合，最後導出一個完整的 <code>options</code> 物件。</p>
+<pre><code class="javascript">computed: {
+  xAxisCate() {
+    return Object.keys(this.data);
+  },
+  seriesData() {
+    return Object.values(this.data);
+  },
+  options() {
+    let options = Object.assign(this.chartOptions, {});
+    options.xAxis.categories = this.xAxisCate;
+    options.series[0].data = this.seriesData;
+    return options;
+  }
+}</code></pre>
+<br/>
+<br/>
+
+<h4 id="3-資料綁定"><a href="#3-資料綁定" class="headerlink" title="3.資料綁定"></a>3.資料綁定</h4><p>有了 <code>options</code> 物件後，就可以把它作為 <code>prop</code> 傳入 <code>&lt;highcharts&gt;</code>，然後就可以看到跟昨天一樣的結果了。</p>
+<pre><code class="html">&lt;template&gt;
+  &lt;highcharts :options=&quot;options&quot;&gt;&lt;/highcharts&gt;
+&lt;/template&gt;</code></pre>
+<img src="vue-chart.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+<br/>
+
+<h4 id="4-資料變動"><a href="#4-資料變動" class="headerlink" title="4.資料變動"></a>4.資料變動</h4><p>經過前面幾個步驟後，我們已經將資料與圖表做了綁定，接下來就要看看在資料改變時，圖表是否會更新畫面了。我們可以在畫面上新增以幾個按鈕，並綁定事件。</p>
+<pre><code class="html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;highcharts :options=&quot;chartOptions&quot;&gt;&lt;/highcharts&gt;
+    &lt;button @click=&quot;changeData&quot;&gt;改變資料&lt;/button&gt;
+    &lt;button @click=&quot;changeType(&#39;line&#39;)&quot;&gt;改為折線圖&lt;/button&gt;
+    &lt;button @click=&quot;changeType(&#39;column&#39;)&quot;&gt;改為柱狀圖&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+<p>我們分別為按鈕綁定改變原始資料和圖表設定的 <code>methods</code>，看看圖表能不能在點擊按鈕後成功更新。</p>
+<pre><code class="javascript">methods: {
+  changeData() {
+    this.xAxisCate.forEach((key) =&gt; {
+      this.data[key] = Math.floor(Math.random() * 20);
+    });
+  },
+  changeType(type) {
+    this.options.chart.type = type;
+  }
+}</code></pre>
+<p>實際測試後，發現圖表確實的在資料發生變動的時候自動響應了新的圖表設定，並且根據設定進行了畫面上的更新。</p>
+<img src="vue-binding.gif" style="max-width: 800px; margin: 16px auto 0;" />
+
+<p><br/><br/></p>
+<p>今天算是真正使用上了 Vue 的特性來繪製 Highcharts 的圖表，透過資料綁定的方式讓圖表可以響應資料的改變，讓我們可以專注在資料的處理，而不用一再的操作圖表或呼叫 Method。</p>
+<p>不過我今天的範例算是相當粗略，目的只在於向大家展示「資料綁定」的概念，假如你有 Vue 的開發經驗，肯定可以大幅改善這個元件的彈性、重用性。而明後兩天我也會透過比較完整的應用來展示更多 Highcharts-Vue 的使用方式。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10252156" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/11/highchart/highcharts-27/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/11/highchart/highcharts-27/" data-id="clcsdp5lc002cneqw7738bxev" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/10/highchart/highcharts-26/" class="article-nav-title">資視就是力量 - Highcharts / Vue 建立圖表</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/12/highchart/highcharts-28/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / Vue 做個記帳本 (上)
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/11/highchart/highcharts-27/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

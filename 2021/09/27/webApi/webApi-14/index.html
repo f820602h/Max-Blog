@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / CustomEvent | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="自己的事件自己決定。  網頁最重要的兩件事，資訊顯示與使用者交互，而使用者交互在頁面中所代表的行為就是「監聽事件」與「觸發事件」，相信這是大家在熟悉不過的了，click、input、blur、scroll…等等，幾乎充斥在我們的網站中，但除了這些常見的、預設的事件之外，其實我們也可以自己創造出全新的事件。  # Window.CustomEventCustomEvent 本身是一個建構函式，也就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; CustomEvent">
+<meta property="og:url" content="https://maxleebk.com/2021/09/27/webApi/webApi-14/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="自己的事件自己決定。  網頁最重要的兩件事，資訊顯示與使用者交互，而使用者交互在頁面中所代表的行為就是「監聽事件」與「觸發事件」，相信這是大家在熟悉不過的了，click、input、blur、scroll…等等，幾乎充斥在我們的網站中，但除了這些常見的、預設的事件之外，其實我們也可以自己創造出全新的事件。  # Window.CustomEventCustomEvent 本身是一個建構函式，也就">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-09-27T13:03:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-14" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / CustomEvent
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-27T13:03:00.000Z" itemprop="datePublished">2021-09-27</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>自己的事件自己決定。</p>
+</blockquote>
+<p>網頁最重要的兩件事，資訊顯示與使用者交互，而使用者交互在頁面中所代表的行為就是「監聽事件」與「觸發事件」，相信這是大家在熟悉不過的了，<code>click</code>、<code>input</code>、<code>blur</code>、<code>scroll</code>…等等，幾乎充斥在我們的網站中，但除了這些常見的、預設的事件之外，其實我們也可以自己創造出全新的事件。</p>
+<hr>
+<h4 id="Window-CustomEvent"><a href="#Window-CustomEvent" class="headerlink" title="# Window.CustomEvent"></a># Window.CustomEvent</h4><p>CustomEvent 本身是一個建構函式，也就是我們常講的 <code>class</code>，當我們想要建立自訂事件時，就透過 <code>new</code> 關鍵字來呼叫它即可，並且要記得傳入代表事件名稱的字串，另外還可以傳入第二個參數來設定事件觸發時傳遞的資料。</p>
+<p>要注意的是，用來設定資料的第二個物件必須要是一個物件，且要傳遞的資料必須設定在該物件的 <code>detail</code> 屬性底下。</p>
+<pre><code class="javascript">const customEvent = new CustomEvent(&quot;myEvent&quot;, {
+  detail: { customData: &quot;maxLee&quot; },
+});</code></pre>
+<p>而當有 DOM 元素需要綁定這個事件時，一樣使用 <code>addEventListener</code> 來處理即可，而其中事件 Callback 會拿到的 Event 物件就會多一個 <code>detail</code> 的屬性，該屬性就會是我們當初設定的事件傳遞資料。</p>
+<pre><code class="javascript">const customEvent = new CustomEvent(&quot;myEvent&quot;, {
+  detail: { customData: &quot;maxLee&quot; },
+});
+document.querySelector(&quot;#element&quot;).addEventListener(&quot;myEvent&quot;, function (event) {
+  console.log(event.detail); // { customData: &quot;maxLee&quot; }
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="EventTarget-dispatchEvent"><a href="#EventTarget-dispatchEvent" class="headerlink" title="# EventTarget.dispatchEvent"></a># EventTarget.dispatchEvent</h4><p>與 CustomEvent 最極其相關的 API 就是 DispatchEvent 了，它是一個可以讓我們主動觸發事件的方法，當我們創建並綁定了一個事件後，就必須要倚靠它來幫我們啟動事件了。</p>
+<p>其中 EventTarget 是一個代稱，它所指的是綁定事件的 DOM 對象，例如以下程式碼中，<code>div</code> 就是 EventTarget：</p>
+<pre><code class="javascript">const customEvent = new CustomEvent(&quot;myEvent&quot;, {
+  detail: { customData: &quot;maxLee&quot; },
+});
+const div = document.querySelector(&quot;div&quot;);
+div.addEventListener(&quot;myEvent&quot;, function (e) {
+  console.log(event.detail);
+});</code></pre>
+<p>此時上面的 <code>div</code> 已經被綁上了我們自訂的 <code>myEvent</code> 事件，這時候我們就可以使用 <code>dispatchEvent</code> 來主動觸發事件，只要在呼叫它時傳入 CustomEvent 物件即可：</p>
+<pre><code class="javascript">const customEvent = new CustomEvent(&quot;myEvent&quot;, {
+  detail: { customData: &quot;maxLee&quot; },
+});
+const div = document.querySelector(&quot;div&quot;);
+div.addEventListener(&quot;myEvent&quot;, function (e) {
+  console.log(event.detail);
+});
+div.dispatchEvent(customEvent);</code></pre>
+<p><br/><br/></p>
+<h4 id="運用場景"><a href="#運用場景" class="headerlink" title="# 運用場景"></a># 運用場景</h4><p>認識了 CustomEvent 後，我們來假設一個需求：<strong><em>「今天有個頁面，在進入時會向後端 request 資料，當資料回來後，我們要更改頁面的標題及一個 list 的內容」</em></strong>，當然了，如果使用前端框架的話，這是一個非常簡單的事情，但我們先假如這次專案不允許使用框架，那一般的寫法可能會是這樣：</p>
+<pre><code class="javascript">function updateTitle(title) {
+  const title = document.querySelector(&quot;h1&quot;);
+  title.textContent = title;
+}
+
+function updateList(list) {
+  const ul = document.querySelector(&quot;ul&quot;);
+  ul.innerHtml = &quot;&quot;;
+  list.forEach((item) =&gt; {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = item;
+    ul.appendChild(li);
+  });
+}
+
+function onDataFetch(res) {
+  updateTitle(res.data.title);
+  updateList(res.data.list);
+}
+
+// 如果不認識 axios，可以把它當成一個請求資料的 Promise 即可
+axios.get(&quot;https://backend/data&quot;).then(onDataFetch);</code></pre>
+<p>以上這樣的寫法其實已經算是盡量避免耦合了，因為還額外包裝了一支 <code>onDataFetch</code> 函式來獨立處理取得資料後的事情，但如果未來還有其他的事情要處理，就必須再加進這個函式中，而且其他人在閱讀時，可能會誤以為裡面執行內容可能有順序性。那接下來我們看看使用 CustomEvent 可以怎麼寫：</p>
+<pre><code class="javascript">let dataFetchEventTarget = [];
+
+function addDataFetchEvent(element, callback) {
+  dataFetchEventTarget.push(element);
+  element.addEventListener(&quot;dataFetch&quot;, callback);
+}
+
+addDataFetchEvent(document.querySelector(&quot;h1&quot;), function (e) {
+  this.textContent = e.detail.title;
+});
+
+addDataFetchEvent(document.querySelector(&quot;ul&quot;), function (e) {
+  this.innerHtml = &quot;&quot;;
+  e.detail.list.forEach((item) =&gt; {
+    const li = document.createElement(&quot;li&quot;);
+    li.textContent = item;
+    this.appendChild(li);
+  });
+});
+
+// 用 setTimeout 來模擬請求資料
+setTimeout(() =&gt; {
+  const dataFetchEvent = new CustomEvent(&quot;dataFetch&quot;, {
+    detail: res.data,
+  });
+  dataFetchEventTarget.forEach((target) =&gt; {
+    target.dispatchEvent(dataFetchEvent);
+  });
+}, 3000);</code></pre>
+<p>首先我們先宣告了一個陣列 <code>dataFetchEventTarget</code>，打算來存放所有有註冊事件的元素，然後寫了一個函式 <code>addDataFetchEvent</code> 來註冊事件，並且同時將元素丟進陣列中，直到我們將資料請求回來後開始建立自訂事件，並且把 <code>dataFetchEventTarget</code> 中的元素一一取出並 <code>dispatchEvent</code> 事件。</p>
+<p>這樣寫法的好處在於，「取得資料」跟「後續行為」完全沒有耦合，「註冊事件」與「觸發事件」完全是獨立的兩件事，所以未來如果有其他地方註冊了這個事件，我們也不需要額外處理任何事，等到事件觸發了，Callback 自然會去執行。</p>
+<p><br/><br/></p>
+<p>一般來說，沒有特別去設計的話，大家都會使用第一種方式吧？但其實使用 CustomEvent 的話，會很接近 Design Patterns 中的觀察者模式(Observer Pattern)，其實是一個非常不錯的撰寫方式，大家可以在未來的開發中嘗試看看。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10274924" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/27/webApi/webApi-14/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/27/webApi/webApi-14/" data-id="clcsdp5lq003aneqwehxs3m83" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/26/webApi/webApi-13/" class="article-nav-title">那些被忽略但很好用的 Web API / SessionStorage</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/28/webApi/webApi-15/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / PostMessage
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/27/webApi/webApi-14/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

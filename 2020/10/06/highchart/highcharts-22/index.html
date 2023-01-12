@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 雙層圓餅圖 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;vYGqGJj  今天要延續昨天「公司部門年齡分佈與人數佔比」的主題，把昨天需要點擊柱狀圖才能看到的「年齡佔比圓餅圖」和「部門人數佔比圓餅圖」合併在同一張圖表裡。  實作目標    就如文章開頭所說，我們今天要將兩個圓餅圖合併起來，而最後的成果就出現像上圖分為內外層的雙層圓餅圖，而「雙層圓餅圖」的設定其實沒有想像的那麼複雜">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 雙層圓餅圖">
+<meta property="og:url" content="https://maxleebk.com/2020/10/06/highchart/highcharts-22/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;vYGqGJj  今天要延續昨天「公司部門年齡分佈與人數佔比」的主題，把昨天需要點擊柱狀圖才能看到的「年齡佔比圓餅圖」和「部門人數佔比圓餅圖」合併在同一張圖表裡。  實作目標    就如文章開頭所說，我們今天要將兩個圓餅圖合併起來，而最後的成果就出現像上圖分為內外層的雙層圓餅圖，而「雙層圓餅圖」的設定其實沒有想像的那麼複雜">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/06/highchart/highcharts-22/case.png">
+<meta property="og:image" content="https://maxleebk.com/2020/10/06/highchart/highcharts-22/inner.png">
+<meta property="article:published_time" content="2020-10-06T06:15:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.843Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/06/highchart/highcharts-22/case.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-22" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 雙層圓餅圖
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-06T06:15:00.000Z" itemprop="datePublished">2020-10-06</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/vYGqGJj" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/vYGqGJj</a></strong></p>
+</blockquote>
+<p>今天要延續昨天「公司部門年齡分佈與人數佔比」的主題，把昨天需要點擊柱狀圖才能看到的「年齡佔比圓餅圖」和「部門人數佔比圓餅圖」合併在同一張圖表裡。</p>
+<hr>
+<h2 id="實作目標"><a href="#實作目標" class="headerlink" title="實作目標"></a>實作目標</h2><img src="case.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+
+<p>就如文章開頭所說，我們今天要將兩個圓餅圖合併起來，而最後的成果就出現像上圖分為內外層的雙層圓餅圖，而「雙層圓餅圖」的設定其實沒有想像的那麼複雜，下面我們就來一步步完成它吧。而事前的資料也和昨天一樣：</p>
+<pre><code class="javascript">const categories = [&quot;18-24&quot;, &quot;25-29&quot;, &quot;30-34&quot;, &quot;35-39&quot;, &quot;40-44&quot;, &quot;45-49&quot;, &quot;50-54&quot;, &quot;55+&quot;];
+const colors = [ &quot;rgb(119, 146, 174)&quot;, &quot;rgb(83, 119, 122)&quot;, &quot;rgb(99, 99, 104)&quot;];
+const data = {
+  &quot;工程部&quot;: [24, 37, 30, 24, 18, 11, 3, 2],
+  &quot;銷售部&quot;: [23, 30, 35, 28, 10, 8, 2, 1],
+  &quot;企劃部&quot;: [22, 32, 27, 25, 16, 6, 4, 3]
+};</code></pre>
+<hr>
+<h2 id="動手開發"><a href="#動手開發" class="headerlink" title="動手開發"></a>動手開發</h2><br/>
+
+<h4 id="1-容器準備"><a href="#1-容器準備" class="headerlink" title="1. 容器準備"></a>1. 容器準備</h4><p>既然是把兩個圓餅圖合併，那容器當然只需要一個，先把它準備好。</p>
+<pre><code class="html">&lt;div id=&quot;pie&quot;&gt;&lt;/div&gt;</code></pre>
+<br/>
+<br/>
+
+<h4 id="2-資料準備"><a href="#2-資料準備" class="headerlink" title="2. 資料準備"></a>2. 資料準備</h4><p>再來也是要先把圖表資料給準備好，利用原始資料來 Mapping 出我們想要的資料格式，內層的資料會是部門的人數加總，外層則是將各部門的八個年齡層分散開來，也就是總共會有二十四個數據點。</p>
+<pre><code class="javascript">const dataKeys = Object.keys(data);
+
+const innerPiePoints = dataKeys.map((department, index) =&gt; ({
+  name: department,
+  color: colors[index],
+  y: data[department].reduce((arr, val) =&gt; arr + val)
+}));
+
+const outerPiePoints = dataKeys.map((department, sIndex) =&gt; {
+  return data[department].map((value, pIndex) =&gt; ({
+    name: categories[pIndex],
+    color: rgbToRgba(colors[sIndex], 1 - pIndex * 0.05)
+    y: value,
+  }))
+}).flat();</code></pre>
+<p>另外為了讓外層的扇形有漸層顏色，一樣要用到昨天的顏色轉換函式，就偷偷把它拿過來使用吧。</p>
+<pre><code class="javascript">function rgbToRgba(rgb, alpha) {
+  return rgb.replace(&quot;rgb&quot;, &quot;rgba&quot;).replace(&quot;)&quot;, `,${alpha})`)
+};</code></pre>
+<br/>
+<br/>
+
+<h4 id="3-創建圖表與區塊設定"><a href="#3-創建圖表與區塊設定" class="headerlink" title="3. 創建圖表與區塊設定"></a>3. 創建圖表與區塊設定</h4><p>最後就是創建圓餅圖了，這次的設定重點在於我們設定了內外兩組數據列，並且利用 <code>innerSize</code> 屬性將外層變為「甜甜圈圖」，而內層則利用 <code>size</code> 屬性來設定成可以剛好放入甜甜圈缺口中的尺寸，如此就可以製作出「雙層圓餅圖」的效果，所以可以發現 <code>size</code> 和 <code>innerSize</code> 的值是一樣的。</p>
+<pre><code class="javascript">const pie = document.querySelector(&#39;#pie&#39;);
+let pieChart = Highcharts.chart(pie, {
+  chart: { height: 500, type: &quot;pie&quot; },
+  credits: { enabled: false },
+  title: { text: &quot;公司部門年齡人數佔比&quot; },
+  tooltip: {
+    headerFormat: &quot;&lt;b&gt;{point.key}&lt;/b&gt;&lt;br/&gt;&quot;,
+    pointFormat: &quot;{point.percentage:.1f} %／{point.y}人&quot;,
+  },
+  series: [
+    { 
+      size: &quot;220px&quot;,
+      data: innerPiePoints,
+      states: { inactive: { enabled: false } },
+      dataLabels: {
+        distance: -50,
+        style: { fontSize: &quot;14px&quot; }
+      },
+    },
+    {
+      innerSize: &quot;220px&quot;,
+      data: outerPiePoints,
+      dataLabels: {
+        format: &quot;{key}歲&quot;,
+        style: { color: &quot;#7e7e7e&quot; }
+      }
+    },
+  ]
+});</code></pre>
+<img src="inner.png" style="max-width: 900px; margin: 16px auto 0;" />
+
+<blockquote>
+<p><strong>注意:</strong> 內層數據列的「數據標籤」要將 <code>distance</code> 設為負數，不然會蓋在外層數據列上方，可能比較不美觀，也不方便觀看。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>雙層圓餅圖是不是一個 CP 值很高的圖表呢？簡簡單單設定就可以製作出看起來很專業的圖表，之後大家如果有遇到類似的資料型態，也可以試試看喔。至於明天，我們還是會延續同一個題目來介紹「下鑽圖表」。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10249790" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/06/highchart/highcharts-22/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/06/highchart/highcharts-22/" data-id="clcsdp5l50020neqwfdzs22dk" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/05/highchart/highcharts-21/" class="article-nav-title">資視就是力量 - Highcharts / 圖表連動</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/07/highchart/highcharts-23/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 下鑽圖表
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/06/highchart/highcharts-22/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

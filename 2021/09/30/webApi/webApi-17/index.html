@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / BroadcastChannel | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="里長辦公室廣播：張君雅小妹妹，恁兜欸泡麵已經煮好了！  前兩天已經認識了 PostMessage 和建立專屬頻道的 MessageChannel，它們都是進行點對點的溝通，但如果想要一次跟多個頁面溝通時怎麼辦了，這時 BroadcastChannel 就能派上用場了。  BroadcastChannelBroadcastChannel 就如同一個無線對講機系統，訊息是播放在一個廣播頻道中，任何頁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; BroadcastChannel">
+<meta property="og:url" content="https://maxleebk.com/2021/09/30/webApi/webApi-17/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="里長辦公室廣播：張君雅小妹妹，恁兜欸泡麵已經煮好了！  前兩天已經認識了 PostMessage 和建立專屬頻道的 MessageChannel，它們都是進行點對點的溝通，但如果想要一次跟多個頁面溝通時怎麼辦了，這時 BroadcastChannel 就能派上用場了。  BroadcastChannelBroadcastChannel 就如同一個無線對講機系統，訊息是播放在一個廣播頻道中，任何頁">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/30/webApi/webApi-17/broadcast.gif">
+<meta property="article:published_time" content="2021-09-30T14:32:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.915Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/30/webApi/webApi-17/broadcast.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-17" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / BroadcastChannel
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-30T14:32:00.000Z" itemprop="datePublished">2021-09-30</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>里長辦公室廣播：張君雅小妹妹，恁兜欸泡麵已經煮好了！</p>
+</blockquote>
+<p>前兩天已經認識了 PostMessage 和建立專屬頻道的 MessageChannel，它們都是進行點對點的溝通，但如果想要一次跟多個頁面溝通時怎麼辦了，這時 BroadcastChannel 就能派上用場了。</p>
+<hr>
+<h2 id="BroadcastChannel"><a href="#BroadcastChannel" class="headerlink" title="BroadcastChannel"></a>BroadcastChannel</h2><p>BroadcastChannel 就如同一個無線對講機系統，訊息是播放在一個廣播頻道中，任何頁面只要取得頻道的頻率就可以在無線電中發送／接收訊息。</p>
+<br/>
+
+<h4 id="建立頻道"><a href="#建立頻道" class="headerlink" title="# 建立頻道"></a># 建立頻道</h4><p>和 <code>MessageChannel</code> 一樣，<code>BroadcastChannel</code> 本身也是一個 <code>Class</code>，只要透過關鍵字 <code>new</code> 就能建立一個廣播頻道，不過這次我們要傳入一個字串來當作廣播頻道的名稱，未來其他頁面才能藉由同樣的字串來進入頻道。</p>
+<pre><code class="javascript">const channel = new BroadcastChannel(&quot;max_channel&quot;);</code></pre>
+<p>接著只要透過我們建立的廣播頻道送出訊息即可：</p>
+<pre><code class="javascript">const channel = new BroadcastChannel(&quot;max_channel&quot;);
+channel.postMessage(&quot;你已成功加入頻道!&quot;, location.origin);</code></pre>
+<p>要收到訊息的話就用 BroadcastChannel 監聽 <code>message</code> 即可：</p>
+<pre><code class="javascript">const channel = new BroadcastChannel(&quot;max_channel&quot;);
+channel.onmessage = function (event) {
+  console.log(event.data);
+};</code></pre>
+<p><br/><br/></p>
+<h4 id="頻道溝通"><a href="#頻道溝通" class="headerlink" title="# 頻道溝通"></a># 頻道溝通</h4><p>這時候其他頁面只要使用同樣的頻道名稱建立一個 BroadcastChannel，並且一樣透過該頻道來傳送／接收訊息，這樣所有頻道中的頁面就都可以相互溝通了。</p>
+<pre><code class="html">&lt;!-- 這裡是 main.html --&gt;
+&lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
+&lt;iframe src=&quot;pageA.html&quot; width=&quot;480&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;
+&lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  const channel = new BroadcastChannel(&quot;max_channel&quot;);
+  channel.onmessage = function (event) {
+    console.log(event.data);
+  };
+  function sendMessage() {
+    channel.postMessage(&quot;你已成功加入頻道!&quot;, location.origin);
+  }
+&lt;/script&gt;</code></pre>
+<pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
+&lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
+&lt;div class=&quot;output&quot;&gt;pageA content&lt;/div&gt;
+&lt;script&gt;
+  const output = document.querySelector(&quot;.output&quot;);
+  const channel = new BroadcastChannel(&quot;max_channel&quot;);
+  channel.onmessage = function (event) {
+    const output = document.querySelector(&quot;.output&quot;);
+    output.innerHTML = event.data;
+  };
+  function sendMessage() {
+    channel.postMessage(&quot;pageA 發送訊息！&quot;, location.origin);
+  }
+&lt;/script&gt;</code></pre>
+<pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
+&lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
+&lt;div class=&quot;output&quot;&gt;pageB content&lt;/div&gt;
+&lt;script&gt;
+  const channel = new BroadcastChannel(&quot;max_channel&quot;);
+  channel.onmessage = function (event) {
+    const output = document.querySelector(&quot;.output&quot;);
+    output.innerHTML = event.data;
+  };
+  function sendMessage() {
+    channel.postMessage(&quot;pageB 發送訊息！&quot;, location.origin);
+  }
+&lt;/script&gt;</code></pre>
+<img src="broadcast.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="頻道名稱"><a href="#頻道名稱" class="headerlink" title="# 頻道名稱"></a># 頻道名稱</h4><p>不過上面這樣的範例，會有一個令人詬病的地方，就是「頻道名稱」的同步問題，要是有其中某個頁面打錯頻道名稱，那就會連不上頻道。或是如果想要更換頻道名稱的時候，就必須大家一起改，似乎是又點不太方便。</p>
+<p>所以在主頁面建立頻道後，其實可以先用一般的 <code>postMessage</code> 將頻道名稱傳給需要的頁面：</p>
+<pre><code class="html">&lt;iframe src=&quot;pageA.html&quot; width=&quot;480&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;
+&lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+  const allIframe = document.querySelectorAll(&quot;iframe&quot;);
+  const channel = new BroadcastChannel(&quot;max_channel&quot;);
+
+  // 發送頻道名稱
+  allIframe.forEach((iframe) =&gt; {
+    iframe.addEventListener(&quot;load&quot;, function () {
+      this.contentWindow.postMessage(channel.name, location.origin);
+    });
+  });
+
+  channel.onmessage = function (event) {
+    console.log(event.data);
+  };
+&lt;/script&gt;</code></pre>
+<pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
+&lt;div class=&quot;output&quot;&gt;pageA content&lt;/div&gt;
+&lt;script&gt;
+  let channel;
+  window.addEventListener(&quot;message&quot;, function (event) {
+    if (event.origin !== location.origin) return;
+    channel = new BroadcastChannel(event.data);
+
+    channel.onmessage = function (bc_event) {
+      const output = document.querySelector(&quot;.output&quot;);
+      output.innerHTML = event.data;
+    };
+
+    channel.postMessage(&quot;pageA 加入頻道&quot;, location.origin);
+  });
+&lt;/script&gt;</code></pre>
+<pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
+&lt;div class=&quot;output&quot;&gt;pageB content&lt;/div&gt;
+&lt;script&gt;
+  let channel;
+  window.addEventListener(&quot;message&quot;, function (event) {
+    if (event.origin !== location.origin) return;
+    channel = new BroadcastChannel(event.data);
+
+    channel.onmessage = function (bc_event) {
+      const output = document.querySelector(&quot;.output&quot;);
+      output.innerHTML = event.data;
+    };
+
+    channel.postMessage(&quot;pageB 加入頻道&quot;, location.origin);
+  });
+&lt;/script&gt;</code></pre>
+<blockquote>
+<p>補充：如果有頁面想要與廣播頻道斷開連結的話，只要拿建立的頻道執行 <code>close()</code> 即可，關閉後頻道還是存在，只是該頁面不再接收頻道的訊息。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>這三天我們已經完全認識了 PostMessage，了解到它不但可以傳送訊息，還可以建立私訊或群組的通訊模式，而這項技術其實時常會用在 <a href="https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 中，但因為它的範疇有點龐大，所以這次的系列文章不會介紹到，有興趣的朋友可以再自行研究～</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10276437" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/30/webApi/webApi-17/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/30/webApi/webApi-17/" data-id="clcsdp5lv003hneqw6w9fa7y9" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/29/webApi/webApi-16/" class="article-nav-title">那些被忽略但很好用的 Web API / MessageChannel</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/01/webApi/webApi-18/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / RequestIdleCallback
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/30/webApi/webApi-17/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

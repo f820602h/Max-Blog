@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / MutationObserver | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我的改變，你看得見！  在開發網頁過程中，我們最常做的事情就是對資料進行修改後運用在 DOM 元素上，像是新增 &#x2F; 刪除節點、調整樣式、改寫內容或是屬性(attribute)的調整，而這些「修改 DOM」的動作通常散落在程式碼的各個角落，發生時機也並不相同，在這樣的情況下，我們能不能追蹤這些動作呢？  MutationObserverMutationObserver API 就是用來解決上述問題">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; MutationObserver">
+<meta property="og:url" content="https://maxleebk.com/2021/10/02/webApi/webApi-19/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="我的改變，你看得見！  在開發網頁過程中，我們最常做的事情就是對資料進行修改後運用在 DOM 元素上，像是新增 &#x2F; 刪除節點、調整樣式、改寫內容或是屬性(attribute)的調整，而這些「修改 DOM」的動作通常散落在程式碼的各個角落，發生時機也並不相同，在這樣的情況下，我們能不能追蹤這些動作呢？  MutationObserverMutationObserver API 就是用來解決上述問題">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-10-02T09:19:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.923Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / MutationObserver
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-02T09:19:00.000Z" itemprop="datePublished">2021-10-02</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>我的改變，你看得見！</p>
+</blockquote>
+<p>在開發網頁過程中，我們最常做的事情就是對資料進行修改後運用在 DOM 元素上，像是新增 / 刪除節點、調整樣式、改寫內容或是屬性(attribute)的調整，而這些「修改 DOM」的動作通常散落在程式碼的各個角落，發生時機也並不相同，在這樣的情況下，我們能不能追蹤這些動作呢？</p>
+<hr>
+<h2 id="MutationObserver"><a href="#MutationObserver" class="headerlink" title="MutationObserver"></a>MutationObserver</h2><p>MutationObserver API 就是用來解決上述問題的，它可以讓我們追蹤 DOM 的變化，無論是子節點的變動或內容、屬性的變動，並且獲得相關的資訊，以便作出後續的行動。</p>
+<br/>
+
+<h4 id="Window-MutationObserver"><a href="#Window-MutationObserver" class="headerlink" title="# Window.MutationObserver"></a># Window.MutationObserver</h4><p>MutationObserver 本身是建構函式，所以我們需要用 <code>new</code> 關鍵字來建立實體，建立時需要傳入一個 Callback Function 作為參數，該 Function 可以接到由 MutationObserver 提供的 MutationRecords 陣列和 MutationObserver 實體作為參數：</p>
+<br/>
+
+<ul>
+<li><strong>MutationRecords</strong>： 這個陣列會存放 MutationRecord 物件，該物件記錄著 DOM 變動的相關資訊，後面再詳細介紹。</li>
+<li><strong>MutationObserver</strong>： 呼叫此 Callback Function 的 MutationObserver 實體，其實就等於該 Function 的 <code>this</code>。</li>
+</ul>
+<br/>
+
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations, owner) {
+  console.log(mutation, owner);
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="MutationObserver-observe"><a href="#MutationObserver-observe" class="headerlink" title="# MutationObserver.observe"></a># MutationObserver.observe</h4><p>我們可以把剛剛 <code>new</code> 出來的 MutationObserver 實體譬喻成一個「觀察者」，當這位觀察者監測到節點變動，他就會執行設定好的任務(callback)，但他目前並未被指派要觀察哪一個元素，所以我們要透過 <code>observe</code> 這個 method 來指定「被觀察的對象」，其中需要傳入兩個參數：</p>
+<br/>
+
+<ul>
+<li><strong>target</strong>： 一個要受到觀察的 DOM 節點。</li>
+<li><strong>options</strong>：一個初始化設定物件，用來指定 DOM 節點的哪些項目需要被觀察等相關設定。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">屬性</th>
+<th align="center">解釋</th>
+<th align="center">型別、預設值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">childList</td>
+<td align="center">是否觀察節點的直屬子節點變動</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">subtree</td>
+<td align="center">是否觀察節點的所有子節點變動</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">attributes</td>
+<td align="center">是否觀察節點的屬性變動</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">characterData</td>
+<td align="center">是否觀察節點中的內容變動</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">attributeOldValue</td>
+<td align="center">是否紀錄變動前的屬性值</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">characterDataOldValue</td>
+<td align="center">是否紀錄變動前的內容值</td>
+<td align="center">boolean、<code>false</code></td>
+</tr>
+<tr>
+<td align="center">attributeFilter</td>
+<td align="center">需要觀察的屬性名稱，如果為空則全部觀察</td>
+<td align="center">array[string]、<code>[]</code></td>
+</tr>
+</tbody></table>
+<br/>
+
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
+  console.log(mutations);
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div, {
+  childList: true,
+  attributes: true,
+  characterData: true,
+});</code></pre>
+<p>如此一來，只要元素有被觀察到我們所指定項目的變動，MutationObserver 就會去執行 Callback。</p>
+<p><br/><br/></p>
+<h4 id="MutationObserver-disconnect"><a href="#MutationObserver-disconnect" class="headerlink" title="# MutationObserver.disconnect"></a># MutationObserver.disconnect</h4><p>另外還可以透過 <code>disconnect</code> 來註銷目前已經被觀察的 DOM，但 MutationObserver 實體並不會消失，只是暫時不再進行觀察，直到你又使用 <code>observe</code> 來註冊一個被觀察對象。</p>
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
+  console.log(mutations);
+});
+
+observer.disconnect();</code></pre>
+<p><br/><br/></p>
+<h4 id="MutationRecord-物件"><a href="#MutationRecord-物件" class="headerlink" title="# MutationRecord 物件"></a># MutationRecord 物件</h4><p>前面有說，MutationObserver 在執行 Callback 時會提供一個 MutationRecords 陣列，裡面會存放 MutationRecord 物件，這個段落我們要來了解為何 MutationRecord 要存放在陣列中，以及它到底存放著哪些資訊供我們使用。</p>
+<br/>
+
+<ul>
+<li><p><strong>首先要先知道一個 MutationObserver 的特性：</strong></p>
+<p>MutationObserver 並非事件監聽，事件是同步執行的，而 MutationObserver 則是非同步執行的，這意味著，如果目前執行的一段程序中有多次的節點變動，MutationObserver 會等到一切結束後才呼叫 Callback。</p>
+<p>這是為了避免大量 DOM 操作所帶來的效能問題，也因此，MutationObserver 會將該程序時間內所有的變動記錄下來並包裝成陣列給我們。</p>
+</li>
+</ul>
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
+  mutations.forEach((record) =&gt; {
+    console.log(record); // MutationRecord 物件
+  });
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div, {
+  childList: true,
+  attributes: true,
+  characterData: true,
+});
+
+div.textContent = &quot;example&quot;;
+div.style.background = &quot;pink&quot;;
+// 此時 MutationObserver 只會呼叫一次 Callback
+// 而 mutations 中會有兩個 MutationRecord</code></pre>
+<br/>
+<br/>
+
+<ul>
+<li><strong>接著來看一下 MutationRecord 中有哪些屬性：</strong><br>以下這些並非全部的屬性，只介紹了幾個比較實用的，如果想知道完整內容的話可以看<a href="https://developer.mozilla.org/zh-TW/docs/Web/API/MutationObserver#mutationobserverinit" target="_blank" rel="noopener">這裡</a>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">屬性</th>
+<th align="center">解釋</th>
+<th align="center">型別</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">type</td>
+<td align="center">觀察到的變動類型</td>
+<td align="center">string</td>
+</tr>
+<tr>
+<td align="center">target</td>
+<td align="center">變動的節點</td>
+<td align="center">Node</td>
+</tr>
+<tr>
+<td align="center">addedNodes</td>
+<td align="center">被新增的節點，如果沒有會是 <code>null</code></td>
+<td align="center">Node</td>
+</tr>
+<tr>
+<td align="center">removedNodes</td>
+<td align="center">被刪除的節點，如果沒有會是 <code>null</code></td>
+<td align="center">Node</td>
+</tr>
+<tr>
+<td align="center">attributeName</td>
+<td align="center">觀察到的變動屬性之名稱</td>
+<td align="center">string</td>
+</tr>
+<tr>
+<td align="center">oldValue</td>
+<td align="center">變動前的值</td>
+<td align="center">string</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>MutationRecord.oldValue 只有在 <code>observe()</code> 的 <code>options</code> 有開啟設定時才會有值。</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="使用情境"><a href="#使用情境" class="headerlink" title="# 使用情境"></a># 使用情境</h4><p>老實說，一定要使用 MutationObserver 的情況並不多，可能比較需要使用的情境會是：「專案中使用了第三方套件，為了觀測該套件所進行的一些 DOM 操作」，由於我們無法直接對第三方套件的程式碼進行修改，導致無法掌控 DOM 變動的程序，所以只能透過 MutationObserver 來追蹤。</p>
+<p>但因為平常的 DOM 操作其實都是由我們主動執行的，所以真的需要在節點變動後做什麼事情就直接放在後面一起執行就好了，例如：</p>
+<pre><code class="html">&lt;button onclick=&quot;changeContent()&quot;&gt;改變內容&lt;/button&gt;
+&lt;button onclick=&quot;changeColor()&quot;&gt;改變顏色&lt;/button&gt;
+&lt;div&gt;Hi I&#39;m Max&lt;/div&gt;
+
+&lt;script&gt;
+  const div = document.querySelector(&quot;div&quot;);
+
+  // 當 DOM 變動時我們想做的事情
+  function onDomMutation(info) {
+    console.log(info);
+  }
+
+  function changeContent() {
+    const oldValue = div.textContent;
+    div.textContent = &quot;Hi I&#39;m Tom&quot;;
+    onDomMutation({
+      target: div,
+      oldValue,
+      type: &quot;characterData&quot;,
+    });
+  }
+
+  function changeColor() {
+    const oldValue = div.style;
+    div.style.color = &quot;red&quot;;
+    onDomMutation({
+      target: div,
+      oldValue,
+      type: &quot;attributes&quot;,
+    });
+  }
+&lt;/script&gt;</code></pre>
+<p><strong>其實透過上面這樣的寫法依然可以做到類似的效果，但我認為 MutationObserver 最主要的優點是「減少耦合」，就像之前介紹的 CustomEvent 一樣，透過「觀察者模式」的 Design Patterns 來讓原本是許多「一對一的依賴關係」整合成單個「一對多的依賴關係」。</strong></p>
+<pre><code class="html">&lt;button onclick=&quot;changeContent()&quot;&gt;改變內容&lt;/button&gt;
+&lt;button onclick=&quot;changeColor()&quot;&gt;改變顏色&lt;/button&gt;
+&lt;div&gt;Hi I&#39;m Max&lt;/div&gt;
+
+&lt;script&gt;
+  const div = document.querySelector(&quot;div&quot;);
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach((record) =&gt; {
+      console.log(record);
+    });
+  });
+
+  observer.observe(div, {
+    childList: true,
+    attributes: true,
+    characterData: true,
+  });
+
+  function changeContent() {
+    div.textContent = &quot;Hi I&#39;m Tom&quot;;
+  }
+
+  function changeColor() {
+    div.style.color = &quot;red&quot;;
+  }
+&lt;/script&gt;</code></pre>
+<p><br/><br/></p>
+<p>不曉得經過這樣的解釋後，各位有沒有理解使用 MutationObserver 的好處呢？後面我們還會陸續介紹幾個也是採用「觀察者模式(Observer Pattern)」的 API，可以期待一下喔。另外有使用過 Vue 的朋友，你知道 <code>$nextTick</code> 其實就是基於 MutationObserver 實踐出來的喔，有興趣的人可以去看看<a href="https://github.com/vuejs/vue/blob/2.6/src/core/util/next-tick.js" target="_blank" rel="noopener">原始碼</a>。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10277536" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/02/webApi/webApi-19/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/02/webApi/webApi-19/" data-id="clcsdp5mf003mneqwbwag9cug" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/01/webApi/webApi-18/" class="article-nav-title">那些被忽略但很好用的 Web API / RequestIdleCallback</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/03/webApi/webApi-20/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / ResizeObserver
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/02/webApi/webApi-19/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

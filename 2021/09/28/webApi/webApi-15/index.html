@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / PostMessage | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="親像愛情的限時批～  各位有想過該如何跟其他頁面進行溝通嗎？如果在Ａ頁面點擊了一個按鈕，能不能夠讓Ｂ頁面發生變化或執行動作呢？別說不可能，今天要介紹的 PostMessage 便能夠達成這樣的效果。  PostMessage一般來說，不同的頁面要相互溝通的話，它們的 Domain 必須相同，然後通常就會使用 LocalStorage 搭配 storage 事件來進行溝通，但 PostMessag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; PostMessage">
+<meta property="og:url" content="https://maxleebk.com/2021/09/28/webApi/webApi-15/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="親像愛情的限時批～  各位有想過該如何跟其他頁面進行溝通嗎？如果在Ａ頁面點擊了一個按鈕，能不能夠讓Ｂ頁面發生變化或執行動作呢？別說不可能，今天要介紹的 PostMessage 便能夠達成這樣的效果。  PostMessage一般來說，不同的頁面要相互溝通的話，它們的 Domain 必須相同，然後通常就會使用 LocalStorage 搭配 storage 事件來進行溝通，但 PostMessag">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-09-28T09:15:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-15" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / PostMessage
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-28T09:15:00.000Z" itemprop="datePublished">2021-09-28</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>親像愛情的限時批～</p>
+</blockquote>
+<p>各位有想過該如何跟其他頁面進行溝通嗎？如果在Ａ頁面點擊了一個按鈕，能不能夠讓Ｂ頁面發生變化或執行動作呢？別說不可能，今天要介紹的 PostMessage 便能夠達成這樣的效果。</p>
+<hr>
+<h2 id="PostMessage"><a href="#PostMessage" class="headerlink" title="PostMessage"></a>PostMessage</h2><p>一般來說，不同的頁面要相互溝通的話，它們的 Domain 必須相同，然後通常就會使用 LocalStorage 搭配 <code>storage</code> 事件來進行溝通，但 PostMessage 神奇的地方就在於它可以越過這項限制，讓我們甚至可以跟不同源的網站頁面進行溝通，這樣就能解決前端最討厭的 CORS 問題了。</p>
+<blockquote>
+<p>雖然 PostMessage 可以跨域溝通，不過當然也要對方願意且有撰寫對應的機制程式碼，要不然世界就大亂了 XD</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="otherWindow-postMessage"><a href="#otherWindow-postMessage" class="headerlink" title="# otherWindow.postMessage"></a># otherWindow.postMessage</h4><p>PostMessage API 底下就是只有 <code>postMessage</code> 這個 method，非常的單純，卻也無比強大，其中 <code>otherWindow</code> 所指的是「目前分頁以外的 Window」，這個 Window 可以是利用 <code>window.open</code> 執行返回的 Window 物件，或是一個 <code>iframe</code> 元素的 <code>contentWindow</code>，而也就是訊息要送達的目的地。</p>
+<p>另外 <code>postMessage</code> 還必須傳入兩個參數：</p>
+<ul>
+<li>message: 第一個是你要傳送的訊息，任何型別格式都可以接受。</li>
+<li>targetOrigin: 第二個則是設定「能夠接收本次訊息」的網頁 Origin，必須要是在這個 Domain 底下的頁面才能接收到訊息。</li>
+</ul>
+<pre><code class="javascript">const url = &quot;https://maxleebk.com//2021/09/28/webApi/webApi-15/&quot;;
+const otherPage = window.open(url);
+otherPage.postMessage(&quot;Hi,Max&quot;, &quot;https://maxleebk.com/&quot;);</code></pre>
+<p>以上面的例子來說，我們先利用 <code>window.open</code> 打開了一個作者本人的部落格分頁，而該分頁的 Window 已經被儲存在 <code>otherPage</code> 中，再來我們就利用 <code>postMessage</code> 傳遞一個字傳，並且利用 <code>targetOrigin</code> 來確保一定要是 <code>https://maxleebk.com/</code> 底下的頁面才能真正接受到訊息。</p>
+<blockquote>
+<p>你該注意：<code>targetOrigin</code> 這個參數建議一定要傳入並填妥，不然訊息有可能會被刻意攔截，導致無法預期的安全性問題。</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="Window-message-Event"><a href="#Window-message-Event" class="headerlink" title="# Window:message Event"></a># Window:message Event</h4><p>訊息有傳送的一方，自然也要有接收的一方，而接收方要順利接到訊息的話，只要在 <code>window</code> 上監聽 <code>message</code> 這個事件即可，而訊息的部分則會被放在 Event 物件的 <code>data</code> 屬性裡:</p>
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+  console.log(event.data);
+});</code></pre>
+<p>所以只要你想傳送的網站中，有打開一個這樣的通道，那你就可以透過 PostMessage 來與之溝通，不過接收方也不可能所有的訊息都照單全收，要是我們今天身為接收方，那應該要像下方這樣做一些防禦。</p>
+<p>在 Event 物件中還有一個 <code>origin</code> 屬性，可以用來獲取傳送方的來源，所以我們可以利用它來過濾那些不在信任範圍的網址：</p>
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+  // 如果訊息不是來自於 IT邦幫忙 那就不執行任何動作
+  if (event.origin !== &quot;https://ithelp.ithome.com.tw&quot;) return;
+  console.log(event.data);
+});</code></pre>
+<p>當然了，信息往來總不能只有單向，如果接收方要回信的話，只要利用 Event 物件中的 <code>source</code> 屬性就可以進行訊息的傳送：</p>
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+  if (event.origin !== &quot;https://ithelp.ithome.com.tw&quot;) return;
+  console.log(event.data);
+  event.source.postMessage(&quot;hi,IT邦幫忙&quot;, event.origin);
+});</code></pre>
+<p>透過 PostMessage 訊息的相互傳遞，我們就可以不受同源政策的限制，向其他網域的網頁請求資料了，或利用訊息的格式判定來執行其他頁面的動作等等…</p>
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+  axios.get(&quot;/user&quot;, event.data.id).then((res) =&gt; {
+    event.source.postMessage(res, event.origin);
+  });
+});
+
+addEventListener(&quot;message&quot;, function (event) {
+  window[event.data.method](); // 執行指定名稱的全域函式
+});</code></pre>
+<p><br/><br/></p>
+<p>PostMessage API 是不是非常有趣又神奇呢？或許要遇到頁面溝通的情境並不多，但千萬忽略了它，等到遇到了，它會是非常強大的幫手，而且應用起來也相當簡單，大家如果有興趣，隨手就能寫個簡單的範例。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10275491" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/28/webApi/webApi-15/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/28/webApi/webApi-15/" data-id="clcsdp5lr003cneqwf8jlhvgr" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/27/webApi/webApi-14/" class="article-nav-title">那些被忽略但很好用的 Web API / CustomEvent</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/29/webApi/webApi-16/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / MessageChannel
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/28/webApi/webApi-15/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

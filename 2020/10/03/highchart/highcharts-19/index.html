@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 資料更新 Method | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;qBZvgGv  在 Highcharts 中呢，除了五花八門的設定屬性之外，還有不少內建的函式可以操作圖表，這種函式通常都稱之為「方法（Method）」。 圖表最重要的目的在於呈現資料，而資料在網頁中不僅重要卻還時常變化，時常都會利用非同步請求來取得資料，而在請求回應後就需要有辦法改變圖表中的資料或設定，所以今天就是要來">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 資料更新 Method">
+<meta property="og:url" content="https://maxleebk.com/2020/10/03/highchart/highcharts-19/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;qBZvgGv  在 Highcharts 中呢，除了五花八門的設定屬性之外，還有不少內建的函式可以操作圖表，這種函式通常都稱之為「方法（Method）」。 圖表最重要的目的在於呈現資料，而資料在網頁中不僅重要卻還時常變化，時常都會利用非同步請求來取得資料，而在請求回應後就需要有辦法改變圖表中的資料或設定，所以今天就是要來">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/03/highchart/highcharts-19/dynamic.gif">
+<meta property="article:published_time" content="2020-10-03T02:52:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.827Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/03/highchart/highcharts-19/dynamic.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 資料更新 Method
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-03T02:52:00.000Z" itemprop="datePublished">2020-10-03</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/qBZvgGv" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/qBZvgGv</a></strong></p>
+</blockquote>
+<p>在 Highcharts 中呢，除了五花八門的設定屬性之外，還有不少內建的函式可以操作圖表，這種函式通常都稱之為「方法（Method）」。</p>
+<p>圖表最重要的目的在於呈現資料，而資料在網頁中不僅重要卻還時常變化，時常都會利用非同步請求來取得資料，而在請求回應後就需要有辦法改變圖表中的資料或設定，所以今天就是要來專門講講這些負責 <strong>更新圖表資料或設定</strong> 的 Method。</p>
+<hr>
+<h2 id="資料更新-Method"><a href="#資料更新-Method" class="headerlink" title="資料更新 Method"></a>資料更新 Method</h2><br/>
+
+<p>現在繪製圖表對我們來說已經駕輕就熟了，但目前圖表都是靜態的，頂多綁個事件增加一下互動功能，但假如今天想要做一個隨時更新資料的「動態圖表」好像就辦不到了。好在 Highcharts 提供了一些 Method 來讓我們可以在 <strong>圖表載入完畢後</strong> 還能操作它。</p>
+<blockquote>
+<p>昨天在事件屬性中有提到的 <code>show()</code>、<code>update()</code>…等等都屬於 Method，不過今天先專注在「更新」這類的 Method 上。</p>
+</blockquote>
+<pre><code class="javascript">// 創建一個圖表，設定內容省略
+var chart = Highcharts.chart(container, options);
+
+// 圖表的更新 Method
+chart.update();
+chart.addSeries();
+// 數據列的更新 Method
+chart.series[0].update();
+chart.series[0].remove();
+chart.series[0].setData();
+chart.series[0].addPoint();
+chart.series[0].removePoint();
+// 數據點的更新 Method
+chart.series[0].data[0].update();
+chart.series[0].data[0].remove();</code></pre>
+<br/>
+
+<p>不曉得大家有沒有好奇過，為什麼在創建圖表的時候要用一個變數來儲存呢？原來在創建圖表的時候，Highcharts 會建立一個圖表的 <strong>實例(Instance)</strong>，其實也就是前面提過的「圖表物件」，裡面也包含了數據列、數據點、座標軸等等區塊的實例／物件。</p>
+<p>而每個實例裡就會有它們專屬的 Method，當要使用時就必須從中索引後呼叫，所以才需要用變數接住實例，好方便我們呼叫。</p>
+<hr>
+<h2 id="整體圖表更新-Method"><a href="#整體圖表更新-Method" class="headerlink" title="整體圖表更新 Method"></a>整體圖表更新 Method</h2><br/>
+
+<blockquote>
+<p>將圖表實例儲存於變數中是必要的，以此才能選取到該圖表並呼叫其方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="chart-update-options"><a href="#chart-update-options" class="headerlink" title="# chart.update(options)"></a># chart.update(options)</h4><p><code>options: Object</code></p>
+<p>這個 Method 可以更新圖表內的任何設定，包括數據列、座標軸等等都能夠更新，而使用方式便是將要更新<br>的 <code>options</code> 物件以參數傳入，而 Highcharts 一樣會幫你做深層的合併，所以你不需要把未更動的設定再撰寫一遍。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  title: { text: &quot;我的圖表&quot; },
+  credits: { enabled: false },
+  series: [
+    { name: &quot;數據列1&quot;, data: [1,2,3] },
+    { name: &quot;數據列2&quot;, data: [4,5,6] }
+  ]        
+});
+// 只有第一組數據列會被更新，但第二組並不會消失
+chart.update({
+  title: { text: &quot;我的圖表(已更新)&quot; },
+  series: [{ data: [10,20,30] }]
+});</code></pre>
+<br/>
+<br/>
+
+<h4 id="chart-addSeries-series"><a href="#chart-addSeries-series" class="headerlink" title="# chart.addSeries(series)"></a># chart.addSeries(series)</h4><p><code>series: Object</code></p>
+<p>昨天其實有簡單帶到這個 Method，它可以在圖表中新增一組新的數據列，只要把新數據列的設定物件傳進參數即可。</p>
+<pre><code class="javascript">chart.addSeries({
+  name: &quot;新數據列&quot;,
+  dataLabels: { enabled: true },
+  data: [[10,20], [30,40], [50,60]]
+});</code></pre>
+<hr>
+<h2 id="數據列更新-Method"><a href="#數據列更新-Method" class="headerlink" title="數據列更新 Method"></a>數據列更新 Method</h2><br/>
+
+<blockquote>
+<p>要呼叫數據列的 Method 需要透過圖表實例裡的 <code>series</code> 陣列裡去找到你要操作的數據列。</p>
+</blockquote>
+<br/>
+
+<h4 id="series-update-options"><a href="#series-update-options" class="headerlink" title="# series.update(options)"></a># series.update(options)</h4><p><code>options: Object</code></p>
+<p>和前面的 <code>chart.update()</code> 是一樣概念，將你要更新的數據列設定物件作為參數傳入函式中，即可改變數據列的設定。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [
+    { name: &quot;數據列1&quot;, data: [1,2,3] },
+    { name: &quot;數據列2&quot;, data: [4,5,6] }
+  ]
+});
+// 第二組數據列將被更新
+chart.series[1].update({
+  name: &quot;數據列2(被更新)&quot;,
+  color: &quot;red&quot;,
+  data: [40, 50, 60]
+});</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-remove"><a href="#series-remove" class="headerlink" title="# series.remove()"></a># series.remove()</h4><p>這個 Method 就單純很多，選取你要的數據列後呼叫這個方法，該數據點便會從圖表中移除。</p>
+<pre><code class="javascript">chart.series[0].remove();</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-setData-data"><a href="#series-setData-data" class="headerlink" title="# series.setData(data)"></a># series.setData(data)</h4><p><code>data: Array</code></p>
+<p>如果僅僅只是要改變數據列的 <code>data</code> 屬性，那可以選擇使用這個 Method，而不需要使用 <code>update()</code>，呼叫時只要傳入新的數據點陣列即可。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{ data: [1,2,3] }]
+});
+// 數據列的數據將會改變
+chart.series[0].setData([4,5,6]);</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-addPoint-point"><a href="#series-addPoint-point" class="headerlink" title="# series.addPoint(point)"></a># series.addPoint(point)</h4><p><code>point: Number|Array|Object</code></p>
+<p>看過前面的 <code>addSeries()</code> 之後應該很好理解，就是在你要操作的數據列中新增一個數據點，而傳入的參數可以接受任何形式的數據點格式，形式種類之前在「數據點設定」的章節中有介紹過。</p>
+<pre><code class="javascript">chart.series[0].addPoint({x: 10, y: 10});</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-removePoint-index"><a href="#series-removePoint-index" class="headerlink" title="# series.removePoint(index)"></a># series.removePoint(index)</h4><p><code>index: Number</code></p>
+<p>在你呼叫這個 Method 時，會從你正在操作的數據列中移除一個數據點，而你必須傳入該數據點的索引值，Highcharts 才知道要移除的是哪一個。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{ data: [6,7,8,9,10] }]
+});
+// 第三個數據點將會被移除
+chart.series[0].removePoint(2);</code></pre>
+<hr>
+<h2 id="數據點更新-Method"><a href="#數據點更新-Method" class="headerlink" title="數據點更新 Method"></a>數據點更新 Method</h2><br/>
+
+<blockquote>
+<p>要呼叫數據點的 Method 需要透過圖表實例裡的 <code>series.data</code> 陣列或 <code>series.points</code> 陣列裡去找到你要操作的數據點。</p>
+</blockquote>
+<br/>
+
+<h4 id="point-update-options"><a href="#point-update-options" class="headerlink" title="# point.update(options)"></a># point.update(options)</h4><p><code>options: Number|Array|Object</code></p>
+<p>和前面的所有的 <code>update</code> 方法都是一樣的，將你要更新的數據點設定作為參數傳入函式中，即可改變數據點的設定，不過此 Method 的參數可以接受任何數據點設定格式。</p>
+<pre><code class="javascript">var chart = Highcharts.chart(container, {
+  series: [{ data: [10, 11, 12, 13, 14] }]
+});
+// 第四個數據點將被更新
+chart.series[0].data[3].update({ y: 20, color: &quot;red&quot; });</code></pre>
+<br/>
+<br/>
+
+<h4 id="point-remove"><a href="#point-remove" class="headerlink" title="# point.remove()"></a># point.remove()</h4><p>也是很單純的一個 Method，選取好要操作的數據點後並呼叫函式，便會將該數據點從數據列中移除。</p>
+<pre><code class="javascript">chart.series[0].data[3].remove();</code></pre>
+<hr>
+<h2 id="指定選取"><a href="#指定選取" class="headerlink" title="指定選取"></a>指定選取</h2><br/>
+
+<p>我們把今天的更新 Method 都認識完了，不過卻發現，若是想要操作數據列或數據點似乎稍嫌麻煩，必須先知道他們的索引值，還要一層層往裡面找才能選到，所以這邊要額外介紹兩個設定屬性：</p>
+<br/>
+<br/>
+
+<h4 id="series-id-series-data-id"><a href="#series-id-series-data-id" class="headerlink" title="# series.id / series.data.id"></a># series.id / series.data.id</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
+<p>這兩個屬性可以為數據列／數據點設定 ID Name，這樣就可以透過 <code>chart.get()</code> 這個 Method 來直接選取它們。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  series: [{ 
+    id: &quot;mySeries&quot;,
+    data: [1, 2, {y: 3, id: &quot;myPoint&quot; }]
+  }]
+});
+
+let series = myChart.get(&quot;mySeries&quot;);
+let point = myChart.get(&quot;myPoint&quot;);</code></pre>
+<hr>
+<p>今天認識的這些 Method 都可以在圖表載入完成後去操作圖表，好處在於可以動態的更新圖表中的資料或設定，讓圖表可以跟整個網頁互動，或是利用非同步事件來做到下面這樣的效果，希望大家吸收的還順利，明天會繼續介紹其他的常用 Method。</p>
+<img src="dynamic.gif" style="max-width: 600px; margin: 24px auto;" />
+
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10248326" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/03/highchart/highcharts-19/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/03/highchart/highcharts-19/" data-id="clcsdp5kl001qneqw7imr48nl" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/02/highchart/highcharts-18/" class="article-nav-title">資視就是力量 - Highcharts / 事件屬性</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/04/highchart/highcharts-20/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 其他實用 Method
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/03/highchart/highcharts-19/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

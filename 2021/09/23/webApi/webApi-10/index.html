@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / Clipboard | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="CTRL + C &amp; CTRL + V，兩個指令就能讓你成為工程師。  Selection API 掌管著網頁中的「反白」，Clipboard API 則是掌管著網頁中的「複製」，不管是做報告、分享文章或是寫 code，都時常會參考、借鑑網頁中的內容，這時候我們就會執行「複製」，將文本內容暫時放在電腦裡的記憶體中，而這項動作只要是發生在我們網頁中，我們就可以利用 Clipboard AP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; Clipboard">
+<meta property="og:url" content="https://maxleebk.com/2021/09/23/webApi/webApi-10/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="CTRL + C &amp; CTRL + V，兩個指令就能讓你成為工程師。  Selection API 掌管著網頁中的「反白」，Clipboard API 則是掌管著網頁中的「複製」，不管是做報告、分享文章或是寫 code，都時常會參考、借鑑網頁中的內容，這時候我們就會執行「複製」，將文本內容暫時放在電腦裡的記憶體中，而這項動作只要是發生在我們網頁中，我們就可以利用 Clipboard AP">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/23/webApi/webApi-10/clipboard.png">
+<meta property="article:published_time" content="2021-09-23T12:38:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.899Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/23/webApi/webApi-10/clipboard.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-10" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / Clipboard
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-23T12:38:00.000Z" itemprop="datePublished">2021-09-23</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>CTRL + C &amp; CTRL + V，兩個指令就能讓你成為工程師。</p>
+</blockquote>
+<p>Selection API 掌管著網頁中的「反白」，Clipboard API 則是掌管著網頁中的「複製」，不管是做報告、分享文章或是寫 code，都時常會參考、借鑑網頁中的內容，這時候我們就會執行「複製」，將文本內容暫時放在電腦裡的記憶體中，而這項動作只要是發生在我們網頁中，我們就可以利用 Clipboard API 來動一些手腳。</p>
+<hr>
+<h2 id="Clipboard"><a href="#Clipboard" class="headerlink" title="Clipboard"></a>Clipboard</h2><p>Clipboard 指的是瀏覽器中的系統剪貼簿，我們可以透過一些指令來訪問它，進而執行讀寫的動作，不過由於使用者可能會將一些機敏性的資料存放在剪貼簿中，所以為了避免個資外洩，除非使用者允許授權，不然瀏覽器都會限制網頁讀取使用者的剪貼簿，不過寫入的部分就沒有限制了。</p>
+<img src="clipboard.png" style="margin: 24px auto;" />
+
+<blockquote>
+<p>如果使用者拒絕了授權，只能透過使用者主動調整授權才能夠開啟功能，所以記得透過 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Permissions_API/Using_the_Permissions_API" target="_blank" rel="noopener">Permissions.query()</a> 來確認授權狀態，並提醒使用者。</p>
+</blockquote>
+<br/>
+
+<h4 id="Navigator-clipboard"><a href="#Navigator-clipboard" class="headerlink" title="# Navigator.clipboard"></a># Navigator.clipboard</h4><p>要取得瀏覽器的 Clipboard 物件，只要訪問 <code>navigator</code> 底下的 <code>clipboard</code> 屬性即可：</p>
+<pre><code class="javascript">const board = navigator.clipboard;
+console.log(board); // Clipboard 物件</code></pre>
+<p><br/><br/></p>
+<h4 id="Clipboard-readText"><a href="#Clipboard-readText" class="headerlink" title="# Clipboard.readText"></a># Clipboard.readText</h4><p>取得 Clipboard 物件後，我們就可以使用它自身的 method 來讀寫剪貼簿了，而 <code>readText</code> 就是讓我們可以讀取剪貼板目前儲存的文本內容，呼叫它後會回傳一個 Promise，需要用 <code>then</code> 來串接並取得文本：</p>
+<pre><code class="html">&lt;button&gt;Get Clipboard&lt;/button&gt;
+&lt;script&gt;
+  const button = document.querySelector(&quot;button&quot;);
+  button.addEventListener(&quot;click&quot;, function () {
+    navigator.clipboard.readText().then((text) =&gt; {
+      console.log(text); // 剪貼簿中的文本內容
+    });
+  });
+&lt;/script&gt;</code></pre>
+<blockquote>
+<p>你該注意：</p>
+<ol>
+<li>有些瀏覽器可能會阻止「直接命令」剪貼簿，最好是透過使用者點擊按鈕或監聽事件來處理。</li>
+<li><code>navigator.clipboard</code> 取得的是當下視窗的系統剪貼簿，所以如果你是透過 Console 面板執行的話有可能會報錯，因為它是在「開發者工具」視窗下執行的。</li>
+</ol>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="Clipboard-writeText"><a href="#Clipboard-writeText" class="headerlink" title="# Clipboard.writeText"></a># Clipboard.writeText</h4><p>知道怎麼「讀」之後，就要來看看怎麼「寫」了，<code>writeText</code> 可以讓我們修改目前使用者儲存在剪貼簿的內容，只要將指定內容當作參數傳入即可，另外在執行後依然會回傳 Promise，當修改成功後便可以執行 <code>then</code> 中的 Callback，或是在失敗後進行 Error Handle。</p>
+<p><button id="get" style="padding: 5px">Set Clipboard</button> &lt;&lt; 你可以試試看</p>
+<script>
+  const button = document.querySelector('#get');
+  button.addEventListener('click', function() {
+    const text = "你複製的東西被我變成這段文字了";
+    navigator.clipboard.writeText(text)
+      .then(() => alert("success"))
+      .catch(() => alert("fail"))
+  });
+</script>
+
+<pre><code class="html">&lt;button&gt;Set Clipboard&lt;/button&gt;
+&lt;script&gt;
+  const button = document.querySelector(&quot;button&quot;);
+  button.addEventListener(&quot;click&quot;, function () {
+    const text = &quot;你複製的東西被我變成這段文字了&quot;;
+    navigator.clipboard
+      .writeText(text)
+      .then(() =&gt; alert(&quot;success&quot;))
+      .catch(() =&gt; alert(&quot;fail&quot;));
+  });
+&lt;/script&gt;</code></pre>
+<p><br/><br/></p>
+<h2 id="ClipboardEvent"><a href="#ClipboardEvent" class="headerlink" title="ClipboardEvent"></a>ClipboardEvent</h2><p>除了可以主動操作 Clipboard 物件以外，瀏覽器還提供了一些剪貼簿的相關事件讓我們監聽，當使用者執行 <code>cut</code>、<code>copy</code> 和 <code>paste</code> 的操作時，便能透過事件 Callback 執行指定動作，且 Callback 所獲得的 Event 物件當中還會多一個 <code>clipboardData</code> 屬性，該屬性也會有自身的 method 可以使用。</p>
+<br/>
+
+<h4 id="Event-clipboardData-getData"><a href="#Event-clipboardData-getData" class="headerlink" title="# Event.clipboardData.getData"></a># Event.clipboardData.getData</h4><p><code>getData</code> 可以讓我們取得剪貼簿中的資料，它有一個必傳的參數是資料格式，一般來說都是使用 <code>&quot;text/plain&quot;</code> 來指定「純文字資料」。</p>
+<blockquote>
+<p>它和前面提到的 <code>Clipboard.readText</code> 功能基本一樣，但要注意這兩者所屬的物件是不同的。</p>
+</blockquote>
+<pre><code class="javascript">// 讓整個網頁可以進行編輯，這樣才能觸發貼上事件
+document.designMode = &quot;on&quot;;
+// getData 通常搭配 paste 事件，在 cut、copy 事件中使用會拿不到東西
+document.addEventListener(&quot;paste&quot;, function (e) {
+  const clipboardText = e.clipboardData.getData(&quot;text/plain&quot;);
+  console.log(&quot;使用者貼上了文字：&quot; + clipboardText);
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="Event-clipboardData-setData"><a href="#Event-clipboardData-setData" class="headerlink" title="# Event.clipboardData.setData"></a># Event.clipboardData.setData</h4><p>不曉得各位有沒有在他人部落格中複製程式碼後，發現貼上後的內容多了幾行作者的著作申明？其實這樣的功能就是透過 <code>setData</code> 做到的，它可以讓我們修改使用者剪貼簿內容。</p>
+<blockquote>
+<p>它和前面提到的 <code>Clipboard.writeText</code> 功能基本一樣，但要注意這兩者所屬的物件是不同的。</p>
+</blockquote>
+<pre><code class="javascript">// setData 通常搭配 cut、copy 事件，在 paste 事件中使用會沒有效果
+document.addEventListener(&quot;copy&quot;, function (e) {
+  // 利用昨天認識的 Selection API 取得使用者反白的文字
+  const selectionText = window.getSelection().toString();
+  const extraText = &quot;\n注意：你複製的這段文字屬於 Max&quot;;
+  e.preventDefault(); // 阻止使用者本來要執行的「複製」動作
+  e.clipboardData.setData(&quot;text/plain&quot;, selectionText + extraText);
+});</code></pre>
+<br/>
+
+<blockquote>
+<p>其實在 Clipboard API 被廣泛的被瀏覽器採用前，要處理剪貼簿都是透過 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/execCommand" target="_blank" rel="noopener">document.execCommand</a>，但因為它有不少缺點，所以逐漸被取代，如果各位有興趣知道的話，可以再去搜尋了解。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>其實你有注意的話，今天的示範程式碼中有出現 DesignMode 和 Selection 的身影，這三者其實常常一起使用，這也就是為什麼我會在前面的章節一直提到要等三個 Web API 一起介紹完後，再來實際做一個文章編輯器的應用。到了今天我們終於把它們通通習得了，就準備明天動手寫吧！</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10271977" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/23/webApi/webApi-10/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/23/webApi/webApi-10/" data-id="clcsdp5ll0030neqw2swk19u0" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/22/webApi/webApi-9/" class="article-nav-title">那些被忽略但很好用的 Web API / Selection</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/24/webApi/webApi-11/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / 簡易文字編輯器
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/23/webApi/webApi-10/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

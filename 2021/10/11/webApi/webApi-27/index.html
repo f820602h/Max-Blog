@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / Share | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="與你分享的快樂，勝過獨自擁有  現代人看到有趣的網頁、新聞、消息等等時，最常做的事情就是分享到社群帳號中，而現在社群軟體數不勝數，Facebook、LINE、Instagram、twitter…等等。 起初，只有在 Android 和 iOS 的 APP 中你可以呼叫 OS 系統的原生分享介面，一般網頁則還是得一個個處理各家社群軟體的分享機制，所以你往往會在網頁中看到一排社群軟體的 LOGO 用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; Share">
+<meta property="og:url" content="https://maxleebk.com/2021/10/11/webApi/webApi-27/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="與你分享的快樂，勝過獨自擁有  現代人看到有趣的網頁、新聞、消息等等時，最常做的事情就是分享到社群帳號中，而現在社群軟體數不勝數，Facebook、LINE、Instagram、twitter…等等。 起初，只有在 Android 和 iOS 的 APP 中你可以呼叫 OS 系統的原生分享介面，一般網頁則還是得一個個處理各家社群軟體的分享機制，所以你往往會在網頁中看到一排社群軟體的 LOGO 用">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/11/webApi/webApi-27/os.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/11/webApi/webApi-27/share.png">
+<meta property="article:published_time" content="2021-10-11T12:52:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:39.006Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/11/webApi/webApi-27/os.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-27" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / Share
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-11T12:52:00.000Z" itemprop="datePublished">2021-10-11</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>與你分享的快樂，勝過獨自擁有</p>
+</blockquote>
+<p>現代人看到有趣的網頁、新聞、消息等等時，最常做的事情就是分享到社群帳號中，而現在社群軟體數不勝數，Facebook、LINE、Instagram、twitter…等等。</p>
+<p>起初，只有在 Android 和 iOS 的 APP 中你可以呼叫 OS 系統的原生分享介面，一般網頁則還是得一個個處理各家社群軟體的分享機制，所以你往往會在網頁中看到一排社群軟體的 LOGO 用來分享到不同地方。不過現在瀏覽器也提供了 Share API 來呼叫原生的分享介面了。</p>
+<hr>
+<h2 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h2><p>雖然網頁終於有 Share API 來讓我們呼叫系統原生的分享介面，不過它的支援度還不是非常完善，其中對「電腦瀏覽器」不僅支援度低，就算有支援，也並沒有提供社群網站的分享，提供的分享途徑非常不實用。</p>
+<img src="os.png" style="margin: 24px auto;" />
+
+<p><strong>而對於電腦的低支援度，我認為可能有兩點原因：</strong></p>
+<ul>
+<li><p><strong>系統權限：</strong><br>由於行動裝置中的 APP 都是依照手機 OS（Android、iOS）的規範編寫，所以手機 OS 能有相應的權限來開啟「社群軟體」的分享功能。反之電腦 OS (Microsoft、macOS) 沒有任何權限去啟動「社群網頁」的分享功能。</p>
+</li>
+<li><p><strong>操作習慣：</strong><br>電腦使用者一般的的分享手段還是以網址分享為主，這樣的手段在電腦操作上是快速且方便的，而行動裝置對於同樣的操作是麻煩的，所以才需要原生分享的幫助。</p>
+</li>
+</ul>
+<br/>
+
+<p>隨然我們平常多以電腦的視角在開發網頁，不過為了加強行動裝置的使用體驗，Share API 還是有使用的需求性。</p>
+<p><br/><br/></p>
+<h4 id="Navigator-share"><a href="#Navigator-share" class="headerlink" title="# Navigator.share"></a># Navigator.share</h4><p>只要執行這個 method 就能啟用分享功能，不過需要注意幾個限制才能順利使用：</p>
+<ul>
+<li>最重要的當然是瀏覽器要支援</li>
+<li>它必須經由使用者的操作／手勢觸發</li>
+<li>網站必須要有 https 的協定</li>
+</ul>
+<br/>
+
+<p>另外，呼叫 <code>navigator.share</code> 時還需要傳入一個參數，用來設定分享內容或檔案：</p>
+<ul>
+<li><strong>ShareData：</strong> 該參數需為一個物件，當中的所有屬性都是「可選的」，但必須至少有一項，可接受的屬性有以下：<ul>
+<li>title: 一組字串，分享訊息的標題</li>
+<li>text: 一組字串，分享訊息的描述</li>
+<li>url: 一組字串，分享訊息要帶上的連結</li>
+<li>files: 一組 <a href="https://developer.mozilla.org/en-US/docs/Web/API/File/File" target="_blank" rel="noopener">File 物件</a> 的陣列，會成為分享內容的附件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>你需要注意</strong>： 不是每個瀏覽器都能辨識所有的屬性，若不能辨識時就會忽略。</p>
+</blockquote>
+<blockquote>
+<p><strong>你需要注意</strong>： 就算瀏覽器能辨認，不同的分享途徑也可能會有不同的支援程度，例如臉書貼文就不支援 <code>files</code>，但 LINE、電子郵件就可以。</p>
+</blockquote>
+<pre><code class="javascript">const shareBtn = document.querySelector(&quot;.share&quot;);
+shareBtn.addEventListener(&quot;click&quot;, function () {
+  const file = new File([&quot;foo&quot;], &quot;foo.txt&quot;, { type: &quot;text/plain&quot; });
+  const shareData = {
+    title: &quot;分享功能&quot;,
+    text: &quot;測試分享功能&quot;,
+    url: &quot;https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share&quot;,
+    files: [file],
+  };
+
+  if (navigator.share) {
+    // 有分享功能就分享
+    navigator
+      .share(shareData)
+      .then(() =&gt; alert(&quot;分享成功&quot;))
+      .catch((err) =&gt; alert(&quot;發生錯誤:&quot; + err));
+  } else {
+    // 沒有分享功能就複製網址到剪貼簿
+    navigator.clipboard
+      .writeText(location.href))
+      .then(() =&gt; alert(&quot;已複製網頁網址&quot;))
+      .catch(() =&gt; alert(&quot;複製失敗&quot;));
+  }
+});</code></pre>
+<p>上方就是一個最基本的使用方式，利用 <code>click</code> 來觸發事件，並且先確認瀏覽器的 <code>navigator</code> 有 <code>share</code> 這個 method 才去執行，並且傳入一組 <code>ShareData</code> 物件，這樣只要有有支援的瀏覽器以及分享途徑就會開啟並根據 <code>ShareData</code> 來組合分享訊息。</p>
+<p>要注意的是，<code>navigator.share</code> 會回傳一個 Promise，你可以利用 <code>then</code> 和 <code>catch</code> 來處理分享成功或失敗的後續動作。</p>
+<img src="share.png" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<p>要是你希望網站有良好的傳遞性，非常建議使用 Share API，尤其是那些支援行動裝置瀏覽的網站。儘管現在手機上的瀏覽器 APP 已經有內建的分享選項，但最直覺的操作還是直接顯示在網頁中的分享按鈕。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10280875" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/11/webApi/webApi-27/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/11/webApi/webApi-27/" data-id="clcsdp5mo0048neqw2z8oeo7c" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/10/webApi/webApi-26/" class="article-nav-title">那些被忽略但很好用的 Web API / 拖拉式待辦清單</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/12/webApi/webApi-28/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Notification
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/11/webApi/webApi-27/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

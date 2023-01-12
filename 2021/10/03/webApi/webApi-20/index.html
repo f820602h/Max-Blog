@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / ResizeObserver | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="你的改變，我看得見！  今天要介紹的是 ResizeObserver，它和昨天的 MutationObserver 非常相像，都是透過「觀察者模式」的設計方式來監測元素，不過 ResizeObserver 監測的變動是元素的「大小」。  ResizeObserver各位應該有使用過 window 的 resize 事件吧？只要視窗大小有更動，事件就會觸發並執行 Callback，然後各位也一定跟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; ResizeObserver">
+<meta property="og:url" content="https://maxleebk.com/2021/10/03/webApi/webApi-20/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="你的改變，我看得見！  今天要介紹的是 ResizeObserver，它和昨天的 MutationObserver 非常相像，都是透過「觀察者模式」的設計方式來監測元素，不過 ResizeObserver 監測的變動是元素的「大小」。  ResizeObserver各位應該有使用過 window 的 resize 事件吧？只要視窗大小有更動，事件就會觸發並執行 Callback，然後各位也一定跟">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/03/webApi/webApi-20/rect.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/03/webApi/webApi-20/box.png">
+<meta property="article:published_time" content="2021-10-03T14:33:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.923Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/03/webApi/webApi-20/rect.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-20" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / ResizeObserver
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-03T14:33:00.000Z" itemprop="datePublished">2021-10-03</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>你的改變，我看得見！</p>
+</blockquote>
+<p>今天要介紹的是 ResizeObserver，它和昨天的 MutationObserver 非常相像，都是透過「觀察者模式」的設計方式來監測元素，不過 ResizeObserver 監測的變動是元素的「大小」。</p>
+<hr>
+<h2 id="ResizeObserver"><a href="#ResizeObserver" class="headerlink" title="ResizeObserver"></a>ResizeObserver</h2><p>各位應該有使用過 window 的 <code>resize</code> 事件吧？只要視窗大小有更動，事件就會觸發並執行 Callback，然後各位也一定跟我一樣，肖想著把 <code>resize</code> 事件綁定在一般元素上，可想而知是不會成功的，但 ResizeObserver 的出現，終於可以實現我們的願望了。</p>
+<br/>
+
+<h4 id="Window-ResizeObserver"><a href="#Window-ResizeObserver" class="headerlink" title="# Window.ResizeObserver"></a># Window.ResizeObserver</h4><p>ResizeObserver： 一樣是一個建構函式，所以需要使用 <code>new</code> 關鍵字來建立實體，建立時需要傳入一個 Callback Function 作為參數，該 Function 可以接到由 ResizeObserver 提供的一個陣列作為參數，該陣列中會一個或多個 ResizeObserverEntry 物件：</p>
+<br/>
+
+<ul>
+<li><strong>ResizeObserverEntry</strong>： 該物件中會有一些屬性，讓我們可以取得一些有關元素的「大小」、「位置」資訊，後面會再詳細介紹。</li>
+</ul>
+<br/>
+
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  console.log(entries);
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="ResizeObserver-observe"><a href="#ResizeObserver-observe" class="headerlink" title="# ResizeObserver.observe"></a># ResizeObserver.observe</h4><p>就和昨天說的一樣，ResizeObserver 創建後並不會直接開始進行觀察，我們需要透過 <code>observe</code> 來註冊想要監測的元素，這樣 ResizeObserver 才會在該元素發生變動時進行動作，這裡有兩個參數傳入：</p>
+<br/>
+
+<ul>
+<li><strong>target</strong>： 一個要受到觀察的 Element 元素。</li>
+<li><strong>options</strong>：這是一個可選的參數，用來初始化觀測的設定選項，目前只有一個屬性：<ul>
+<li>box: 這個屬性會決定要觀測元素的哪一種「盒模型(Box Model)」。可接受的值有 <code>content-box</code> 和 <code>border-box</code> 兩種，預設為 <code>content-box</code>。（其實有第三種，但使用度很低）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>如果對盒模型不太熟悉的朋友可以看<a href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model#%E4%BB%80%E4%B9%88%E6%98%AFcss_%E7%9B%92%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener">這裡</a>瞭解一下</p>
+</blockquote>
+<br/>
+
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  console.log(entries);
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div, {
+  box: &quot;border-box&quot;,
+});</code></pre>
+<p>這樣只要受到監測的元素發生寬高的變化，ResizeObserver 就會執行我們指定的行為了。</p>
+<p><br/><br/></p>
+<h4 id="ResizeObserver-disconnect"><a href="#ResizeObserver-disconnect" class="headerlink" title="# ResizeObserver.disconnect"></a># ResizeObserver.disconnect</h4><p>和 MutationObserver 一樣，只要使用 <code>disconnect</code> 這個 method 就可以註銷目前所有被觀察的元素，後續只要再次呼叫 <code>observe</code> 來註冊一個被觀察的元素，ResizeObserver 依然會持續運作。</p>
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  console.log(entries);
+});
+
+observer.disconnect();</code></pre>
+<p><br/><br/></p>
+<h4 id="ResizeObserver-unobserve"><a href="#ResizeObserver-unobserve" class="headerlink" title="# ResizeObserver.unobserve"></a># ResizeObserver.unobserve</h4><p>ResizeObserver 除了 <code>disconnect</code> 之外，還額外多了一個 <code>unobserve</code> method，它可以讓我們註銷「單個」元素的觀察，當某個元素已經不在需要受到監測，就可以將其做為參數，<code>unobserve</code> 便會把它從 ResizeObserver 的監測中移除。</p>
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  console.log(entries);
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div, {
+  box: &quot;border-box&quot;,
+});
+observer.unobserve(div);</code></pre>
+<p><br/><br/></p>
+<h4 id="ResizeObserver-特性"><a href="#ResizeObserver-特性" class="headerlink" title="# ResizeObserver 特性"></a># ResizeObserver 特性</h4><p>一樣的，ResizeObserver 為了優化效能問題，如果有一連串連續且即時的元素尺寸變動，那 ResizeObserver 並不會一次次觸發，而是會將它們合併成一次變動，並且只會紀錄最終的結果。</p>
+<p>而如果同一時間中，有多個觀測中的元素都發生了尺寸變動，那 ResizeObserver 就會有相應數量的紀錄，這也就是為什麼會以陣列形式來包裝 ResizeObserverEntry 物件。</p>
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  entries.forEach((entry) =&gt; {
+    console.log(entry); // ResizeObserverEntry 物件
+  });
+});
+
+const element1 = document.querySelector(&quot;#element1&quot;);
+const element2 = document.querySelector(&quot;#element2&quot;);
+observer.observe(element1);
+observer.observe(element2);
+
+element1.style.width = &quot;300px&quot;;
+element1.style.height = &quot;200px&quot;;
+element2.style.width = &quot;300px&quot;;
+element2.style.height = &quot;200px&quot;;
+// 看似是四次變動，但 ResizeObserver 只會視為「兩個元素的一次變動」
+// 因此 callback 只會觸發一次，且 entries 中會有兩組 ResizeObserverEntry</code></pre>
+<p><br/><br/></p>
+<h4 id="ResizeObserverEntry-物件"><a href="#ResizeObserverEntry-物件" class="headerlink" title="# ResizeObserverEntry 物件"></a># ResizeObserverEntry 物件</h4><p>ResizeObserverEntry 的屬性雖然不多，但都較為複雜，所以下面就一一拉出來說明：</p>
+<br/>
+
+<ul>
+<li><strong>ResizeObserverEntry.target</strong><br>這是其中比較單純的屬性，讀取到的會是變動的元素(element)。</li>
+</ul>
+<br/>
+
+<ul>
+<li><p><strong>ResizeObserverEntry.contentRect</strong><br>這個屬性的值為一個 DOMRectReadOnly 物件，該物件會紀錄很多 <code>target</code> 的相關資訊：</p>
+<ul>
+<li><strong>x</strong>： 變動元素之 <code>contentBox</code> 在該元素中的Ｘ座標，通常等於 padding 寬度。</li>
+<li><strong>y</strong>： 變動元素之 <code>contentBox</code> 在該元素中的Ｙ座標，通常等於 padding 寬度。</li>
+<li><strong>width</strong>： 變動元素之 <code>contentBox</code> 的寬度。</li>
+<li><strong>height</strong>： 變動元素之 <code>contentBox</code> 的高度。</li>
+<li><strong>top</strong>： 變動元素之 <code>contentBox</code> 的「頂邊」的Ｙ座標，通常與 <code>y</code> 相同。</li>
+<li><strong>bottom</strong>： 變動元素之 <code>contentBox</code> 的「底邊」的Ｙ座標，通常與 <code>y + height</code> 相同。</li>
+<li><strong>left</strong>： 變動元素之 <code>contentBox</code> 的「左側」的Ｘ座標，通常與 <code>x</code> 相同。</li>
+<li><strong>right</strong>： 變動元素之 <code>contentBox</code> 的「右側」的Ｘ座標，通常與 <code>x + width</code> 相同。</li>
+</ul>
+</li>
+</ul>
+<img src="rect.png" style="max-width: 600px; margin: 24px auto;" />
+
+<br/>
+
+<ul>
+<li><p><strong>ResizeObserverEntry.borderBoxSize</strong><br>這個屬性會是一個陣列，而陣列中會是一個或多個 borderBoxSize 物件，該物件中又會有兩個屬性：</p>
+<ul>
+<li><p><strong>blockSize</strong>： 這個屬性的值會是一個數值，該數值通常代表元素的高，會說通常是因為，這取決於元素被設定的書寫方向，<code>blockSize</code> 代表的是「垂直」於書寫方向的元素邊長尺寸(單位:px)。</p>
+</li>
+<li><p><strong>inlineSize</strong>： 而 <code>inlineSize</code> 剛好相反，它代表的是「平行」於書寫方向的元素邊長尺寸(單位:px)。</p>
+</li>
+</ul>
+</li>
+</ul>
+<br/>
+
+<ul>
+<li><p><strong>ResizeObserverEntry.contentBoxSize</strong><br>這個屬性會是一個陣列，而陣列中會是一個或多個 contentBoxSize 物件，而物件中一樣會有兩個屬性，其實跟 borderBoxSize 物件是一樣的，但是兩者的差別在於尺寸的計算方式，borderBoxSize 是依照 <code>border-box</code> 的方式計算，contentBoxSize 則是依 <code>content-box</code> 進行計算。</p>
+<ul>
+<li><p><strong>blockSize</strong>： 「垂直」於書寫方向的元素邊長尺寸(單位:px)。</p>
+</li>
+<li><p><strong>inlineSize</strong>： 「平行」於書寫方向的元素邊長尺寸(單位:px)。</p>
+</li>
+</ul>
+</li>
+</ul>
+<img src="box.png" style="max-width: 600px; margin: 24px auto;" />
+
+<p>以上這些資訊我們都可以在 Callback 中取得，想要做任何判斷或計算都是非常方便，所以大家可以根據需求去決定需要利用的資訊有哪些。</p>
+<pre><code class="javascript">const observer = new ResizeObserver(function (entries) {
+  entries.forEach((entry) =&gt; {
+    const target = entry.target;
+    const borderBox = entry.borderBoxSize[0];
+    console.log(`${target.id} 寬度: ${borderBox.inlineSize} 高度: ${borderBox.blockSize}`);
+  });
+});</code></pre>
+<p><br/><br/></p>
+<p>相比 MutationObserver，ResizeObserver 的使用情境就比較多了，因為今天元素的變動會受到很多因素影響，且大部分都不是我們可以完全預測掌控的，例如視窗大小的壓縮、元素內容的增加/減少、RWD 的控制的等等，這時就可以透過 ResizeObserver 來監測元素的大小，並做出相對應的動作。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10278080" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/03/webApi/webApi-20/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/03/webApi/webApi-20/" data-id="clcsdp5mh003rneqw63384vte" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/02/webApi/webApi-19/" class="article-nav-title">那些被忽略但很好用的 Web API / MutationObserver</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/04/webApi/webApi-21/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / GetBoundingClientRect
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/03/webApi/webApi-20/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

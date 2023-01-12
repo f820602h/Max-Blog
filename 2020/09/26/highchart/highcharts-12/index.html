@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 繪圖區設定 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;ExKRLGP避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  如果前面幾個圖表元素的設定介紹你都有跟到的話，你可以想想看繪圖區設定還能調整或修改什麼？ 繪圖區裡的數據列和數據點都有專屬的區塊設定，隔線、標記線(帶)由座標軸控制，就連繪圖區自己本身的背景、外框都是在「圖表整體設定」裡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 繪圖區設定">
+<meta property="og:url" content="https://maxleebk.com/2020/09/26/highchart/highcharts-12/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;ExKRLGP避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  如果前面幾個圖表元素的設定介紹你都有跟到的話，你可以想想看繪圖區設定還能調整或修改什麼？ 繪圖區裡的數據列和數據點都有專屬的區塊設定，隔線、標記線(帶)由座標軸控制，就連繪圖區自己本身的背景、外框都是在「圖表整體設定」裡">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/09/26/highchart/highcharts-12/weights.png">
+<meta property="og:image" content="https://maxleebk.com/2020/09/26/highchart/highcharts-12/weight-case.png">
+<meta property="article:published_time" content="2020-09-26T03:10:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.719Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/09/26/highchart/highcharts-12/weights.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-12" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 繪圖區設定
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-09-26T03:10:00.000Z" itemprop="datePublished">2020-09-26</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/ExKRLGP" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/ExKRLGP</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>如果前面幾個圖表元素的設定介紹你都有跟到的話，你可以想想看繪圖區設定還能調整或修改什麼？</p>
+<p>繪圖區裡的數據列和數據點都有專屬的區塊設定，隔線、標記線(帶)由座標軸控制，就連繪圖區自己本身的背景、外框都是在「圖表整體設定」裡做調整，那繪圖區設定到底還能設定什麼？</p>
+<p><strong>其實繪圖區本身沒有任何屬性可以設定，但它卻可以幫我們把數據列的重複設定抽出並統一管理。</strong></p>
+<hr>
+<h2 id="繪圖區設定-使用方法"><a href="#繪圖區設定-使用方法" class="headerlink" title="繪圖區設定 - 使用方法"></a>繪圖區設定 - 使用方法</h2><br/>
+
+<p>繪圖區的設定就像是我們把重複的值抽出來設為變數一樣，它可以把重複的數據列設定給拉出來，統一放在它自己這邊，讓所有數據列都能吃到個設定。</p>
+<p>由此可知，繪圖區的所有屬性都跟「數據列」一模一樣，除了 <code>type</code>、<code>name</code>、<code>data</code>、<code>index</code>、<code>legendIndex</code>…這些「不該共用」數據列的屬性。你可以自己比較看看折線圖的 <strong><a href="https://api.highcharts.com/highcharts/series.line" target="_blank" rel="noopener">數據列設定</a></strong> 和 <strong><a href="https://api.highcharts.com/highcharts/plotOptions.line" target="_blank" rel="noopener">繪圖區設定</a></strong> 有哪些不同。</p>
+<br/>
+<br/>
+
+<p>不過你可能會好奇，如果是 <code>marker</code>、<code>size</code> 這類專屬於某個圖表類型的屬性怎麼辦？其實繪圖區設定的撰寫方式是這樣的…</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  plotOptions: {
+    series:{
+      // 在這張圖表裡的所有數據列都會套用
+    },
+    line: {
+      // 在這張圖表裡type為line的數據列會套用
+    },
+    column: {
+      // 在這張圖表裡type為column的數據列會套用
+    }
+  },
+});</code></pre>
+<p>透過這樣的設定結構，你可以把通用的屬性放在 <code>series</code> 子物件底下，而折線圖專屬的設定放在 <code>line</code> 底下，這樣就可以區分通用與專門屬性了。</p>
+<blockquote>
+<p>但其實寫在一起也沒關係，就算設定了一個該圖表沒有的屬性，也不會發生錯誤或造成影響。</p>
+</blockquote>
+<br/>
+<br/>
+
+<h4 id="用一個簡單的案例來感受繪圖區設定的方便："><a href="#用一個簡單的案例來感受繪圖區設定的方便：" class="headerlink" title="用一個簡單的案例來感受繪圖區設定的方便："></a>用一個簡單的案例來感受繪圖區設定的方便：</h4><p>假設我們今天有一個「兩組折線圖／一組柱狀圖」的複合圖表，當中的三組數據列都要顯示「數據標籤」，然後兩組折線圖都要將線條改為虛線。沒用繪圖區設定的話要這樣寫…</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  // 省略其他區塊設定...
+  series: [
+    {
+      type: &quot;column&quot;,
+      name: &quot;柱狀圖&quot;,
+      data: [10,20,30,40,50],
+      dataLabels: { enabled: true }
+    },
+    {
+      name: &quot;折線圖一&quot;,
+      data: [35,35,35,35,35],
+      dashStyle: &quot;Dash&quot;,
+      dataLabels: { enabled: true }
+    },
+    {
+      name: &quot;折線圖二&quot;,
+      data: [55,55,55,55,55],
+      dashStyle: &quot;Dash&quot;,
+      dataLabels: { enabled: true }
+    }
+  ]
+});</code></pre>
+<p>但如果利用繪圖區設定改寫一下，我們就可以避免大量重複的程式碼，而且如果未來要調整，就只要統一修改繪圖區設定一個地方就好，大大提升了程式碼的管理品質。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  // 省略其他區塊設定...
+  plotOptions: {
+    series: {
+      dataLabels: { enabled: true }
+    },
+    line: {
+      dashStyle: &quot;Dash&quot;,
+    }
+  },
+  series: [
+    {
+      name: &quot;折線圖一&quot;,
+      data: [1,3,5,7,9]
+    },
+    {
+      name: &quot;折線圖二&quot;,
+      data: [2,4,6,8,10]
+    },
+    {
+      type: &quot;column&quot;,
+      name: &quot;柱狀圖&quot;,
+      data: [10,20,30,40,50]
+    }
+  ]
+});</code></pre>
+<br/>
+
+<blockquote>
+<p>其實就算不是複合圖表，甚至只有單組數據列，我都習慣把數據列設定挪到繪圖區設定裡，這樣可以讓數據列專注在設定「數據點資料」。</p>
+</blockquote>
+<hr>
+<h2 id="繪圖區設定-權重高低"><a href="#繪圖區設定-權重高低" class="headerlink" title="繪圖區設定 - 權重高低"></a>繪圖區設定 - 權重高低</h2><br/>
+
+<p>既然「數據列設定」和「繪圖區設定」都能調整數據列，那如果不小心兩邊對同個屬性設定了不同的值會發生什麼事呢？</p>
+<p>「越細節，權重越高」，在 Highcharts 中保持著一個觀念就不會容易被搞糊塗，以這個原則來看的話我們可以得到下圖的結果，也就是說如果「數據列設定」和「繪圖區設定」發生衝突，那最後會以數據列設定為優先。</p>
+<p><img src="weights.png" alt=""></p>
+<br/>
+<br/>
+
+<p>因此，只要把權重運用得宜的話，就可以這樣做：<strong><a href="https://codepen.io/max-lee/pen/RwaJyjg" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/RwaJyjg</a></strong></p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  // 省略其他區塊設定...
+  plotOptions: {
+    series: {
+       marker: { 
+         enabled: true,
+         symbol: &quot;diamond&quot;,
+         radius: 6
+      }
+    },
+    line: {
+      marker: { symbol: &quot;triangle&quot; }
+    }
+  },
+  series: [
+    {
+      name: &quot;折線圖一&quot;,
+      marker: { enabled: false },
+      data: [30,30,30,30,{
+        y: 30,
+        marker: { enabled: true, symbol: &quot;triangle-down&quot; },
+      }]
+    },
+    {
+      name: &quot;折線圖二&quot;,
+      data: [60,60,60,60,60]
+    },
+    {
+      type: &quot;area&quot;,
+      name: &quot;面積圖&quot;,
+      fillColor: &quot;rgba(144, 237, 125, 0.2)&quot;,
+      data: [10,10,10,10,10]
+    }
+  ]
+});</code></pre>
+<img src="weight-case.png" style="max-width: 700px; margin: 24px auto;" />
+
+
+<p><br/><br/></p>
+<p>那繪圖區設定的介紹就到這邊，是不是覺得這樣統一的集中數據列設定清爽多了呢？不僅避免重複的程式碼還增加了易讀性，所以強烈建議大家試著多利用繪圖區設定來管理數據列！</p>
+<p>接著明天要介紹的是看似簡單卻被我刻意跳過的「顏色設定」。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10244400" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/09/26/highchart/highcharts-12/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/09/26/highchart/highcharts-12/" data-id="clcsdp5jx001bneqwfc02e4cs" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/09/25/highchart/highcharts-11/" class="article-nav-title">資視就是力量 - Highcharts / 數據點設定</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/27/highchart/highcharts-13/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 顏色屬性
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/09/26/highchart/highcharts-12/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

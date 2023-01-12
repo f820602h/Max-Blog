@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JS地下城 - 井字遊戲 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本篇為六角學院 - JS地下城攻略文　Github｜Demo    確認需求 先手為 O，後手為 X，某方獲勝時，上方會紀錄各方的獲勝戰績 每回合結束後，會判定結果頁(平手、Ｏ 獲勝、X 獲勝) 需符合 RWD，能在低螢幕解析度也能遊玩，介面不能超出 x 軸。 請使用瀏覽器離線儲存技術，將戰績保留起來，重新打開遊戲也仍可觀看到歷史戰績。技術請任選以下幾種  基本上都不是太複雜的需求，唯有判斷勝負">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS地下城 - 井字遊戲">
+<meta property="og:url" content="https://maxleebk.com/2019/12/01/js-underground-8/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本篇為六角學院 - JS地下城攻略文　Github｜Demo    確認需求 先手為 O，後手為 X，某方獲勝時，上方會紀錄各方的獲勝戰績 每回合結束後，會判定結果頁(平手、Ｏ 獲勝、X 獲勝) 需符合 RWD，能在低螢幕解析度也能遊玩，介面不能超出 x 軸。 請使用瀏覽器離線儲存技術，將戰績保留起來，重新打開遊戲也仍可觀看到歷史戰績。技術請任選以下幾種  基本上都不是太複雜的需求，唯有判斷勝負">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/5208/1*3uprjW3Qc2fTBbzFDeH3KA.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/4268/1*JlxlNuoF5OPvRfsv7Rpr2g.png">
+<meta property="og:image" content="https://maxleebk.com/2019/12/01/js-underground-8/ooxx.png">
+<meta property="article:published_time" content="2019-12-01T12:46:25.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.883Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="JS地下城">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/5208/1*3uprjW3Qc2fTBbzFDeH3KA.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-underground-8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      JS地下城 - 井字遊戲
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2019-12-01T12:46:25.000Z" itemprop="datePublished">2019-12-01</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS%E5%9C%B0%E4%B8%8B%E5%9F%8E/" rel="tag">JS地下城</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本篇為六角學院 - JS地下城攻略文　<a href="https://github.com/f820602h/OXGame/" target="_blank" rel="noopener">Github</a>｜<a href="https://f820602h.github.io/OXGame/" target="_blank" rel="noopener">Demo</a></p>
+</blockquote>
+</br>
+
+<h2 id="確認需求"><a href="#確認需求" class="headerlink" title="確認需求"></a>確認需求</h2><ul>
+<li>先手為 O，後手為 X，某方獲勝時，上方會紀錄各方的獲勝戰績</li>
+<li>每回合結束後，會判定結果頁(平手、Ｏ 獲勝、X 獲勝)</li>
+<li>需符合 RWD，能在低螢幕解析度也能遊玩，介面不能超出 x 軸。</li>
+<li>請使用瀏覽器離線儲存技術，將戰績保留起來，重新打開遊戲也仍可觀看到歷史戰績。技術請任選以下幾種</li>
+</ul>
+<p><strong>基本上都不是太複雜的需求，唯有判斷勝負可能需要花點時間來思考。</strong></p>
+<hr>
+<h2 id="解題攻略"><a href="#解題攻略" class="headerlink" title="解題攻略"></a>解題攻略</h2></br>
+
+<h4 id="畫面處理"><a href="#畫面處理" class="headerlink" title="# 畫面處理"></a># 畫面處理</h4><p>秉持專業原則：「設計稿給什麼，畫面就出什麼」，叉叉中間可以利用偽元素蓋掉多餘的線條，製造出中空的效果。<br>文字部分用 text-shadow 或 -webkit-text-stroke 就可以搞定。</p>
+<pre><code class="css">.text{
+  text-shadow: 2px 2px white, -2px -2px white, 2px -2px white, -2px 2px white;
+  -webkit-text-stroke: 2px white;
+}</code></pre>
+<p><img src="https://cdn-images-1.medium.com/max/5208/1*3uprjW3Qc2fTBbzFDeH3KA.png" alt=""> <img src="https://cdn-images-1.medium.com/max/4268/1*JlxlNuoF5OPvRfsv7Rpr2g.png" alt=""></p>
+<p></br></br></p>
+<h4 id="初始化遊戲"><a href="#初始化遊戲" class="headerlink" title="# 初始化遊戲"></a># 初始化遊戲</h4><p>畫面完成後，來處理遊戲流程吧，我們可以使用陣列來儲存每個格子中的圈叉。</p>
+<ul>
+<li>事先為每個格子加一個 <code>data-num</code> 屬性，<code>value</code> 從 <code>0~8</code> 剛好對應九宮格位置，也對應陣列 <code>gamePlay</code> 的 <code>index</code>。</li>
+<li><code>circleTurn</code> 是表示玩家回合的變數，如果為 <code>true</code> 就是圈圈的回合，反之為叉叉的回合。</li>
+<li>每次點擊空格都會由 <code>circleTurn</code> 告訴我們該將 <code>1 (圈)</code> 或 <code>-1 (叉)</code> 加入 <code>gamePlay</code> 陣列中，並且切換回合。</li>
+</ul>
+<p>陣列成功存進資料後，剩下就是判定啦！</p>
+<pre><code class="javascript">let gamePlay = [];
+let circleTurn = true;
+let boxes = document.querySelectorAll(&quot;.box&quot;);
+
+boxes.forEach( box =&gt; {
+  box.addEventListener(&quot;click&quot;, function() {
+    let index = this.getAttribute(&quot;data-num&quot;);
+    // 如果格子已經被佔領過，不作動
+    if (gamePlay[index] != undefined) return;
+    // 反之根據回合填入1或-1
+    gamePlay[index] = circleTurn ? 1 : -1;
+    // 切換回合
+    circleTurn = !circleTurn;
+  });
+});</code></pre>
+<p></br></br></p>
+<h4 id="勝負判斷"><a href="#勝負判斷" class="headerlink" title="# 勝負判斷"></a># 勝負判斷</h4><p><img src="ooxx.png" alt=""></p>
+<p>我們前面已經利用 <code>data-num</code> 屬性爲格子加上編號了，現在來看看成功連線有什麼規律：</p>
+<ol>
+<li><strong>橫排：012、345、678 - 可以歸類為 3n、3n+1、3n+2。</strong></li>
+<li><strong>直排：036、147、258 - 可以歸類為 n、n+3、n+6。</strong></li>
+<li><strong>斜角：048、246</strong></li>
+</ol>
+<p>我們按照找到的規律去把格子裡的 <code>±1</code> 給相加，如果絕對值等於 <code>3</code>，就代表分出勝負了，那我們就返回其中一個格子的值 <code>(1 或 -1)</code>。<br>如果是 <code>1</code> 代表圈圈獲勝，如果是 <code>-1</code> 代表叉叉獲勝，知道誰獲勝後就可以處理勝負的畫面跟計分了。</p>
+<pre><code class="javascript">let whoWin = function() {
+  // 左上至右下的斜角
+  let lrCross = Math.abs(gamePlay[0] + gamePlay[4] + gamePlay[8]); 
+  if (lrCross === 3) return gamePlay[0]
+
+  // 右上至左下的斜角
+  let rlCross = Math.abs(gamePlay[2] + gamePlay[4] + gamePlay[6]); 
+  if (rlCross === 3) return gamePlay[2]
+
+  // 橫排
+  for (let i =0; i &lt; 3; i++) {
+    let row = Math.abs(gamePlay[3*i] + gamePlay[3*i+1] + gamePlay[3*i+2]);
+    if (row === 3) return gamePlay[3*i]
+  }
+
+  // 直排
+  for (let i =0; i &lt; 3; i++) {
+    let row = Math.abs(gamePlay[i] + gamePlay[i+3] + gamePlay[i+6]);
+    if (row === 3) return gamePlay[i]
+  }
+
+  // 平手
+  return null
+};</code></pre>
+<p></br></br></p>
+<h4 id="平手狀況"><a href="#平手狀況" class="headerlink" title="# 平手狀況"></a># 平手狀況</h4><p>不過我們還有平手的狀況要處理，先利用變數幫我們紀錄目前的回合數，如果已經達到 <code>9</code>，<code>whoWin()</code> 回傳的卻還是 <code>null</code> 那就表示沒有分出勝負。</p>
+<pre><code class="javascript">let step = 1
+let gameover = function(){
+  step++
+  if (whoWin() === null &amp;&amp; step === 9) {
+    // 平手要做的事情
+  } else if (whoWin() === 1) {
+    // 圈圈贏了要做的事
+  } else if (whoWin() === -1) {
+    // 叉叉贏了要做的事
+  } else {
+    // 還沒結束的話，切換回合
+    circleTurn = !circleTurn;
+  }
+}</code></pre>
+<p>這樣遊戲架構就完成了，畫面的切換以及分數的顯示再稍微處理一下就可以開始和朋友來場圈叉遊戲了。</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2019/12/01/js-underground-8/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS%E5%9C%B0%E4%B8%8B%E5%9F%8E/" rel="tag">JS地下城</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2019/12/01/js-underground-8/" data-id="clcsdp5fi0005neqw9cz34j63" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2019/11/01/js-underground-7/" class="article-nav-title">JS地下城 - Canvas</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/01/14/js-underground-9/" class="article-nav-title">
+        
+          JS地下城 - 幸運輪盤
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2019/12/01/js-underground-8/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

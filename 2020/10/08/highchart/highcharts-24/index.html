@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 雙Ｙ軸複合圖表 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;mdPZaRr  複合圖表和複數座標軸在前面的章節其實都有介紹過，不過今天我們要結合一下時事，用台灣疫情的資料來實際做一個「雙Ｙ軸複合圖表」。  實作目標    如上圖所示，這次要做的是柱狀圖和折線圖的複合圖表，並且累計確診是使用左邊的人數Ｙ軸，而致死率則是右邊的百分比Ｙ軸。不過複合式圖表應該算是蠻簡單的，之前的 範例 也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 雙Ｙ軸複合圖表">
+<meta property="og:url" content="https://maxleebk.com/2020/10/08/highchart/highcharts-24/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;mdPZaRr  複合圖表和複數座標軸在前面的章節其實都有介紹過，不過今天我們要結合一下時事，用台灣疫情的資料來實際做一個「雙Ｙ軸複合圖表」。  實作目標    如上圖所示，這次要做的是柱狀圖和折線圖的複合圖表，並且累計確診是使用左邊的人數Ｙ軸，而致死率則是右邊的百分比Ｙ軸。不過複合式圖表應該算是蠻簡單的，之前的 範例 也">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/08/highchart/highcharts-24/doubleY.png">
+<meta property="article:published_time" content="2020-10-08T04:58:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.851Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/08/highchart/highcharts-24/doubleY.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-24" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 雙Ｙ軸複合圖表
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-08T04:58:00.000Z" itemprop="datePublished">2020-10-08</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/mdPZaRr" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/mdPZaRr</a></strong></p>
+</blockquote>
+<p>複合圖表和複數座標軸在前面的章節其實都有介紹過，不過今天我們要結合一下時事，用台灣疫情的資料來實際做一個「雙Ｙ軸複合圖表」。</p>
+<hr>
+<h2 id="實作目標"><a href="#實作目標" class="headerlink" title="實作目標"></a>實作目標</h2><img src="doubleY.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+
+<p>如上圖所示，這次要做的是柱狀圖和折線圖的複合圖表，並且累計確診是使用左邊的人數Ｙ軸，而致死率則是右邊的百分比Ｙ軸。不過複合式圖表應該算是蠻簡單的，之前的 <strong><a href="https://codepen.io/max-lee/pen/mdPxGyq" target="_blank" rel="noopener">範例</a></strong> 也已經有展示過了，所以這次的重點會放在雙Ｙ軸上面。那今天為大家準備的原始資料如下：</p>
+<pre><code class="javascript">const colors = [&quot;#8E354A&quot;, &quot;#1C1C1C&quot;];
+const epidemic = [
+  { &quot;月份&quot;: 2, &quot;累計確診&quot;: 39, &quot;累計死亡&quot;: 1 },
+  { &quot;月份&quot;: 3, &quot;累計確診&quot;: 322, &quot;累計死亡&quot;: 5 },
+  { &quot;月份&quot;: 4, &quot;累計確診&quot;: 429, &quot;累計死亡&quot;: 6 },
+  { &quot;月份&quot;: 5, &quot;累計確診&quot;: 442, &quot;累計死亡&quot;: 7 },
+  { &quot;月份&quot;: 6, &quot;累計確診&quot;: 447, &quot;累計死亡&quot;: 7 },
+  { &quot;月份&quot;: 7, &quot;累計確診&quot;: 467, &quot;累計死亡&quot;: 7 },
+  { &quot;月份&quot;: 8, &quot;累計確診&quot;: 488, &quot;累計死亡&quot;: 7 },
+  { &quot;月份&quot;: 9, &quot;累計確診&quot;: 514, &quot;累計死亡&quot;: 7 },
+];</code></pre>
+<hr>
+<h2 id="動手開發"><a href="#動手開發" class="headerlink" title="動手開發"></a>動手開發</h2><br/>
+
+<h4 id="1-容器準備"><a href="#1-容器準備" class="headerlink" title="1. 容器準備"></a>1. 容器準備</h4><p>第一步還是一樣，要先準備好放圖表的容器，另外今天偷偷跟大家說一個小撇步，如果容器有設定 HTML <code>id</code> 屬性的話，其實 ID 名稱可以直接作為 <code>chart()</code> 的 <code>element</code> 參數。但先前怕大家覺得怎麼突然沒來由的傳了一個字串，所以就還是用了比較保守的寫法。</p>
+<pre><code class="html">&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="javascript">// const container = document.querySelector(&#39;#container&#39;);
+// 可以省略上面這行，直接將id名稱作為參數
+let myChart = Highcharts.chart(&quot;container&quot;, {...});</code></pre>
+<br/>
+<br/>
+
+<h4 id="2-資料準備"><a href="#2-資料準備" class="headerlink" title="2. 資料準備"></a>2. 資料準備</h4><p>再來就是把需要的資料透過原始資料 Mapping 出來，這裡我有把月份給 <code>map</code> 出來，因為這樣可以直接作為Ｘ軸的 <code>categories</code> 使用，就不用設定一堆屬性來做「日期座標軸」了。</p>
+<pre><code class="javascript">const month = epidemic.map(data =&gt; `${data[&quot;月份&quot;]}月`);
+const confirmedNum = epidemic.map(data =&gt; data[&quot;累計確診&quot;]);
+const deathRate = epidemic.map(data =&gt; {
+  return Math.floor(data[&quot;累計死亡&quot;] / data[&quot;累計確診&quot;] * 10000) / 100;
+});</code></pre>
+<br/>
+<br/>
+
+<h4 id="3-創建圖表與區塊設定"><a href="#3-創建圖表與區塊設定" class="headerlink" title="3. 創建圖表與區塊設定"></a>3. 創建圖表與區塊設定</h4><p><strong>資料準備好後就可以建立圖表了，不過大家要注意一下我們的圖表設定，有下面幾個重點：</strong></p>
+<ol>
+<li>因為要做的是複數座標軸，所以Ｙ軸設定傳入的是 <strong>陣列</strong>，裡面的兩組物件代表的就是兩組Ｙ軸。</li>
+<li>第二組的百分比Ｙ軸要加上 <code>opposite</code> 屬性，才會顯示在右邊。</li>
+<li>數據列必須要設定 <code>yAxis</code> 屬性，用來指定要使用陣列中哪一組座標軸。</li>
+</ol>
+<br/>
+
+<p>其中最容易忘記的就是第三點，要是沒有設定 <code>xAxis</code> 或 <code>yAxis</code> 屬性，那所有數據列都會採用第一組座標軸，最後圖表的結果就會很不一樣了。</p>
+<pre><code class="javascript">let myChart = Highcharts.chart(&quot;container&quot;, {
+  chart: { height: 500 },
+  colors: colors,
+  credits: { text: &quot;數據來源: 衛福部疾管署&quot; },
+  title: { text: &quot;2020 臺灣疫情報告&quot; },
+  tooltip: {
+    headerFormat: &quot;&lt;b&gt;{point.key}&lt;/b&gt;&lt;br/&gt;&quot;,
+    pointFormat: &quot;{series.name}: {point.y} {series.userOptions.custom}&quot;,
+  },
+  xAxis: { categories: month },
+  yAxis: [
+    {
+      title: { text: &quot;人數&quot; },
+      labels: { format: &quot;{value}人&quot; }
+    },
+    {
+      title: { text: &quot;百分比&quot; },
+      labels: { format: &quot;{value}％&quot; },
+      opposite: true
+    }
+  ],
+  series: [
+    {
+      name: &quot;累計確診人數&quot;,
+      type: &quot;column&quot;,
+      data: confirmedNum,
+      custom: &quot;人&quot;
+    },
+    {
+      name: &quot;致死率&quot;,
+      data: deathRate,
+      yAxis: 1, // 指定第二組座標軸，1 為索引值
+      custom: &quot;%&quot;
+    }
+  ]
+});</code></pre>
+<p><br/><br/></p>
+<p>今天實作了「雙Ｙ軸複合圖表」，算是一個很常見的圖表類型，能夠運用的情境應該蠻多的，建議大家可以練習看看。接著明天，我們要再換一個題目來做做看「金字塔圖表」，也即將會是最後一個實作範例。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10250764" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/08/highchart/highcharts-24/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/08/highchart/highcharts-24/" data-id="clcsdp5l80025neqw9abh4n6c" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/07/highchart/highcharts-23/" class="article-nav-title">資視就是力量 - Highcharts / 下鑽圖表</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/09/highchart/highcharts-25/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 金字塔圖表
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/08/highchart/highcharts-24/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

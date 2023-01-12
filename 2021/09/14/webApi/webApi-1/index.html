@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / 前言 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Web API – Application Programming Interface for The Web，翻譯成中文就是「給網頁使用的應用程序介面」  相信對於開發網頁的前端工程師來說，Web API 是在熟悉不過，就算你沒聽過或不曉得 Web API 是什麼，你也絕對使用過它。 舉幾個例子：console.log、setTimeOut、setInterval，這些其實都是所謂的 Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; 前言">
+<meta property="og:url" content="https://maxleebk.com/2021/09/14/webApi/webApi-1/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="Web API – Application Programming Interface for The Web，翻譯成中文就是「給網頁使用的應用程序介面」  相信對於開發網頁的前端工程師來說，Web API 是在熟悉不過，就算你沒聽過或不曉得 Web API 是什麼，你也絕對使用過它。 舉幾個例子：console.log、setTimeOut、setInterval，這些其實都是所謂的 Web">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/14/webApi/webApi-1/web-api.png">
+<meta property="article:published_time" content="2021-09-14T01:29:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.899Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/14/webApi/webApi-1/web-api.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / 前言
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-14T01:29:00.000Z" itemprop="datePublished">2021-09-14</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>Web API – Application Programming Interface for The Web，翻譯成中文就是「給網頁使用的應用程序介面」</p>
+</blockquote>
+<p>相信對於開發網頁的前端工程師來說，Web API 是在熟悉不過，就算你沒聽過或不曉得 Web API 是什麼，你也絕對使用過它。</p>
+<p>舉幾個例子：<code>console.log</code>、<code>setTimeOut</code>、<code>setInterval</code>，這些其實都是所謂的 Web API，它們並非是 JavaScript 的原生 method。</p>
+<hr>
+<h2 id="Web-API-到底是什麼？"><a href="#Web-API-到底是什麼？" class="headerlink" title="Web API 到底是什麼？"></a>Web API 到底是什麼？</h2><br/>
+
+<p>剛剛上面提到的常用 method，它們其實來自於 <code>window</code> 這個全域物件，實際上你使用的是 <code>window.console.log</code>，只不過 <code>window</code> 是被允許省略的。而這個神奇的 <code>window</code> 其實是由瀏覽器提供給我們的，連平常我們常常使用的 <code>document</code> 物件也是所屬於 <code>window</code> 底下，如果你有寫過 Node.js 的話，就可以確認我說的是真的，因為在 Node.js 的環境下是找不到 <code>window</code>，取而代之的是 <code>global</code> 物件。</p>
+<p>而這次的系列文章就是想要介紹那些深埋在 <code>window</code> 裡，你不曾發覺或是常常遺忘的 API，或許在你開發網頁的過程中有遇過一些特殊需求，當下雖然用了一些管用手法解決，但看完這次的系列文章，你可能會有新的靈感或發現。</p>
+<img src="web-api.png" style="max-width: 500px; margin: 24px auto;" />
+
+<h4 id="尷尬的痛點"><a href="#尷尬的痛點" class="headerlink" title="# 尷尬的痛點"></a># 尷尬的痛點</h4><p>由於 <code>window</code> 是瀏覽器提供給我們的，所以當中的內容完全取決於使用者所使用的瀏覽器。不幸的是，Web API 其實必沒有被統一標準化，有些甚至還在實踐階段，或是有一些還有裝置的限制，也因為如此，並非所有瀏覽器都會把全部的 Web API 實踐出來，所以在我們使用之前可以先去看看 <strong><a href="https://caniuse.com/" target="_blank" rel="noopener">瀏覽器的支援度</a></strong> 。</p>
+<hr>
+<h2 id="系列內容"><a href="#系列內容" class="headerlink" title="系列內容"></a>系列內容</h2><br/>
+
+<p>如果要細數的話 Web API 其實以上千個，不過我們常用的卻不多，因為其實有一大部分的 API 並沒有什麼實際功能性，不過呢，這次想跟各位分享的是一些非常實用但使用度缺相對較低的 Web API。</p>
+<p>另外想要聲明的事，有些 Web API 比較龐大複雜，大到可以單獨寫成一個新的系列文章了，像是 Canvas、WebSocket..等等，而這些就不會是我們系列文章的範疇，這次會分享的是一些比較間單，大家可以快速上手使用的內容。</p>
+<br/>
+
+<ol>
+<li>Console</li>
+<li>CreateDocumentFragment</li>
+<li>RequestAnimationFrame</li>
+<li>FullScreen</li>
+<li>Battery</li>
+<li>ImageCapture</li>
+<li>DesignMode</li>
+<li>Selection</li>
+<li>Clipboard</li>
+<li>History</li>
+<li>SessionStorage</li>
+<li>CustomEvent</li>
+<li>PostMessage</li>
+<li>MessageChannel</li>
+<li>BroadcastChannel</li>
+<li>RequestIdleCallback</li>
+<li>MutationObserver</li>
+<li>ResizeObserver</li>
+<li>GetBoundingClientRect</li>
+<li>IntersectionObserver</li>
+<li>ScrollIntoView</li>
+<li>Drag &amp; Drop</li>
+<li>Share</li>
+<li>Notification</li>
+<li>Geolocation</li>
+</ol>
+<br/>
+
+<p>以上這些 Web API 就會在我們這次的系列文章中介紹到，部分 API 也還會再額外拉一個篇章來示範一些實際應用，讓大家可以更了解到它們的實際作用與功能。那接下來的三十天就期待與大家一起挖掘 「那些被忽略但很好用的 Web API」囉～</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10265151" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/14/webApi/webApi-1/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/14/webApi/webApi-1/" data-id="clcsdp5ll002yneqwgxva8pg8" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/14/highchart/highcharts-30/" class="article-nav-title">資視就是力量 - Highcharts / 尾聲</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/15/webApi/webApi-2/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Console
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/14/webApi/webApi-1/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

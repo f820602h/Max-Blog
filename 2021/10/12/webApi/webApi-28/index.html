@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / Notification | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="訂閱、分享、開啟小鈴鐺，才不會錯過通知喔～  各位有沒有收過網站的通知呢？例如 Youtube 或 Netflix 的新片通知，或是 Facebook 的訊息通知等等…，這個其實就是今天要介紹的 Notification 所達成的效果。  Notification不過實話是，真的要像 Youtube 那樣在使用者沒有拜訪網站的狀況下發送通知，是需要使用 Service Worker 以及後端的配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; Notification">
+<meta property="og:url" content="https://maxleebk.com/2021/10/12/webApi/webApi-28/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="訂閱、分享、開啟小鈴鐺，才不會錯過通知喔～  各位有沒有收過網站的通知呢？例如 Youtube 或 Netflix 的新片通知，或是 Facebook 的訊息通知等等…，這個其實就是今天要介紹的 Notification 所達成的效果。  Notification不過實話是，真的要像 Youtube 那樣在使用者沒有拜訪網站的狀況下發送通知，是需要使用 Service Worker 以及後端的配">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/12/webApi/webApi-28/os.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/12/webApi/webApi-28/mic.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/12/webApi/webApi-28/pr.png">
+<meta property="article:published_time" content="2021-10-12T10:31:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:39.010Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/12/webApi/webApi-28/os.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-28" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / Notification
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-12T10:31:00.000Z" itemprop="datePublished">2021-10-12</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>訂閱、分享、開啟小鈴鐺，才不會錯過通知喔～</p>
+</blockquote>
+<p>各位有沒有收過網站的通知呢？例如 Youtube 或 Netflix 的新片通知，或是 Facebook 的訊息通知等等…，這個其實就是今天要介紹的 Notification 所達成的效果。</p>
+<hr>
+<h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>不過實話是，真的要像 Youtube 那樣在使用者沒有拜訪網站的狀況下發送通知，是需要使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API/Using_Service_Workers" target="_blank" rel="noopener">Service Worker</a> 以及後端的配合，有興趣的人可以看看 <a href="https://whien.medium.com/%E5%BB%BA%E7%AB%8B-service-worker-web-push-notification-web-notification-%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84-8a3bb9ff09e8" target="_blank" rel="noopener">這篇文章</a>，有詳細說明如何推送未拜訪網站情況下的通知，而今天我們的範疇就先聚焦在如何在「瀏覽情況下」發送通知吧。</p>
+<img src="os.png" style="margin: 24px auto;" />
+
+<p>Notification 對於電腦瀏覽器到支援度是不錯的，但在行動裝置上就很糟糕了，iOS 全軍覆沒，Android 也是有使用上的限制，所以使用上還是需要注意一下的。</p>
+<p><br/><br/></p>
+<h4 id="Window-Notification"><a href="#Window-Notification" class="headerlink" title="# Window.Notification"></a># Window.Notification</h4><p>Notification 使用起來並不困難，它本身是一個建構函式，透過 <code>new</code> 關鍵字創建，並傳入一個必要參數即可：</p>
+<pre><code class="javascript">// 檢查瀏覽器是否有支援 Notification
+if (&quot;Notification&quot; in window) {
+  let notification = new Notification(&quot;這是一則通知&quot;);
+}</code></pre>
+<p>Notification 的第一個參數是 <code>title</code>，會顯示為通知的標題，該參數為必傳參數，而除了 <code>title</code> 之外，你也可以傳入一個可選參數 <code>options</code>，它為一個物件，當中有更多關於通知的詳細設定，下面我只列出幾個我認為比較實用的，若對其他屬性有興趣的話可以看 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification" target="_blank" rel="noopener">這裡</a>。</p>
+<br/>
+
+<ul>
+<li><strong>body</strong>： 一組字串，會設定為通知的內文，位置會在 <code>title</code> 的下方。</li>
+<li><strong>image</strong>： 一組圖片的 URL 字串，它會成為通知的主視覺圖片。</li>
+<li><strong>icon</strong>： 一組圖片的 URL 字串，它會成為通知的圖標，位置大小依系統原生通知而定。</li>
+<li><strong>data</strong>： 任意的資料格式，任何與通知相關的資料可以放在這，不會顯示在通知當中，一般情境下比較少用，</li>
+<li><strong>requireInteraction</strong>： 一個布林值，決定通知必須要由使用者來關閉，而不是使其自動關閉，預設值為 <code>false</code></li>
+</ul>
+<br/>
+
+<blockquote>
+<p><strong>注意：</strong> 每個作業系統對於不同的設定屬性有不同的支援或做法，最終的行為可能不會相同，例如 macOS 不支援 <code>image</code> 圖片顯示。</p>
+</blockquote>
+<pre><code class="html">&lt;button onclick=&quot;notifyMe()&quot;&gt;click&lt;/button&gt;
+&lt;script&gt;
+  function notifyMe() {
+    let notification = new Notification(&quot;這裡是通知的標題&quot;, {
+      body: &quot;這裡是通知的內文&quot;,
+      icon: &quot;./max.jpg&quot;,
+      image: &quot;./max.jpg&quot;,
+      requireInteraction: true,
+    });
+  }
+&lt;/script&gt;</code></pre>
+<img src="mic.png" style="margin: 24px auto;" />
+
+<p>可以看到不同作業系統本身在通知的顯示上有很大的不同，而且針對同一個屬性也會有不同的行為模式：</p>
+<ul>
+<li>首先在 macOS 上，右邊的圖示是根據 <code>icon</code> 的設定顯示的，而非 <code>image</code>，但 Microsoft 就同時顯示了 <code>icon</code> 和 <code>image</code>。</li>
+<li>再者，由於設定了 <code>requireInteraction</code>，所以當使用者沒有主動關閉中前 macOS 會將通知訊息疊加顯示，反之 Microsoft 並不會，要等到第一條通知被關閉後，第二條才會出現。</li>
+</ul>
+<p><br/><br/></p>
+<h4 id="Notification-實體"><a href="#Notification-實體" class="headerlink" title="# Notification 實體"></a># Notification 實體</h4><p>如果我們在創建 Notification 時有將宣告在變數中，我們就可以取得 Notification 實體，並訪問它的相關屬性，而它的屬性其實就是當初在呼叫建構函式時所傳入的參數，像是這樣：</p>
+<pre><code class="javascript">let notification = new Notification(&quot;這是一則通知&quot;, {
+  body: &quot;這是 Ｍax 的通知&quot;,
+  icon: &quot;./max.jpg&quot;,
+  data: { name: &quot;Max&quot; },
+  requireInteraction: true,
+});
+
+console.log(notification.title); // &quot;這是一則通知&quot;
+console.log(notification.body); // &quot;這是 Ｍax 的通知&quot;
+console.log(notification.data.name); // &quot;Max&quot;
+console.log(notification.requireInteraction); // true</code></pre>
+<p>另外除了這些唯讀屬性外，我們還可以為通知綁定事件，而且事件的 Callback 也和其他事件一樣，可以接到一個 Event 物件，當中的 <code>event.target</code> 就會是被觸發事件的 Notification 實體。</p>
+<p><strong>可監聽的事件有:</strong></p>
+<ul>
+<li><code>click</code>： 使用者點擊通知時觸發，關閉時的點擊不包含在內。</li>
+<li><code>error</code>： 當通知發生錯誤時觸發。</li>
+</ul>
+<pre><code class="javascript">let notification = new Notification(&quot;這是一則通知&quot;, {
+  body: &quot;這是 Ｍax 的通知&quot;,
+  icon: &quot;./max.jpg&quot;,
+  data: { name: &quot;Max&quot; },
+  requireInteraction: true,
+});
+
+notification.addEventListener(&quot;click&quot;, function (event) {
+  console.log(event.target.data.name); // &quot;Max&quot;
+
+  // 打開頁面是一個常見的點擊事件行為
+  window.open(&quot;https://maxleebk.com/&quot;, &quot;_blank&quot;);
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="Window-Notification-permission"><a href="#Window-Notification-permission" class="headerlink" title="# Window.Notification.permission"></a># Window.Notification.permission</h4><p>由於 Notification 算是一個有點打擾使用者的功能，所以使用前是需要取得授權的，而 Notification 這個建構函示（class）本身有提供 <code>permission</code> 這個靜態屬性讓我們確認授權的狀態。</p>
+<p>當我們訪問 <code>permission</code> 時會讀取到一個表示授權狀態的字串，其值可能會是以下三種：</p>
+<ul>
+<li><code>&quot;granted&quot;</code>： 表示使用者允許網站的通知功能。</li>
+<li><code>&quot;denied&quot;</code>： 表示使用者阻擋網站的通知功能，直到使用者主動到瀏覽器設定中開啟通知。</li>
+<li><code>&quot;default&quot;</code>： 表示使用者對於通知功能還沒有明確的授權與否。</li>
+</ul>
+<pre><code class="javascript">if (!window.Notification) {
+  console.log(&quot;這個瀏覽器不支援 Notification&quot;);
+} else if (Notification.permission === &quot;granted&quot;) {
+  let notification = new Notification(&quot;這是一則通知&quot;);
+} else if (Notification.permission === &quot;denied&quot;) {
+  alert(&quot;建議您允許通知，以收到最新消息&quot;);
+}</code></pre>
+<p><br/><br/></p>
+<h4 id="Window-Notification-requestPermission"><a href="#Window-Notification-requestPermission" class="headerlink" title="# Window.Notification.requestPermission"></a># Window.Notification.requestPermission</h4><p>若是授權狀態為 <code>&quot;default&quot;</code>，那表示使用者並未對通知功能表示明確的答覆，這時候就需要我們使用 <code>requestPermission</code> 來詢問，它本身會再去確認一次授權狀態，若發現狀態為 <code>&quot;default&quot;</code> 就會跳出詢問授權的對話框，並且在使用者答覆之後利用 Promise 將結果丟給我們。</p>
+<pre><code class="javascript">if (!window.Notification) {
+  console.log(&quot;這個瀏覽器不支援 Notification&quot;);
+} else if (Notification.permission === &quot;granted&quot;) {
+  let notification = new Notification(&quot;這是一則通知&quot;);
+} else if (Notification.permission === &quot;denied&quot;) {
+  alert(&quot;建議您允許通知，以收到最新消息&quot;);
+} else if (Notification.permission === &quot;default&quot;) {
+  Notification.requestPermission().then((result) =&gt; {
+    // result 相當於 Notification.permission
+    if (result === &quot;granted&quot;) {
+      let notification = new Notification(&quot;這是一則通知&quot;);
+    }
+  });
+}</code></pre>
+<img src="pr.png" style="margin: 24px auto;" />
+
+<p>前面有說，其實 <code>requestPermission</code> 會自己再去確認一次狀態，如果為 <code>&quot;default&quot;</code> 才會詢問使用者，反之則會直接將授權狀態丟給我們，所以我們其實直接呼叫它就好，不一定要先透過 <code>permission</code> 來判斷。</p>
+<pre><code class="javascript">Notification.requestPermission().then((result) =&gt; {
+  if (result === &quot;granted&quot;) {
+    let notification = new Notification(&quot;這是一則通知&quot;);
+  } else if (result === &quot;denied&quot;) {
+    alert(&quot;建議您允許通知，以收到最新消息&quot;);
+  }
+});</code></pre>
+<p><br/><br/></p>
+<p>以上就是 Notification API 的大致內容了，但就如開頭所說，其實它還是搭配 Service Worker 才會有更強大的效果，尤其是網站有提供訂閱服務的話，那它的幫助絕對是非常大的，不過至少今天我們已經知道如何發送通知了，未來如果有機會和後端配合也可以快速上手。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10281329" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/12/webApi/webApi-28/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/12/webApi/webApi-28/" data-id="clcsdp5mo004aneqw70eof5nf" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/11/webApi/webApi-27/" class="article-nav-title">那些被忽略但很好用的 Web API / Share</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/13/webApi/webApi-29/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Geolocation
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/12/webApi/webApi-28/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

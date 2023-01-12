@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / 簡易文字編輯器 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="學習之後，刻意進行練習能夠加深印象。  前面三天我們已經習得 DesignMode、Selection API、Clipboard API，今天我們就將這三個 Web API 一同使用，動手寫一個簡易的文字編輯器吧!  簡易文字編輯器我們今天要做的文字編輯器沒有特別的功能，只會模擬「全選」、「複製」、「剪下」、「貼上」四大功能，純粹就是為了讓大家更熟悉前面認識的 Web API 而已，未來各位想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; 簡易文字編輯器">
+<meta property="og:url" content="https://maxleebk.com/2021/09/24/webApi/webApi-11/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="學習之後，刻意進行練習能夠加深印象。  前面三天我們已經習得 DesignMode、Selection API、Clipboard API，今天我們就將這三個 Web API 一同使用，動手寫一個簡易的文字編輯器吧!  簡易文字編輯器我們今天要做的文字編輯器沒有特別的功能，只會模擬「全選」、「複製」、「剪下」、「貼上」四大功能，純粹就是為了讓大家更熟悉前面認識的 Web API 而已，未來各位想">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/24/webApi/webApi-11/rich.png">
+<meta property="article:published_time" content="2021-09-24T08:48:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.899Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/24/webApi/webApi-11/rich.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / 簡易文字編輯器
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-24T08:48:00.000Z" itemprop="datePublished">2021-09-24</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>學習之後，刻意進行練習能夠加深印象。</p>
+</blockquote>
+<p>前面三天我們已經習得 DesignMode、Selection API、Clipboard API，今天我們就將這三個 Web API 一同使用，動手寫一個簡易的文字編輯器吧!</p>
+<hr>
+<h2 id="簡易文字編輯器"><a href="#簡易文字編輯器" class="headerlink" title="簡易文字編輯器"></a>簡易文字編輯器</h2><p>我們今天要做的文字編輯器沒有特別的功能，只會模擬「全選」、「複製」、「剪下」、「貼上」四大功能，純粹就是為了讓大家更熟悉前面認識的 Web API 而已，未來各位想要新增其他的 feature，可以再自行發揮。</p>
+<br/>
+
+<h4 id="HTML"><a href="#HTML" class="headerlink" title="# HTML"></a># HTML</h4><p>首先我們先準備一下今天的網頁版面：</p>
+<pre><code class="html">&lt;div&gt;
+  &lt;button id=&quot;all&quot;&gt;全選&lt;/button&gt;
+  &lt;button id=&quot;copy&quot;&gt;複製&lt;/button&gt;
+  &lt;button id=&quot;cut&quot;&gt;剪下&lt;/button&gt;
+  &lt;button id=&quot;paste&quot;&gt;貼上&lt;/button&gt;
+&lt;/div&gt;
+&lt;div id=&quot;editable&quot; contenteditable=&quot;true&quot;&gt;&lt;/div&gt;</code></pre>
+<img src="rich.png" style="margin: 24px auto;" />
+
+<p>那上面就是我們這次的編輯器，上面是工具列的部分，下面則是文字編輯的區域，樣式的話各位可以自由發揮，CSS 的部分就不額外放上來了。而為了方便，這次的可編輯範圍我們使用 <code>contenteditable</code> 屬性，各位也可以改用 iframe 搭配 DesignMode。</p>
+<p><br/><br/></p>
+<h4 id="Utilities"><a href="#Utilities" class="headerlink" title="# Utilities"></a># Utilities</h4><p>再來，我們先準備一些共用的變數和函式：</p>
+<pre><code class="javascript">const editableDiv = document.querySelector(&quot;#editable&quot;);
+
+function addClickListener(selector, callback) {
+  const el = document.querySelector(selector);
+  el.addEventListener(&quot;mousedown&quot;, function (e) {
+    e.preventDefault(); // 關閉 mousedown 原生事件
+  });
+  el.addEventListener(&quot;click&quot;, function (e) {
+    callback(e);
+  });
+}</code></pre>
+<p>由於我們這次有四個按鈕需要綁定事件，所以為了避免重複撰寫，我們把事件監聽的程式碼拉出來作為共用函式，<strong>要注意的是</strong>，因為我們在點擊按鈕時會使得「可編輯區域」（#editable）的 focus 造成失焦，所以要特別把 <code>mousedown</code> 的原生事件關閉。</p>
+<p><br/><br/></p>
+<h4 id="全選按鈕"><a href="#全選按鈕" class="headerlink" title="# 全選按鈕"></a># 全選按鈕</h4><p>首先第一個按鈕是「全選」，我們希望使用者在點擊按鈕後可以把編輯區域中的文字全部反白：</p>
+<pre><code class="javascript">addClickListener(&quot;#all&quot;, function (e) {
+  const selection = window.getSelection();
+  selection.collapse(editableDiv, 0);
+  if (!editableDiv.childNodes.length) return; // 避免在沒有任何文字節點時進行 extend
+  selection.extend(editableDiv.childNodes[0], editableDiv.textContent.length);
+});</code></pre>
+<p>利用前面的共用函式 <code>addClickListener</code>，來設定按鈕，而在 Callback 中我們的步驟是先將 Selection 坍縮（collapse）在編輯區的最前頭，然後透過 <code>extend</code> 來將 focus 移動到最後面，這樣編輯區自然就會被全部反白了。</p>
+<p>不過要注意，當編輯區沒有任何文字節點時進行 <code>extend</code> 是會報錯的，所以我們在中間有加一行防禦性的判斷式。</p>
+<p><br/><br/></p>
+<h4 id="複製按鈕"><a href="#複製按鈕" class="headerlink" title="# 複製按鈕"></a># 複製按鈕</h4><p>再來複製按鈕要讓使用者可以將目前反白的文字放進系統剪貼簿中，這樣之後才能將其「貼上」。</p>
+<pre><code class="javascript">addClickListener(&quot;#copy&quot;, function (e) {
+  const selection = window.getSelection();
+  navigator.clipboard.writeText(selection.toString());
+});</code></pre>
+<p>複製功能就相對簡單很多了，只要使用之前介紹 Selection 和 Clipboard 的基本 method 就可以實現。</p>
+<p><br/><br/></p>
+<h4 id="剪下按鈕"><a href="#剪下按鈕" class="headerlink" title="# 剪下按鈕"></a># 剪下按鈕</h4><p>剪下按鈕要做的事情其實和「複製」沒差多少，不過除了要將文字加進剪貼簿外，原本的文本內容需要將其移除，所以最後我們使用 Selection 的 <code>deleteFromDocument</code> 來處理。</p>
+<pre><code class="javascript">addClickListener(&quot;#cut&quot;, function (e) {
+  const selection = window.getSelection();
+  navigator.clipboard.writeText(selection.toString());
+  selection.deleteFromDocument();
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="貼上按鈕"><a href="#貼上按鈕" class="headerlink" title="# 貼上按鈕"></a># 貼上按鈕</h4><p>最後就剩貼上按鈕了，也是本次練習中最複雜的功能，因為「貼上」這個動作在將剪貼簿的內容放入編輯區時，可能會有兩種情境需要必一併考慮：</p>
+<ol>
+<li>使用者要輸入游標插入編輯區的某個位置，想要並將剪貼簿內容貼上</li>
+<li>使用者先反白了文字，想要將剪貼簿內容貼上，並取代反白的文字</li>
+</ol>
+<br/>
+
+<p><strong>根據以上兩個情境，我們可以大致盤點出需要做的事情：</strong></p>
+<ol>
+<li>如果有反白文字，必須要將反白文字刪除</li>
+<li>如果有反白文字，反白文字以前和以後的文字要保留</li>
+<li>如果沒有反白文字，游標插入位置之前和之後的文字要保留</li>
+<li>最後編輯區要顯示的內容應該是，前半部保留的文字 + 剪貼簿的文字 + 後半部保留的文字</li>
+</ol>
+<pre><code class="javascript">addClickListener(&quot;#paste&quot;, async function (e) {
+  const selection = window.getSelection();
+  selection.deleteFromDocument();
+
+  const offset = selection.anchorOffset;
+  const prefix = editableDiv.textContent.substr(0, offset);
+  const suffix = editableDiv.textContent.substr(offset);
+
+  const clipboardText = await navigator.clipboard.readText();
+  const textNode = document.createTextNode(prefix + clipboardText + suffix);
+  editableDiv.innerHTML = &quot;&quot;;
+  editableDiv.appendChild(textNode);
+  selection.collapse(textNode, (prefix + clipboardText).length);
+});</code></pre>
+<p>在整理出事項後，上面就是我們最後撰寫出來的程式碼了，首先執行 <code>deleteFromDocument</code>，只要有反白的文字就會被刪除，而且與此同時，Selection 會被自動坍縮在一個點上，這樣只要取得 <code>anchorOffset</code> 就可以知道游標目前插入在第幾個字。</p>
+<p>然後就可以使用 <code>substr</code> 把需要保留的文字分割出來，最後只要加上剪貼簿的內容再放回去就行囉，最後一行則是將游標放回原本的位置。</p>
+<p><strong>如果想要玩玩看的話，這邊是這次練習的 <a href="https://codepen.io/max-lee/pen/wveYwKK" target="_blank" rel="noopener">CodePen</a></strong></p>
+<p><br/><br/></p>
+<p>不曉得大家對於這次的練習還滿意嗎？雖然今天做出來的功能並不是很實用，但主要還是希望和大家一起在複習前面幾天學習的內容，而且其實各位時間心力的話，可以再為這個範例不斷添加新功能，完成自己的作品。</p>
+<p>另外這種文字編輯器，其實有很多 js 套件都有實現了，例如 <a href="https://www.slatejs.org/examples/richtext" target="_blank" rel="noopener">Slate.js</a> 就是一套很完整的工具，它使用的技術和我們今天使用的差不了多少，有興趣的人可以再去看看。</p>
+<blockquote>
+<p>通常這種所見即所得的編輯器會稱作「富文字編輯器」（Rich Text）</p>
+</blockquote>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10272325" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/24/webApi/webApi-11/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/24/webApi/webApi-11/" data-id="clcsdp5lm0033neqw4jsw6knt" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/23/webApi/webApi-10/" class="article-nav-title">那些被忽略但很好用的 Web API / Clipboard</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/25/webApi/webApi-12/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / History
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/24/webApi/webApi-11/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

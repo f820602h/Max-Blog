@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>用 Axios Instance 管理 API | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="自從用前端框架開始開發後，就沒在用 JQuery Ajax 了，取而代之的是 Axios   Axios 不僅輕量，而且直接幫我們把非同步操作包裝成 Promise 物件，所以我們可以直接使用 Promise API 像 then()、catch()。 雖然自己在用 Axios 的時候，都是直接 improt 進來就開始 axios.get、axios.post，不過後來在工作中接觸到了更好管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Axios Instance 管理 API">
+<meta property="og:url" content="https://maxleebk.com/2020/05/27/axios-instance/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="自從用前端框架開始開發後，就沒在用 JQuery Ajax 了，取而代之的是 Axios   Axios 不僅輕量，而且直接幫我們把非同步操作包裝成 Promise 物件，所以我們可以直接使用 Promise API 像 then()、catch()。 雖然自己在用 Axios 的時候，都是直接 improt 進來就開始 axios.get、axios.post，不過後來在工作中接觸到了更好管理">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-05-27T12:46:25.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.711Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="Vus.js">
+<meta property="article:tag" content="Axios">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-axios-instance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      用 Axios Instance 管理 API
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-05-27T12:46:25.000Z" itemprop="datePublished">2020-05-27</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axios/" rel="tag">Axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vus-js/" rel="tag">Vus.js</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>自從用前端框架開始開發後，就沒在用 JQuery Ajax 了，取而代之的是 Axios</p>
+</blockquote>
+<p> Axios 不僅輕量，而且直接幫我們把非同步操作包裝成 Promise 物件，所以我們可以直接使用 Promise API 像 <code>then()</code>、<code>catch()</code>。</p>
+<p>雖然自己在用 Axios 的時候，都是直接 <code>improt</code> 進來就開始 <code>axios.get</code>、<code>axios.post</code>，不過後來在工作中接觸到了更好管理 API 的方式 Axios - Instance （Axios實體）。</p>
+<hr>
+<h2 id="為什麼要用-Axios-Instance"><a href="#為什麼要用-Axios-Instance" class="headerlink" title="為什麼要用 Axios Instance ?"></a>為什麼要用 Axios Instance ?</h2><ul>
+<li>集中設定 Request Config</li>
+<li>支援攔截器，可在 then/catch 前做額外處理</li>
+<li>封裝 API 易於管理</li>
+</ul>
+<hr>
+<h2 id="建立實體"><a href="#建立實體" class="headerlink" title="建立實體"></a>建立實體</h2></br>
+
+<h4 id="Custom-Config"><a href="#Custom-Config" class="headerlink" title="# Custom Config"></a># Custom Config</h4><p>我們可以建立一支檔案 api.js ，先用 axios.create 創造一個實體，裡面放進 Request 的相關設定屬性。</p>
+<pre><code class="javascript">// api.js
+import axios from &quot;axios&quot;;
+
+// baseURL是你API的主要Domain，只後發請求時只要填相對路徑就可以了
+const instance = axios.create({
+  baseURL: &#39;https://your.api.domain.tw/&#39;,
+  headers: { &#39;Content-Type&#39;: &#39;application/json&#39; },
+  timeout: 20000
+});</code></pre>
+<p>Request Config 其實有不少屬性可以設定，但一般常見的是上面這些，詳細的說明 <a href="https://github.com/axios/axios#request-config" target="_blank" rel="noopener">官方</a> 都有介紹，這邊就不再贅述。</p>
+<p></br></br></p>
+<h4 id="攔截器"><a href="#攔截器" class="headerlink" title="# 攔截器"></a># 攔截器</h4><p>攔截器的設置可以讓我們在發出 <code>request</code> 或接到 <code>response</code> 之前做一些事情，例如改變 <code>response</code> 回來的資料格式，或是根據不同 <code>request</code> 來添加不同的 config 等等。</p>
+<ul>
+<li>Request Interceptors<br>用 <code>axios.interceptors.request.use()</code> 就可以設置 <code>request</code> 的攔截器，放入兩個函式做為參數。<ul>
+<li>Fulfilled Function: 第一個函式會在 request 送出前攔截到此次的 config，讓你可以做一些前置處理。</li>
+<li>Rejected Function: 第二個函式可以讓你在 request 發生錯誤時做一些額外的處理。</li>
+</ul>
+</li>
+</ul>
+<pre><code class="javascript">// 此處的instance為我們create的實體
+instance.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);</code></pre>
+</br>
+
+<ul>
+<li>Response Interceptors<br><code>response</code> 攔截器大同小異，用 <code>axios.interceptors.response.use()</code> 就可以設置。<br>而這邊要著墨的部分就在於攔截到 <code>response</code> 發生錯誤時的 <code>error</code> 處理。</li>
+</ul>
+<pre><code class="javascript">// 此處的instance為我們create的實體
+instance.interceptors.response.use(
+  function (response) {
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    if (error.response){
+      switch (error.response.status) {
+        case 404:
+          console.log(&quot;你要找的頁面不存在&quot;)
+          break;
+
+        case 500:
+          console.log(&quot;程式發生問題&quot;)
+          break;
+
+        default
+          console.log(error.message)
+      }
+    } 
+    if (!window.navigator.onLine) {
+      alert(&quot;網路出了點問題，請重新連線後重整網頁&quot;);
+      return;
+    }
+    return Promise.reject(error);
+  }
+);</code></pre>
+<p>這樣設定後，就可以在 <code>response</code> 回應錯誤時做相關的處理，例如導頁就是常見的處理方式。<br>以上就是攔截器的主要用途和應用，預計之後會再寫一篇說明該如何用攔截器來取消 <code>request</code>。</p>
+<p></br></br></p>
+<h4 id="封裝請求"><a href="#封裝請求" class="headerlink" title="# 封裝請求"></a># 封裝請求</h4><p>有了主設定以及攔截器，<code>axios instance</code> 就設計得差不多了，一般來說你已經可以把實體 <code>export</code> 出去使用了，但為了更有系統性的管理後端提供的 API，我們可以設計成 <code>function</code> 再 <code>export</code> 出去。</p>
+<pre><code class="javascript">// 此處的instance為我們create的實體
+export default function(method, url, data = null, config) {
+  method = method.toLowerCase();
+  switch (method) {
+    case &quot;post&quot;:
+      return instance.post(url, data, config);
+    case &quot;get&quot;:
+      return instance.get(url, { params: data });
+    case &quot;delete&quot;:
+      return instance.delete(url, { params: data });
+    case &quot;put&quot;:
+      return instance.put(url, data);
+    case &quot;patch&quot;:
+      return instance.patch(url, data);
+    default:
+      console.log(`未知的 method: ${method}`);
+      return false;
+  }
+}</code></pre>
+<p>這樣就可以透過判斷參數來回傳相對應的 <code>method</code>，而且我們也已經把發送請求的格式寫好了。<br>今天假設我們有一些與使用者相關的 API 好了，我們就可以把這個函式 <code>import</code> 進來，把 API 一支支地列出。</p>
+<pre><code class="javascript">// user.js
+import req from &quot;./api&quot;;
+
+export const userSignUp = (signUpData) =&gt; {
+  return req(&quot;post&quot;, &quot;/user/sign-in&quot;, signUpData)
+}
+
+export const userLogIn = (logInData) =&gt; {
+  return req(&quot;post&quot;, &quot;/user/log-in&quot;, logInData)
+}
+
+export const userLogOut = () =&gt; {
+  return req(&quot;get&quot;, &quot;/user/log-out&quot;)
+}
+
+export const userDelete = (userNo) =&gt; {
+  return req(&quot;delete&quot;, &quot;/user/delete&quot;, userNo)
+}</code></pre>
+<p>而實際要呼叫API的時候，只要把它 <code>import</code> 進來就可以用囉～</p>
+<pre><code class="javascript">import { userLogIn } from &quot;./user&quot;;
+
+userLogIn()
+  .than(res =&gt; {
+    console.log(&quot;登入成功&quot;);
+  })
+  .catch(error =&gt; {
+    // response攔截器會先執行，除非你漏接了，才會進到catch
+  })</code></pre>
+<p>這樣統一、集中且有條理地管理API是不是很清爽呢！</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/05/27/axios-instance/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axios/" rel="tag">Axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vus-js/" rel="tag">Vus.js</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/05/27/axios-instance/" data-id="clcsdp5f90002neqwfz34cybu" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/05/18/vue-svg/" class="article-nav-title">在 Vue 聰明使用 SVG-Icon</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/07/07/axios-cancelToken/" class="article-nav-title">
+        
+          透過 CancelToken 解析 Axios 原始碼
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/05/27/axios-instance/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

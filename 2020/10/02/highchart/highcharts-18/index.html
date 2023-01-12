@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 事件屬性 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;bGpzoZr避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  第一天就有跟各位說過，Highcharts 除了豐富的圖表設定外，另一大看點就是可以做到圖表的事件監聽，讓我們的圖表不僅僅只是展示資料，更是一個可以跟使用者互動的介面，所以今天就要來好好講講「事件屬性」。  事件屬性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 事件屬性">
+<meta property="og:url" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;bGpzoZr避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  第一天就有跟各位說過，Highcharts 除了豐富的圖表設定外，另一大看點就是可以做到圖表的事件監聽，讓我們的圖表不僅僅只是展示資料，更是一個可以跟使用者互動的介面，所以今天就要來好好講講「事件屬性」。  事件屬性">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/seriesClick.png">
+<meta property="og:image" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/seriesOver.png">
+<meta property="article:published_time" content="2020-10-02T03:22:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.823Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/seriesClick.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-18" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 事件屬性
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-02T03:22:00.000Z" itemprop="datePublished">2020-10-02</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/bGpzoZr" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/bGpzoZr</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+</blockquote>
+<p>第一天就有跟各位說過，Highcharts 除了豐富的圖表設定外，另一大看點就是可以做到圖表的事件監聽，讓我們的圖表不僅僅只是展示資料，更是一個可以跟使用者互動的介面，所以今天就要來好好講講「事件屬性」。</p>
+<hr>
+<h2 id="事件屬性"><a href="#事件屬性" class="headerlink" title="事件屬性"></a>事件屬性</h2><br/>
+
+<p>事件屬性和格式化屬性一樣，分佈在各個圖表區塊當中，不過基本上「圖表事件」、「數據列事件」、「數據點事件」這三個就能囊括八成以上的應用了，下面就大致先讓大家看看有哪些事件名稱吧。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  chart: {
+    events: { // 圖表整體事件屬性
+      load: function() {},
+      redraw: function() {},
+      render: function() {},
+      addSeries: function() {},
+      click: function() {}
+    }
+  },
+  series: [{
+    events: { // 數據列事件屬性，繪圖區設定亦同
+      click: function() {},
+      mouseOver: function() {},
+      mouseOut: function() {},
+      show: function() {},
+      hide: function() {},
+      legendItemClick: function() {}
+    },  
+    data: [{
+      events: { // 數據點事件屬性
+        click: function() {},
+        mouseOver: function() {},
+        mouseOut: function() {},
+        select: function() {},
+        unselect: function() {},
+        update: function() {},
+        remove: function() {}
+      }
+    }]
+  }]
+});</code></pre>
+<p>其實這些事件屬性都不會很複雜，有部分跟 DOM 元素的事件也大同小異，而且設定上也很簡單，就是給予一個回呼函式 (Call-Back) 就好了，未來只要事件觸發了，Highcharts 就會幫你執行函式囉。</p>
+<br/>
+<br/>
+
+<h4 id="this-和-event-物件"><a href="#this-和-event-物件" class="headerlink" title="# this 和 event 物件"></a># this 和 event 物件</h4><p>在一般 JavaScript 的事件中，<code>this</code> 代表的是被賦予事件監聽的那個 DOM 元素，在 Highcharts 也是類似的，<code>this</code> 代表的就是那個被設定事件的圖表物件、數據列物件或數據點物件。</p>
+<p>相同地，你可以透過參數的設定去接住回呼函式中被 Highcharts 傳入的 <code>event</code> 物件，而不同的事件類型，<code>event</code> 物件會提供不同的屬性內容。</p>
+<pre><code class="javascript">events: {
+  click: function(event) {
+    console.log(this, event)
+  }
+}</code></pre>
+<p>透過 <code>this</code> 與 <code>event</code> 所提供的內容，我們就可以利用這些資訊來達到許多複雜互動與操作。</p>
+<br/>
+
+<blockquote>
+<p>由於實在是很難特別想一些應用來給大家做演示，所以今天主要會介紹的是事件的觸發時機以及 <code>event</code> 物件的資料內容。</p>
+</blockquote>
+<hr>
+<h2 id="圖表整體事件"><a href="#圖表整體事件" class="headerlink" title="圖表整體事件"></a>圖表整體事件</h2><br/>
+
+<blockquote>
+<p>圖表整體事件中，<code>this</code> 會是「圖表物件」，內容包含了該圖表的各種屬性內容與方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="chart-events-load"><a href="#chart-events-load" class="headerlink" title="# chart.events.load"></a># chart.events.load</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當圖表載入完成後觸發，<code>event</code> 物件中則沒有什麼特別的屬性，倒是 <code>event.target</code> 和 <code>this</code> 一樣，提供的是「圖表物件」。</p>
+<br/>
+<br/>
+
+<h4 id="chart-events-redraw"><a href="#chart-events-redraw" class="headerlink" title="# chart.events.redraw"></a># chart.events.redraw</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當圖表重新繪圖時觸發，包括「尺寸改變」、「數據列、數據點或座標軸的變更」，<code>event</code> 物件的內容則與 <code>load</code> 事件相同。</p>
+<br/>
+<br/>
+
+<h4 id="chart-events-render"><a href="#chart-events-render" class="headerlink" title="# chart.events.render"></a># chart.events.render</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>這個事件觸發時機等於 <code>load</code> 事件加上 <code>redraw</code> 事件，而 <code>event</code> 物件的內容也與它們相同。</p>
+<br/>
+<br/>
+
+<h4 id="chart-events-addSeries"><a href="#chart-events-addSeries" class="headerlink" title="# chart.events.addSeries"></a># chart.events.addSeries</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>這個事件的觸發時機比較特別，當有一個新的數據列被加進圖表時會觸發，也就是使用 <code>addSeries()</code> 這個方法的時候會觸發，而它的 <code>event</code> 物件中有一個 <code>options</code> 屬性，有著該次加入的數據列內容。</p>
+<p>另外你也可以在函式中返回 <code>false</code> 就可以阻止這次的新增，如果成功新增也會觸發 <code>redraw</code> 和 <code>render</code> 事件。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  chart: {
+    events: {
+      addSeries: function(event) {
+        console.log(event.options)
+        return event.options.data.length &gt;= 5;
+        // 如果要被加入的數據列少於五個數據點，就不加入
+      }
+    }
+  }
+});
+
+myChart.addSeries({
+  name: &quot;newSeries&quot;,
+  data: [12, 15, 12, 5]
+})
+
+// console: { name: &quot;newSeries&quot;, data: [12, 15, 12, 5] }</code></pre>
+<br/>
+<br/>
+
+<h4 id="chart-events-click"><a href="#chart-events-click" class="headerlink" title="# chart.events.click"></a># chart.events.click</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當你點擊「繪圖區」時會觸發這個事件，它的 <code>event</code> 物件除了有滑鼠事件的相關屬性外，還有提供「座標軸物件」，甚至還有「該點擊處」在圖表中所代表的Ｘ／Ｙ軸數值。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+  chart: {
+    events: {
+      click: function(event) {
+        // 拿到點擊處的Ｘ／Ｙ數值，並加進數據列當中
+        this.series[0].addPoint([
+          event.xAxis[0].value,
+          event.yAxis[0].value,
+        ])
+      }
+    }
+  }
+});</code></pre>
+<hr>
+<h2 id="數據列事件"><a href="#數據列事件" class="headerlink" title="數據列事件"></a>數據列事件</h2><br/>
+
+<blockquote>
+<p>數據列事件中，<code>this</code> 會是「數據列物件」，內容包含了該數據列的各種屬性內容與方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="series-events-click"><a href="#series-events-click" class="headerlink" title="# series.events.click"></a># series.events.click</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當數據列被點擊時會觸發這個事件，由於是滑鼠事件，所以 <code>event</code> 中會有鼠標的相關資訊，另外 <code>event.point</code> 會提供你點擊時，處於聚焦狀態的數據點之「數據點物件」。</p>
+<img src="seriesClick.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+<br/>
+
+<h4 id="series-events-mouseOver"><a href="#series-events-mouseOver" class="headerlink" title="# series.events.mouseOver"></a># series.events.mouseOver</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當鼠標使數據列聚焦時就會觸發這個事件，要注意的是有一些圖表類型 (例如折線圖)，有預設開啟 <code>series.stickyTracking</code> 這個屬性，導致鼠標進入繪圖區時，一定會使數據列被聚焦。</p>
+<p>它的 <code>event</code> 物件比較沒那麼特殊，當中的 <code>target</code> 屬性和 <code>this</code> 一樣，都是「數據列物件」。</p>
+<img src="seriesOver.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+<br/>
+
+<h4 id="series-events-mouseOut"><a href="#series-events-mouseOut" class="headerlink" title="# series.events.mouseOut"></a># series.events.mouseOut</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當鼠標使數據列從聚焦轉為失焦時就會觸發，其他內容與 <code>mouseOver</code> 都一樣。</p>
+<br/>
+<br/>
+
+<h4 id="series-events-show"><a href="#series-events-show" class="headerlink" title="# series.events.show"></a># series.events.show</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當你將數據列從隱藏狀態改為顯示狀態時，就會觸這個事件，另外這個動作也會同時觸發前面介紹的 <code>redraw</code> 和 <code>render</code> 事件。</p>
+<p>而它的 <code>event</code> 物件也是只有 <code>target</code> 屬性而已，內容為「數據列物件」。</p>
+<br/>
+<br/>
+
+<h4 id="series-events-hide"><a href="#series-events-hide" class="headerlink" title="# series.events.hide"></a># series.events.hide</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>就是 <code>show</code> 的相反版本，其餘並無不同。</p>
+<blockquote>
+<p>大部分都是透過點擊圖例來顯示／隱藏數據列，但你也可以使用 <code>show()</code>、<code>hide()</code> 這兩個數據列方法來操作，可見本章節範例。</p>
+</blockquote>
+<br/>
+<br/>
+
+<h4 id="series-events-legendItemClick"><a href="#series-events-legendItemClick" class="headerlink" title="# series.events.legendItemClick"></a># series.events.legendItemClick</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>這個屬性是你只要點擊圖例就會觸發，因此觸發順序應該會是 <code>legendItemClick</code> 才接到 <code>show</code> 或 <code>hide</code>，另外你還可以在回呼函式中返回一個 <code>false</code>，那就會使本次點擊圖例的效果失效。</p>
+<p>它的 <code>event</code> 物件比前兩者多了一個 <code>browserEvent</code>，內容為滑鼠事件的相關屬性。</p>
+<pre><code class="javascript">series: [{
+  events: {
+    legendItemClick: function(event){
+      // event.target.visible 為數據列目前是否顯示
+      // 會使數據點只許隱藏，卻無法再次顯示
+      return event.target.visible;
+    } 
+  }
+}] </code></pre>
+<br/>
+<br/>
+
+<hr>
+<h2 id="數據點事件"><a href="#數據點事件" class="headerlink" title="數據點事件"></a>數據點事件</h2><br/>
+
+<blockquote>
+<p>數據點事件中，<code>this</code> 會是「數據點物件」，內容包含了該數據點的各種屬性內容與方法。</p>
+</blockquote>
+<br/>
+
+<h4 id="series-data-events-click"><a href="#series-data-events-click" class="headerlink" title="# series.data.events.click"></a># series.data.events.click</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>會在點擊數據點時觸發，要注意的是，只要有數據點是「聚焦狀態」，點擊到數據列的任一位置都會觸發此事件，也就是說鼠標並非要在「點」上。而它的 <code>event</code> 物件一樣有滑鼠事件的相關屬性，且 <code>point</code> 屬性中也有該數據點的「數據點物件」，和數據列的點擊事件只差在 <code>this</code> 的不同。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-events-mouseOver"><a href="#series-data-events-mouseOver" class="headerlink" title="# series.data.events.mouseOver"></a># series.data.events.mouseOver</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當鼠標使數據點聚焦時就觸發，依然受到 <code>series.stickyTracking</code> 屬性影響，而 <code>event</code> 物件也是只有 <code>target</code> 屬性，內容與 <code>this</code> 一樣是「數據點物件」。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-events-mouseOut"><a href="#series-data-events-mouseOut" class="headerlink" title="# series.data.events.mouseOut"></a># series.data.events.mouseOut</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當鼠標使數據點從聚焦轉為失焦時觸發，其他內容與 <code>mouseOver</code> 都一樣。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-events-select"><a href="#series-data-events-select" class="headerlink" title="# series.data.events.select"></a># series.data.events.select</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>在你選取了數據點時會觸發這個事件，此事件必須在 <code>series.allowPointSelect</code> 開啟的狀態下才能作用，<code>event</code> 物件的內容和 <code>mouse</code> 系列相同。此外你可以透過回傳 <code>false</code> 來取消選取動作：</p>
+<pre><code class="javascript">data: [{
+  y: 3,
+  events: {
+    select: function(){
+      // 這個數據點將無法被選取
+      return this.y &gt; 5 
+    } 
+  }
+}]</code></pre>
+<br/>
+<br/>
+
+<h4 id="series-data-events-unselect"><a href="#series-data-events-unselect" class="headerlink" title="# series.data.events.unselect"></a># series.data.events.unselect</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當數據點被取消選取時觸發，其餘特性均與 <code>select</code> 相同。</p>
+<br/>
+<br/>
+
+<h4 id="series-data-events-update"><a href="#series-data-events-update" class="headerlink" title="# series.data.events.update"></a># series.data.events.update</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當數據點被更新時會觸發事件，它與 <code>addSeries</code> 很類似，<code>event</code> 物件中一樣有 <code>options</code> 屬性來提供這次要更新的內容，並且也可以在函式中返回 <code>false</code> 來阻止這次更新，且數據點成功更新也會觸發 <code>redraw</code> 和 <code>render</code> 事件。</p>
+<br/>
+
+<blockquote>
+<p>要更新數據點要使用 <code>update()</code> 這個數據點方法，請見本章節範例。</p>
+</blockquote>
+<br/>
+<br/>
+
+<h4 id="series-data-events-remove"><a href="#series-data-events-remove" class="headerlink" title="# series.data.events.remove"></a># series.data.events.remove</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
+<p>當數據點被移除時會觸發，<code>event.target</code> 和 <code>this</code> 中都會有此次被刪除的數據點之「數據點物件」，且一樣可以返回 <code>false</code> 來阻止這次刪除，且數據點成功刪除也會觸發 <code>redraw</code> 和 <code>render</code> 事件。</p>
+<br/>
+
+<blockquote>
+<p>要更新數據點要使用 <code>remove()</code> 這個數據點方法，請見本章節範例。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>今天把比較主力的幾個事件屬性介紹完畢，非常強烈建議大家到今天的範例裡去玩玩看，我準備的應該算很周全，可以讓大家知道各件事的機制以及觸發順序，明天的話則是要跟大家介紹 Highcharts 裡一些更新資料與設定的方法 (method)。</p>
+<p>像是今天就有稍微帶到 <code>addSeries()</code> 和 <code>update()</code>…等等，在下個章節中都會比較詳細的介紹它們。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10247862" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/02/highchart/highcharts-18/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/02/highchart/highcharts-18/" data-id="clcsdp5ki001oneqw9bn82enn" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/01/highchart/highcharts-17/" class="article-nav-title">資視就是力量 - Highcharts / 響應式設定</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/03/highchart/highcharts-19/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 資料更新 Method
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/02/highchart/highcharts-18/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

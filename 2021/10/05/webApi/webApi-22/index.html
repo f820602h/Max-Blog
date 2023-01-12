@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / IntersectionObserver | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="當你進入我的眼簾，我們的命運就有了交集～  看到 Observer，應該就知道今天要介紹的又是「觀察者」系列的 API 了，而且這次的觀察者可能比前面的 MutationObserver 和 ResizeObserver 還要實用。只要有了它，Scroll Animation 就只是一塊小蛋糕了。  IntersectionObserverIntersectionObserver 幫我們觀察的是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; IntersectionObserver">
+<meta property="og:url" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="當你進入我的眼簾，我們的命運就有了交集～  看到 Observer，應該就知道今天要介紹的又是「觀察者」系列的 API 了，而且這次的觀察者可能比前面的 MutationObserver 和 ResizeObserver 還要實用。只要有了它，Scroll Animation 就只是一塊小蛋糕了。  IntersectionObserverIntersectionObserver 幫我們觀察的是">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/inter.gif">
+<meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/options2.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/rect.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/infinity.gif">
+<meta property="article:published_time" content="2021-10-05T12:11:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.939Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/inter.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-22" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / IntersectionObserver
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-05T12:11:00.000Z" itemprop="datePublished">2021-10-05</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>當你進入我的眼簾，我們的命運就有了交集～</p>
+</blockquote>
+<p>看到 Observer，應該就知道今天要介紹的又是「觀察者」系列的 API 了，而且這次的觀察者可能比前面的 MutationObserver 和 ResizeObserver 還要實用。只要有了它，Scroll Animation 就只是一塊小蛋糕了。</p>
+<hr>
+<h2 id="IntersectionObserver"><a href="#IntersectionObserver" class="headerlink" title="IntersectionObserver"></a>IntersectionObserver</h2><p>IntersectionObserver 幫我們觀察的是元素的「相交（intersect）」變動，也就是元素與指定可視窗口的「相交與否」發生變動時觸發。</p>
+<p>簡單來說就是頁面元素因捲動而進入到可視範圍中，或是離開了可視範圍時，IntersectionObserver 就會執行指定任務，所以我們可以利用它來偵測「某個元素是不是進入視窗中」了，而且還可以調整許多細微的偵測設定，相當強大。</p>
+<img src="inter.gif" style="max-width: 600px; margin: 24px auto;" />
+
+<br/>
+
+<h4 id="Window-IntersectionObserver"><a href="#Window-IntersectionObserver" class="headerlink" title="# Window.IntersectionObserver"></a># Window.IntersectionObserver</h4><p>和其他「觀察者」一樣，<code>IntersectionObserver</code> 為一個建構函示，需要使用 <code>new</code> 關鍵字來創建實體，並且需要傳入 Callback Function 作為參數，該 Callback 會獲得一個存放 IntersectionObserverEntry 的陣列以及「觀察者（observer）」自身實體，</p>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry</strong>： 其中會有一些關於觀測元素與可視範圍交互的相關資訊，後面會詳細介紹。</li>
+<li><strong>IntersectionObserver</strong>： 呼叫 Callback 的 IntersectionObserver 實體，即為該 Function 的 <code>this</code>。</li>
+</ul>
+<br/>
+
+<pre><code class="javascript">const observer = new IntersectionObserver((entries, owner) =&gt; {
+  console.log(owner); // IntersectionObserver 實體
+  entries.forEach((entry) =&gt; {
+    console.log(entry); // IntersectionObserverEntry 物件
+  });
+});</code></pre>
+<br/>
+
+<p>另外，IntersectionObserver 除了 Callback 之外還有一個可選的 <code>options</code> 參數可以設定：</p>
+<pre><code class="javascript">const callback = function (entries) {
+  console.log(entries);
+};
+
+const observer = new IntersectionObserver(callback, {
+  root: null,
+  rootMargin: &quot;0px 0px 0px 0px&quot;,
+  threshold: 0.0,
+});</code></pre>
+<br/>
+
+<p>這個 <code>options</code> 參數須為物件，並接受上面這三個屬性：</p>
+<ul>
+<li><strong>root</strong>： 這個屬性將決定要以哪個元素的可視窗口作為觀察依據，預設為 <code>null</code>，表示以 Viewport 作為判斷依據，也可以設定成其他元素。</li>
+<li><strong>rootMargin</strong>： 這個屬性決定的是窗口的縮放，設定規則和 CSS 的 <code>margin</code>，可以給定一個值，也可以四邊各自設定，正值為外擴，負值為內縮。</li>
+<li><strong>threshold</strong>： 這個屬性是設定觸發的<strong>比例門檻</strong>，當目標元素與可視範圍的相交範圍「經過」了這道門檻，Callback 就會被觸發，舉例來說：<ul>
+<li>預設值 <code>0</code>： 當相交範圍的比例「開始大於 0%」或「開始小於 0%」 的瞬間會觸發。</li>
+<li>設定為 <code>1</code>： 當相交範圍的比例「開始大於 100%」或「開始小於 100%」 的瞬間會觸發。</li>
+<li>設定成陣列 <code>[0, 0.5, 1]</code>： 規則如上，但目標元素就會有三個觸發時機。</li>
+</ul>
+</li>
+</ul>
+<img src="options2.png" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="IntersectionObserver-observe"><a href="#IntersectionObserver-observe" class="headerlink" title="# IntersectionObserver.observe"></a># IntersectionObserver.observe</h4><p>老樣子，觀察者們都需要我們使用 <code>observe</code> method 來指定觀察對象：</p>
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+  console.log(entries);
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div);</code></pre>
+<p><br/><br/></p>
+<h4 id="IntersectionObserver-unobserve"><a href="#IntersectionObserver-unobserve" class="headerlink" title="# IntersectionObserver.unobserve"></a># IntersectionObserver.unobserve</h4><p>若要註銷某元素的觀察，IntersectionObserver 一樣有 <code>unobserve</code> method 可以使用：</p>
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+  console.log(entries);
+});
+
+const div = document.querySelector(&quot;div&quot;);
+observer.observe(div);
+observer.unobserve(div);</code></pre>
+<p><br/><br/></p>
+<h4 id="IntersectionObserver-disconnect"><a href="#IntersectionObserver-disconnect" class="headerlink" title="# IntersectionObserver.disconnect"></a># IntersectionObserver.disconnect</h4><p>當然也可以一次性的註銷所有元素的觀察，同樣要記得，IntersectionObserver 實體並不會消失，只是沒有觀測中的元素而已，你依然可以再次使用 <code>observe</code> 來註冊一個新的觀察：</p>
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+  console.log(entries);
+});
+const box1 = document.querySelector(&quot;.box1&quot;);
+const box2 = document.querySelector(&quot;.box2&quot;);
+observer.observe(box1);
+observer.disconnect();
+observer.observe(box2);</code></pre>
+<p><br/><br/></p>
+<h4 id="IntersectionObserverEntry-物件"><a href="#IntersectionObserverEntry-物件" class="headerlink" title="# IntersectionObserverEntry 物件"></a># IntersectionObserverEntry 物件</h4><p>IntersectionObserver 和之前介紹的 MutationObserver 和 ResizeObserver 不同，它是<strong>「非同步」</strong>觸發的，畢竟「相交與否」這件事情是一個瞬間，不會有不斷疊加的狀態，所以也就不需要考慮連續觸發導致的效能問題，也就是說儘管你非常快速的來回捲動，它也不會將事件合併。</p>
+<p>而 IntersectionObserverEntry 需要用陣列存放，是因為會有多個觀測中的元素同時進入／離開可視範圍的可能，這時候每一筆的 IntersectionObserverEntry 便代表一個元素的變動，而其中有許多屬性可以提供我們使用，下面就一一向各位介紹：</p>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.target</strong><br>發生進出變動的目標元素(element)，每個「觀察者」都會提供的資訊。</li>
+</ul>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.isIntersecting</strong><br><code>isIntersecting</code> 是當中非常實用的屬性，用來表示目前元素是否與可是範圍（root）相交，也就是目標元素是否進入到可視範圍中。</li>
+</ul>
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+  entries.forEach((entry) =&gt; {
+    if (entry.isIntersecting) {
+      // 目標元素進入 viewport 時執行
+    } else {
+      // 目標元素離開 viewport 時執行
+    }
+  });
+});</code></pre>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.intersectionRatio</strong><br>這個屬性提供的是目前元素與觀察窗口的相交比例，會是一個 0~1 的數值，計算方式是 <code>相交面積 / 目標元素面積</code>。</li>
+</ul>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.boundingClientRect</strong><br>這個屬性會提供目標元素的尺寸、座標資訊，而它就等於拿 <code>target</code> 去執行昨天介紹的 <code>getBoundingClientRect</code> 所得到的結果。</li>
+</ul>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.rootBounds</strong><br>這個拿到的也會是 <code>getBoundingClientRect</code> 資訊，但計算的是可視窗口的尺寸、座標，要記得有 <code>rootMargin</code> 的影響。</li>
+</ul>
+<br/>
+
+<ul>
+<li><strong>IntersectionObserverEntry.intersectionRect</strong><br>和前面都一樣，不過提供的區塊範圍很特別，是目標元素與可視窗口的「交疊範圍」。</li>
+</ul>
+<img src="rect.png" style="max-width: 600px; margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="使用情境"><a href="#使用情境" class="headerlink" title="# 使用情境"></a># 使用情境</h4><p>IntersectionObserver 的使用情境很多，可以做「捲動特效」或是「無限捲動」，下面我們就來試試寫個無間捲動的功能看看，先看效果：</p>
+<img src="infinity.gif" style="max-width: 600px; margin: 24px auto;" />
+
+<pre><code class="html">&lt;ul class=&quot;list&quot;&gt;
+  &lt;li class=&quot;item&quot;&gt;
+    &lt;div class=&quot;avatar&quot;&gt;&lt;/div&gt;
+    &lt;div&gt;
+      &lt;h3&gt;Name&lt;/h3&gt;
+      &lt;h5&gt;
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem tenetur odit.rem ipsum dolor sit, amet consectetur
+        adipisicing elit. Rem tenetur odit
+      &lt;/h5&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<pre><code class="javascript">const ul = document.querySelector(&quot;ul&quot;);
+
+// 這個 function 會一次新增20筆項目到 ul 中
+// 用來模擬獲取資料後渲染畫面
+const getMoreItem = () =&gt; {
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i &lt;= 20; i++) {
+    const item = document.querySelector(&quot;li:first-child&quot;);
+    const newItem = item.cloneNode(true);
+    fragment.appendChild(newItem);
+  }
+  ul.appendChild(fragment);
+};
+
+const observer = new IntersectionObserver(
+  function (entries, observer) {
+    // 每當目標元素進入畫面後就新增20筆，並且重置觀察的元素
+    if (entries[0].isIntersecting) {
+      getMoreItem();
+      observer.unobserve(entries[0].target);
+      observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));
+    }
+  },
+  { root: ul } // 觀察窗口為 ul 的元素範圍
+);
+
+getMoreItem();
+observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));</code></pre>
+<p>無限捲動的功能是非常常見的一個功能，平常在滑 FB 或 IG 時，貼文能不段的出現就是使用無線捲動，而使用 IntersectionObserver 就可以輕鬆做到。</p>
+<p>我們實踐的概念也非常簡單，就是在目標元素進入窗口時去向後端獲取資料並渲染在畫面上，然後不斷的重新觀察倒數第二個 <code>li</code>，所以可以看到 Callback 中有執行 <code>unobserve</code> 來註銷原本的元素，然後又再次使用 <code>observe</code> 來註冊新元素。</p>
+<p><br/><br/></p>
+<p>IntersectionObserver 是不是非常方便呢？昨天我們還在用 <code>getBoundingClientRect</code> 來計算元素是否進入畫面，今天已經連計算都不用計算，完全交由「觀察者」來幫忙偵測，我們只要坐等通知就好了，大家快把它學起來，當個懶惰的工程師吧！</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10279046" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/05/webApi/webApi-22/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/05/webApi/webApi-22/" data-id="clcsdp5mj003wneqwdbzhbmwi" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/04/webApi/webApi-21/" class="article-nav-title">那些被忽略但很好用的 Web API / GetBoundingClientRect</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/06/webApi/webApi-23/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Animation On Scroll
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/05/webApi/webApi-22/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

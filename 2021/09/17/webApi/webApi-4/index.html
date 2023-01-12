@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / RequestAnimationFrame | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="別再用 setTimeOut、setInterval 寫動畫啦！  如果你有用 js 寫過動畫，那通常你第一個想到的絕對會是 setTimeOut 或 setInterval，讓畫面元素可以在固定的時間間隔進行一點一點的變化，如此就可以形成動畫的效果。但其實這兩個計時器其實都有一些不為人知的小缺點，而今天要介紹的 RequestAnimationFrame 可以讓你不需要擔心這些。  Reque">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; RequestAnimationFrame">
+<meta property="og:url" content="https://maxleebk.com/2021/09/17/webApi/webApi-4/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="別再用 setTimeOut、setInterval 寫動畫啦！  如果你有用 js 寫過動畫，那通常你第一個想到的絕對會是 setTimeOut 或 setInterval，讓畫面元素可以在固定的時間間隔進行一點一點的變化，如此就可以形成動畫的效果。但其實這兩個計時器其實都有一些不為人知的小缺點，而今天要介紹的 RequestAnimationFrame 可以讓你不需要擔心這些。  Reque">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-09-17T13:38:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:39.038Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / RequestAnimationFrame
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-17T13:38:00.000Z" itemprop="datePublished">2021-09-17</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>別再用 <code>setTimeOut</code>、<code>setInterval</code> 寫動畫啦！</p>
+</blockquote>
+<p>如果你有用 js 寫過動畫，那通常你第一個想到的絕對會是 <code>setTimeOut</code> 或 <code>setInterval</code>，讓畫面元素可以在固定的時間間隔進行一點一點的變化，如此就可以形成動畫的效果。但其實這兩個計時器其實都有一些不為人知的小缺點，而今天要介紹的 RequestAnimationFrame 可以讓你不需要擔心這些。</p>
+<hr>
+<h2 id="RequestAnimationFrame"><a href="#RequestAnimationFrame" class="headerlink" title="RequestAnimationFrame"></a>RequestAnimationFrame</h2><br/>
+
+<p>在正式介紹 RequestAnimationFrame 之前我們要先來了解一些相關概念以及 <code>setTimeOut</code> 和 <code>setInterval</code> 到底有什麼缺點。</p>
+<br/>
+
+<h4 id="螢幕更新頻率"><a href="#螢幕更新頻率" class="headerlink" title="# 螢幕更新頻率"></a># 螢幕更新頻率</h4><p>大家應該知道，其實動畫就是一連串的靜態畫面以一定的頻率連續顯示，讓人的眼睛及大腦可以腦部成一個動態過程，而這個「一定的頻率」到底是多少呢？以現在這個影音世代來說，每秒六十張影格是一個可以讓動畫看起來最順暢的。</p>
+<p>只也就是為什麼現代螢幕的畫面更新率至少都有 60Hz (每秒 60 幀)，當然了，不同的設備、網路環境等因素的影響，螢幕更新率不會都是 60Hz。</p>
+<p><br/><br/></p>
+<h4 id="setTimeOut"><a href="#setTimeOut" class="headerlink" title="# setTimeOut"></a># setTimeOut</h4><p>如果依照每秒 60 幀的需求來使用 <code>setTimeOut</code> 來撰寫動畫的話，大致上都會是這樣寫的：</p>
+<pre><code class="javascript">let timerID;
+const figure = document.querySelector(&quot;#figure&quot;);
+function moveFigure() {
+  figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
+  timerID = setTimeout(moveFigure, 1000 / 60);
+}
+moveFigure(); // 動畫開始
+clearTimeout(timerID); // 動畫停止</code></pre>
+<p>我們透過遞迴的方式不斷的呼叫 <code>setTimeout</code> 來幫我們移動元素，而 <code>1000 / 60</code> 就是用來模擬 60Hz 的頻率的。不過使用這樣的方法會有以下缺點。</p>
+<p><strong>1. Callback 執行通常會晚一點</strong><br>由於 <code>setTimeout</code> 中的 callback 要等到計時完成後才會被放到佇列（queue）中等待執行，這時候如果堆疊中（stack）還有其他工作項目的話，就必須要等待一些額外的時間才會執行。如果想知道更多細節的話，可以去了解 Event Loop。</p>
+<p><strong>2. 與螢幕更新頻率對應不上</strong><br>前面說過，很多因素都會影響螢幕更新率，所以他是一個浮動的頻率，但 <code>setTimeout</code> 只能設定固定頻率，這時候如果跟更新率對應不上，可能動畫就會掉幀的可能。</p>
+<p><br/><br/></p>
+<h4 id="setInterval"><a href="#setInterval" class="headerlink" title="# setInterval"></a># setInterval</h4><p>相比 <code>setTimeOut</code> ，可能更多人會用 <code>setInterval</code>，因為它自己就可以不斷重複執行 callback，不用搞什麼遞迴：</p>
+<pre><code class="javascript">const figure = document.querySelector(&quot;#figure&quot;);
+function moveFigure() {
+  figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
+}
+let timerID = setInterval(moveFigure, 1000 / 60);
+moveFigure(); // 動畫開始
+clearInterval(timerID); // 動畫停止</code></pre>
+<p>其實除了第一次執行時也會延遲之外，與 <code>setTimeOut</code> 效果沒什麼太大差別，所以想當然的 <code>setTimeOut</code> 有的缺點它也都有，而且還額外多了幾個：</p>
+<p><strong>1. 忽略錯誤</strong><br>非常可怕的缺點，儘管你的 Callback 已經發生壞掉了，<code>setInterval</code> 也會義無反顧地執行下去。</p>
+<p><strong>2. Callback 有可能被取消</strong><br>前面有說過當計時完成後 callback 會被放進佇列中，當堆疊空閒時就會被抓出來執行，但要堆疊特別繁忙時，也是有可能連第一次的 callback 都還沒被執行，第二次的 callback 就又被放進佇列了，這時候等堆疊空閒時，兩次 callback 就會幾乎同時執行。</p>
+<pre><code class="javascript">// 堆疊再在處理其他函式
+stack = [&quot;其他工作項目&quot;];
+queue = [];
+// 第一次的 setInterval 觸發
+stack = [&quot;其他工作項目&quot;];
+queue = [&quot;第一次 callback&quot;];
+// 第二次的 setInterval 觸發
+stack = [&quot;其他工作項目&quot;];
+queue = [&quot;第一次 callback&quot;, &quot;第二次 callback&quot;];
+// 堆疊空閒了，這時候第一次 callback 會被執行，第二次則緊跟在後。
+stack = [&quot;第一次 callback&quot;];
+queue = [&quot;第二次 callback&quot;];</code></pre>
+<p>為了防止這樣的情發生，其實 JS 引擎會在佇列已經有該 SetInterval 的 Callback 的時候，把後面這一次的 Callback 給取消掉。</p>
+<p><br/><br/></p>
+<h4 id="RequestAnimationFrame-1"><a href="#RequestAnimationFrame-1" class="headerlink" title="# RequestAnimationFrame"></a># RequestAnimationFrame</h4><p>但如果使用今天的主角 RequestAnimationFrame 來製作動畫，那上述缺點就通通沒有了，因為它會自動與螢幕的更新頻率同步，以此來避免掉幀的問題。</p>
+<pre><code class="javascript">let requestID;
+const figure = document.querySelector(&quot;#figure&quot;);
+function moveFigure() {
+  figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
+  requestID = requestAnimationFrame(moveFigure, 1000 / 60);
+}
+moveFigure(); // 動畫開始
+cancelAnimationFrame(requestID); // 動畫停止</code></pre>
+<p><br/><br/></p>
+<p>如果大家有興趣的話，可以把我們今天的三段 code 拿去試試看，我個人是可以感受到非常明顯的滑順感落差，RequestAnimationFrame 所製作出來的動畫在視覺上會比較舒服。如果你也有同感的話，你可以開始考慮使用它了！</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10267420" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/17/webApi/webApi-4/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/17/webApi/webApi-4/" data-id="clcsdp5mr004ineqw6wbef39w" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/16/webApi/webApi-3/" class="article-nav-title">那些被忽略但很好用的 Web API / CreateDocumentFragment</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/18/webApi/webApi-5/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / FullScreen
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/17/webApi/webApi-4/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

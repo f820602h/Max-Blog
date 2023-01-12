@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / GetBoundingClientRect | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="小孩才做選擇，成年人當然是尺寸、座標全都要！  昨天介紹的 ResizeObserver API 可以觀察到元素的尺寸變動時執行回呼，並且會提供元素變動後的「尺寸」、「座標」等資訊，而今天介紹的 GetBoundingClientRect 雖然無法再觀察元素變動了，但我們可以主動出擊，直接索取目前元素的相關資訊。  GetBoundingClientRectGetBoundingClientRe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; GetBoundingClientRect">
+<meta property="og:url" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="小孩才做選擇，成年人當然是尺寸、座標全都要！  昨天介紹的 ResizeObserver API 可以觀察到元素的尺寸變動時執行回呼，並且會提供元素變動後的「尺寸」、「座標」等資訊，而今天介紹的 GetBoundingClientRect 雖然無法再觀察元素變動了，但我們可以主動出擊，直接索取目前元素的相關資訊。  GetBoundingClientRectGetBoundingClientRe">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/width.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/top.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/rect.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/bounding.gif">
+<meta property="article:published_time" content="2021-10-04T08:54:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.927Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/04/webApi/webApi-21/width.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-21" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / GetBoundingClientRect
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-04T08:54:00.000Z" itemprop="datePublished">2021-10-04</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>小孩才做選擇，成年人當然是尺寸、座標全都要！</p>
+</blockquote>
+<p>昨天介紹的 ResizeObserver API 可以觀察到元素的尺寸變動時執行回呼，並且會提供元素變動後的「尺寸」、「座標」等資訊，而今天介紹的 GetBoundingClientRect 雖然無法再觀察元素變動了，但我們可以主動出擊，直接索取目前元素的相關資訊。</p>
+<hr>
+<h2 id="GetBoundingClientRect"><a href="#GetBoundingClientRect" class="headerlink" title="GetBoundingClientRect"></a>GetBoundingClientRect</h2><p>GetBoundingClientRect 可以使我們取得 Element 元素的寬高以及相對於視窗可視範圍(Viewport)的座標位置，對於前端老鳥來說可能不是那麼陌生，但對於新手來說，它不太會是第一批認識的 Web API，大部分可能都會先認識 <code>clientWidth</code>、<code>scrollWidth</code>、<code>offsetWidth</code>、<code>scrollTop</code>、<code>clientTop</code>、<code>offsetTop</code>…等等，這一大堆眼花撩亂讓人容易混淆的系列屬性。</p>
+<br/>
+
+<h4 id="元素的各種寬高與位置"><a href="#元素的各種寬高與位置" class="headerlink" title="# 元素的各種寬高與位置"></a># 元素的各種寬高與位置</h4><p>為了讓各位更好的理解 GetBoundingClientRect，先來幫各位整理及複習前面提到的這一大堆元素屬性，</p>
+<ul>
+<li><strong>offsetWidth / offsetHeight</strong>： 元素 <code>borderBox</code> 的寬/高，包含 <code>padding</code>、<code>border</code></li>
+<li><strong>clientWidth / clientHeight</strong>： 元素 <code>paddingBox</code> 的寬/高，包含 <code>padding</code>，不包含 <code>border</code></li>
+<li><strong>scrollWidth / scrollHeight</strong>： 元素包含 <code>padding</code> 及外溢內容的寬/高，不包含 <code>border</code></li>
+</ul>
+<img src="width.png" style="max-width: 600px; margin: 24px auto;" />
+
+<ul>
+<li><strong>offsetTop / offsetLeft</strong>： 元素 <code>borderBox</code> 相對於 <code>offsetParent</code> 的垂直/水平距離</li>
+<li><strong>clientTop / clientLeft</strong>： 元素 <code>paddingBox</code> 相對於 <code>borderBox</code> 的垂直/水平距離</li>
+<li><strong>scrollTop / scrollLeft</strong>： 元素 <code>paddingBox</code> 被捲動的垂直/水平距離</li>
+</ul>
+<img src="top.png" style="max-width: 600px; margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="Element-getBoundingClientRect"><a href="#Element-getBoundingClientRect" class="headerlink" title="# Element.getBoundingClientRect"></a># Element.getBoundingClientRect</h4><p>其實剛剛介紹的眾多屬性，相信大家或多或少都有使用過，尤其在一些捲動事件中常常會出現它們的身影，不過在今天之後，你使用它們的機會可能會漸漸減少了。</p>
+<p><code>getBoundingClientRect</code> 的使用方式非常簡單，它屬於 Element 的原生 method，直接互叫即可：</p>
+<pre><code class="javascript">const div = document.querySelector(&quot;div&quot;);
+console.log(div.getBoundingClientRect());</code></pre>
+<br/>
+
+<p>執行過後便會回傳一個 DOMRect 物件，該物件中就會有指定元素的相關尺寸與座標訊息：</p>
+<ul>
+<li><strong>width</strong>： 元素的 <code>borderBox</code> 寬度，相當於 <code>offsetWidth</code></li>
+<li><strong>height</strong>： 元素的 <code>borderBox</code> 高度，相當於 <code>offsetHeight</code></li>
+<li><strong>x</strong>： 元素的 <code>borderBox</code> 左上角相對於視窗的水平(Ｘ)座標</li>
+<li><strong>y</strong>： 元素的 <code>borderBox</code> 左上角相對於視窗的垂直(Ｙ)座標</li>
+<li><strong>left</strong>： 元素的 <code>borderBox</code> 左上角相對於視窗的水平(Ｘ)座標，等同 <code>x</code></li>
+<li><strong>top</strong>： 元素的 <code>borderBox</code> 左上角相對於視窗的垂直(Ｙ)座標，等同 <code>y</code></li>
+<li><strong>right</strong>： 元素的 <code>borderBox</code> 右下角相對於視窗的水平(Ｘ)座標</li>
+<li><strong>bottom</strong>： 元素的 <code>borderBox</code> 右下角相對於視窗的垂直(Ｙ)座標</li>
+</ul>
+<br/>
+
+<blockquote>
+<p>DOMRect 跟昨天介紹的 <code>ResizeObserverEntry.contentRect</code> 所回傳的 DOMRectReadOnly 格式是一樣的，但當中數值所代表的意義完全不同，不要被混淆囉。</p>
+</blockquote>
+<img src="rect.png" style="margin: 24px auto;" />
+
+<p>有了這些資訊後，針對一些捲動事件的需求其實就會變得簡單許多，像是我們常常會做的事情是「判斷某元素是否進入可視範圍」，就可以來看看使用 <code>getBoundingClientRect</code> 後的差別：</p>
+<pre><code class="javascript">const div = document.querySelector(&quot;div&quot;);
+// 不使用 getBoundingClientRect
+window.addEventListener(&quot;scroll&quot;, function (e) {
+  if (div.offsetTop + div.offsetHeight &lt;= window.pageYOffset) {
+    console.log(&quot;元素底端已離開畫面&quot;);
+  } else if (div.offsetTop &lt;= window.pageYOffset + window.innerHeight) {
+    console.log(&quot;元素頂端已進入畫面&quot;);
+  }
+});
+// 使用 getBoundingClientRect
+window.addEventListener(&quot;scroll&quot;, function (e) {
+  const { top, bottom } = div.getBoundingClientRect();
+  if (bottom &lt;= 0) {
+    console.log(&quot;元素底端已離開畫面&quot;);
+  } else if (top &lt;= window.innerHeight) {
+    console.log(&quot;元素頂端已進入畫面&quot;);
+  }
+});</code></pre>
+<p>可以看到，如果不使用 <code>getBoundingClientRect</code> 需進行較複雜的計算，而且如果該元素的 <code>offsetParent</code> 不是 <code>body</code> 的話，這個計算就會出現 Bug。反之使用 <code>getBoundingClientRect</code> 的程式碼簡潔又容易理解，而且因為 <code>top</code> 和 <code>bottom</code> 的數值是直接相對視窗計算出來的，所以也不用去顧慮元素的 <code>offsetParent</code>。</p>
+<blockquote>
+<p>小技巧： 利用 <code>window.pageYOffset</code> + <code>getBoundingClientRect().top</code> 就可以計算出元素相對於文件(document)的絕對座標喔。</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="實際練習"><a href="#實際練習" class="headerlink" title="# 實際練習"></a># 實際練習</h4><p>為了讓大家更能感受到 <code>getBoundingClientRect</code> 的強大，我們來做一個 「動態 Highlight」 的小練習，需求是「當游標滑到文章中的粗體字時會自動添加底色，且底色在不同關鍵字之間切換時，要有移動的過渡效果」。先看效果：</p>
+<img src="bounding.gif" style="max-width: 700px; margin: 24px auto;" />
+
+<pre><code class="css">.highlight {
+  position: fixed;
+  background: yellowgreen;
+}</code></pre>
+<pre><code class="javascript">const highlight = document.querySelector(&quot;.highlight&quot;);
+const bold = document.querySelectorAll(&quot;b&quot;);
+
+let hoverElement;
+
+bold.forEach((el) =&gt; {
+  el.addEventListener(&quot;mouseenter&quot;, function () {
+    hoverElement = this;
+    highlight.style.transition = &quot;0.3s&quot;;
+    setHighlight();
+  });
+});
+
+// 為了在視窗滾動時不會跑版，要在 scroll 進行重新定位
+window.addEventListener(&quot;scroll&quot;, function () {
+  highlight.style.transition = &quot;0s&quot;;
+  if (hoverElement) setHighlight();
+});
+
+function setHighlight() {
+  const { width, height, top, left } = hoverElement.getBoundingClientRect();
+  highlight.textContent = hoverElement.textContent;
+  highlight.style.width = width + &quot;px&quot;;
+  highlight.style.height = height + &quot;px&quot;;
+  highlight.style.top = top + &quot;px&quot;;
+  highlight.style.left = left + &quot;px&quot;;
+}</code></pre>
+<p>整體概念就是在指定的元素上綁定 <code>mouseenter</code> 事件，並在事件發生時使用 <code>getBoundingClientRect</code> 來取得該元素的尺寸座標資訊，然後將其設定在 Highlight 元素的樣式上。</p>
+<p>不要認為這樣的功能效果好像很簡單，如果沒有 <code>getBoundingClientRect</code> 的話，做起來是特別麻煩的，想要實際玩玩看的話，這邊提供我已經寫好的 <a href="https://codepen.io/max-lee/pen/GREVWGa" target="_blank" rel="noopener">CodePen</a>，並且也鼓勵大家發揮創意來試試看其他的應用，感受一下它的好用之處。</p>
+<p><br/><br/></p>
+<p>希望經過今天的介紹，各位已經開始愛上 <code>getBoundingClientRect</code> 了，我本身就蠻常使用的，比較記下一堆容易搞混的屬性，只需要一行我就可以取得那些經常使用的資訊，而且還可以剩下很多麻煩的計算，何樂不為呢？</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10278542" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/04/webApi/webApi-21/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/04/webApi/webApi-21/" data-id="clcsdp5mi003uneqw1x6d1svh" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/03/webApi/webApi-20/" class="article-nav-title">那些被忽略但很好用的 Web API / ResizeObserver</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/05/webApi/webApi-22/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / IntersectionObserver
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/04/webApi/webApi-21/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

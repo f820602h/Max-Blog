@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / 圖表連動 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;JjXqYyz  經過前面各種設定屬性與 Method 的轟炸後，我們先來個簡單的小應用，也算是給自己的一個小驗收。  實作目標 今天打算要來實作圖表連動的功能，主題是「公司部門年齡分佈與人數佔比」，功能如上圖所示，柱狀圖會有三個部門的數據列資料，且點擊數據列時會使圓餅圖更換標題，並且呈現特定部門的各年齡人數佔比，額外還提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; 圖表連動">
+<meta property="og:url" content="https://maxleebk.com/2020/10/05/highchart/highcharts-21/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;JjXqYyz  經過前面各種設定屬性與 Method 的轟炸後，我們先來個簡單的小應用，也算是給自己的一個小驗收。  實作目標 今天打算要來實作圖表連動的功能，主題是「公司部門年齡分佈與人數佔比」，功能如上圖所示，柱狀圖會有三個部門的數據列資料，且點擊數據列時會使圓餅圖更換標題，並且呈現特定部門的各年齡人數佔比，額外還提">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/05/highchart/highcharts-21/case.gif">
+<meta property="og:image" content="https://maxleebk.com/2020/10/05/highchart/highcharts-21/state.png">
+<meta property="article:published_time" content="2020-10-05T03:35:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.831Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/05/highchart/highcharts-21/case.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-21" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / 圖表連動
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-05T03:35:00.000Z" itemprop="datePublished">2020-10-05</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/JjXqYyz" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/JjXqYyz</a></strong></p>
+</blockquote>
+<p>經過前面各種設定屬性與 Method 的轟炸後，我們先來個簡單的小應用，也算是給自己的一個小驗收。</p>
+<hr>
+<h2 id="實作目標"><a href="#實作目標" class="headerlink" title="實作目標"></a>實作目標</h2><p><img src="case.gif" alt=""></p>
+<p>今天打算要來實作圖表連動的功能，主題是「公司部門年齡分佈與人數佔比」，功能如上圖所示，柱狀圖會有三個部門的數據列資料，且點擊數據列時會使圓餅圖更換標題，並且呈現特定部門的各年齡人數佔比，額外還提供一個按鈕來重新觀看各部門的人數佔比。而事前我們已得知的資料如下：</p>
+<pre><code class="javascript">const categories = [&quot;18-24&quot;, &quot;25-29&quot;, &quot;30-34&quot;, &quot;35-39&quot;, &quot;40-44&quot;, &quot;45-49&quot;, &quot;50-54&quot;, &quot;55+&quot;];
+const colors = [ &quot;rgb(119, 146, 174)&quot;, &quot;rgb(83, 119, 122)&quot;, &quot;rgb(99, 99, 104)&quot;];
+const data = {
+  &quot;工程部&quot;: [24, 37, 30, 24, 18, 11, 3, 2],
+  &quot;銷售部&quot;: [23, 30, 35, 28, 10, 8, 2, 1],
+  &quot;企劃部&quot;: [22, 32, 27, 25, 16, 6, 4, 3]
+};</code></pre>
+<hr>
+<h2 id="動手開發"><a href="#動手開發" class="headerlink" title="動手開發"></a>動手開發</h2><br/>
+
+<h4 id="1-容器與元素準備"><a href="#1-容器與元素準備" class="headerlink" title="1. 容器與元素準備"></a>1. 容器與元素準備</h4><p>大略了解功能需求後，就要來一步步來完成應用了，首先把容器和按鈕準備一下吧，樣式部分就留給各位自由發揮了</p>
+<pre><code class="html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div id=&quot;column&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;pie&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;button class=&quot;overview&quot;&gt;返回看整體佔比&lt;/button&gt;</code></pre>
+<br/>
+<br/>
+
+<h4 id="2-資料準備"><a href="#2-資料準備" class="headerlink" title="2. 資料準備"></a>2. 資料準備</h4><p>接著把一些基本變數跟圖表資料準備一下，這個部分要注意的是「柱狀圖」和「圓餅圖」的資料格式，柱狀圖的部分我準備的是「數據列」的資料，而圓餅圖則是 Mapping 出了「數據點」的資料。</p>
+<pre><code class="javascript">const dataKeys = Object.keys(data);
+
+const columnSeries = dataKeys.map(department =&gt; ({
+  name: department,
+  data: data[department]
+}));
+
+const piePoints = dataKeys.map(department =&gt; ({
+  name: department,
+  y: data[department].reduce((arr, val) =&gt; arr + val)
+}));</code></pre>
+<br/>
+<br/>
+
+<h4 id="3-主題設定"><a href="#3-主題設定" class="headerlink" title="3. 主題設定"></a>3. 主題設定</h4><p>再來先用「主題設定」把一些共同的設定先處理一下，像是顏色和版權標籤。</p>
+<pre><code class="javascript">Highcharts.setOptions({
+  colors: colors,
+  credits: { enabled: false }
+});</code></pre>
+<br/>
+<br/>
+
+<h4 id="4-創建圖表與區塊設定"><a href="#4-創建圖表與區塊設定" class="headerlink" title="4. 創建圖表與區塊設定"></a>4. 創建圖表與區塊設定</h4><p>然後用 <code>Highcharts.chart()</code> 來把這次的兩個主要圖表處建出來，這邊我暫時還沒有設定「事件屬性」，而是先把基本的區塊設定給完成，讓圖表先出顯示出來，後面會再透過其他方式加上去。</p>
+<blockquote>
+<p>記得要用變數將「圖表實例」存起來，之後才能呼叫其中的 Method。</p>
+</blockquote>
+<pre><code class="javascript">const column = document.querySelector(&#39;#column&#39;);
+let columnChart = Highcharts.chart(column, {
+  chart: { type: &quot;column&quot; },
+  title: { text: &quot;公司部門年齡分佈&quot; },
+  xAxis: {
+    categories,
+    labels: { format: &quot;{value}歲&quot; }
+  },
+  yAxis: { 
+    title: { text: &quot;人數&quot; } 
+  },
+  tooltip: {
+    headerFormat: &quot;&lt;b&gt;{series.name}&lt;/b&gt;&lt;br/&gt;&quot;,
+    pointFormat: &quot;{point.category}: {point.y}人&quot;,
+  },
+  series: columnSeries
+});
+
+const pie = document.querySelector(&#39;#pie&#39;);
+let pieChart = Highcharts.chart(pie, {
+  chart: { type: &quot;pie&quot; },
+  title: { text: &quot;公司部門人數佔比&quot; },
+  tooltip: {
+    headerFormat: &quot;&lt;b&gt;{point.key}&lt;/b&gt;&lt;br/&gt;&quot;,
+    pointFormat: &quot;{point.percentage:.1f} %／{point.y}人&quot;,
+  },
+  plotOptions: {
+    series: {
+      size: &quot;80%&quot;,
+      states: { inactive: { enabled: false } }
+    }
+  },
+  series: [{ data: piePoints }]
+});</code></pre>
+<p>這邊我在圓餅圖設定了一個之前沒介紹的屬性 <code>series.states</code>，它可以開關數據列的狀態及調整樣式，像這次我把 <code>inactive</code> (非聚焦狀態) 給關閉，這樣當我在聚焦某個數據點(扇形)時，其他非聚焦狀態的數據點就不會被反灰了。想更了解這個屬性的話可以看 <strong><a href="https://api.highcharts.com/highcharts/series.line.states" target="_blank" rel="noopener">官方文件</a></strong>。</p>
+<img src="state.png" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+<br/>
+
+<h4 id="5-柱狀圖的事件設定"><a href="#5-柱狀圖的事件設定" class="headerlink" title="5. 柱狀圖的事件設定"></a>5. 柱狀圖的事件設定</h4><p>圖表都出來後，我們就要來處理事件的部分了，這邊用圖表的 <code>update()</code> 方法來為柱狀圖更新「繪圖區設定」，這樣所有數據列就都會被設定到了。那 <code>columnClick</code> 這個變數就是事件的回呼函式了，點擊發生時的邏輯就會寫在這裡面。</p>
+<pre><code class="javascript">columnChart.update({
+  plotOptions: {
+    series: {
+      events: { click: columnClick }
+    }
+  }
+});</code></pre>
+<p><strong>先來細數一下當點擊發生時會發生哪些事：</strong></p>
+<ol>
+<li>圓餅圖的數據點顏色會變成該部門數據列的顏色漸層</li>
+<li>圓餅圖的數據點資料會改為該部門的各年齡人數資料</li>
+<li>圓餅圖的標題會顯示該部門的的名稱</li>
+</ol>
+<br/>
+
+<p>知道要做哪些事情後，就可以來設計邏輯了，主要概念會是點擊柱狀圖數據列時可以透過 <code>event</code> 事件物件來取得「數據列物件」，並利用數據列的顏色、資料和名稱來改變圓餅圖的設定。</p>
+<pre><code class="javascript">function columnClick() {
+  const { color, points, name } = event.point.series;
+  console.log(color, points, name);
+};</code></pre>
+<p>首先顏色因為是自己設定的，所以已經知道會是 <code>rgb</code> 格式了，若要把圓餅圖數據點的顏色改成漸層色，可以轉成 <code>rgba</code> 後利用透明度做出漸層效果，所以可以先設計一個調整顏色透明度的輔助函式吧。</p>
+<pre><code class="javascript">function rgbToRgba(rgb, alpha) {
+  return rgb.replace(&quot;rgb&quot;, &quot;rgba&quot;).replace(&quot;)&quot;, `,${alpha})`);
+};</code></pre>
+<p>再來就可以透過 <code>points</code> 來 Mapping 出我們要的數據點格式，並且使用 <code>setData()</code> 和 <code>setTitle()</code> 來更新圓餅圖了。</p>
+<pre><code class="javascript">function columnClick() {
+  const { color, points, name } = event.point.series;
+  let data = points.map((point, index) =&gt; ({
+    y: point.y,
+    color: rgbToRgba(color, 1 - index * 0.05),
+    name: point.category
+  }));
+  pieChart.series[0].setData(data);
+  pieChart.setTitle({ text: `${name}年齡佔比` });
+};</code></pre>
+<br/>
+<br/>
+
+<h4 id="6-返回觀看整體佔比"><a href="#6-返回觀看整體佔比" class="headerlink" title="6. 返回觀看整體佔比"></a>6. 返回觀看整體佔比</h4><p>最後，把按鈕也加上原生的 <code>click</code> 事件，並在回呼函式中將圓餅圖改回最初的設定內容就大公告成了！</p>
+<pre><code class="javascript">const overview = document.querySelector(&#39;.overview&#39;);
+overview.addEventListener(&quot;click&quot;, function() {
+  pieChart.series[0].setData(piePoints);
+  pieChart.setTitle({ text: `公司部門人數佔比` })
+});</code></pre>
+<p><br/><br/></p>
+<p>今天的範例比較著重在「事件屬性」和「方法」的使用，是否有幫助大家熟悉使用呢？另外如果對於「主題設定」、「繪圖區設定」、「格式屬性」來不太理解，也可以利用這個範例來複習一下。</p>
+<p>接著明天，要用同一個資料案例來示範「雙層圓餅圖」的實作技巧。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10249008" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/05/highchart/highcharts-21/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/05/highchart/highcharts-21/" data-id="clcsdp5kz001yneqw85nce8hf" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/04/highchart/highcharts-20/" class="article-nav-title">資視就是力量 - Highcharts / 其他實用 Method</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/06/highchart/highcharts-22/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 雙層圓餅圖
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/05/highchart/highcharts-21/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

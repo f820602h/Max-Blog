@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / Drag &amp; Drop | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="就是要拖拖拉拉  現在使用手機、平板來瀏覽網站的機會比起電腦來說，實在是多太多了，所以其實 Web API 也不斷針對這樣的趨勢在靠攏，像是我們前期介紹的 Battery API 就是一個案例。 使用者在長期使用行動裝置的情況下，已經習慣了系統 OS 或 APP 的操作，所以對於「拖曳物件」這個手勢動作已經是直覺反應了，而在網站開發中，Drag &amp; Drop API 就是協助我們完成「拖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; Drag &amp; Drop">
+<meta property="og:url" content="https://maxleebk.com/2021/10/09/webApi/webApi-25/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="就是要拖拖拉拉  現在使用手機、平板來瀏覽網站的機會比起電腦來說，實在是多太多了，所以其實 Web API 也不斷針對這樣的趨勢在靠攏，像是我們前期介紹的 Battery API 就是一個案例。 使用者在長期使用行動裝置的情況下，已經習慣了系統 OS 或 APP 的操作，所以對於「拖曳物件」這個手勢動作已經是直覺反應了，而在網站開發中，Drag &amp; Drop API 就是協助我們完成「拖">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/09/webApi/webApi-25/move.gif">
+<meta property="article:published_time" content="2021-10-09T13:19:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.979Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/09/webApi/webApi-25/move.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-25" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / Drag &amp; Drop
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-09T13:19:00.000Z" itemprop="datePublished">2021-10-09</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>就是要拖拖拉拉</p>
+</blockquote>
+<p>現在使用手機、平板來瀏覽網站的機會比起電腦來說，實在是多太多了，所以其實 Web API 也不斷針對這樣的趨勢在靠攏，像是我們前期介紹的 Battery API 就是一個案例。</p>
+<p>使用者在長期使用行動裝置的情況下，已經習慣了系統 OS 或 APP 的操作，所以對於「拖曳物件」這個手勢動作已經是直覺反應了，而在網站開發中，Drag &amp; Drop API 就是協助我們完成「拖曳」功能的好幫手。</p>
+<hr>
+<h2 id="Drag-amp-Drop"><a href="#Drag-amp-Drop" class="headerlink" title="Drag &amp; Drop"></a>Drag &amp; Drop</h2><p>Drag &amp; Drop 其實是「拖」和「放」兩個動作，也就是除了「拖曳」元素外，也可以將其「放置」在特定位置。這也代表說整個過程中會與使用者交互的元素不只有一個，會發生的事件也不只有一個，在拖放的過程中至少會有兩個角色，各自也都有對應的事件：</p>
+<br/>
+
+<ul>
+<li><strong>Drag Source</strong>： 被使用者點擊不放並「拖曳」的目標元素。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">事件</th>
+<th align="center">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">dragstart</td>
+<td align="center">當使用者<strong>開始</strong>拖曳時觸發（滑鼠開始移動時）</td>
+</tr>
+<tr>
+<td align="center">drag</td>
+<td align="center">開始拖曳到結束拖曳前都會不斷觸發（約幾百毫秒觸發一次）</td>
+</tr>
+<tr>
+<td align="center">dragend</td>
+<td align="center">當使用者<strong>結束</strong>拖曳時觸發（滑鼠按鍵放開時）</td>
+</tr>
+</tbody></table>
+<br/>
+
+<ul>
+<li><strong>Drop Location</strong>： 一個可以「放置」 <code>drag source</code> 的元素。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">事件</th>
+<th align="center">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">dragenter</td>
+<td align="center">當使用者拖曳期間<strong>進入</strong>元素時觸發</td>
+</tr>
+<tr>
+<td align="center">dragover</td>
+<td align="center">當使用者拖曳期間<strong>經過</strong>元素時觸發（約幾百毫秒觸發一次）</td>
+</tr>
+<tr>
+<td align="center">dragleave</td>
+<td align="center">當使用者拖曳期間<strong>離開</strong>元素時觸發</td>
+</tr>
+<tr>
+<td align="center">drop</td>
+<td align="center">當使用者將拖曳的目標<strong>放置</strong>在元素時觸發</td>
+</tr>
+</tbody></table>
+<p><br/><br/></p>
+<h4 id="Attribute-draggable"><a href="#Attribute-draggable" class="headerlink" title="# Attribute:draggable"></a># Attribute:draggable</h4><p>通常來說，按住元素不放也是沒辦法拖曳的，若要使其可以拖曳必須要在 HTML 標籤上加入 <code>draggable</code> 屬性：</p>
+<pre><code class="html">&lt;div class=&quot;box&quot; draggable=&quot;true&quot;&gt;&lt;/div&gt;</code></pre>
+<blockquote>
+<p>Drop Location 則不用額外添加屬性，任何元素都可以是 Drop Location。</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="交互事件"><a href="#交互事件" class="headerlink" title="# 交互事件"></a># 交互事件</h4><p>由於前面的表格已經大致說明了各個事件的觸發時機了，應該也都不難離解，所以我們就直接試試看能夠利用事件做些什麼效果，以及 Drag Source 和 Drop Location 之間該怎麼互動。</p>
+<br/>
+
+<p><strong>- 樣式改變</strong></p>
+<p>我們可以利用 <code>dragstart</code> 和 <code>dragend</code> 來改變 Drag Source 的樣式，讓使用者能更清楚目前被拖曳的元素是哪一個，以及利用 <code>dragenter</code> 和 <code>dragleave</code> 來改變 Drop Location 的樣式：</p>
+<pre><code class="html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;box&quot; draggable=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;box&quot; draggable=&quot;true&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;box&quot; draggable=&quot;true&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;container&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="css">.container {
+  background: white;
+}
+.container.hover {
+  background: aliceBlue;
+}
+.box {
+  background: lightblue;
+  cursor: grab;
+}
+.box.dragging {
+  background: lightgreen;
+  cursor: grabbing;
+}</code></pre>
+<pre><code class="javascript">const boxes = document.querySelectorAll(&quot;.box&quot;);
+boxes.forEach((box) =&gt; {
+  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+    e.target.classList.add(&quot;dragging&quot;);
+  });
+  box.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+    e.target.classList.remove(&quot;dragging&quot;);
+  });
+});
+
+const containers = document.querySelectorAll(&quot;.container&quot;);
+containers.forEach((container) =&gt; {
+  container.addEventListener(&quot;dragenter&quot;, (e) =&gt; {
+    e.target.classList.add(&quot;hover&quot;);
+  });
+  container.addEventListener(&quot;dragleave&quot;, (e) =&gt; {
+    e.target.classList.remove(&quot;hover&quot;);
+  });
+});</code></pre>
+<br/>
+
+<p><strong>- 鼠標位置</strong></p>
+<p>由於 <code>drag</code> 和 <code>dragover</code> 都是不斷觸發的事件，所以我們可以用來追蹤使用者游標的位置：</p>
+<pre><code class="javascript">const boxes = document.querySelectorAll(&quot;.box&quot;);
+boxes.forEach((box) =&gt; {
+  box.addEventListener(&quot;drag&quot;, (e) =&gt; {
+    console.log(`滑鼠在視窗中的座標: ${e.clientX} / ${e.clientY}`);
+  });
+});
+
+const containers = document.querySelectorAll(&quot;.container&quot;);
+containers.forEach((container) =&gt; {
+  container.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+    console.log(`滑鼠在 Drop Location 中的座標: ${e.offsetX} / ${e.offsetY}`);
+  });
+});</code></pre>
+<br/>
+
+<p><strong>- 移動元素</strong></p>
+<p>最後只要搭配上 <code>drop</code> 事件，我們就可以達成移動元素的效果，不過有個要注意的事情是 <code>dragover</code> 和 <code>drop</code> 會有執行上的衝突，所以如果要讓 <code>drop</code> 的 Callback 能夠順利觸發，必須要在 <code>dragover</code> 中將預設行為給取消掉：</p>
+<pre><code class="javascript">let source = null;
+
+const boxes = document.querySelectorAll(&quot;.box&quot;);
+boxes.forEach((box) =&gt; {
+  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+    source = e.target;
+  box.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+    source = null;
+  });
+});
+
+const containers = document.querySelectorAll(&quot;.container&quot;);
+containers.forEach((container) =&gt; {
+  container.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+    e.preventDefault();
+  });
+  container.addEventListener(&quot;drop&quot;, (e) =&gt; {
+    e.target.appendChild(source)
+    e.target.classList.remove(&quot;hover&quot;);
+  });
+});</code></pre>
+<img src="move.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<p>看過以上示範後是不是覺得 Drag &amp; Drop API 還蠻簡單的呢？只要先設定好需要拖曳的元素後，透過幾個事件的交互就可以達到這樣的效果。不過其實很多 API 都是這樣的，使用起來都很容易，但實際上要應用時就容易邏輯卡住，所以為了讓各位能對 Drag &amp; Drop 有更具體的印象，明天就來實際寫一個拖拉的 ToDo List 吧！</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10280217" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/09/webApi/webApi-25/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/09/webApi/webApi-25/" data-id="clcsdp5mm0044neqw2qutfug7" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/07/webApi/webApi-24/" class="article-nav-title">那些被忽略但很好用的 Web API / ScrollIntoView</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/10/webApi/webApi-26/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / 拖拉式待辦清單
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/09/webApi/webApi-25/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

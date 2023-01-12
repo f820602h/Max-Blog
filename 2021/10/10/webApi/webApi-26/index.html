@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / 拖拉式待辦清單 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="就算拖拖拉拉，也可以把待辦事項處理好  昨天雖然已經知道該如何使用 Drag &amp; Drop API 了，不過今天會實際用它來做個「拖拉式待辦清單」，用具體的範例來讓我們更加理解它的運用技巧。  設計概念  # 確立需求與功能 既然是待辦清單，那自然要可以新增待辦事項 每項任務可以透過拖曳來進行狀態的更換（待處理、進行中、已完成） 每項任務可以透過拖曳來進行排序的調換 每項任務可以透過拖曳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; 拖拉式待辦清單">
+<meta property="og:url" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="就算拖拖拉拉，也可以把待辦事項處理好  昨天雖然已經知道該如何使用 Drag &amp; Drop API 了，不過今天會實際用它來做個「拖拉式待辦清單」，用具體的範例來讓我們更加理解它的運用技巧。  設計概念  # 確立需求與功能 既然是待辦清單，那自然要可以新增待辦事項 每項任務可以透過拖曳來進行狀態的更換（待處理、進行中、已完成） 每項任務可以透過拖曳來進行排序的調換 每項任務可以透過拖曳">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/layout.png">
+<meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/add.gif">
+<meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/drag.gif">
+<meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/sort.gif">
+<meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/done.gif">
+<meta property="article:published_time" content="2021-10-10T09:39:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.983Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/layout.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-26" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / 拖拉式待辦清單
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-10-10T09:39:00.000Z" itemprop="datePublished">2021-10-10</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>就算拖拖拉拉，也可以把待辦事項處理好</p>
+</blockquote>
+<p>昨天雖然已經知道該如何使用 Drag &amp; Drop API 了，不過今天會實際用它來做個「拖拉式待辦清單」，用具體的範例來讓我們更加理解它的運用技巧。</p>
+<hr>
+<h2 id="設計概念"><a href="#設計概念" class="headerlink" title="設計概念"></a>設計概念</h2><br/>
+
+<h4 id="確立需求與功能"><a href="#確立需求與功能" class="headerlink" title="# 確立需求與功能"></a># 確立需求與功能</h4><ol>
+<li>既然是待辦清單，那自然要可以新增待辦事項</li>
+<li>每項任務可以透過拖曳來進行狀態的更換（待處理、進行中、已完成）</li>
+<li>每項任務可以透過拖曳來進行排序的調換</li>
+<li>每項任務可以透過拖曳來進行刪除</li>
+</ol>
+<br/>
+
+<h2 id="開始實踐"><a href="#開始實踐" class="headerlink" title="開始實踐"></a>開始實踐</h2><br/>
+
+<p>由於主要是為了示範 Drag &amp; Drop，所以就不額外使用前端框架，並且也不進行資料的處理，完全使用 DOM 的增刪操作來完成作品，如果各位想要完善範例的話可以再自行採用更方便的技術。</p>
+<p>首先準備好我們 ToDo List 的結構和樣式，大致上長成下面這樣，樣式部分各位可以各自發揮，這邊就不秀出完整 CSS 了。</p>
+<pre><code class="html">&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;div class=&quot;title todo&quot;&gt;待處理&lt;/div&gt;
+    &lt;div class=&quot;input-wrap&quot;&gt;
+      &lt;input type=&quot;text&quot; placeholder=&quot;＋ 新增事項&quot; /&gt;
+      &lt;button&gt;新增&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;ol class=&quot;list&quot;&gt;&lt;/ol&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;div class=&quot;title handle&quot;&gt;進行中&lt;/div&gt;
+    &lt;ol class=&quot;list&quot;&gt;&lt;/ol&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;column&quot;&gt;
+    &lt;div class=&quot;title complete&quot;&gt;已完成&lt;/div&gt;
+    &lt;ol class=&quot;list&quot;&gt;&lt;/ol&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;delete&quot;&gt;刪除&lt;/div&gt;</code></pre>
+<img src="layout.png" style="margin: 24px auto;" />
+
+<br/>
+
+<h4 id="新增代辦任務"><a href="#新增代辦任務" class="headerlink" title="# 新增代辦任務"></a># 新增代辦任務</h4><p>首先我們先來透過 <code>&lt;input&gt;</code> 和 <code>&lt;button&gt;</code> 來完成「新增任務」的功能，透過點擊按鈕或按下 Enter 就會執行 <code>createToDo</code> 函式，用來創造一個 <code>li</code> 元素，並加上屬性及文字後丟掉「待處理」的 <code>ol</code> 中。</p>
+<pre><code class="javascript">const input = document.querySelector(&quot;input&quot;);
+const button = document.querySelector(&quot;button&quot;);
+const todoList = input.parentElement.nextElementSibling;
+
+function createToDo(content) {
+  const newItem = document.createElement(&quot;li&quot;);
+  newItem.classList.add(&quot;item&quot;);
+  // 記得要加上 draggable，這樣任務才可以拖曳
+  newItem.setAttribute(&quot;draggable&quot;, true);
+  newItem.textContent = content;
+  todoList.appendChild(newItem);
+  input.value = &quot;&quot;;
+}
+
+input.addEventListener(&quot;keydown&quot;, (e) =&gt; {
+  if (!input.value.trim() || e.which !== 13) return;
+  createToDo(input.value);
+});
+
+button.addEventListener(&quot;click&quot;, () =&gt; {
+  if (!input.value.trim()) return;
+  createToDo(input.value);
+});</code></pre>
+<img src="add.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="拖曳以改變任務狀態"><a href="#拖曳以改變任務狀態" class="headerlink" title="# 拖曳以改變任務狀態"></a># 拖曳以改變任務狀態</h4><p>接著我們要讓任務可以進行「拖曳」，且三個不同的區塊都要可以「被放置」任務，也就是 Drag &amp; Drop API 的部分了，分別把 Drag Source 和 Drop Location 監聽事件的流程包裝成函式，然後在新增任務時把元素加上 <code>drag</code> 相關事件，以及為三個狀態區塊加上 <code>drop</code> 相關事件。</p>
+<pre><code class="javascript">// 用來暫存被 drag 的元素
+let source = null;
+function addDragEvt(element) {
+  element.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+    e.target.classList.add(&quot;dragging&quot;);
+    source = e.target;
+  });
+  element.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+    e.target.classList.remove(&quot;dragging&quot;);
+    source = null;
+  });
+}
+
+function createToDo(content) {
+  // ...前面省略
+  // 記得在 createToDo 中加入這一行來為新增的 li 監聽事件
+  addDragEvt(newItem);
+  todoList.appendChild(newItem);
+  input.value = &quot;&quot;;
+}</code></pre>
+<pre><code class="javascript">function addDropEvt(element) {
+  element.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+    e.preventDefault();
+  });
+  element.addEventListener(&quot;drop&quot;, (e) =&gt; {
+    e.currentTarget.querySelector(&quot;ol&quot;).appendChild(source);
+  });
+}
+
+const columns = document.querySelectorAll(&quot;.column&quot;);
+columns.forEach((column) =&gt; {
+  addDropEvt(column);
+});</code></pre>
+<img src="drag.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="拖曳以改變任務排序"><a href="#拖曳以改變任務排序" class="headerlink" title="# 拖曳以改變任務排序"></a># 拖曳以改變任務排序</h4><p>現在各項任務已經可以通過拖曳放置在不同狀態的區塊了，現在要來處理排序問題了，我們可以先透過 <code>dragover</code> 事件來取得鼠標的位置，得以判斷使用者想要把項目放在哪一個位置，並且利用樣式的改變讓使用者能更清楚知道他放開滑鼠後，任務會被加在哪裡：</p>
+<pre><code class="css">.item {
+  position: relative;
+}
+.item::before,
+.item::after {
+  content: &quot;&quot;;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: lightblue;
+  opacity: 0;
+}
+.item.before::before {
+  top: -2px;
+  left: 0;
+  opacity: 1;
+}
+.item.after::after {
+  bottom: -2px;
+  left: 0;
+  opacity: 1;
+}</code></pre>
+<pre><code class="javascript">// 用來暫存被 dragover 的元素
+let overItem = null;
+
+// 重置被 dragover 的元素
+function clearOverItem() {
+  if (!overItem) return;
+  overItem.classList.remove(&quot;before&quot;);
+  overItem.classList.remove(&quot;after&quot;);
+  overItem = null;
+}
+
+function addDropEvt(element) {
+  element.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+    clearOverItem();
+    // 如果 dragover 的元素也是任務項目且不是目前被 drag 的 source 時執行
+    if (e.target.getAttribute(&quot;draggable&quot;) &amp;&amp; e.target !== source) {
+      overItem = e.target;
+
+      if (e.offsetY &gt; overItem.offsetHeight / 2) {
+        // 如果鼠標在元素的下半部顯示下方的藍條
+        overItem.classList.add(&quot;after&quot;);
+      } else {
+        // 反之，顯示上方的藍條
+        overItem.classList.add(&quot;before&quot;);
+      }
+    }
+    e.preventDefault();
+  });
+  //...以下省略
+}</code></pre>
+<img src="sort.gif" style="margin: 24px auto;" />
+
+<p>接著我們只要在修改一下 <code>drop</code> 事件，在當中判斷目前被 <code>dragover</code> 元素的狀態就可以放到對應的位置了：</p>
+<pre><code class="javascript">function addDropEvt(element) {
+  //...以上省略
+  element.addEventListener(&quot;drop&quot;, (e) =&gt; {
+    const list = e.currentTarget.querySelector(&quot;ol&quot;);
+    if (overItem) {
+      if (overItem.classList.contains(&quot;before&quot;)) {
+        // 如果 overItem 有 before class 就將 source 移動到它的前面
+        list.insertBefore(source, overItem);
+      } else {
+        // 反之，有 after class 就將 source 移動到它的後面
+        list.insertBefore(source, overItem.nextElementSibling);
+      }
+    } else {
+      // 如果沒有 overItem 也沒有更換狀態就不動作
+      if (e.currentTarget.contains(source)) return;
+      // 反之，加到最後面
+      else list.appendChild(source);
+    }
+    clearOverItem();
+  });
+}</code></pre>
+<img src="done.gif" style="margin: 24px auto;" />
+
+<p><br/><br/></p>
+<h4 id="拖曳以刪除任務"><a href="#拖曳以刪除任務" class="headerlink" title="# 拖曳以刪除任務"></a># 拖曳以刪除任務</h4><p>最後在把刪除的功能給補上，這樣一切就大功告成了。</p>
+<pre><code class="javascript">const del = document.querySelector(&quot;.delete&quot;);
+del.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+  e.preventDefault();
+});
+del.addEventListener(&quot;drop&quot;, (e) =&gt; {
+  source.remove();
+  clearOverItem();
+});</code></pre>
+<p><br/><br/></p>
+<p>整個範例做完後，希望各位對於 Drag &amp; Drop API 能有更深更具體的認識，如果你在動手做之前想先試玩看看的話，我把原始碼放在 <a href="https://codepen.io/max-lee/pen/rNzNXOX" target="_blank" rel="noopener">CodePen</a> 囉，如果文章中的說明看不是很懂的話，也可以在 CodePen 看看，有任何問題或建議也好歡迎各位提出～</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10280490" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/10/10/webApi/webApi-26/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/10/10/webApi/webApi-26/" data-id="clcsdp5mn0046neqw06rkemsv" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/10/09/webApi/webApi-25/" class="article-nav-title">那些被忽略但很好用的 Web API / Drag &amp; Drop</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/10/11/webApi/webApi-27/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Share
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/10/10/webApi/webApi-26/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

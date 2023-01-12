@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / CreateDocumentFragment | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="除了功能完善，有時候效能也該一併考慮。  今天要介紹的是 CreateDocumentFragment，它隸屬於 document 物件底下，而 Document 所指的就是整個網頁文件，也是節點樹（DOM tree）的一個進入點。簡單的說，Document 提供了一些 methods 讓我們去操作整個網頁文件，像是 document.querySelector 就是我們經常使用，拿來遍歷整個">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; CreateDocumentFragment">
+<meta property="og:url" content="https://maxleebk.com/2021/09/16/webApi/webApi-3/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="除了功能完善，有時候效能也該一併考慮。  今天要介紹的是 CreateDocumentFragment，它隸屬於 document 物件底下，而 Document 所指的就是整個網頁文件，也是節點樹（DOM tree）的一個進入點。簡單的說，Document 提供了一些 methods 讓我們去操作整個網頁文件，像是 document.querySelector 就是我們經常使用，拿來遍歷整個">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-09-16T06:38:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:39.030Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / CreateDocumentFragment
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-16T06:38:00.000Z" itemprop="datePublished">2021-09-16</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>除了功能完善，有時候效能也該一併考慮。</p>
+</blockquote>
+<p>今天要介紹的是 CreateDocumentFragment，它隸屬於 <code>document</code> 物件底下，而 Document 所指的就是整個網頁文件，也是節點樹（DOM tree）的一個進入點。簡單的說，Document 提供了一些 methods 讓我們去操作整個網頁文件，像是 <code>document.querySelector</code> 就是我們經常使用，拿來遍歷整個 DOM tree 並找到我們指定的元素。</p>
+<hr>
+<h2 id="CreateDocumentFragment"><a href="#CreateDocumentFragment" class="headerlink" title="CreateDocumentFragment"></a>CreateDocumentFragment</h2><br/>
+
+<p>先直接說明 CreateDocumentFragment 的功能好了，它可以幫我們創建一個 DocumentFragment，而 DocumentFragment 就如同一個虛擬的文件片段，就算對其進行節點操作時並不會造成瀏覽器回流（reflow），也就是不會耗費資源來進行畫面更新，這也就是它最大的優點。</p>
+<p>如果你還沒接觸過前端框架的話，那相信你在遇到需要新增動態元素至畫面上時你通常會有下面這幾個方法：</p>
+<br/>
+
+<h4 id="innerHTML"><a href="#innerHTML" class="headerlink" title="# innerHTML"></a># innerHTML</h4><p>首先是比較基礎的方式是用，也就是用字串的方式來設定某個元素的 HTML 內容，使用起來非常間單，不過如果想要塞入的內容結構上比較複雜的話那就會非常麻煩了（字串裡可是沒有編輯器提示的啊～）。</p>
+<pre><code class="javascript">let list = [&quot;egg&quot;, &quot;milk&quot;, &quot;sugar&quot;, &quot;flour&quot;];
+let htmlContent = &quot;&quot;;
+for (let i = 0; i &lt; list.length; i++) {
+  htmlContent += `&lt;li&gt;${list[i]}&lt;/li&gt;`;
+}
+const ul = document.querySelector(&quot;ul&quot;);
+ul.innerHTML += htmlContent;</code></pre>
+<p>還有一點比較麻煩的是，在父元素已經有部分子元素情況下使用 <code>innerHTML</code>，會很難從中插入新的元素，會需要其他額外的處理，反而會造成程式碼很冗長，所以它大部分都不會是我們的最佳解決方案。</p>
+<pre><code class="html">&lt;ul&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+  &lt;!--   如果你的新元素要放在這裡就會很麻煩 --&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p><br/><br/></p>
+<h4 id="appendChild"><a href="#appendChild" class="headerlink" title="# appendChild"></a># appendChild</h4><p>相比 <code>innerHTML</code>，<code>appendChild</code> 應該才是更常使用的方法：</p>
+<pre><code class="javascript">let list = [&quot;egg&quot;, &quot;milk&quot;, &quot;sugar&quot;, &quot;flour&quot;];
+const ul = document.querySelector(&quot;ul&quot;);
+for (let i = 0; i &lt; list.length; i++) {
+  const li = document.createElement(&quot;li&quot;);
+  li.textContent = list[i];
+  ul.appendChild(li);
+}</code></pre>
+<p>這種方式就算想要創建比較複雜的 HTML 結構也可以寫得比較有系統性，程式碼也有比較好的易讀性及維護性，而且其實除了 <code>appendChild</code>，你也可以用 <code>insertBefore</code> 選擇新元素要注入的位置。</p>
+<pre><code class="html">&lt;ul&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+  &lt;!--  新元素將會放在這邊 --&gt;
+  &lt;li&gt;我是本來就在的元素&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<pre><code class="javascript">let list = [&quot;egg&quot;, &quot;milk&quot;, &quot;sugar&quot;, &quot;flour&quot;];
+const ul = document.querySelector(&quot;ul&quot;);
+const last_li = ul.querySelector(&quot;li:last-child&quot;);
+for (let i = 0; i &lt; list.length; i++) {
+  const new_li = document.createElement(&quot;li&quot;);
+  new_li.textContent = list[i];
+  ul.insertBefore(new_li, last_li);
+}</code></pre>
+<p>不過這樣的方式有個致命的缺點，每次迴圈在執行時都會直接在目前的 DOM tree 中塞入新元素時，此時會促使網頁更新畫面，這樣其實或多或少會引響效能。</p>
+<p><br/><br/></p>
+<h4 id="createDocumentFragment"><a href="#createDocumentFragment" class="headerlink" title="# createDocumentFragment"></a># createDocumentFragment</h4><p>但如果使用 <code>createDocumentFragment</code> 可就不一樣了，我們是在一個虛擬的文件片段中加入新元素，這樣就完全不會造成畫面的更新，因為它根本就沒渲染在畫面上。</p>
+<pre><code class="javascript">let list = [&quot;egg&quot;, &quot;milk&quot;, &quot;sugar&quot;, &quot;flour&quot;];
+const ul = document.querySelector(&quot;ul&quot;);
+const fragment = document.createDocumentFragment();
+for (let i = 0; i &lt; list.length; i++) {
+  const li = document.createElement(&quot;li&quot;);
+  li.textContent = list[i];
+  fragment.appendChild(li);
+}
+ul.appendChild(fragment);</code></pre>
+<p>當我們將全部想要新增的元素都加進 DocumentFragment 後，再一次性的塞進我們真正想要放的位置就可以了，整體的感覺會很像 <code>innerHTML</code>，但 <code>innerHTML</code> 在設定後其實還多了一個字串轉換成節點的過程，所以 createDocumentFragment 在效能層面來說真的是比較友善。</p>
+<blockquote>
+<p>不過現在的瀏覽器似乎對於短時間內的連續 DOM 操作都有做一些最佳化，不至於讓效能差到太多，但使用 CreateDocumentFragment 其實也可以讓 「不斷插入」 變成 「一次插入」，在程式碼的目的表達上也會更清楚。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>今天介紹的 CreateDocumentFragment 雖然不是什麼功能華麗的 API，但是非常建議大家可以使用看看，儘管能提升的效能或許不多，但這一點點很有可能就是你跟其他人的差異喔～</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10266640" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/16/webApi/webApi-3/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/16/webApi/webApi-3/" data-id="clcsdp5mq004eneqwbbhebwmd" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/15/webApi/webApi-2/" class="article-nav-title">那些被忽略但很好用的 Web API / Console</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/17/webApi/webApi-4/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / RequestAnimationFrame
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/16/webApi/webApi-3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

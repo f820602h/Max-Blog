@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>透過 CancelToken 解析 Axios 原始碼 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本篇會藉由設計「取消重複請求機制」來解析 axios 的原始碼，篇幅較長請耐心閱讀，如果要直接看實作可以點 這裡  其實要實踐取消請求的功能並不會很難，官方也有一目瞭然的 教學，不過我自己在實作後一直對於 cancelToken 的原理耿耿於懷，就去研究了一下原始碼，所以在實際撰寫之前，想先分享一下我的理解。 接下來我們會直接看打包過的檔案： axios&#x2F;dist&#x2F;axios.js，所有 axi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="透過 CancelToken 解析 Axios 原始碼">
+<meta property="og:url" content="https://maxleebk.com/2020/07/07/axios-cancelToken/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="本篇會藉由設計「取消重複請求機制」來解析 axios 的原始碼，篇幅較長請耐心閱讀，如果要直接看實作可以點 這裡  其實要實踐取消請求的功能並不會很難，官方也有一目瞭然的 教學，不過我自己在實作後一直對於 cancelToken 的原理耿耿於懷，就去研究了一下原始碼，所以在實際撰寫之前，想先分享一下我的理解。 接下來我們會直接看打包過的檔案： axios&#x2F;dist&#x2F;axios.js，所有 axi">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/07/07/axios-cancelToken/flow.png">
+<meta property="article:published_time" content="2020-07-07T07:23:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.711Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="Vus.js">
+<meta property="article:tag" content="Axios">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/07/07/axios-cancelToken/flow.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-axios-cancelToken" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      透過 CancelToken 解析 Axios 原始碼
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-07-07T07:23:00.000Z" itemprop="datePublished">2020-07-07</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axios/" rel="tag">Axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vus-js/" rel="tag">Vus.js</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>本篇會藉由設計「取消重複請求機制」來解析 axios 的原始碼，篇幅較長請耐心閱讀，如果要直接看實作可以點 <a href="#實際運用">這裡</a></p>
+</blockquote>
+<p>其實要實踐取消請求的功能並不會很難，官方也有一目瞭然的 <a href="https://github.com/axios/axios#cancellation" target="_blank" rel="noopener">教學</a>，不過我自己在實作後一直對於 <code>cancelToken</code> 的原理耿耿於懷，就去研究了一下原始碼，所以在實際撰寫之前，想先分享一下我的理解。</p>
+<p>接下來我們會直接看打包過的檔案： <code>axios/dist/axios.js</code>，所有 axios 的程式碼都在這。<br>你也可以一邊看 <a href="https://github.com/axios/axios/blob/master/dist/axios.js" target="_blank" rel="noopener">github</a> 一邊看文章。</p>
+<hr>
+<h2 id="為什麼需要取消請求"><a href="#為什麼需要取消請求" class="headerlink" title="為什麼需要取消請求"></a>為什麼需要取消請求</h2><p><code>cancelToken</code> 可以為我們取消多餘或不必要的 <code>http請求</code>，雖然在一般情況下可能感覺不到有取消請求的必要，不過在一些特殊情況中沒有好好處理的話，可能會導致一些問題發生。像是…</p>
+<ul>
+<li>快速的頁面切換，使得上個頁面的請求在新頁面完成。</li>
+<li><code>Pending</code> 時間較久的 <code>API</code> 若短時間內重複請求，會有舊蓋新的情況。</li>
+<li>重復的 <code>post</code> 請求，有可能導致多次的資料操作，例如表單發送兩次。</li>
+</ul>
+<hr>
+<h2 id="發送請求與攔截器"><a href="#發送請求與攔截器" class="headerlink" title="發送請求與攔截器"></a>發送請求與攔截器</h2><br/>
+
+<h4 id="Class-Axios"><a href="#Class-Axios" class="headerlink" title="# Class Axios"></a># Class Axios</h4><p>先從最主要的 <code>Axios類別</code> 看起，每一個 axios 應用都會創建一個 <code>Axios類別</code>，而當中最核心的就是 <code>request</code> 方法，不過我們先暫時跳過。<br>後面兩段則是在類別上又新增了好幾個方法，讓我們可以發起不同的http請求： <code>axios.get()</code>、<code>axios.post()</code>。<br>不過仔細一看會發現，最終我們呼叫的還是 <code>request</code>，所以才會說 <code>request</code> 是 axios 的核心。</p>
+<pre><code class="javascript">function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+Axios.prototype.request = function request(config) {
+  // ...先跳過
+};
+
+// 幫不同的請求方法創建別名，最終都是呼叫request
+utils.forEach([&#39;delete&#39;, &#39;get&#39;, &#39;head&#39;, &#39;options&#39;], function forEachMethodNoData(method) {
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach([&#39;post&#39;, &#39;put&#39;, &#39;patch&#39;], function forEachMethodWithData(method) {
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});</code></pre>
+<p></br></br></p>
+<h4 id="Class-InterceptorManager"><a href="#Class-InterceptorManager" class="headerlink" title="# Class InterceptorManager"></a># Class InterceptorManager</h4><p>在前面我們有看到，<code>Axios類別</code> 中有個 <code>interceptors</code> 屬性，其值為物件，並且有 <code>request</code> 和 <code>response</code> 的屬性。<br>這兩個屬性都是 <code>InterceptorManager類別</code>，而這個類別是用來管理攔截器的，我在 <a href="https://f820602h.github.io/Max-Blog/2020/05/27/axios-instance/" target="_blank" rel="noopener">上一篇</a> 有介紹過攔截器是什麼，忘記的人快去複習一下。</p>
+<p>而今天我們就是要用Axios的攔截器來達到取消重複請求的功能，所以來看看 <code>InterceptorManager</code> 吧。</p>
+<pre><code class="javascript">function InterceptorManager() {
+  // 儲存攔截器的方法，未來陣列裡會放入物件，每個物件會有兩個屬性分別對應成功和失敗後的函式
+  this.handlers = [];
+}
+
+// 在攔截器裡新增一組函式，我們在上一篇有用過
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+// 註銷攔截器裡的某一組函式
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+// 原碼的寫法我覺得很容易看不懂，所以我改寫了一下
+// 簡單來說就是拿handlers跑迴圈，把裡面的物件當作參數來給fn執行
+InterceptorManager.prototype.forEach = function(fn) {
+  this.handlers.forEach(obj =&gt; {
+    fn(h);
+  });
+};</code></pre>
+<p>基本上這個類別還蠻單純的，主要就是三個操作 <code>handlers</code> 的方法，我們之前就是透過 <code>axios.interceptors.request.use</code> 和 <code>axios.interceptors.response.use</code> 來添加攔截器的。</p>
+<p>但現在我們要再更深入了解Axios是怎麼在請求前後透過攔截器處理 <code>request</code> 和 <code>response</code> 的，這時候就要回去看 <code>Axios.prototype.request</code> 了。<br></br></br></p>
+<h4 id="Axios-prototype-request"><a href="#Axios-prototype-request" class="headerlink" title="# Axios.prototype.request"></a># Axios.prototype.request</h4><p>可以發現，每當我們發送請求 <code>Axios.prototype.request</code> 會宣告一個陣列以及一個Promise物件。<br>並且利用 <code>InterceptorManager.prototype.forEach</code> 把我們攔截器中新增的函式一一放進 <code>chain</code> 中。<br>至於 <code>dispatchRequest</code> 就是Axios主要發送 <code>XMLHttpRequest</code> 的函式，我們等等會提到。</p>
+<p>當所有函式都放進 <code>chain</code> 後再兩兩一組拿出來作為 <code>promise.then()</code> 的參數，而且利用Promise的鏈式呼叫來串接。<br>最後我們的請求就可以依照 <code>request攔截器 -&gt; dispatchRequest -&gt; response攔截器</code> 的順序進行處理。</p>
+<pre><code class="javascript">Axios.prototype.request = function request(config) {
+  //..省略
+  var chain = [dispatchRequest, undefined];
+
+  // 定義一個狀態是resolve的Promise; config是發出請求時帶的設定
+  var promise = Promise.resolve(config);
+
+  // InterceptorManager.prototype.forEach，把request攔截器的每一組函式「往前」加進chain裡
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  // InterceptorManager.prototype.forEach，把response攔截器的每一組函式「往後」加進chain裡
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  // 全部加進去後，chain會長的像是這樣: [
+  //   request.handlers[0].fulfilled, request.handlers[0].rejected, ..., 
+  //   dispatchRequest, undefined,
+  //   response.handlers[0].fulfilled, response.handlers[0].rejected, ...,
+  // ]
+
+  // 只要chain裡還有項目，就繼續執行
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};</code></pre>
+<p>最後把所有的函數串接起來後，<code>promise</code> 會像是下面這樣，並且 <code>Axios.prototype.request</code> 會把這個 <code>promise</code> 返回出來，所以我們才可以在呼叫 <code>axios.get()</code> 之後直接用 <code>then()</code>。</p>
+<pre><code class="javascript">Promise.resolve(config)
+  .then(requestFulfilled, requestRejected)
+  .then(dispatchRequest, undefined)
+  .then(responseFulfilled, responseRejected)</code></pre>
+</br>
+
+<ul>
+<li>這個 <code>Promise</code> 已經是 <code>resolve</code> 狀態，所以請求攔截器會拿到 <code>config</code> 來做前置處理。</li>
+<li>官方文件有規定，添加請求攔截器的時候，fulfilled函式最後要返回 <code>config</code>，所以 <code>dispatchRequest</code> 才能拿到 <code>config</code> 來發送請求。</li>
+<li><code>dispatchRequest</code> 在完成 <code>XMLHttpRequest</code> 後會返回請求的 <code>response</code> 給回應攔截器。</li>
+<li>官方文件一樣有規定回應攔截器的fulfilled函式最後要返回 <code>response</code>，所以你最後才可以拿到API資料。</li>
+</ul>
+<p></br></br></p>
+<h4 id="Function-dispatchRequest"><a href="#Function-dispatchRequest" class="headerlink" title="# Function dispatchRequest"></a># Function dispatchRequest</h4><p>現在知道了攔截器是如何串接的了，那 <code>dispatchRequest</code> 是如何發送http請求的呢？<br>我們只看重點部分，當中 <code>adapter</code> 會根據發送請求的環境對應到不同的適配器(建立請求的函式)，而 <code>dispatchRequest</code> 會再以 <code>then()</code> 串接，由http請求的成功或失敗來決定要進入回應攔截器的 <code>fulfilled</code> 函式或 <code>rejected</code> 函式。</p>
+<pre><code class="javascript">module.exports = function dispatchRequest(config) {
+  // 檢查請求是否被取消的函式
+  throwIfCancellationRequested(config);
+
+  // axios會使用預設的http請求適配器，除非你有特別設定
+  // 以瀏覽器發送請求會使用xhrAdapter，node環境則使用httpAdapter
+  var adapter = config.adapter || defaults.adapter;
+
+  // 適配器會把http請求包裝成Promise並返回，dispatchRequest再以then()串接
+  return adapter(config).then(
+    // 若請求成功dispatchRequest會返回response給回應攔截器的fulfilled函式
+    function onAdapterResolution(response) {
+      throwIfCancellationRequested(config);
+      return response;
+    },
+    // 反之則將錯誤拋給回應攔截器的rejected函式
+    function onAdapterRejection(reason) {
+      if (!isCancel(reason)) throwIfCancellationRequested(config);
+      return Promise.reject(reason);
+    }
+  );
+}</code></pre>
+<p>另外可以看到 <code>throwIfCancellationRequested</code> 不斷的出現，這個函式會檢查請求是否已經被「要求」取消，等我們進入到 CancelToken 時會再提到它。<br></br></br></p>
+<h4 id="Function-xhrAdapter"><a href="#Function-xhrAdapter" class="headerlink" title="# Function xhrAdapter"></a># Function xhrAdapter</h4><p>由於我們是以瀏覽器發送請求，所以這邊以 <code>xhrAdapter</code> 適配器為主，<a href="https://github.com/axios/axios/blob/master/dist/axios.js#L977-L1146" target="_blank" rel="noopener">完整程式碼</a>。<br><code>xhrAdapter</code> 整段很長，但如果只看重點，其實就是在發送 <code>XMLHttpRequest</code>，並在過程中做一些判斷來決定要 <code>resolve</code> 或 <code>reject</code> 這個 <code>Promise</code>。</p>
+<pre><code class="javascript">module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    // 建立一個新的XMLHttpRequest
+    var request = new XMLHttpRequest();
+
+    // 監聽readyState的變化
+    request.onreadystatechange = function handleLoad() {
+      // readyState === 4 代表請求完成
+      if (!request || request.readyState !== 4) return;
+
+      // 若請求完成，準備好回應的response
+      var responseHeaders = &#39;getAllResponseHeaders&#39; in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === &#39;text&#39; ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      // settle內部會做一些驗證，成功則resolve(response)，反之reject(error)
+      settle(resolve, reject, response);
+      request = null;
+    };
+
+    // 發送XMLHttpRequest
+    request.send(requestData);
+  });
+};</code></pre>
+<p>到目前為止我們已經知道 axios 處理請求的流程，接下來就進入本文的重點 - CancelToken。</p>
+<p><img src="flow.png" alt="我把整個架構圖像化，希望對各位有幫助。"></p>
+<hr>
+<h2 id="CancelToken"><a href="#CancelToken" class="headerlink" title="CancelToken"></a>CancelToken</h2><br/>
+
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="# 基本用法"></a># 基本用法</h4><p>在看原始碼前，我們先看看 <code>CancelToken</code> 是怎麼使用的。<br>這段程式做了什麼可以先不管，我們只要知道，如果要使用 <code>CancelToken</code> 就必須在 <code>request</code> 的 <code>config</code> 中新增一個 <code>cancelToken</code> 屬性。</p>
+<pre><code class="javascript">let cancel
+
+axios.get(&#39;/user/12345&#39;, {
+  cancelToken: new axios.CancelToken(c =&gt; { cancel = c; })
+});
+
+cancel()</code></pre>
+<p><br/><br/></p>
+<h4 id="Class-CancelToken"><a href="#Class-CancelToken" class="headerlink" title="# Class CancelToken"></a># Class CancelToken</h4><p>再來就該看看我們在 <code>cancelToken</code> 屬性中建構的 <code>CancelToken類別</code> 是什麼。</p>
+<ul>
+<li>首先，每一個 <code>CancelToken</code> 都會建立一個 <code>Promise</code>，並且將 <code>resolve</code> 主動權給拿了出來，定義給<code>resolvePromise</code>。</li>
+<li>再者，當我們要建構一個 <code>CancelToken</code> 的時候必須傳入一個 <code>function</code>，它會直接被呼叫並且得到一個名為 <code>cancel</code> 的函式作為參數。</li>
+</ul>
+<p>當要取消請求就是呼叫 <code>cancel</code>，而它做了兩件事情： 1. 賦值給屬性 <code>reason</code>　2. 將屬性 <code>promise</code> 給 <code>resolve</code></p>
+<pre><code class="javascript">function CancelToken(executor) {
+  // 判斷executor是否為function
+  if (typeof executor !== &#39;function&#39;) {
+    throw new TypeError(&#39;executor must be a function.&#39;);
+  }
+
+  // 建立一個新的Promise物件，並將其resolve函式賦予給變數resolvePromise
+  // 此時Promise會是pending狀態，還未被resolve
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  // 執行executor，並以函式「cancel」作為參數帶入
+  var token = this;
+  executor(function cancel(message) {
+    // 確認reason是否存在，若存在代表cancel已被執行過
+    if (token.reason) return;
+
+    // 將reason賦值為一個Cancel類別
+    token.reason = new Cancel(message);
+
+    // resolve Promise
+    resolvePromise(token.reason);
+  });
+}
+
+// 確認reason是否存在，若存在代表此CancelToken的cancel已被執行過，便拋出錯誤
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) throw this.reason;
+};
+</code></pre>
+<p>所以 axios 只要根據這兩個屬性，就能判斷此次請求是否已經被取消，而 <code>throwIfRequested</code> 就是利用 <code>reason</code> 來判斷是否要拋出錯誤。<br><br/><br/></p>
+<h4 id="throwIfCancellationRequested"><a href="#throwIfCancellationRequested" class="headerlink" title="# throwIfCancellationRequested"></a># throwIfCancellationRequested</h4><p>還記得我們在 <code>dispatchRequest</code> 裡有看到 <code>throwIfCancellationRequested</code> 不斷的被呼叫嗎？<a href="#Function-dispatchRequest">這裡</a><br>它的作用就是判斷 <code>config</code> 是否有被加上 <code>cancelToken</code> 屬性，有的話就會呼叫 <code>CancelToken.prototype.throwIfRequested</code>，以此來判斷請求是否已被取消。</p>
+<pre><code class="javascript">function throwIfCancellationRequested(config) {
+  if (config.cancelToken) config.cancelToken.throwIfRequested();
+}</code></pre>
+<p><br/><br/></p>
+<h4 id="Function-xhrAdapter-1"><a href="#Function-xhrAdapter-1" class="headerlink" title="# Function xhrAdapter"></a># Function xhrAdapter</h4><p>沒錯，又再次看到了 <code>xhrAdapter</code>，因為在前面我暫時省略了 <code>xhrAdapter</code> 內部的一個判斷。<br>當它發現 <code>config.cancelToken</code> 存在，便會為 <code>CancelToken.promise</code> 接上一個 <code>then()</code>，意味著當 <code>promise</code> 被 <code>resolve</code> 的那一刻，請求就會被 <code>abort</code>。</p>
+<pre><code class="javascript">module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var request = new XMLHttpRequest();
+
+    // ...省略....
+
+    if (config.cancelToken) {
+      // cancelToken.promise要被resolve才會執行then
+      // onCanceled(cancel)中的cancel會是cancelToken.reason
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) return;
+
+        // 取消XMLHttpRequest
+        request.abort();
+        reject(cancel);
+
+        request = null;
+      });
+    }
+
+    request.send(requestData);
+  });
+};</code></pre>
+<p><br/><br/></p>
+<h4 id="重點整理"><a href="#重點整理" class="headerlink" title="# 重點整理"></a># 重點整理</h4><p>首先我們可以知道 CancelToken 的原理就是在 <code>request config</code> 中加上一個 <code>CancelToken類別</code>，並且利用其類別屬性來判斷 <code>cancel</code> 函式是否被呼叫執行，若已執行代表該請求被「要求」取消。</p>
+<p>另外可以發現 axios 在以下三個時機點都有檢查請求的取消與否：</p>
+<ul>
+<li>請求發送前 - <a href="#Function-dispatchRequest">dispatchRequest開頭</a></li>
+<li>請求發送中 - <a href="#Function-xhrAdapter-1">xhrAdapterq</a></li>
+<li>請求發送後 - <a href="#Function-dispatchRequest">dispatchRequest.then</a></li>
+</ul>
+<hr>
+<h2 id="實際運用"><a href="#實際運用" class="headerlink" title="實際運用"></a>實際運用</h2></br>
+
+<p>了解整個 axios 架構以及 CancelToken 後，終於可以來實踐取消請求的功能了，先來釐清我們的需求。</p>
+<blockquote>
+<p>每次發送請求要判斷是否已經存在相同的請求，若存在就取消前一次請求，只保留最新的</p>
+</blockquote>
+<p>根據這樣的需求我們歸納出幾個必要的關鍵，然後準備以下程式碼</p>
+<ol>
+<li>為了要能取消請求，必須設定 <code>config.cancelToken</code></li>
+<li>為了要判斷重複的請求，要把每次請求記錄在暫存中</li>
+<li>在請求完成或被取消時從暫存中移除</li>
+</ol>
+<pre><code class="javascript">// 暫存：紀錄執行中的請求
+const pending = new Map();
+
+const addPending = config =&gt; {
+  // 利用method和url來當作這次請求的key，一樣的請求就會有相同的key
+  const key = [config.method, config.url].join(&quot;&amp;&quot;);
+  // 為config添加cancelToken屬性
+  config.cancelToken = new axios.CancelToken(cancel =&gt; {
+    // 確認暫存中沒有相同的key後，把這次請求的cancel函式存起來
+    if (!pending.has(key)) pending.set(key, cancel);
+  });
+};
+
+const removePending = config =&gt; {
+  // 利用method和url來當作這次請求的key，一樣的請求就會有相同的key
+  const key = [config.method, config.url].join(&quot;&amp;&quot;);
+  // 如果暫存中有相同的key，把先前存起來的cancel函式拿出來執行，並且從暫存中移除
+  if (pending.has(key)) {
+    const cancel = pending.get(key);
+    cancel(key);
+    pending.delete(key);
+  }
+};</code></pre>
+<p>準備就緒後，只要在請求攔截與回應攔截器中呼叫它們即可…</p>
+<pre><code class="javascript">// request 攔截器
+instance.interceptors.request.use(
+  config =&gt; {
+    // 先判斷是否有重複的請求要取消
+    removePending(config);
+    // 把這次請求加入暫存
+    addPending(config);
+    return config;
+  },
+  error =&gt; {
+    return Promise.reject(error);
+  }
+);
+// response 攔截器
+instance.interceptors.response.use(
+  response =&gt; {
+    // 請求被完成，從暫存中移除
+    removePending(response);
+    return response;
+  },
+  error =&gt; {
+    return Promise.reject(error);
+  }
+);</code></pre>
+<p>從此我們不必再擔心 API 在回應前被重複觸發導致錯誤，因為我們永遠只會保留最新一次的請求。</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/07/07/axios-cancelToken/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axios/" rel="tag">Axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vus-js/" rel="tag">Vus.js</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/07/07/axios-cancelToken/" data-id="clcsdp5f50001neqw0d2ogku9" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/05/27/axios-instance/" class="article-nav-title">用 Axios Instance 管理 API</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/07/25/prototype/" class="article-nav-title">
+        
+          面試官最愛考的 JS 原型鏈
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/07/07/axios-cancelToken/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

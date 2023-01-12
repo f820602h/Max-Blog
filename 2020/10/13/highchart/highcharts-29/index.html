@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>資視就是力量 - Highcharts / Vue 做個記帳本 (下) | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="昨天已經將記帳本打造出一個基本雛形了，但似乎功能並不是很多，純粹就只是看到消費的金額和走向而已，所以我們今天來利用圖表的「事件屬性」搭配 Vue 的 emit 來為記帳本新增一個查看明細的功能吧。  記帳本實作就像下圖所示，這次要做到的功能是希望能點擊「數據列」時，在下方顯示當天的消費明細以及總金額，讓我們的記帳本有更完整的功能。 而開發的邏輯是透過點擊拿到數據點的日期時間戳，然後利用父子層的溝通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資視就是力量 - Highcharts &#x2F; Vue 做個記帳本 (下)">
+<meta property="og:url" content="https://maxleebk.com/2020/10/13/highchart/highcharts-29/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="昨天已經將記帳本打造出一個基本雛形了，但似乎功能並不是很多，純粹就只是看到消費的金額和走向而已，所以我們今天來利用圖表的「事件屬性」搭配 Vue 的 emit 來為記帳本新增一個查看明細的功能吧。  記帳本實作就像下圖所示，這次要做到的功能是希望能點擊「數據列」時，在下方顯示當天的消費明細以及總金額，讓我們的記帳本有更完整的功能。 而開發的邏輯是透過點擊拿到數據點的日期時間戳，然後利用父子層的溝通">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/10/13/highchart/highcharts-29/emit.gif">
+<meta property="article:published_time" content="2020-10-13T01:35:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.859Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Highcharts">
+<meta property="article:tag" content="12th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/10/13/highchart/highcharts-29/emit.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-highchart/highcharts-29" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      資視就是力量 - Highcharts / Vue 做個記帳本 (下)
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-10-13T01:35:00.000Z" itemprop="datePublished">2020-10-13</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <p>昨天已經將記帳本打造出一個基本雛形了，但似乎功能並不是很多，純粹就只是看到消費的金額和走向而已，所以我們今天來利用圖表的「事件屬性」搭配 Vue 的 <code>emit</code> 來為記帳本新增一個查看明細的功能吧。</p>
+<hr>
+<h2 id="記帳本實作"><a href="#記帳本實作" class="headerlink" title="記帳本實作"></a>記帳本實作</h2><p>就像下圖所示，這次要做到的功能是希望能點擊「數據列」時，在下方顯示當天的消費明細以及總金額，讓我們的記帳本有更完整的功能。</p>
+<p>而開發的邏輯是透過點擊拿到數據點的日期時間戳，然後利用父子層的溝通來將這個時間戳傳遞到一個新的「清單元件」中，清單元件會拿這個時間戳去打 Json-Server 的 API，取得該日期的帳目定顯示於畫面上。那就馬上動手開發吧！</p>
+<img src="emit.gif" style="max-width: 800px; margin: 16px auto 0;" />
+
+<br/>
+
+<h4 id="1-設定事件屬性"><a href="#1-設定事件屬性" class="headerlink" title="1.設定事件屬性"></a>1.設定事件屬性</h4><p>我們在圖表元件 <code>LedgerChart.vue</code> 中新增一個 Method，並將它作為圖表 <code>click</code> 事件的回呼函式，而由於回呼函式可以接到 Highcharts 的 <code>event</code> 物件，我們就可以拿到時間戳，並利用 <code>$emit</code> 來傳至 <code>App.vue</code>。</p>
+<pre><code class="javascript">methods: {
+  selectDate() {
+    this.$emit(&quot;selectDate&quot;, event.point.category)
+  }
+}</code></pre>
+<pre><code class="javascript">// computed
+options() {
+  let options = Object.assign(this.chartOptions, {});
+  options.series = this.seriesData;
+  options.xAxis.categories = this.xAxisCategories;
+  options.plotOptions.series.events = {
+    click: this.selectDate
+  };
+  return options;
+}</code></pre>
+<p><br/><br/></p>
+<h4 id="2-父層監聽自定義事件"><a href="#2-父層監聽自定義事件" class="headerlink" title="2.父層監聽自定義事件"></a>2.父層監聽自定義事件</h4><p>剛剛在 <code>LedgerChart.vue</code> 有 <code>emit</code> 了自定義事件，現在要在父層來監聽接收這事件，這樣每次點擊數據列就都會更新 <code>date</code> 了。</p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;LedgerForm /&gt;
+    &lt;LedgerChart @selectDate=&quot;selectDate&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import LedgerForm from &quot;./components/LedgerForm&quot;
+import LedgerChart from &quot;./components/LedgerChart&quot;
+
+export default {
+  name: &quot;App&quot;,
+  components: {
+    LedgerForm,
+    LedgerChart
+  },
+  data() {
+    return {
+      date: 0
+    }
+  },
+  methods: {
+    selectDate(val) {
+      this.date = val;
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+<p><br/><br/></p>
+<h4 id="3-清單元件-LedgerList-vue"><a href="#3-清單元件-LedgerList-vue" class="headerlink" title="3.清單元件 - LedgerList.vue"></a>3.清單元件 - LedgerList.vue</h4><p>再來就是下方要顯示的明細清單了，檔案內容如下，主要是透過接收一個 <code>date</code> 的 Prop，每當它更新時就會觸發 <code>watch</code>，然後利用 Json-Server 的 Filter 功能來抓出「當天」的資料，如此就能將消費明細顯示在畫面上了。</p>
+<blockquote>
+<p>明細上方的日期和總金額透過 <code>computed</code> 計算即可得到，因為不是重點，這邊就將程式碼省略了。</p>
+</blockquote>
+<pre><code class="vue">&lt;template&gt;
+  &lt;div v-if=&quot;date&quot;&gt;
+    &lt;div class=&quot;ledger-item&quot; v-for=&quot;item in fetchData&quot; :key=&quot;item.id&quot;&gt;
+      &lt;div&gt;{{ item.category }}&lt;/div&gt;
+      &lt;div&gt;{{ item.description }}&lt;/div&gt;
+      &lt;div&gt;NT$ {{ item.amount }}&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  export default {
+    props: {
+      date: {
+        type: Number,
+        default: 0
+      }
+    },
+    data() {
+      return {
+        fetchData: []
+      }
+    },
+    watch: {
+      date(val) {
+        this.axios.get(`http://localhost:3000/accounts?date=${val}`)
+          .then((response) =&gt; {
+            this.fetchData = response.data;
+          });
+      }
+    }
+  }
+&lt;/script&gt;</code></pre>
+<p><br/><br/></p>
+<h4 id="4-掛載元件並傳入-Prop"><a href="#4-掛載元件並傳入-Prop" class="headerlink" title="4.掛載元件並傳入 Prop"></a>4.掛載元件並傳入 Prop</h4><p>清單元件完成後就將他掛到 <code>App.vue</code> 上了，並且記得要把剛剛的 <code>date</code> 傳進清單元件中。如此一來我們就成功增加了查看明細的新功能囉！</p>
+<pre><code class="html">&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;LedgerForm /&gt;
+    &lt;LedgerChart @selectDate=&quot;selectDate&quot; /&gt;
+    &lt;LedgerList :date=&quot;date&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+<p><br/><br/></p>
+<p>花了四天的時間我們從熟悉 Highcharts-Vue 的使用到最後開發出一個小作品，相信大家應該有感受到 Highcharts 與前端框架的配合是多麼的方便好用。不過隨著記帳本的完成，這個系列文章也即將告一段落了，明天最後一篇文章則會做個系列的總結，並講講我的參賽心得。</p>
+<hr>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10252727" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/10/13/highchart/highcharts-29/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/10/13/highchart/highcharts-29/" data-id="clcsdp5le002gneqw5kuybsx4" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/10/12/highchart/highcharts-28/" class="article-nav-title">資視就是力量 - Highcharts / Vue 做個記帳本 (上)</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/10/14/highchart/highcharts-30/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 尾聲
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/10/13/highchart/highcharts-29/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

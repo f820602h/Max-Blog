@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / DesignMode | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DesignMode 讓整個網站都是你的 textarea。  今天要介紹的 API 非常簡單明瞭，簡單到有點偷懶的嫌疑了，但其實等我們連同後面兩天的內容介紹完後，今天的 DesignMode 才可以發揮它的真正實力，今天我們就先簡單暸解一下它的效果就好。  DesignModeDesignMode 翻譯成中文就是設計模式，但要設計什麼呢？設計整個網頁。你沒聽錯，DesignMode 的設定可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; DesignMode">
+<meta property="og:url" content="https://maxleebk.com/2021/09/21/webApi/webApi-8/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="DesignMode 讓整個網站都是你的 textarea。  今天要介紹的 API 非常簡單明瞭，簡單到有點偷懶的嫌疑了，但其實等我們連同後面兩天的內容介紹完後，今天的 DesignMode 才可以發揮它的真正實力，今天我們就先簡單暸解一下它的效果就好。  DesignModeDesignMode 翻譯成中文就是設計模式，但要設計什麼呢？設計整個網頁。你沒聽錯，DesignMode 的設定可以">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2021/09/21/webApi/webApi-8/design-mode.gif">
+<meta property="article:published_time" content="2021-09-21T13:38:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:39.142Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2021/09/21/webApi/webApi-8/design-mode.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / DesignMode
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-21T13:38:00.000Z" itemprop="datePublished">2021-09-21</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>DesignMode 讓整個網站都是你的 textarea。</p>
+</blockquote>
+<p>今天要介紹的 API 非常簡單明瞭，簡單到有點偷懶的嫌疑了，但其實等我們連同後面兩天的內容介紹完後，今天的 DesignMode 才可以發揮它的真正實力，今天我們就先簡單暸解一下它的效果就好。</p>
+<hr>
+<h2 id="DesignMode"><a href="#DesignMode" class="headerlink" title="DesignMode"></a>DesignMode</h2><p>DesignMode 翻譯成中文就是設計模式，但要設計什麼呢？設計整個網頁。你沒聽錯，DesignMode 的設定可以讓整個網頁變成一個網頁編輯器，使用者便可以隨心所欲的修改網站中的文字。</p>
+<br/>
+
+<h4 id="Document-designMode"><a href="#Document-designMode" class="headerlink" title="# Document.designMode"></a># Document.designMode</h4><p>今天最主要的 API 就這麼一個，也沒有什麼技巧可言，就是這麼一行簡單的 code：</p>
+<pre><code class="javascript">document.designMode = &quot;on&quot;; // 關閉則設定成 &quot;off&quot;</code></pre>
+<p>你可以試著打開 devTool 的 Console 面板並執行上面這段指令，你就會發現你能夠自由編輯目前畫面中的所有東西，剪下、貼上、刪除、新增等等都不是問題。但你可能會想：「這到底可以幹嘛？」。</p>
+<p>其實 DesignMode 有一個最直覺的作用，那就是讓你在開發時可以進行更即時性的文案測試，你可以直接在網頁上進行文字編輯，而不是在開發環境中修改後再到頁面上確認。或許身為前端工程師的你會覺得這項功能有點雞肋，但如果你要跟設計師溝通，或設計師想要進行調整測試時，直接打開 DesignMode 就會非常方便。</p>
+<p><br/><br/></p>
+<h4 id="iframe-amp-designMode"><a href="#iframe-amp-designMode" class="headerlink" title="# iframe &amp; designMode"></a># iframe &amp; designMode</h4><p>另外，DesignMode 也不是只能運用在目前的頁面，你也可以針對頁面中的 iframe 來設定：</p>
+<p><strong>◾ iframe.html</strong></p>
+<pre><code class="html">&lt;h1&gt;I am Max.&lt;/h1&gt;
+&lt;p&gt;DesignMode is very fun.&lt;/p&gt;</code></pre>
+<br/>
+
+<p><strong>◾ index.html</strong></p>
+<pre><code class="html">&lt;iframe src=&quot;./iframe.html&quot;&gt;&lt;/iframe&gt;
+&lt;button onClick=&quot;getHtml()&quot;&gt;Get HTML&lt;/button&gt;
+&lt;script&gt;
+  window.onload = function () {
+    const iframeDocument = document.querySelector(&quot;iframe&quot;).contentDocument;
+    iframeDocument.designMode = &quot;on&quot;;
+  };
+
+  function getHtml() {
+    const iframeDocument = document.querySelector(&quot;iframe&quot;).contentDocument;
+    console.log(iframeDocument.body.innerHTML);
+  }
+&lt;/script&gt;</code></pre>
+<img src="design-mode.gif" style="margin: 24px auto;" />
+
+<p>當然了，你可能還是會問說這樣的效果可以做些什麼？但其實許多部落格或筆記網站能夠讓你在網頁中進行文字編輯，靠的就是 DesignMode，只不過它們通常都會搭配一些編輯工具，讓你可以將文字放大縮小、粗體斜體或設定顏色等等。</p>
+<p><br/><br/></p>
+<h2 id="Contenteditable"><a href="#Contenteditable" class="headerlink" title="Contenteditable"></a>Contenteditable</h2><p>既然剛剛講到了部落格和筆記網站，那我們就必須再額外介紹 Contenteditable，它擁有與 DesignMode 非常相像的功能，且比起 DesignMode，剛剛提到的網站可能更常用的是 Contenteditable，像是目前最火紅的 Notion 就是使用 Contenteditable。</p>
+<p>不過 Contenteditable 其實並不是 Web API，它是 HTML5 中的一個全域屬性，只要在任何元素標籤中加上這個屬性，該元素中的內文就會變成可編輯的狀態。</p>
+<pre><code class="html">&lt;div contenteditable=&quot;true&quot;&gt;這裡的文字可以編輯&lt;/div&gt;</code></pre>
+<br/>
+
+<blockquote>
+<p>textarea 本身就是一個可編輯文本的區域沒錯，但如果你想做到像部落格一樣有文字美編功能的話，textarea 是沒辦法達成的。</p>
+</blockquote>
+<p><br/><br/></p>
+<p>其實我們已經在文章中點出了 DesignMode 的真實實力該如何發揮了，那就是透過一些手法，讓我們可以對編輯中的文字進行一些樣式的設定，如此以來 DesignMode 就會是名副其實的設計模式了。而這樣的工具，我們會在認識 Selection 與 Clipboard 之後，再來動手寫寫看。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10270710" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/21/webApi/webApi-8/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/21/webApi/webApi-8/" data-id="clcsdp5mu004qneqw03nkgxtt" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/20/webApi/webApi-7/" class="article-nav-title">那些被忽略但很好用的 Web API / ImageCapture</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/22/webApi/webApi-9/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / Selection
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/21/webApi/webApi-8/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>那些被忽略但很好用的 Web API / History | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="歷史是現在與過去之間永無休止的對話。  我們都知道瀏覽器提供了上一頁、下一頁，甚至可以讓你回到前兩頁、前三頁…，但其實我們也可以借助 History API 的力量，在網頁中自己實踐這樣的功能。  HistoryHistory 是一個瀏覽器提供的歷史紀錄操作介面，你可以透過 window.history 來取得該物件，當中有一些屬性跟方法可以獲取來使用，下面我們就一一來認識一下。   # His">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些被忽略但很好用的 Web API &#x2F; History">
+<meta property="og:url" content="https://maxleebk.com/2021/09/25/webApi/webApi-12/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="歷史是現在與過去之間永無休止的對話。  我們都知道瀏覽器提供了上一頁、下一頁，甚至可以讓你回到前兩頁、前三頁…，但其實我們也可以借助 History API 的力量，在網頁中自己實踐這樣的功能。  HistoryHistory 是一個瀏覽器提供的歷史紀錄操作介面，你可以透過 window.history 來取得該物件，當中有一些屬性跟方法可以獲取來使用，下面我們就一一來認識一下。   # His">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2021-09-25T12:33:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="WebApi">
+<meta property="article:tag" content="13th鐵人賽">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webApi/webApi-12" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      那些被忽略但很好用的 Web API / History
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2021-09-25T12:33:00.000Z" itemprop="datePublished">2021-09-25</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>歷史是現在與過去之間永無休止的對話。</p>
+</blockquote>
+<p>我們都知道瀏覽器提供了上一頁、下一頁，甚至可以讓你回到前兩頁、前三頁…，但其實我們也可以借助 History API 的力量，在網頁中自己實踐這樣的功能。</p>
+<hr>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>History 是一個瀏覽器提供的歷史紀錄操作介面，你可以透過 <code>window.history</code> 來取得該物件，當中有一些屬性跟方法可以獲取來使用，下面我們就一一來認識一下。</p>
+<br/>
+
+<h4 id="History-length"><a href="#History-length" class="headerlink" title="# History.length"></a># History.length</h4><p><code>length</code> 是一個唯讀屬性，可以取得目前瀏覽器分頁的歷史紀錄總數，當你開啟一個新分頁時，它會是 <code>1</code>，而每當你瀏覽一個新的網址，它便會不斷增加。</p>
+<pre><code class="javascript">console.log(history.length);</code></pre>
+<p><br/><br/></p>
+<h4 id="History-scrollRestoration"><a href="#History-scrollRestoration" class="headerlink" title="# History.scrollRestoration"></a># History.scrollRestoration</h4><p><code>scrollRestoration</code> 這個屬性是可以修改的，它影響的是瀏覽器對於「使用者在歷史紀錄的頁面中移動時」的捲動行為，可以設定的值有兩個：</p>
+<ul>
+<li><code>&quot;auto&quot;</code>: 當使用者離開某個頁面時，瀏覽器會紀錄離開時的卷動距離，並在使用者到該頁時，自動卷動到記錄的位置。</li>
+<li><code>&quot;manual&quot;</code>: 瀏覽器不會紀錄捲動距離，每次頁面更換時都會回到頂部。</li>
+</ul>
+<pre><code class="javascript">if (history.scrollRestoration === &quot;manual&quot;) {
+  history.scrollRestoration = &quot;auto&quot;;
+}</code></pre>
+<blockquote>
+<p>雖然 MDN 上說，<code>scrollRestoration</code> 還是一個實驗中的屬性，但其實除了 IE，其他的瀏覽器都已經實踐這個功能了，且預設會是 <code>auto</code>。</p>
+</blockquote>
+<p><br/><br/></p>
+<h4 id="History-back"><a href="#History-back" class="headerlink" title="# History.back"></a># History.back</h4><p><code>back</code> 是 History 的其中一個 method，它相當於瀏覽器介面上的「上一頁」，所以如果你希望你的頁面中也有按鈕可以讓使用者返回上一頁，就可以適用它：</p>
+<pre><code class="javascript">document.querySelector(&quot;button&quot;).addEventListener(&quot;click&quot;, function () {
+  history.back();
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="History-forward"><a href="#History-forward" class="headerlink" title="# History.forward"></a># History.forward</h4><p>沒錯，有上一頁，自然也有下一頁，對應的 method 就是 <code>forward</code>。</p>
+<pre><code class="javascript">document.querySelector(&quot;button&quot;).addEventListener(&quot;click&quot;, function () {
+  history.forward();
+});</code></pre>
+<p><br/><br/></p>
+<h4 id="History-go"><a href="#History-go" class="headerlink" title="# History.go"></a># History.go</h4><p>比起 <code>back</code> 和 <code>forward</code> 來說，<code>go</code> 就比較靈活了，它可以傳入一個數字來代表要往前或往後至相對於目前頁面的哪個歷史位置，例如傳入 <code>-1</code> 就相當於「上一頁」，傳入 <code>1</code> 則相當於「下一頁」。</p>
+<p>要注意的是，如果傳入的數字超出了歷史紀錄的範圍，那將不會有任何效果。</p>
+<pre><code class="javascript">history.go(-1); // 等於 history.back()
+history.go(1); // 等於 history.forward()
+history.go(-3); // 回到三頁之前
+history.go(0); // 瀏覽器會重新整理目前的頁面</code></pre>
+<p><br/><br/></p>
+<h2 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState / replaceState"></a>pushState / replaceState</h2><p>上面介紹的 <code>back</code>、<code>forward</code> 和 <code>go</code>，其實都算是蠻簡單的，而且可能很多人都已經用過了，所以我們今天要重點介紹的其實是 <code>pushState</code> 和 <code>replaceState</code>，它們是 HTML5 中新增加的 API，讓我們可以添加或修改歷史紀錄。</p>
+<br/>
+
+<h4 id="History-pushState"><a href="#History-pushState" class="headerlink" title="# History.pushState"></a># History.pushState</h4><p><code>pushState</code> 可以讓我們在不移動頁面的情況下，添加一筆歷史紀錄，它一共有三個參數</p>
+<ul>
+<li>state: 這個參數可以接受一個物件，該物件裡可以存放任何資料，至於有什麼實際用途，後面會再介紹。</li>
+<li>title: 這是一個被暫時保留的參數，實際上沒有任何用途，且會被瀏覽器忽略。</li>
+<li>URL: 這個參數是用來設定我們添加的這筆歷史紀錄的網址，可傳可不傳。</li>
+</ul>
+<pre><code class="javascript">history.pushState({ name: &quot;max&quot; }, null, &quot;newPage.html&quot;);</code></pre>
+<p>假設我們原本所在頁面的網址是 <code>https://maxleebk.com/index.html</code>，那當我們執行上面這段程式碼時，網址就會被改成 <code>https://maxleebk.com/newPage.html</code>，並且歷史紀錄會被加上一筆，所以如果點擊上一頁，又會回到 <code>/index.html</code>。</p>
+<p>更有趣的是，當網址被改為 <code>/newPage.html</code> 時，瀏覽器不會真的去讀取 <code>newPage.html</code> 這個文件，而是維持在 <code>index.html</code>，直到使用者進行重新整理。</p>
+<p><br/><br/></p>
+<h4 id="History-replaceState"><a href="#History-replaceState" class="headerlink" title="# History.replaceState"></a># History.replaceState</h4><p><code>replaceState</code> 跟 <code>pushState</code> 的參數和效果都一樣，唯一不同的是 <code>replaceState</code> 並不是「添加」歷史紀錄，而是修改最新一筆的歷史紀錄。</p>
+<pre><code class="javascript">history.replaceState({ name: &quot;max&quot; }, null, &quot;newPage.html&quot;);</code></pre>
+<p>以同樣的例子來說，在 <code>https://maxleebk.com/index.html</code> 執行上面這段程式碼，網址一樣會被改成 <code>/newPage.html</code>，但當你按上一頁時，並不會回到 <code>/index.html</code>，而是回到更往前的一次的頁面，因為 <code>/index.html</code> 其實是被 <code>/newPage.html</code> 取代了。</p>
+<p><br/><br/></p>
+<h4 id="Window-popstate-Event"><a href="#Window-popstate-Event" class="headerlink" title="# Window:popstate Event"></a># Window:popstate Event</h4><p>再來要介紹的這個 WindowEvent 與 <code>pushState</code> 跟 <code>replaceState</code> 息息相關，這個事件會在使用者進行歷史紀錄操作（例如上一頁、下一頁）時觸發。</p>
+<p>還記得前面講到 <code>pushState</code> 和 <code>replaceState</code> 的 <code>state</code> 參數嗎？<code>popstate</code> 事件的回呼函示所拿到的 Event 物件會有一個 <code>state</code> 屬性，它存放的就會是當初設定的 <code>state</code> 參數副本。</p>
+<pre><code class="javascript">window.addEventListener(&quot;popstate&quot;, function (event) {
+  console.log(event.state);
+});
+history.pushState({ name: &quot;max&quot; }, null); // 不指定URL，所以網址不會變
+history.pushState({ name: &quot;tom&quot; }, null); // 不指定URL，所以網址不會變
+//此時按下「上一頁」，console 會印出 { name: &quot;max&quot; }
+//接著按下「下一頁」，console 會印出 { name: &quot;tom&quot; }</code></pre>
+<p><br/><br/></p>
+<h4 id="復原-重做小應用"><a href="#復原-重做小應用" class="headerlink" title="# 復原 / 重做小應用"></a># 復原 / 重做小應用</h4><p>那學會 <code>pushState</code>、<code>replaceState</code> 和 <code>popstate</code> 能做什麼呢？其實我們可以利用 <code>state</code> 的設定來把使用者的一些操作記錄在 History 中：</p>
+<pre><code class="html">&lt;div id=&quot;editable&quot; contenteditable=&quot;true&quot;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  window.addEventListener(&quot;popstate&quot;, function (e) {
+    editable.textContent = &quot;&quot;;
+    if (e.state &amp;&amp; e.state.text) {
+      // 每次有歷史紀錄的「移動」時，便將當下紀錄的 state 丟到可編輯元素中
+      editable.textContent = e.state.text;
+    }
+  });
+
+  const editableDiv = document.querySelector(&quot;#editable&quot;);
+  editableDiv.addEventListener(&quot;input&quot;, function () {
+    // 每次輸入時新增一筆歷史紀錄，且會利用 state 儲存當下的輸入內容
+    window.history.pushState({ text: editable.textContent }, null);
+  });
+&lt;/script&gt;</code></pre>
+<p>我們一樣拿 <code>contenteditable</code> 的可編輯元素來示範，每當使用者輸入文字時我們就 <code>pushState</code> 一次，並把元素當中的文字內容紀錄在 <code>state</code> 中。而因為我們有監聽了 <code>popstate</code> 事件，使得使用者每次在進行「上一頁」或「下一頁」時，便能取得每一次輸入的內容。</p>
+<p>這樣的好處就是，使用者可以透過瀏覽器的上一頁或下一頁來模擬「復原」和「重做」功能。</p>
+<p><strong>如果想要玩玩看的話，這邊是我已經寫好的 <a href="https://codepen.io/max-lee/pen/KKqrbBO" target="_blank" rel="noopener">CodePen</a></strong></p>
+<p><br/><br/></p>
+<p>其實大家如果有使用過 VueRouter 的話，它底層就是透過 <code>pushState</code>、<code>replaceState</code>，來實踐 SPA 的網址變換的，所以才說其實很多 Web API 都是非常好用，甚至很多有名的套件都會採用，只是我們通常會忽視這些 Web API 的強大功能。</p>
+<hr>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10273613" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2021/09/25/webApi/webApi-12/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2021/09/25/webApi/webApi-12/" data-id="clcsdp5lo0035neqwgb8pdqcn" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2021/09/24/webApi/webApi-11/" class="article-nav-title">那些被忽略但很好用的 Web API / 簡易文字編輯器</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2021/09/26/webApi/webApi-13/" class="article-nav-title">
+        
+          那些被忽略但很好用的 Web API / SessionStorage
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2021/09/25/webApi/webApi-12/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

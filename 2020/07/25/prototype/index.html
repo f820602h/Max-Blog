@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>面試官最愛考的 JS 原型鏈 | Max&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JavaScript 是一種基於原型，而不是基於類的物件導向語言。由於這個根本的區別，使它在如何創建物件的層級結構，以及如何繼承屬性和它的值上，顯得有點模糊。 – MDN  JavaScript 的原型鏈一直都是大家比較懼怕的一部分，但其實並不是因為它過於艱深，而是因為它的概念很抽象，且初期的前端開發中也不是常常遇到，導致要學習起來會比較困難。 我自己也是花了不少時間在理解，而今天希望可以透過我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面試官最愛考的 JS 原型鏈">
+<meta property="og:url" content="https://maxleebk.com/2020/07/25/prototype/index.html">
+<meta property="og:site_name" content="Max&#39;s Blog">
+<meta property="og:description" content="JavaScript 是一種基於原型，而不是基於類的物件導向語言。由於這個根本的區別，使它在如何創建物件的層級結構，以及如何繼承屬性和它的值上，顯得有點模糊。 – MDN  JavaScript 的原型鏈一直都是大家比較懼怕的一部分，但其實並不是因為它過於艱深，而是因為它的概念很抽象，且初期的前端開發中也不是常常遇到，導致要學習起來會比較困難。 我自己也是花了不少時間在理解，而今天希望可以透過我">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="https://maxleebk.com/2020/07/25/prototype/chain.png">
+<meta property="article:published_time" content="2020-07-25T08:55:00.000Z">
+<meta property="article:modified_time" content="2023-01-12T00:54:38.883Z">
+<meta property="article:author" content="Max Lee">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="原型鏈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://maxleebk.com/2020/07/25/prototype/chain.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Max&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-landing">
+      <a href="/" id="header-avatar"></a>
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">Max&#39;s Blog</a>
+        </h1>
+        
+          <h2 id="subtitle-wrap">
+            <a href="/" id="subtitle">Max Your Mind</a>
+          </h2>
+        
+      </div>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Article</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-prototype" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        <div class="article-header-wrap">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      面試官最愛考的 JS 原型鏈
+    </h1>
+  
+
+          <div>
+            <p class="article-date">
+  Posted by Max on
+  <time datetime="2020-07-25T08:55:00.000Z" itemprop="datePublished">2020-07-25</time>
+</p>
+          </div>
+        </div>
+      </header>
+    
+    
+        <div class="article-excerpt" itemprop="articleBody">
+          <div class="post-cate">
+            
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B%E9%8F%88/" rel="tag">原型鏈</a></li></ul>
+
+            
+          </div>
+          
+        </div>
+      
+        <div class="article-entry" itemprop="articleBody">
+          <blockquote>
+<p>JavaScript 是一種基於原型，而不是基於類的物件導向語言。由於這個根本的區別，使它在如何創建物件的層級結構，以及如何繼承屬性和它的值上，顯得有點模糊。 – <em>MDN</em></p>
+</blockquote>
+<p>JavaScript 的原型鏈一直都是大家比較懼怕的一部分，但其實並不是因為它過於艱深，而是因為它的概念很抽象，且初期的前端開發中也不是常常遇到，導致要學習起來會比較困難。</p>
+<p>我自己也是花了不少時間在理解，而今天希望可以透過我的思考方式來和大家一起認識原型鏈。</p>
+<hr>
+<h2 id="背景觀念"><a href="#背景觀念" class="headerlink" title="背景觀念"></a>背景觀念</h2></br>
+
+<p>在正式開始之前，想先問問大家有沒有聽過 <strong>物件導向(Object-oriented programming；OOP)</strong>？<br>物件導向是一種程式設計模式，在其概念中，軟體是由無數個物件交互合作所組成的，換句話說「物件」就是程式的基本單位。</p>
+<p>可能不是每個人都能理解它的意思，但沒關係，我們今天不會深入這個主題，會提到物件導向是因為 JavaScript 是一個支援物件導向設計的程式語言，而能夠支援的秘密就藏在原型鏈裡面。</p>
+<br/>
+
+<p>雖然說 JavaScript 支援物件導向，但它的設計方式和一些常見的程式語言不太一樣，程式語言可以簡單分為下面兩種：</p>
+<ul>
+<li><strong>基於類別(Class-Based)</strong>：<br>擁有「類別」與「實例」的概念，類別定義了某種物件的屬性，而實例是由類別產生的物件。比如 Java 和 C++。</li>
+<li><strong>基於原型(Prototype-Based)</strong>：<br>沒有類別與實體的概念，它只有物件，新物件在初始化時以原型物件為範本獲得屬性，比如 JavaScript。</li>
+</ul>
+<br/>
+
+<p style="font-size:12px; line-height:1.5;">透過上面的描述我們知道了 JavaScript 並沒有類別與實體，但你可能聽過有人會在 JavaScript 的領域提到過類別，或是看過 ES6 的 Class，這是怎麼回事呢？這件事情其實常常被誤會，或許是因為基於類別的程式語言比較廣為使用，所以大家就以習慣的「類別」和「實例」來稱呼 JavaScript 的建構函式和物件了，而 ES6 的 Class，僅僅只是簡化原型鏈操作的語法糖。</p>
+
+<hr>
+<h2 id="何謂原型"><a href="#何謂原型" class="headerlink" title="何謂原型?"></a>何謂原型?</h2><br/>
+
+<blockquote>
+<p>指某種新技術在投入量產之前所作的模型，未來將以其作為核心並在此基礎上進行製作、改造或重組。</p>
+</blockquote>
+<p>舉個簡單的例子，貨車可以說是依照汽車的原型製造的，它和汽車有共通的屬性，像是有車門、車輪，需要燃料等等。若是用程式碼來體現這個概念呢？</p>
+<p>下面是一個叫做 <code>Car</code> 的物件，若現在將它作為一個「原型」，並請你以此原型製作出 <strong>六輪雙門柴油貨卡</strong>，你會怎麼做呢？</p>
+<pre><code class="javascript">const Car = {
+  wheel: 2,
+  door: 4,
+  fuel: &quot;汽油&quot;
+};</code></pre>
+<p>若你不曾接觸過原型鏈或建構函式，你可能會定義一個 <code>truck</code> 物件，然後調整一下屬性的值。<br>這個方法可以得到正確的結果，但它其實在意義上是錯的，因為你是「重新」製造了一個新的物件，而不是「基於」原型建立的。</p>
+<pre><code class="javascript">const truck = {
+  wheel: 6,
+  door: 2,
+  fuel: &quot;柴油&quot;
+};</code></pre>
+<p>這時候你可能會改成將 <code>truck</code> 賦值為 <code>Car</code> 然後修改屬性的值。<br>但這個方法不只沒有新物件被建立，連 <code>Car</code> 的屬性都會一起被改掉，因為 <code>truck</code> 其實是指向了 <code>Car</code> 的參考。</p>
+<pre><code class="javascript">const Truck = Car;
+Truck.wheel = 6;
+Truck.door = 2;
+Truck.fuel = &quot;柴油&quot;;
+console.log(Car.wheel);  // 6</code></pre>
+<p>可見平時的基礎觀念沒辦法實現「原型」的概念，這會使物件導向沒辦法實踐，因此我們該來認識「建構函式」了。</p>
+<hr>
+<h2 id="建構函式與實例-Constructor-amp-Instance"><a href="#建構函式與實例-Constructor-amp-Instance" class="headerlink" title="建構函式與實例 Constructor &amp; Instance"></a>建構函式與實例 Constructor &amp; Instance</h2><br/>
+
+<p>前面有提到 Java 是基於類別的程式語言，會利用類別來建立實例，而在類別裡會有個很特別的函式叫做「建構函式」，他會進行實例的初始化，用來設定一些實例的基礎屬性。</p>
+<p>我們先來看看 Java 在建立實例時的語法：</p>
+<pre><code class="java">Foo foo = new Foo();
+// 以Foo這個類別來建立一個實例foo</code></pre>
+<p>在 Java、C++ 中都會使用 <code>new</code> 這個關鍵字來產生新的實例，而 JavaScript 就也把 <code>new</code> 拿來用了，不過 JavaScript 並沒有「類別」，<code>new</code> 後面該接什麼呢？ JavaScript 的設計者就想到了，既然類別裡都一定要有建構函式，那乾脆 <code>new</code> 後面就接一個函式吧。</p>
+<pre><code class="javascript">function Car(wheel, door, fuel) {
+  this.wheel = wheel,
+  this.door = door,
+  this.fuel = fuel
+};
+let truck = new Car(6, 2, &quot;柴油&quot;);</code></pre>
+<p>可以看到 <code>Car</code> 其實只是一個普通的函式，但如果你用 <code>new</code> 運算子來呼叫它的話，JavaScript 就會將它視為建構函式。<br>而 <code>truck</code> 就是透過 <code>Car</code> 新建出來的實例，印出來會長這樣：</p>
+<pre><code class="javascript">// console.log(truck)
+Car {
+  door: 2
+  fuel: &quot;柴油&quot;
+  wheel: 6
+  __proto__: Object
+}</code></pre>
+<p>你會發現 <code>Car</code> 確實依據我們傳入的參數把 <code>truck</code> 的相關屬性給設定好了，而且在前面標註了 <code>Car</code>，以此說明 <code>truck</code> 是 <code>Car</code> 的實例。</p>
+<hr>
+<h2 id="原型與繼承-Prototype-amp-Inheritance"><a href="#原型與繼承-Prototype-amp-Inheritance" class="headerlink" title="原型與繼承 Prototype &amp; Inheritance"></a>原型與繼承 Prototype &amp; Inheritance</h2></br>
+
+<p>當然實體與建構函式之間的連結不僅僅只是一個標記那麼簡單，它們各自有著特別的屬性，讓 JavaScript 能夠實踐所謂的「繼承」，而現在我們就要來深入認識這些屬性。</p>
+<h4 id="prototype"><a href="#prototype" class="headerlink" title="# prototype"></a># prototype</h4><p>在 JavaScript 裡，每個函式都擁有 <code>prototype</code> 這個訪問器屬性，而建構函式也是函式，當然就也有 <code>prototype</code>。</p>
+<p style="font-size:12px; line-height:1.5; margin-top: 4px">＊ 訪問器屬性 - 你可以把它當成一種隱藏的內建屬性，所以平常不會注意到。</p>
+
+<pre><code class="javascript">// console.log(Car.prototype)
+{
+  constructor: Car(wheel, door, fuel),
+  __proto__: Object
+}</code></pre>
+<p><code>Car.prototype</code> 我們可以稱之為 <code>Car</code> 的原型，在原型中會有兩個固定的訪問器屬性：</p>
+<ul>
+<li><strong>__proto__：</strong>後面會再介紹，這裡暫時先跳過。</li>
+<li><strong>constructor：</strong>中文翻譯就是建構函式，有趣的是它的值就是原本的 <code>Car</code>，所以會造成一個很特別的現象。</li>
+</ul>
+<pre><code class="javascript">console.log(Car === Car.prototype.constructor); // true
+console.log(Car === Car.prototype.constructor.prototype.constructor); // true
+console.log(Car === Car.prototype.constructor.prototype.constructor.prototype.constructor); // true
+...</code></pre>
+<p></br></br></p>
+<h4 id="proto"><a href="#proto" class="headerlink" title="# __proto__"></a># __proto__</h4><p>在 JavaScript 裡，每個物件型別的變數都有 <code>__proto__</code> 這個訪問器屬性，而實例就是物件，當然就也有 <code>__proto__</code>。</p>
+<p style="font-size:12px; line-height:1.5; margin-top: 4px">＊ 物件型別(Object) - 例如：物件、陣列、函式、日期等。</p>
+
+<pre><code class="javascript">// console.log(truck.__proto__)
+{
+  constructor: Car(wheel, door, fuel),
+  __proto__: Object
+}</code></pre>
+<p>把 <code>truck.__proto__</code> 印出來後就會發現它跟 <code>Car.prototype</code> 長得一模一樣，所以我們可以來做個大膽的假設：</p>
+<blockquote>
+<p>身為一個實例，<code>truck</code> 應該繼承 <code>Car</code> 類別的屬性，但 <code>Car</code> 只是建構函式而不是真的類別，所以 JavaScrip 為函式設計了 <code>prototype</code> 屬性，讓實例被創建時，可以繼承建構函式的原型。</p>
+</blockquote>
+<p>要證明這個假設也很簡單：</p>
+<pre><code class="javascript">console.log(truck.__proto__ === Car.prototype); // true</code></pre>
+<p><code>truck.__proto__</code> 和 <code>Car.prototype</code> 不只是長得一樣，它們指向的就是同一個物件，所以 <code>truck</code> 確實繼承了 <code>Car</code> 的屬性。</p>
+<hr>
+<h2 id="new-運算子"><a href="#new-運算子" class="headerlink" title="new 運算子"></a>new 運算子</h2><br/>
+
+<p>現在知道當我們在創建實例時，主要會有兩件事情發生：</p>
+<ul>
+<li><strong>實例會被初始化，並透過建構函式新增屬性</strong></li>
+<li><strong>實例的 <code>__proto__</code> 會被指向建構函式的 <code>prototype</code></strong></li>
+</ul>
+<p>但這些事情怎麼發生的？而且為什麼在 <code>Car</code> 裡面使用 <code>this</code> 會是幫實例加上屬性呢？<br>正常來說函式中的 <code>this</code> 指向的應該會是 <code>window</code>，所以要是你直接執行 <code>Car</code> 的話，應該是 <code>window</code> 會被設定屬性才對：</p>
+<pre><code class="javascript">Car(1, 1, &quot;空氣&quot;);
+console.log(window.door); // 1</code></pre>
+<p>其實一切的關鍵都在於 <code>new</code>，我們可以用函式來模擬 <code>new</code> 做的事情：</p>
+<pre><code class="javascript">function newObject(Constructor, arguments) {
+  var o = new Object();  // 1. 建立新物件
+  o.__proto__ = Constructor.prototype;  // 2. 重新指向原型
+  Constructor.apply(o, arguments);  // 3. 初始化物件
+  return o; // 4. 回傳新物件
+};
+let truck = newObject(Car, [6, 2, &quot;柴油&quot;]);</code></pre>
+</br>
+
+<ol>
+<li><strong>建立新物件：</strong> 建立一個新物件，起初這個物件的 <code>__proto__</code> 指向的會是 <code>Object.prototype</code></li>
+<li><strong>重新指向原型：</strong> 重新將 <code>__proto__</code> 指向建構函式的原型，使物件成為建構函式的實例</li>
+<li><strong>初始化物件：</strong> 執行建構函式，但利用 <code>apply</code> 將 <code>this</code> 指定給實例，這樣才能為它新增屬性</li>
+<li><strong>回傳新物件：</strong> 最後回傳這個處理完成的實例</li>
+</ol>
+<p><code>new</code> 背後做的事情不是很複雜但卻很重要，它將實例以及原型之間建立了連結。</p>
+<hr>
+<h2 id="原型鏈-prototype-chain"><a href="#原型鏈-prototype-chain" class="headerlink" title="原型鏈 prototype chain"></a>原型鏈 prototype chain</h2></br>
+
+<p><code>new</code> 負責將實例的 <code>__proto__</code> 指向建構函式的原型，但 <code>Car.prototype</code> 中卻又看到另一個 <code>__proto__</code>，它會指向誰呢？</p>
+<pre><code class="javascript">// console.log(Car.prototype.__proto__)
+{
+  constructor: Object(),
+  // ...其餘省略
+}</code></pre>
+<p>我們把 <code>Car.prototype.__proto__</code> 印出來後發現裡面一樣有 <code>constructor</code>，指向的是 <code>Object</code> 這個建構函式。<br>而這個線索告訴了我們，原來 <code>Car.prototype.__proto__</code> 指向的是 <code>Object</code> 的原型，驗證了一下也確實如此：</p>
+<pre><code class="javascript">console.log(Car.prototype.__proto__ === Object.prototype); // true</code></pre>
+<p>更重要的是物件之間的繼承關係，原來是一個接著一個不斷延續的，看起來就像條鎖鏈一樣。</p>
+<pre><code class="javascript">truck.__proto__ // Car.prototype
+truck.__proto__.__proto__ // Object.prototype
+truck.__proto__.__proto__.__proto__  // null</code></pre>
+<p>不過原型鏈也是有終點的，<code>Object.prototype.__proto__</code> 指向的是 <code>null</code>，代表 <code>Object</code> 是原型鏈的最頂端，這也是為什麼會說 <strong>JavaScript 中一切都是物件</strong>的原因了。用圖像表示應該可以更容易理解：<br><img src="chain.png" alt=""></p>
+<hr>
+<h2 id="原理的實際體現"><a href="#原理的實際體現" class="headerlink" title="原理的實際體現"></a>原理的實際體現</h2></br>
+
+<p>到目前為止似乎還沒有感受到 <code>prototype</code> 帶來什麼特別的益處，因為我們還沒有開始利用它，這也是為什麼 <code>Car.prototype</code> 裡面除了訪問器屬性外什麼都沒有的原因。</p>
+<pre><code class="javascript">// console.log(Car.prototype)
+{
+  constructor: Car(wheel, door, fuel),
+  __proto__: Object
+}</code></pre>
+</br>
+
+<p>假設要為 <code>Car</code> 的實例加上一個 <code>drive</code> 的函式，我們已經知道在建構函式裡多寫行程式碼就可以辦到：</p>
+<pre><code class="javascript">function Car(wheel, door, fuel) {
+  this.wheel = wheel,
+  this.door = door,
+  this.fuel = fuel
+  this.drive = function() {
+    console.log(`消耗${this.fuel}前進`)
+  }
+};
+let truck = new Car(6, 2, &quot;柴油&quot;);
+let gogoro = new Car(2, 0, &quot;電力&quot;);
+
+truck.drive(); // 消耗柴油前進
+gogoro.drive(); // 消耗電力前進</code></pre>
+<p>不過 <code>drive</code> 其實在每個實例中都是做同樣的事情，應該是可以抽出來共享的，如果用上面這種方式寫的話，反而會造成記憶體空間的浪費：</p>
+<pre><code class="javascript">console.log(truck.drive === gogoro.drive); // false</code></pre>
+<p>上面的等式不成立表示兩個實例中的 <code>drive</code> 雖然長得一樣，卻是兩個不同的函式，為了解決這個缺點可以這樣做：</p>
+<pre><code class="javascript">function Car(wheel, door, fuel) {
+  this.wheel = wheel,
+  this.door = door,
+  this.fuel = fuel
+};
+
+Car.prototype.drive = function() {
+  console.log(`消耗${this.fuel}前進`);
+};
+
+let truck = new Car(6, 2, &quot;柴油&quot;);
+let gogoro = new Car(2, 0, &quot;電力&quot;);
+
+truck.drive(); // 消耗柴油前進
+gogoro.drive(); // 消耗電力前進
+
+console.log(truck.drive === gogoro.drive); // true</code></pre>
+<p>我們把 <code>drive</code> 抽出來放進 <code>Car</code> 的原型裡，這樣就算是不同的實體，操作的還是同一個函式，因為它們呼叫的都是 <code>Car.prototype.drive</code>。</p>
+<p>不過你可能會驚訝 <code>drive</code> 其實不是 <code>truck</code> 的屬性之一，而你能夠呼叫它是因為 JavaScript 如果在物件中找不到某個屬性時就會去 <code>__proto__</code> 裡面找，一路找到 <code>Object.prototype</code>。</p>
+<pre><code class="javascript">truck.hasOwnProperty(&quot;drive&quot;); // true
+console.log(truck.drive === truck.__proto__.drive); // true</code></pre>
+<p>而這也是為什麼當你在 <code>let today = new Date()</code> 後可以使用 <code>getMonth()</code> 或 <code>getDate()</code> 等方法的原因，這些 methods 實際上是在 <code>Date.prototype</code> 裡，甚至下面這些你平常在寫語法背後也是同樣的道理：</p>
+<pre><code class="javascript">let obj = {}; // new Object()
+let arr = []; // new Array()
+let fn = function(){}; // new Function()</code></pre>
+<hr>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2></br>
+
+<p>過了今天會發現其實平常我們就已經在「原型鏈」的架構下撰寫 JavaScript 了，或許目前還用不到 JavaScript 的類別(當然不是真的類別)，不過你現在已經知道箇中玄機了，所以假使未來有使用的需要或甚至在面試時被面試官問到，相信你已經可以應付得宜了。</p>
+<p>參考資料：</p>
+<ul>
+<li><a href="https://blog.techbridge.cc/2017/04/22/javascript-prototype/" target="_blank" rel="noopener">該來理解 JavaScript 的原型鏈了 - huli</a></li>
+<li><a href="https://cythilya.github.io/2018/10/26/prototype/" target="_blank" rel="noopener">你懂 JavaScript 嗎？#19 原型（Prototype）- Summer</a></li>
+</ul>
+
+        </div>
+      
+    
+  </div>
+
+  <footer class="article-footer">
+    <!-- 
+      <a href="https://maxleebk.com/2020/07/25/prototype/#disqus_thread" class="article-comment-link">Comments</a>
+     -->
+    <div>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B%E9%8F%88/" rel="tag">原型鏈</a></li></ul>
+
+    </div>
+    <a data-url="https://maxleebk.com/2020/07/25/prototype/" data-id="clcsdp5fp0008neqw4fayeqna" class="article-share-link">分享</a>
+  </footer>
+  
+    
+<nav id="article-nav">
+  
+    <div id="article-nav-older" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">前一篇文章</strong></br>
+      <a href="/2020/07/07/axios-cancelToken/" class="article-nav-title">透過 CancelToken 解析 Axios 原始碼</a>
+      
+    </div>
+  
+  
+    <div id="article-nav-newer" class="article-nav-link-wrap">
+      
+      <strong class="article-nav-caption">下一篇文章</strong></br>
+      <a href="/2020/09/15/highchart/highcharts-1/" class="article-nav-title">
+        
+          資視就是力量 - Highcharts / 資料視覺化
+        
+      </a>
+      
+    </div>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Max Lee ｜ Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Article</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'f820602h';
+  
+  var disqus_url = 'https://maxleebk.com/2020/07/25/prototype/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<!-- Highlight.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/vs2015.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
