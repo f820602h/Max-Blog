@@ -765,12 +765,11 @@ hexo-cli@^4.3.0:
     resolve "^1.11.0"
     tildify "^2.0.0"
 
-hexo-filter-emoji@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/hexo-filter-emoji/-/hexo-filter-emoji-2.2.1.tgz"
+hexo-filter-emoji@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/hexo-filter-emoji/-/hexo-filter-emoji-2.2.2.tgz#08920149b76c764ebe3226d3ef7c9fe18f254008"
   dependencies:
-    lodash "4.17.15"
-    random-ua "0.0.6"
+    lodash "4.17.21"
 
 hexo-front-matter@^3.0.0:
   version "3.0.0"
@@ -1119,11 +1118,7 @@ lodash.isfinite@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npmjs.org/lodash.isfinite/-/lodash.isfinite-3.3.2.tgz"
 
-lodash@4.17.15, lodash@^4.17.10:
-  version "4.17.15"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz"
-
-lodash@^4.17.14:
+lodash@4.17.21, lodash@^4.17.10, lodash@^4.17.14:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
 
@@ -1373,10 +1368,6 @@ punycode.js@^2.1.0:
 q@^1.0.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/q/-/q-1.5.1.tgz"
-
-random-ua@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/random-ua/-/random-ua-0.0.6.tgz"
 
 range-parser@~1.2.0, range-parser@~1.2.1:
   version "1.2.1"
