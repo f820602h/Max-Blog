@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2020/10/13/highchart/highcharts-29/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="昨天已經將記帳本打造出一個基本雛形了，但似乎功能並不是很多，純粹就只是看到消費的金額和走向而已，所以我們今天來利用圖表的「事件屬性」搭配 Vue 的 emit 來為記帳本新增一個查看明細的功能吧。  記帳本實作就像下圖所示，這次要做到的功能是希望能點擊「數據列」時，在下方顯示當天的消費明細以及總金額，讓我們的記帳本有更完整的功能。 而開發的邏輯是透過點擊拿到數據點的日期時間戳，然後利用父子層的溝通">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/10/13/highchart/highcharts-29/emit.gif">
 <meta property="article:published_time" content="2020-10-13T01:35:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.859Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.859Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -118,21 +114,21 @@
 <br/>
 
 <h4 id="1-設定事件屬性"><a href="#1-設定事件屬性" class="headerlink" title="1.設定事件屬性"></a>1.設定事件屬性</h4><p>我們在圖表元件 <code>LedgerChart.vue</code> 中新增一個 Method，並將它作為圖表 <code>click</code> 事件的回呼函式，而由於回呼函式可以接到 Highcharts 的 <code>event</code> 物件，我們就可以拿到時間戳，並利用 <code>$emit</code> 來傳至 <code>App.vue</code>。</p>
-<pre><code class="javascript">methods: {
-  selectDate() {
+<pre><code class="javascript">methods: &#123;
+  selectDate() &#123;
     this.$emit(&quot;selectDate&quot;, event.point.category)
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <pre><code class="javascript">// computed
-options() {
-  let options = Object.assign(this.chartOptions, {});
+options() &#123;
+  let options = Object.assign(this.chartOptions, &#123;&#125;);
   options.series = this.seriesData;
   options.xAxis.categories = this.xAxisCategories;
-  options.plotOptions.series.events = {
+  options.plotOptions.series.events = &#123;
     click: this.selectDate
-  };
+  &#125;;
   return options;
-}</code></pre>
+&#125;</code></pre>
 <p><br/><br/></p>
 <h4 id="2-父層監聽自定義事件"><a href="#2-父層監聽自定義事件" class="headerlink" title="2.父層監聽自定義事件"></a>2.父層監聽自定義事件</h4><p>剛剛在 <code>LedgerChart.vue</code> 有 <code>emit</code> 了自定義事件，現在要在父層來監聽接收這事件，這樣每次點擊數據列就都會更新 <code>date</code> 了。</p>
 <pre><code class="vue">&lt;template&gt;
@@ -146,23 +142,23 @@ options() {
 import LedgerForm from &quot;./components/LedgerForm&quot;
 import LedgerChart from &quot;./components/LedgerChart&quot;
 
-export default {
+export default &#123;
   name: &quot;App&quot;,
-  components: {
+  components: &#123;
     LedgerForm,
     LedgerChart
-  },
-  data() {
-    return {
+  &#125;,
+  data() &#123;
+    return &#123;
       date: 0
-    }
-  },
-  methods: {
-    selectDate(val) {
+    &#125;
+  &#125;,
+  methods: &#123;
+    selectDate(val) &#123;
       this.date = val;
-    }
-  }
-}
+    &#125;
+  &#125;
+&#125;
 &lt;/script&gt;</code></pre>
 <p><br/><br/></p>
 <h4 id="3-清單元件-LedgerList-vue"><a href="#3-清單元件-LedgerList-vue" class="headerlink" title="3.清單元件 - LedgerList.vue"></a>3.清單元件 - LedgerList.vue</h4><p>再來就是下方要顯示的明細清單了，檔案內容如下，主要是透過接收一個 <code>date</code> 的 Prop，每當它更新時就會觸發 <code>watch</code>，然後利用 Json-Server 的 Filter 功能來抓出「當天」的資料，如此就能將消費明細顯示在畫面上了。</p>
@@ -172,35 +168,35 @@ export default {
 <pre><code class="vue">&lt;template&gt;
   &lt;div v-if=&quot;date&quot;&gt;
     &lt;div class=&quot;ledger-item&quot; v-for=&quot;item in fetchData&quot; :key=&quot;item.id&quot;&gt;
-      &lt;div&gt;{{ item.category }}&lt;/div&gt;
-      &lt;div&gt;{{ item.description }}&lt;/div&gt;
-      &lt;div&gt;NT$ {{ item.amount }}&lt;/div&gt;
+      &lt;div&gt;&#123;&#123; item.category &#125;&#125;&lt;/div&gt;
+      &lt;div&gt;&#123;&#123; item.description &#125;&#125;&lt;/div&gt;
+      &lt;div&gt;NT$ &#123;&#123; item.amount &#125;&#125;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
-  export default {
-    props: {
-      date: {
+  export default &#123;
+    props: &#123;
+      date: &#123;
         type: Number,
         default: 0
-      }
-    },
-    data() {
-      return {
+      &#125;
+    &#125;,
+    data() &#123;
+      return &#123;
         fetchData: []
-      }
-    },
-    watch: {
-      date(val) {
-        this.axios.get(`http://localhost:3000/accounts?date=${val}`)
-          .then((response) =&gt; {
+      &#125;
+    &#125;,
+    watch: &#123;
+      date(val) &#123;
+        this.axios.get(`http://localhost:3000/accounts?date=$&#123;val&#125;`)
+          .then((response) =&gt; &#123;
             this.fetchData = response.data;
-          });
-      }
-    }
-  }
+          &#125;);
+      &#125;
+    &#125;
+  &#125;
 &lt;/script&gt;</code></pre>
 <p><br/><br/></p>
 <h4 id="4-掛載元件並傳入-Prop"><a href="#4-掛載元件並傳入-Prop" class="headerlink" title="4.掛載元件並傳入 Prop"></a>4.掛載元件並傳入 Prop</h4><p>清單元件完成後就將他掛到 <code>App.vue</code> 上了，並且記得要把剛剛的 <code>date</code> 傳進清單元件中。如此一來我們就成功增加了查看明細的新功能囉！</p>
@@ -214,7 +210,7 @@ export default {
 <p><br/><br/></p>
 <p>花了四天的時間我們從熟悉 Highcharts-Vue 的使用到最後開發出一個小作品，相信大家應該有感受到 Highcharts 與前端框架的配合是多麼的方便好用。不過隨著記帳本的完成，這個系列文章也即將告一段落了，明天最後一篇文章則會做個系列的總結，並講講我的參賽心得。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10252727" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10252727">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -230,7 +226,7 @@ export default {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/10/13/highchart/highcharts-29/" data-id="clcsdp5le002gneqw5kuybsx4" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/10/13/highchart/highcharts-29/" data-id="clo2cteub001ijsnl4pvp8h9e" class="article-share-link">分享</a>
   </footer>
   
     
@@ -263,7 +259,7 @@ export default {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

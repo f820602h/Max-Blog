@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/06/webApi/webApi-23/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="學以致用是最快樂的事情  昨天我們認識了 IntersectionObserver，知道它可以偵測到元素進入畫面的時機，而這個特性非常適合用來製作 Animation On Scroll 的捲動動畫效果，像是 AOS 就是一個很經典的套件，雖然 AOS 其實不是用 IntersectionObserver 實踐的，但我們可以嘗試做出類似效果的工具。  設計概念  # 確立需求與功能 既然是工具，">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/10/06/webApi/webApi-23/result.gif">
 <meta property="article:published_time" content="2021-10-06T14:35:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.963Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.979Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -112,7 +108,7 @@
           <blockquote>
 <p>學以致用是最快樂的事情</p>
 </blockquote>
-<p>昨天我們認識了 IntersectionObserver，知道它可以偵測到元素進入畫面的時機，而這個特性非常適合用來製作 Animation On Scroll 的捲動動畫效果，像是 <a href="https://michalsnik.github.io/aos/" target="_blank" rel="noopener">AOS</a> 就是一個很經典的套件，雖然 AOS 其實不是用 IntersectionObserver 實踐的，但我們可以嘗試做出類似效果的工具。</p>
+<p>昨天我們認識了 IntersectionObserver，知道它可以偵測到元素進入畫面的時機，而這個特性非常適合用來製作 Animation On Scroll 的捲動動畫效果，像是 <a target="_blank" rel="noopener" href="https://michalsnik.github.io/aos/">AOS</a> 就是一個很經典的套件，雖然 AOS 其實不是用 IntersectionObserver 實踐的，但我們可以嘗試做出類似效果的工具。</p>
 <hr>
 <h2 id="設計概念"><a href="#設計概念" class="headerlink" title="設計概念"></a>設計概念</h2><br/>
 
@@ -134,126 +130,126 @@
 
 <h4 id="元素的樣式變換機制"><a href="#元素的樣式變換機制" class="headerlink" title="# 元素的樣式變換機制"></a># 元素的樣式變換機制</h4><p>整理完需求及機制後，就來開始動手吧，首先是為了讓元素可以透過 <code>data-*</code> 屬性的變化來轉換樣式，所以為想要有動畫效果的元素加上 <code>data-appear=&quot;hide&quot;</code>，表示元素還沒進入畫面，未來只要把 <code>data-appear</code> 改成 <code>show</code> ，元素就會有樣式的變化。</p>
 <pre><code class="html">&lt;div class=&quot;box&quot; data-appear=&quot;hide&quot;&gt;&lt;/div&gt;</code></pre>
-<pre><code class="css">.box {
+<pre><code class="css">.box &#123;
   width: 500px;
   height: 500px;
   transition: 0.3s;
-}
-.box[data-appear=&quot;hide&quot;] {
+&#125;
+.box[data-appear=&quot;hide&quot;] &#123;
   background: white;
-}
-.box[data-appear=&quot;show&quot;] {
+&#125;
+.box[data-appear=&quot;show&quot;] &#123;
   background: pink;
-}</code></pre>
+&#125;</code></pre>
 <p><br/><br/></p>
 <h4 id="自動建立實體與註冊元素"><a href="#自動建立實體與註冊元素" class="headerlink" title="# 自動建立實體與註冊元素"></a># 自動建立實體與註冊元素</h4><p>再來程式部分，先宣告一個叫做 <code>Appear</code> 建構函式，其中會有一個函式 <code>init</code>，要用來創建 IntersectionObserver 實體以及註冊要觀察的元素，未來只要執行 <code>appear.init()</code> 一行就搞定了，而且因為已經確定只要有 <code>data-appear</code> 屬性的元素就是要觀察的對象，所以直接全部抓出來註冊即可。</p>
-<pre><code class="javascript">const Appear = function () {
-  this.init = function (callback, options) {
+<pre><code class="javascript">const Appear = function () &#123;
+  this.init = function (callback, options) &#123;
     this.observer = new IntersectionObserver(callback, options);
 
     const container = options.root || document;
     const targetList = container.querySelectorAll(&quot;[data-appear]&quot;);
-    targetList.forEach((el) =&gt; {
+    targetList.forEach((el) =&gt; &#123;
       this.observer.observe(el);
-    });
-  };
-};
+    &#125;);
+  &#125;;
+&#125;;
 const appear = new Appear();</code></pre>
 <p><br/><br/></p>
 <h4 id="Callback-包裝與元素屬性切換"><a href="#Callback-包裝與元素屬性切換" class="headerlink" title="# Callback 包裝與元素屬性切換"></a># Callback 包裝與元素屬性切換</h4><p>前面有說，工具需要自動改變元素的 <code>data-appear</code> 屬性，而不是由我們手動寫在 Callback 中，所以看來傳入 <code>init</code> 的 <code>callback</code> 參數不能直接放到 IntersectionObserver 中，需要另外在包裝一次。</p>
 <p>包裝後的 Callback 就可以在元素進出畫面時進行 <code>data-appear</code> 屬性的調整了，另外我們也將 <code>entry.target</code> 和改變後的狀態傳進 <code>init</code> 的 <code>callback</code> 中，讓使用工具的人可以取得額外資訊。</p>
-<pre><code class="javascript">const Appear = function () {
-  this.init = function (callback, options) {
+<pre><code class="javascript">const Appear = function () &#123;
+  this.init = function (callback, options) &#123;
     // IntersectionObserver 要觸發的 Callback Function
-    const obCallback = function (entries) {
-      entries.forEach((entry) =&gt; {
+    const obCallback = function (entries) &#123;
+      entries.forEach((entry) =&gt; &#123;
         // 取得元素進入當下的狀態
         let state = entry.target.getAttribute(&quot;data-appear&quot;);
 
-        if (state === &quot;hide&quot; &amp;&amp; entry.isIntersecting) {
+        if (state === &quot;hide&quot; &amp;&amp; entry.isIntersecting) &#123;
           // 從 hide 的狀態下進到畫面時...
           state = &quot;show&quot;;
           entry.target.setAttribute(&quot;data-appear&quot;, state);
           callback(entry.target, state);
-        } else if (state === &quot;show&quot; &amp;&amp; !entry.isIntersecting) {
+        &#125; else if (state === &quot;show&quot; &amp;&amp; !entry.isIntersecting) &#123;
           // 從 show 的狀態下離開畫面時...
           state = &quot;hide&quot;;
           entry.target.setAttribute(&quot;data-appear&quot;, state);
           callback(entry.target, state);
-        }
-      });
-    };
+        &#125;
+      &#125;);
+    &#125;;
 
     this.observer = new IntersectionObserver(obCallback, options);
 
     const container = options.root || document;
     const targetList = container.querySelectorAll(&quot;[data-appear]&quot;);
-    targetList.forEach((el) =&gt; {
+    targetList.forEach((el) =&gt; &#123;
       this.observer.observe(el);
-    });
-  };
-};
+    &#125;);
+  &#125;;
+&#125;;
 const appear = new Appear();</code></pre>
 <p><br/><br/></p>
 <h4 id="自定義的函式參數"><a href="#自定義的函式參數" class="headerlink" title="# 自定義的函式參數"></a># 自定義的函式參數</h4><p>再來其實我覺得原本 IntersectionObserver 的 <code>options</code> 參數設定有點不是很容易懂，所以我們自己設計一個新的物件做為 <code>init</code> 的參數設定，以下是它的屬性名稱及預設值，順便也把 <code>callback</code> 一起放進去了：</p>
-<pre><code class="javascript">const defaultOptions = {
+<pre><code class="javascript">const defaultOptions = &#123;
   container: null,
   offsetTop: 0,
   offsetRight: 0,
   offsetBottom: 0,
   offsetLeft: 0,
   threshold: 0,
-  callback: function () {},
-};</code></pre>
+  callback: function () &#123;&#125;,
+&#125;;</code></pre>
 <p>這樣在使用工具的人只要傳一個參數到 <code>init</code> 中就好，而且屬性名稱也比較好了解，傳進去後只要在 <code>init</code> 內部再轉換成原本 IntersectionObserver 接受的格式即可。</p>
-<pre><code class="javascript">const Appear = function () {
-  this.init = function (userOptions) {
-    const options = { ...defaultOptions, ...userOptions };
-    const obOptions = {
+<pre><code class="javascript">const Appear = function () &#123;
+  this.init = function (userOptions) &#123;
+    const options = &#123; ...defaultOptions, ...userOptions &#125;;
+    const obOptions = &#123;
       root: options.container,
       rootMargin: [
-        `${options.offsetTop}px`,
-        `${options.offsetRight}px`,
-        `${options.offsetBottom}px`,
-        `${options.offsetLeft}px`,
+        `$&#123;options.offsetTop&#125;px`,
+        `$&#123;options.offsetRight&#125;px`,
+        `$&#123;options.offsetBottom&#125;px`,
+        `$&#123;options.offsetLeft&#125;px`,
       ].join(&quot; &quot;),
       threshold: options.threshold,
-    };
+    &#125;;
     //...其他省略
     this.observer = new IntersectionObserver(obCallback, obOptions);
-  };
-};
+  &#125;;
+&#125;;
 const appear = new Appear();</code></pre>
 <p><br/><br/></p>
 <h4 id="防呆機制與註銷"><a href="#防呆機制與註銷" class="headerlink" title="# 防呆機制與註銷"></a># 防呆機制與註銷</h4><p>最後為了避免有人重複執行 <code>init</code>，我們在最前面進行判斷來阻擋，額外也可以再做一個關閉 IntersectionObserver 的功能：</p>
-<pre><code class="javascript">const Appear = function () {
-  this.init = function (userOptions) {
+<pre><code class="javascript">const Appear = function () &#123;
+  this.init = function (userOptions) &#123;
     if (this.observer) return;
     //...其他省略
-  };
+  &#125;;
   // 註銷所有觀察元素並釋放 observer
-  this.destroy = function () {
+  this.destroy = function () &#123;
     if (!this.observer) return;
     this.observer.disconnect();
     this.observer = null;
-  };
-};
+  &#125;;
+&#125;;
 const appear = new Appear();</code></pre>
 <p><br/><br/></p>
 <h2 id="實際使用"><a href="#實際使用" class="headerlink" title="實際使用"></a>實際使用</h2><p>以上的 JS 程式碼我們可以包成一支 <code>appear.js</code> 檔案，只要未來有專案需要使用時直接引入並且呼叫 <code>init</code> 就可以了：</p>
 <pre><code class="html">&lt;style&gt;
-  .box {
+  .box &#123;
     width: 500px;
     height: 500px;
     margin: 30px auto;
     transition: 0.3s;
-  }
-  .box[data-appear=&quot;hide&quot;] {
+  &#125;
+  .box[data-appear=&quot;hide&quot;] &#123;
     background: white;
-  }
-  .box[data-appear=&quot;show&quot;] {
+  &#125;
+  .box[data-appear=&quot;show&quot;] &#123;
     background: pink;
-  }
+  &#125;
 &lt;/style&gt;
 
 &lt;div class=&quot;box&quot; data-appear=&quot;hide&quot;&gt;&lt;/div&gt;
@@ -262,19 +258,19 @@ const appear = new Appear();</code></pre>
 
 &lt;script src=&quot;appear.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
-  appear.init({
+  appear.init(&#123;
     threshold: 0.5,
-    callback: function (target, state) {
+    callback: function (target, state) &#123;
       console.log(target, state);
-    },
-  });
+    &#125;,
+  &#125;);
 &lt;/script&gt;</code></pre>
 <img src="result.gif" style="max-width: 800px; margin: 24px auto;" />
 
 <p><br/><br/></p>
 <p>這樣的工具是不是非常實用呢？而且能夠自己做出一個以後也能夠不斷使用的小套件真的是非常有成就感，有興趣的小夥伴們也可以發揮自己的創新，把這個小工具不斷的擴充，增加新功能喔。完整原始碼，我就放在 CodePen，文章中如果有不清楚的，可以再去看看。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10279479" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10279479">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -290,7 +286,7 @@ const appear = new Appear();</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/06/webApi/webApi-23/" data-id="clcsdp5ml003zneqw7pjw8jj0" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/06/webApi/webApi-23/" data-id="clo2cteuz002wjsnlao7jf7qt" class="article-share-link">分享</a>
   </footer>
   
     
@@ -323,7 +319,7 @@ const appear = new Appear();</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

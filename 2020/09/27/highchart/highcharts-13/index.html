@@ -13,13 +13,13 @@
 <meta property="og:url" content="https://maxleebk.com/2020/09/27/highchart/highcharts-13/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;poyZgWx避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  我猜可能有些人在前面幾天一直很在意到底要怎麼更換「數據列／點」的顏色吧，還是其實已經有人等不及，自己偷偷跑去翻出調整顏色的屬性了。 Highcharts 當然是可以調整顏色的，但不是我不想跟大家介紹，而是能夠設定顏色的方">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/09/27/highchart/highcharts-13/color.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/27/highchart/highcharts-13/color1.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/27/highchart/highcharts-13/color2.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/27/highchart/highcharts-13/color3.png">
 <meta property="article:published_time" content="2020-09-27T03:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.719Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.687Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -36,7 +36,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -50,10 +50,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -113,7 +109,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/poyZgWx" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/poyZgWx</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/poyZgWx">https://codepen.io/max-lee/pen/poyZgWx</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
 </blockquote>
 <p>我猜可能有些人在前面幾天一直很在意到底要怎麼更換「數據列／點」的顏色吧，還是其實已經有人等不及，自己偷偷跑去翻出調整顏色的屬性了。</p>
 <p>Highcharts 當然是可以調整顏色的，但不是我不想跟大家介紹，而是能夠設定顏色的方法很多，而且又有權重的問題，所以才會想接在「繪圖區設定」後面介紹顏色的部分。</p>
@@ -121,27 +117,27 @@
 <h2 id="數據列顏色"><a href="#數據列顏色" class="headerlink" title="數據列顏色"></a>數據列顏色</h2><br/>
 
 <p>昨天有講到繪圖區、數據列、數據點的權重大小，而調整顏色的屬性除了在這些區塊裡都可以調整外，顏色本身也有獨立的屬性可以設定。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   colors: [&quot;red&quot;, &quot;orange&quot;],    // 所有數據列依序採用陣列中顏色 
-  plotOptions: {
-    series:{ 
+  plotOptions: &#123;
+    series:&#123; 
       color: &quot;green&quot;,           // 所有數據列都採用這個顏色
       colorByPoint: true,       // 所有數據列是否都用colors設定數據點顏色
       colors: [&quot;cyan&quot;, &quot;navy&quot;], // 所有數據列的數據點依序採用陣列中顏色
-    },
-    line: { 
+    &#125;,
+    line: &#123; 
       color: &quot;blue&quot;,            // 指定類型數據列都採用這個顏色
       colorByPoint: true,       // 指定類型數據列是否都用colors設定數據點顏色
       colors: [&quot;lime&quot;, &quot;plum&quot;], // 指定類型數據列的數據點依序採用陣列中顏色
-     }
-  },
-  series: [{
+     &#125;
+  &#125;,
+  series: [&#123;
     color: &quot;purple&quot;,            // 這組數據列採用這個顏色
     colorByPoint: true,         // 是否要用colors設定數據點顏色
     colors: [&quot;pink&quot;, &quot;gray&quot;],   // 這組數據列裡的數據點依序採用陣列中顏色
-    data: [{ color: &quot;black&quot; }]  // 這個數據點採用這個顏色
-  }]
-});</code></pre>
+    data: [&#123; color: &quot;black&quot; &#125;]  // 這個數據點採用這個顏色
+  &#125;]
+&#125;);</code></pre>
 <p>是不是看得頭都暈了？這樣應該知道為何我要等的現在才講顏色了吧？那下面就從權重最低到最高一個個詳細介紹。</p>
 <br/>
 
@@ -161,18 +157,18 @@
 
 <h4 id="plotOptions-type-color"><a href="#plotOptions-type-color" class="headerlink" title="# plotOptions.[type].color"></a># plotOptions.[type].color</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
 <p>由於昨天解釋過繪圖區的權重關係，所以這個顏色屬性應該也不難懂，就是把 <strong>「所有指定類型的數據列」</strong> 改成指定的顏色，須要特別注意的是，假如你設定的圖表種類未涵蓋所有圖表的話，那其他圖表會「從頭」開始設定 <code>options.colors</code> 中的顏色，並且跳過已經有指定顏色的圖表。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   colors: [&quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;], // 所有數據列依序採用陣列中顏色 
-  plotOptions: {
-    column: { color: &quot;red&quot; }
-  },
+  plotOptions: &#123;
+    column: &#123; color: &quot;red&quot; &#125;
+  &#125;,
   series: [
-    { type: &quot;column&quot;, data: [2, 2, 2] }, // 紅色
-    { type: &quot;line&quot;,   data: [6, 6, 6] }, // 綠色
-    { type: &quot;column&quot;, data: [4, 4, 4] }, // 紅色
-    { type: &quot;line&quot;,   data: [2, 2, 2] }  // 藍色
+    &#123; type: &quot;column&quot;, data: [2, 2, 2] &#125;, // 紅色
+    &#123; type: &quot;line&quot;,   data: [6, 6, 6] &#125;, // 綠色
+    &#123; type: &quot;column&quot;, data: [4, 4, 4] &#125;, // 紅色
+    &#123; type: &quot;line&quot;,   data: [2, 2, 2] &#125;  // 藍色
   ]
-});</code></pre>
+&#125;);</code></pre>
 <br/>
 <br/>
 
@@ -188,66 +184,66 @@
 
 <h4 id="plotOptions-series-colors"><a href="#plotOptions-series-colors" class="headerlink" title="# plotOptions.series.colors"></a># plotOptions.series.colors</h4><p><code>型別: Array[String]</code> <code>預設: undefined</code></p>
 <p>假如你的數據列沒有開啟 <code>colorByPoint</code>，那這個顏色屬性基本上就沒以任何作用，但如果開啟了，這個屬性就會覆蓋 <code>options.colors</code>，並用你提供的顏色陣列來依序設定<strong>「所有數據列的數據點顏色」</strong>。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   colors: [&quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;],
-  plotOptions: {
-    series: {
+  plotOptions: &#123;
+    series: &#123;
       colorByPoint: true,
       colors: [&quot;pink&quot;, &quot;red&quot;, &quot;orange&quot;]
-    }
-  },
-  series: [{ 
+    &#125;
+  &#125;,
+  series: [&#123; 
     // 粉紅色, 紅色, 橘色, 粉紅色, 紅色
     data: [5, 3, 7, 4, 10] 
-  }] 
-});</code></pre>
+  &#125;] 
+&#125;);</code></pre>
 <br/>
 <br/>
 
 <h4 id="plotOptions-type-colorByPoint-plotOptions-type-colors"><a href="#plotOptions-type-colorByPoint-plotOptions-type-colors" class="headerlink" title="# plotOptions.[type].colorByPoint / plotOptions.[type].colors"></a># plotOptions.[type].colorByPoint / plotOptions.[type].colors</h4><p>這組應該就不用多作介紹了吧，作用和前面一樣，只不過對象換成 <strong>「所有指定類型數據列的數據點顏色」</strong>。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   colors: [&quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;],
-  plotOptions: {
-    series: {
+  plotOptions: &#123;
+    series: &#123;
       colors: [&quot;pink&quot;, &quot;red&quot;, &quot;orange&quot;]
-    },
-    line: {
+    &#125;,
+    line: &#123;
       colorByPoint: true,
-    }
-  },
+    &#125;
+  &#125;,
   series: [
     // 粉紅色, 紅色, 橘色, 粉紅色, 紅色
-    { type: &quot;line&quot;, data: [5, 5, 5, 5, 5] },
+    &#123; type: &quot;line&quot;, data: [5, 5, 5, 5, 5] &#125;,
     // 所有數據列都是綠色的
-    { type: &quot;column&quot;, data: [3, 3, 3, 3, 3] },
+    &#123; type: &quot;column&quot;, data: [3, 3, 3, 3, 3] &#125;,
     // 粉紅色, 紅色, 橘色, 粉紅色, 紅色
-    { type: &quot;line&quot;, data: [2, 2, 2, 2, 2] }
+    &#123; type: &quot;line&quot;, data: [2, 2, 2, 2, 2] &#125;
   ] 
-});</code></pre>
+&#125;);</code></pre>
 <img src="color1.png" style="max-width: 600px; margin: 20px auto;" />
 
 <br/>
 <br/>
 
 <h4 id="series-colorByPoint-series-colors"><a href="#series-colorByPoint-series-colors" class="headerlink" title="# series.colorByPoint / series.colors"></a># series.colorByPoint / series.colors</h4><p>數據列中也是有同一組的設定，也是必須要 <code>colorByPoint</code> 開啟才會作用，不過作用對象就換成了 <strong>「單一數據列的數據點顏色」</strong>。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: { type: &quot;column&quot; },
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123; type: &quot;column&quot; &#125;,
   colors: [&quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;],
-  plotOptions: {
-    series: {
+  plotOptions: &#123;
+    series: &#123;
       colorByPoint: true,
       colors: [&quot;pink&quot;, &quot;red&quot;, &quot;orange&quot;]
-    },
-  },
+    &#125;,
+  &#125;,
   series: [
     // 粉紅色, 紅色, 橘色, 粉紅色, 紅色
-    { data: [5, 3, 7, 4, 10] },
+    &#123; data: [5, 3, 7, 4, 10] &#125;,
     // 所有數據列都是綠色的
-    { colorByPoint: false, data: [5, 3, 7, 4, 10] },
+    &#123; colorByPoint: false, data: [5, 3, 7, 4, 10] &#125;,
     // 黑色, 灰色, 褐色, 黑色, 灰色
-    { colors: [&quot;black&quot;, &quot;gray&quot;, &quot;brown&quot;], data: [5, 3, 7, 4, 10] }
+    &#123; colors: [&quot;black&quot;, &quot;gray&quot;, &quot;brown&quot;], data: [5, 3, 7, 4, 10] &#125;
   ] 
-});</code></pre>
+&#125;);</code></pre>
 <img src="color2.png" style="max-width: 600px; margin: 20px auto;" />
 
 <br/>
@@ -255,17 +251,17 @@
 
 <h4 id="series-data-color"><a href="#series-data-color" class="headerlink" title="# series.data.color"></a># series.data.color</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
 <p>這個顏色屬性是權重最高的，它可以決定 <strong>「單一數據點顏色」</strong>，不過跟數據列不同的是，它會直接覆蓋 <code>colors</code> 設定的顏色，而 <strong>不會被跳過</strong>。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: { type: &quot;column&quot; },
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123; type: &quot;column&quot; &#125;,
   colors: [&quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;],
-  plotOptions: {
-    series: { colorByPoint: true }
-  },
-  series: [{ 
+  plotOptions: &#123;
+    series: &#123; colorByPoint: true &#125;
+  &#125;,
+  series: [&#123; 
     // 綠色, 紅色, 紫色, 綠色, 藍色
-    data: [5, { y: 3, color: &quot;red&quot; }, 7, 4, 10]
-  }] 
-});</code></pre>
+    data: [5, &#123; y: 3, color: &quot;red&quot; &#125;, 7, 4, 10]
+  &#125;] 
+&#125;);</code></pre>
 <img src="color3.png" style="max-width: 600px; margin: 20px auto;" />
 
 <br/>
@@ -277,7 +273,7 @@
 <p>今天完全在物理上體會了什麼叫「給你一點顏色瞧瞧」，單單一個顏色 Highcharts 就可以搞得那麼複雜。不過也因為這樣，在圖表的設計上就可以有很大的發揮空間，例如依據數據點的數值大小來調整顏色深淺。</p>
 <p>而明天終於要來填「格式化屬性」的坑了。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10244723" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10244723">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -293,7 +289,7 @@
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/09/27/highchart/highcharts-13/" data-id="clcsdp5jz001cneqw5s3x7svg" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/09/27/highchart/highcharts-13/" data-id="clo2ctett000ljsnlcnswbo6a" class="article-share-link">分享</a>
   </footer>
   
     
@@ -326,7 +322,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

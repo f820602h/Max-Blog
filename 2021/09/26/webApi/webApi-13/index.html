@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/26/webApi/webApi-13/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="狡兔有三窟，儲存用戶端的資料當然也要有三個。  相信大家應該都有遇過需要將資料儲存在用戶端的需求，像是將後端的 SessionID 儲存在 Cookie，或是將一些靜態資料存在 LocalStorage，但今天想要分享的是一個大家比較少選擇的 API - SessionStorage。  Cookie &amp; LocalStorage在介紹 SessionStorage 之前，我們先來複習一">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-09-26T09:33:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.903Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -147,7 +143,7 @@
 <h4 id="SessionStorage-setItem"><a href="#SessionStorage-setItem" class="headerlink" title="# SessionStorage.setItem"></a># SessionStorage.setItem</h4><p>SessionStorage 就連 methods 也都和 LocalStorage 是一樣的，<code>setItem</code> 可以讓我們下增/修改一筆 SessionStorage：</p>
 <pre><code class="javascript">sessionStorage.setItem(&quot;key&quot;, &quot;value&quot;);
 // 如果想要儲存物件、陣列等複雜型別，可以先進行字串化
-sessionStorage.setItem(&quot;object&quot;, JSON.stringify({ key: &quot;value&quot; }));</code></pre>
+sessionStorage.setItem(&quot;object&quot;, JSON.stringify(&#123; key: &quot;value&quot; &#125;));</code></pre>
 <br/>
 
 <h4 id="SessionStorage-getItem"><a href="#SessionStorage-getItem" class="headerlink" title="# SessionStorage.getItem"></a># SessionStorage.getItem</h4><p><code>getItem</code> 則是可以幫我們讀取 SessionStorage 中的某筆資料：</p>
@@ -164,7 +160,7 @@ console.log(JSON.parse(data));</code></pre>
 <p><br/><br/></p>
 <p>不曉得今天認識了 SessionStorage 之後，各位有沒有靈光一閃，突然覺得之前某些資料其實可以存在 SessionStorage 就好了呢？之後如果再有這種要在用戶端儲存資料的需求，大家就可以再多思考一下，選出符合情境的 Storage API 囉。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10274151" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10274151">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -180,7 +176,7 @@ console.log(JSON.parse(data));</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/26/webApi/webApi-13/" data-id="clcsdp5lp0037neqwe2pl0qyc" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/26/webApi/webApi-13/" data-id="clo2cteuo0028jsnl0xbuadpg" class="article-share-link">分享</a>
   </footer>
   
     
@@ -213,7 +209,7 @@ console.log(JSON.parse(data));</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

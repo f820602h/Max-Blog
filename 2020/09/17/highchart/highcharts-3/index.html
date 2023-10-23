@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2020/09/17/highchart/highcharts-3/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="圖表的種類非常多，呈現方式各有不同，但幾乎都有幾個固定的元素內容，能夠使圖表的易讀性提昇  昨天我們成功做出了一個 Highcharts 的圖表，今天要重新說明一下我們到底寫了些什麼，另外也要讓大家知道，其實圖表是由很多重要的元素所組成的，它們扮演了重要的角色，使觀看者能更快速的理解圖表。  前情回顧  const container &#x3D; document.querySelector(&amp;quot">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/09/17/highchart/highcharts-3/element.png">
 <meta property="article:published_time" content="2020-09-17T01:24:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.863Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.863Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -120,55 +116,55 @@
 const xAxisCate = Object.keys(data);
 const seriesData = xAxisCate.map(key =&gt; data[key]);
 
-var myChart = Highcharts.chart(container, {
-  chart: { type: &quot;column&quot; },
-  title: { text: &quot;公司員工年齡分佈&quot; },
-  xAxis: { categories: xAxisCate },
-  yAxis: {
-    title: { text: &quot;人數&quot; }
-  },
-  series: [{
+var myChart = Highcharts.chart(container, &#123;
+  chart: &#123; type: &quot;column&quot; &#125;,
+  title: &#123; text: &quot;公司員工年齡分佈&quot; &#125;,
+  xAxis: &#123; categories: xAxisCate &#125;,
+  yAxis: &#123;
+    title: &#123; text: &quot;人數&quot; &#125;
+  &#125;,
+  series: [&#123;
     name: &quot;XX公司員工&quot;,
     data: seriesData
-  }]
-});</code></pre>
+  &#125;]
+&#125;);</code></pre>
 <p>昨天這段程式碼，大家比較陌生的應該是 <code>Highcharts.chart</code> 這一段，而它其實就是 Highcharts 最主要的初始化函式。</p>
 <pre><code class="javascript">Highcharts.chart(element, options);</code></pre>
 <p>當你要創建一個新的圖表時，就必須使用這個函式，並且傳入兩個參數，第一個是 DOM 元素容器，第二個是圖表設定，在昨天的案例中 DOM 元素很明顯是 <code>#container</code> 這個容器，而圖表設定是這一大包物件。</p>
-<pre><code class="javascript">{
-  chart: { type: &quot;column&quot; },
-  title: { text: &quot;公司員工年齡分佈&quot; },
-  xAxis: { categories: xAxisCate },
-  yAxis: {
-    title: { text: &quot;人數&quot; }
-  },
-  series: [{
+<pre><code class="javascript">&#123;
+  chart: &#123; type: &quot;column&quot; &#125;,
+  title: &#123; text: &quot;公司員工年齡分佈&quot; &#125;,
+  xAxis: &#123; categories: xAxisCate &#125;,
+  yAxis: &#123;
+    title: &#123; text: &quot;人數&quot; &#125;
+  &#125;,
+  series: [&#123;
     name: &quot;XX公司員工&quot;,
     data: seriesData
-  }]
-}</code></pre>
+  &#125;]
+&#125;</code></pre>
 <p>不過目前我們不會去探究裡面的屬性到底做了些什麼，那是後面幾天會著墨的內容，今天會先用圖表的組成來理解這個 <code>options</code> 物件的結構。</p>
 <hr>
-<h2 id="圖表中的元素"><a href="#圖表中的元素" class="headerlink" title="圖表中的元素"></a>圖表中的元素</h2><p>其實圖表是由許多元素所組合而成的，Highcharts 的圖表也不例外，以昨天的 <a href="https://codepen.io/max-lee/pen/BaKwdyN" target="_blank" rel="noopener">範例</a> 來說的話，它包含了以下內容：</p>
+<h2 id="圖表中的元素"><a href="#圖表中的元素" class="headerlink" title="圖表中的元素"></a>圖表中的元素</h2><p>其實圖表是由許多元素所組合而成的，Highcharts 的圖表也不例外，以昨天的 <a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/BaKwdyN">範例</a> 來說的話，它包含了以下內容：</p>
 <p><img src="element.png" alt=""></p>
 <p>透過上面的示意圖可以發現，Highcharts 圖表可以粗略的分成這七個主要區塊加上一個整體設定，並且在 <code>options</code> 物件中都有對應的屬性，不過如果圖表不會太複雜，Highcharts 本身都有預設設定，就未必每個區塊都要額外修改，像是我們的範例就沒有去調整圖例和提示框。</p>
-<pre><code class="javascript">{
-  chart: {},      // 圖表整體設定
-  title: {},      // 標題設定
-  xAxis: [{}],    // Ｘ座標軸設定
-  yAxis: [{}],    // Ｙ座標軸設定
-  legend: {},     // 圖例設定
-  tooltip: {},    // 提示框設定
-  series: [{}],   // 數據列設定
-  plotOptions: {} // 繪圖區設定
+<pre><code class="javascript">&#123;
+  chart: &#123;&#125;,      // 圖表整體設定
+  title: &#123;&#125;,      // 標題設定
+  xAxis: [&#123;&#125;],    // Ｘ座標軸設定
+  yAxis: [&#123;&#125;],    // Ｙ座標軸設定
+  legend: &#123;&#125;,     // 圖例設定
+  tooltip: &#123;&#125;,    // 提示框設定
+  series: [&#123;&#125;],   // 數據列設定
+  plotOptions: &#123;&#125; // 繪圖區設定
   // ...還有更多更多更多更多
-}</code></pre>
+&#125;</code></pre>
 <p>另外 Highcharts 其實還有更多特殊的圖表元素可以進行設定，而且許多屬性底下還能再分成更細緻的區塊做調整，使得圖表的設定屬性數量非常可觀，所以後面我會把重點放在比較實用與常見的屬性上，而剩餘的就留給各位慢慢摸索了。</p>
 <br/>
 
-<p>豐富的圖表設定是 Highcharts 這個圖表庫強大的特點之一，你可以先偷偷到 <a href="https://api.highcharts.com/highcharts/" target="_blank" rel="noopener">官方文件</a> 感受一下所謂的數量可觀。</p>
+<p>豐富的圖表設定是 Highcharts 這個圖表庫強大的特點之一，你可以先偷偷到 <a target="_blank" rel="noopener" href="https://api.highcharts.com/highcharts/">官方文件</a> 感受一下所謂的數量可觀。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10238356" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10238356">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -184,7 +180,7 @@ var myChart = Highcharts.chart(container, {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/09/17/highchart/highcharts-3/" data-id="clcsdp5lf002ineqw21yie8xx" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/09/17/highchart/highcharts-3/" data-id="clo2cteuc001kjsnlb2utfxpf" class="article-share-link">分享</a>
   </footer>
   
     
@@ -217,7 +213,7 @@ var myChart = Highcharts.chart(container, {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

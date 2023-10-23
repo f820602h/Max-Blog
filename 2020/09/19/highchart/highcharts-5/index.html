@@ -13,12 +13,12 @@
 <meta property="og:url" content="https://maxleebk.com/2020/09/19/highchart/highcharts-5/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;BaKwdyN避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  雖然大家可能都會把圖表的重點放在「圖」上，但有時候文字可以讓觀看者更快速抓的到圖表主題或是引導觀看者發覺背後含義，而今天要介紹的就是這些文字性的圖表元素。  主標題設定  主標題可以點出圖表所呈現的資料主題，甚至有些圖表">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/09/19/highchart/highcharts-5/useHTML.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/19/highchart/highcharts-5/float.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/19/highchart/highcharts-5/textOption.png">
 <meta property="article:published_time" content="2020-09-19T03:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.871Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.871Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -35,7 +35,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -49,10 +49,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -112,16 +108,16 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/BaKwdyN" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/BaKwdyN</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/BaKwdyN">https://codepen.io/max-lee/pen/BaKwdyN</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
 </blockquote>
 <p>雖然大家可能都會把圖表的重點放在「圖」上，但有時候文字可以讓觀看者更快速抓的到圖表主題或是引導觀看者發覺背後含義，而今天要介紹的就是這些文字性的圖表元素。</p>
 <hr>
 <h2 id="主標題設定"><a href="#主標題設定" class="headerlink" title="主標題設定"></a>主標題設定</h2><br/>
 
 <p>主標題可以點出圖表所呈現的資料主題，甚至有些圖表如果沒有標題，你都未必知道它在呈現什麼資料，所以主標題算是圖表中非常重要的說明文字。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  title: {} // 主標題設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  title: &#123;&#125; // 主標題設定
+&#125;);</code></pre>
 <br/>
 
 <h4 id="title-text"><a href="#title-text" class="headerlink" title="# title.text"></a># title.text</h4><p><code>型別: String|null</code> <code>預設: &quot;Chart title&quot;</code></p>
@@ -130,18 +126,18 @@
 <br/>
 <br/>
 
-<h4 id="title-style"><a href="#title-style" class="headerlink" title="# title.style"></a># title.style</h4><p><code>型別: Object</code> <code>預設: { &quot;color&quot;: &quot;#333333&quot;, &quot;fontSize&quot;: &quot;18px&quot; }</code></p>
+<h4 id="title-style"><a href="#title-style" class="headerlink" title="# title.style"></a># title.style</h4><p><code>型別: Object</code> <code>預設: &#123; &quot;color&quot;: &quot;#333333&quot;, &quot;fontSize&quot;: &quot;18px&quot; &#125;</code></p>
 <p>標題的樣式可以透過這個屬性來調整，設定方式其實跟 CSS 差不多，只不過是物件的形式，並且樣式的屬性名稱要用小駝峰的方式撰寫，再者是並非所有的 CSS 屬性都支援，下面我就示意幾個比較常見的。</p>
-<p>如果要知道所有屬性的話可以到 <strong><a href="https://api.highcharts.com/class-reference/Highcharts.CSSObject" target="_blank" rel="noopener">https://api.highcharts.com/class-reference/Highcharts.CSSObject</a></strong></p>
-<pre><code class="javascript">title: {
-  style: {
+<p>如果要知道所有屬性的話可以到 <strong><a target="_blank" rel="noopener" href="https://api.highcharts.com/class-reference/Highcharts.CSSObject">https://api.highcharts.com/class-reference/Highcharts.CSSObject</a></strong></p>
+<pre><code class="javascript">title: &#123;
+  style: &#123;
     fontSize: &quot;20px&quot;,
     fontWeight: &quot;bold&quot;,
     textAlign: &quot;right&quot;,
     color: &quot;#292929&quot;,
     padding: &quot;8px&quot;
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <br/>
 <br/>
 
@@ -180,12 +176,12 @@
 <h2 id="副標題設定"><a href="#副標題設定" class="headerlink" title="副標題設定"></a>副標題設定</h2><br/>
 
 <p>副標題可以用來補充說明主標題的主旨，預設是沒有副標題的，而它的屬性幾乎跟主標題一樣，只有以下設定只有預設值不同而已。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  subtitle: {} // 副標題設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  subtitle: &#123;&#125; // 副標題設定
+&#125;);</code></pre>
 <br/>
 
-<h4 id="subtitle-style"><a href="#subtitle-style" class="headerlink" title="# subtitle.style"></a># subtitle.style</h4><p><code>型別: Object</code> <code>預設: { &quot;color&quot;: &quot;#666666&quot; }</code></p>
+<h4 id="subtitle-style"><a href="#subtitle-style" class="headerlink" title="# subtitle.style"></a># subtitle.style</h4><p><code>型別: Object</code> <code>預設: &#123; &quot;color&quot;: &quot;#666666&quot; &#125;</code></p>
 <br/>
 <br/>
 
@@ -194,12 +190,12 @@
 <h2 id="圖表說明設定"><a href="#圖表說明設定" class="headerlink" title="圖表說明設定"></a>圖表說明設定</h2><br/>
 
 <p>圖表說明可以詳細說明圖表的內容或是資料來源等等內容，它的屬性也是預設值跟主標題稍微不一樣而已。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  caption: {} // 圖表說明設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  caption: &#123;&#125; // 圖表說明設定
+&#125;);</code></pre>
 <br/>
 
-<h4 id="caption-style"><a href="#caption-style" class="headerlink" title="# caption.style"></a># caption.style</h4><p><code>型別: Object</code> <code>預設: { &quot;color&quot;: &quot;#666666&quot; }</code></p>
+<h4 id="caption-style"><a href="#caption-style" class="headerlink" title="# caption.style"></a># caption.style</h4><p><code>型別: Object</code> <code>預設: &#123; &quot;color&quot;: &quot;#666666&quot; &#125;</code></p>
 <br/>
 <br/>
 
@@ -213,9 +209,9 @@
 
 <p>版權標籤預設是在圖表的右下角，主要用意是要展現 Highcharts 的版權所有，不過因為 Highcharts 是可以非商業免費使用的，所以如果你的網站沒有營利，拿掉是沒有關係的。</p>
 <p>或是有需要的話你也可以利用這個位置來說明圖表的資料來源、呈現自己網站的網址名稱等等。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  credits: {} // 版權標籤設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  credits: &#123;&#125; // 版權標籤設定
+&#125;);</code></pre>
 <br/>
 
 <h4 id="credits-enabled"><a href="#credits-enabled" class="headerlink" title="# credits.enabled"></a># credits.enabled</h4><p><code>型別: Boolean</code> <code>預設: true</code></p>
@@ -233,28 +229,28 @@
 <br/>
 <br/>
 
-<h4 id="credits-style"><a href="#credits-style" class="headerlink" title="# credits.style"></a># credits.style</h4><p><code>型別: Object</code> <code>預設: { color: &quot;#999999&quot;, cursor: &quot;pointer&quot;, fontSize: &quot;9px&quot; }</code></p>
+<h4 id="credits-style"><a href="#credits-style" class="headerlink" title="# credits.style"></a># credits.style</h4><p><code>型別: Object</code> <code>預設: &#123; color: &quot;#999999&quot;, cursor: &quot;pointer&quot;, fontSize: &quot;9px&quot; &#125;</code></p>
 <p>用法與前面都一樣，唯有預設值不同。</p>
 <br/>
 <br/>
 
 <h4 id="credits-position"><a href="#credits-position" class="headerlink" title="# credits.position"></a># credits.position</h4><p><code>型別: Object</code> <code>預設: 如下顯示</code></p>
-<pre><code class="javascript">credits: {
-  position: {
+<pre><code class="javascript">credits: &#123;
+  position: &#123;
     align: &quot;right&quot;,
     verticalAlign: &quot;bottom&quot;,
     x: -10,
     y: -5
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>其實可以發現 <code>credits.position</code> 只是將前面看過的 <code>align</code>、<code>verticalAlign</code>、<code>x</code>、<code>y</code> 包裝成一個物件而已，而它們分別的用法也都跟前面介紹的一模一樣。</p>
 <br/>
 
 <img src="textOption.png" style="max-width: 600px; margin: 24px auto;" />
 
-<p>那今天的最後就附上一個有標題、說明、版權標籤的 <strong><a href="https://codepen.io/max-lee/pen/NWNwZoZ" target="_blank" rel="noopener">案例</a></strong> 來做 Ending，而明天要介紹的圖表元素是「圖例」。</p>
+<p>那今天的最後就附上一個有標題、說明、版權標籤的 <strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/NWNwZoZ">案例</a></strong> 來做 Ending，而明天要介紹的圖表元素是「圖例」。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10239473" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10239473">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -270,7 +266,7 @@
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/09/19/highchart/highcharts-5/" data-id="clcsdp5lh002oneqwf1ywhwgg" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/09/19/highchart/highcharts-5/" data-id="clo2cteuf001qjsnl1ssrf11w" class="article-share-link">分享</a>
   </footer>
   
     
@@ -303,7 +299,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

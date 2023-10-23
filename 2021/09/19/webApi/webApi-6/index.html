@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/19/webApi/webApi-6/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="低電量～低～低～電量～ 呂士軒-低電量  今天要分享的也是一個使用情境偏少的 API，但如果你有想要做移動端的應用的話，或許可以嘗試使用看看。  BatteryBattery API 是一個與使用者的裝置電池相關的 API，我們可以透過它來得知電池的相關資訊，也可以監聽電量的變化，以此來做到一些提示或警告的功能效果。   # Navigator.getBattery裝置電池的資訊會被包裹在一個叫">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/09/19/webApi/webApi-6/battery.png">
 <meta property="article:published_time" content="2021-09-19T06:38:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.138Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.187Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -118,36 +114,36 @@
 <br/>
 
 <h4 id="Navigator-getBattery"><a href="#Navigator-getBattery" class="headerlink" title="# Navigator.getBattery"></a># Navigator.getBattery</h4><p>裝置電池的資訊會被包裹在一個叫做 BatteryManager 的物件中，要取得該物件的話，我們必須要透過呼叫 <code>navigator.getBattery</code> 來取得：</p>
-<pre><code class="javascript">navigator.getBattery().then((battery) =&gt; {
+<pre><code class="javascript">navigator.getBattery().then((battery) =&gt; &#123;
   console.log(battery); // BatteryManager
-});</code></pre>
+&#125;);</code></pre>
 <p>可以看到，互叫後 <code>getBattery</code> 回傳的是 Promise，其被 <code>resolve</code> 後才會傳遞 BatteryManager 給我們，所以我們要用 <code>then</code> 去串接取得。</p>
 <p><br/><br/></p>
 <h4 id="BatteryManager"><a href="#BatteryManager" class="headerlink" title="# BatteryManager"></a># BatteryManager</h4><p>取得 BatteryManager 後，我們就可以看到裡面會有四個比較重要的屬性：</p>
-<pre><code class="javascript">{
+<pre><code class="javascript">&#123;
   charging: true,             // 是否正在充電
   chargingTime: 2940,         // 多少時間會滿電（單位：秒）
   dischargingTime: Infinity,  // 多少時間會沒電（單位：秒）
   level: 0.86                 // 目前的電量 （乘上100，即為百分比）
-}</code></pre>
+&#125;</code></pre>
 <p>其中比較特別的是 <code>chargingTime</code> 和 <code>dischargingTime</code>，若是目前裝置正在充電，那 <code>dischargingTime</code> 必為 <code>Infinity</code>，反之為充電時 <code>chargingTime</code> 必為 <code>Infinity</code>。</p>
 <p>而除了上面這四個屬性之外呢，你還會看到四個事件屬性，讓你可以監聽不同的電量事件：</p>
-<pre><code class="javascript">{
+<pre><code class="javascript">&#123;
   onchargingchange: null,         // 監聽充電狀態
   onchargingtimechange: null,     // 監聽滿電時間
   ondischargingtimechange: null,  // 監聽沒電時間
   onlevelchange: null             // 監聽電量
-}</code></pre>
+&#125;</code></pre>
 <p>只要像下面這樣撰寫的話就可以在電池狀態有變更的時候觸發 Callback:</p>
-<pre><code class="javascript">navigator.getBattery().then(battery =&gt;  {
-  battery.onchargingchange = function() {
+<pre><code class="javascript">navigator.getBattery().then(battery =&gt;  &#123;
+  battery.onchargingchange = function() &#123;
     console.log(this.level)
-  }
+  &#125;
   // 或是這樣寫也可以
-  battery.addEventListener(&quot;chargingchange&quot;, function {
+  battery.addEventListener(&quot;chargingchange&quot;, function &#123;
     console.log(this.level)
-  })
-});</code></pre>
+  &#125;)
+&#125;);</code></pre>
 <br/>
 
 <p>接下來我們只要透過以上這些屬性就可以做到這樣的一個小應用：</p>
@@ -156,26 +152,26 @@
 <pre><code class="javascript">const batteryLevel = document.querySelector(&quot;.battery-level&quot;);
 const batteryWrap = document.querySelector(&quot;.battery-wrap&quot;);
 
-navigator.getBattery().then((battery) =&gt; {
+navigator.getBattery().then((battery) =&gt; &#123;
   const count = Math.floor(battery.level / 0.2);
-  const callback = function () {
+  const callback = function () &#123;
     batteryLevel.textContent = battery.level * 100 + &quot;%&quot;;
     batteryWrap.innerHTML = &quot;&quot;;
-    for (let i = 0; i &lt; count; i++) {
+    for (let i = 0; i &lt; count; i++) &#123;
       const batteryLevel = document.createElement(&quot;div&quot;);
       batteryLevel.setAttribute(&quot;class&quot;, &quot;battery&quot;);
       batteryWrap.appendChild(batteryLevel);
-    }
-  };
+    &#125;
+  &#125;;
   battery.onlevelchange = callback;
   callback();
-});</code></pre>
+&#125;);</code></pre>
 <img src="battery.png" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <p>雖然 Battery API 並不是非常重要的功能，但其實瀏覽器能夠實作出來讓我們使用也是蠻方便的，畢竟要如何應用就要看大家的創意發揮，總比我們有想法卻沒有工具實踐來得好。習得 Battery API 後，你有什麼應用它的 idea 嗎？</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10269328" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10269328">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -191,7 +187,7 @@ navigator.getBattery().then((battery) =&gt; {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/19/webApi/webApi-6/" data-id="clcsdp5ms004mneqw6489bklq" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/19/webApi/webApi-6/" data-id="clo2ctevb003hjsnl6b4calry" class="article-share-link">分享</a>
   </footer>
   
     
@@ -224,7 +220,7 @@ navigator.getBattery().then((battery) =&gt; {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://maxleebk.com/2020/10/12/highchart/highcharts-28/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="既然已經掌握了 Highcharts-Vue 的基本使用技巧，那今明兩天打算帶大家來實作一個「記帳本」，用一個比較完整的應用來完結這個系列，也算是一個學習成果的回顧。  記帳本實作如下圖所示，第一天打算先把我們記帳本的介面、圖表及資料串接完成，畫面大致如上，上方為新增帳目的表單元件，下方則是顯示每日消費金額的柱狀圖，樣式的話大家可以自由發揮，文章中將只會說明程式邏輯的部分。     1.安裝 Js">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/10/12/highchart/highcharts-28/case.png">
 <meta property="og:image" content="https://maxleebk.com/2020/10/12/highchart/highcharts-28/ledger.gif">
 <meta property="article:published_time" content="2020-10-12T01:45:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.859Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.855Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -34,7 +34,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -48,10 +48,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -120,17 +116,17 @@
 <h4 id="1-安裝-Json-Server"><a href="#1-安裝-Json-Server" class="headerlink" title="1.安裝 Json-Server"></a>1.安裝 Json-Server</h4><p>為了可以讓記帳本真的可以記帳，我們會需要資料庫來紀錄帳目，而我選擇使用的是 Json-Server，它讓我們可以用一個 Json 檔來作為簡易的資料庫，而且內建基本的 REST API 可以使用，這樣我們就不用真的架一個後端伺服器了，在終端機輸入下方指令就可以全域安裝了。</p>
 <pre><code class="shell">npm install -g json-server</code></pre>
 <p>安裝完成後新增一個 <code>db.json</code>，然後可以先手動新增一筆帳目，檔案內容如下：</p>
-<pre><code class="json">{
+<pre><code class="json">&#123;
   &quot;accounts&quot;: [
-    {
+    &#123;
       &quot;id&quot;: 1,
       &quot;category&quot;: &quot;伙食&quot;,
       &quot;amount&quot;: &quot;50&quot;,
       &quot;date&quot;: 1602028800000,
       &quot;description&quot;: &quot;早餐&quot;
-    }
+    &#125;
   ]
-}</code></pre>
+&#125;</code></pre>
 <p>檔案備妥後，在終端機輸入以下指令就可以啟動 <code>json-server</code>，這時候到 <code>http://localhost:3000/accounts</code>，就可以看到剛剛建立的資料了，未來只要是開啟伺服器的狀態就可以使用 API 來讀寫 <code>db.json</code> 的資料了。</p>
 <pre><code class="shell">json-server db.json</code></pre>
 <p><br/><br/></p>
@@ -145,15 +141,15 @@ Vue.prototype.axios = axios;</code></pre>
 <pre><code class="javascript">import Vue from &quot;vue&quot;;
 import Highcharts from &quot;highcharts&quot;;
 
-Highcharts.setOptions({
-  lang: {
+Highcharts.setOptions(&#123;
+  lang: &#123;
     shortMonths: [&quot;1月&quot;, &quot;2月&quot;, ..., &quot;12月&quot;],
     weekdays: [&quot;星期日&quot;, &quot;星期一&quot;, ..., &quot;星期六&quot;],
-  },
+  &#125;,
   // 也可增加其他你像要的全域設定
-  credits: { enabled: false },
+  credits: &#123; enabled: false &#125;,
   colors: [...]
-});</code></pre>
+&#125;);</code></pre>
 <p><br/><br/></p>
 <h4 id="4-表單元件-LedgerForm-vue"><a href="#4-表單元件-LedgerForm-vue" class="headerlink" title="4.表單元件 - LedgerForm.vue"></a>4.表單元件 - LedgerForm.vue</h4><p>前置作業完成後就可以來開發元件了，首先是上方用來新增帳目的表單元件。新增一個檔案內容如下的元件，其中四個表單欄位剛好對應資料庫的內容，而點擊按鈕觸發的 <code>addItem</code> 就是用 <code>axios</code> 送出 <code>post</code> 請求，便會在資料庫添加一筆新的帳目。</p>
 <br/>
@@ -191,26 +187,26 @@ Highcharts.setOptions({
 &lt;/template&gt;
 
 &lt;script&gt;
-  export default {
-    data() {
-      return {
+  export default &#123;
+    data() &#123;
+      return &#123;
         date: &quot;&quot;,
         category: &quot;伙食&quot;,
         amount: 0,
         description: &quot;&quot;
-      }
-    },
-    methods: {
-      addItem() {
-        this.axios.post(&quot;http://localhost:3000/accounts&quot;, {
+      &#125;
+    &#125;,
+    methods: &#123;
+      addItem() &#123;
+        this.axios.post(&quot;http://localhost:3000/accounts&quot;, &#123;
           date: new Date(this.date).getTime(),
           category: this.category,
           amount: this.amount,
           description: this.description
-        })
-      }
-    }
-  }
+        &#125;)
+      &#125;
+    &#125;
+  &#125;
 &lt;/script&gt;</code></pre>
 <p><br/><br/></p>
 <h4 id="5-圖表元件-LedgerChart-vue"><a href="#5-圖表元件-LedgerChart-vue" class="headerlink" title="5.圖表元件 - LedgerChart.vue"></a>5.圖表元件 - LedgerChart.vue</h4><p><strong>可以紀錄帳目後，就要讓消費記錄透過圖表呈現出來了，而需求規格有以下幾點：</strong></p>
@@ -223,77 +219,77 @@ Highcharts.setOptions({
 <p>避免模糊焦點，這次圖表只做到近七天的資料顯示，有興趣的話你也可以根據自己你想法改善這個範例。</p>
 </blockquote>
 <p>根據需求，我們先準備好需要的資料，包括儲存今日時間戳的 <code>todayTimeStamp</code>，儲存 API 資料的 <code>fetchData</code>，以及圖表設定 <code>chartOptions</code>。</p>
-<pre><code class="javascript">data() {
-  return {
+<pre><code class="javascript">data() &#123;
+  return &#123;
     todayTimeStamp: 0,
     fetchData: [],
-    chartOptions: {
-      chart: { type: &quot;column&quot; },
-      title: { text: &quot;每日消費&quot; },
-      tooltip: {
+    chartOptions: &#123;
+      chart: &#123; type: &quot;column&quot; &#125;,
+      title: &#123; text: &quot;每日消費&quot; &#125;,
+      tooltip: &#123;
         shared: true,
-        headerFormat: &quot;{point.key:%Y/%m/%d %A}&lt;br/&gt;&quot;,
+        headerFormat: &quot;&#123;point.key:%Y/%m/%d %A&#125;&lt;br/&gt;&quot;,
         valuePrefix: &quot;NT$&quot;
-      },
-      xAxis: {
+      &#125;,
+      xAxis: &#123;
         type: &quot;datetime&quot;,
         categories: [],
-        labels: { format: &quot;{value:%b%d}日&quot; },
-      },
-      yAxis: {
+        labels: &#123; format: &quot;&#123;value:%b%d&#125;日&quot; &#125;,
+      &#125;,
+      yAxis: &#123;
         title: undefined,
-        labels: { format: &quot;NT$ {value}&quot; },
-      },
-      plotOptions: {
-        series: { stacking: &quot;normal&quot; }
-      },
+        labels: &#123; format: &quot;NT$ &#123;value&#125;&quot; &#125;,
+      &#125;,
+      plotOptions: &#123;
+        series: &#123; stacking: &quot;normal&quot; &#125;
+      &#125;,
       series: [],
-    }
-  };
-}</code></pre>
+    &#125;
+  &#125;;
+&#125;</code></pre>
 <p>而API資料我們需要再 <code>created</code> 時先去取得，順便把今天的時間戳儲存起來，方便我們之後計算近七天的時間。</p>
-<pre><code class="javascript">created() {
+<pre><code class="javascript">created() &#123;
   // 取得當日的時間戳
   let now = new Date().getTime();
   this.todayTimeStamp = now - now  % 86400000;
   // call json-server api
-  this.axios.get(&quot;http://localhost:3000/accounts&quot;).then((response) =&gt; {
+  this.axios.get(&quot;http://localhost:3000/accounts&quot;).then((response) =&gt; &#123;
     this.fetchData = response.data;
-  });
-},</code></pre>
+  &#125;);
+&#125;,</code></pre>
 <p>有了這些資料後，就可以透過 <code>computed</code> 來將資料處理成我們所需的格式了。</p>
-<pre><code class="javascript">computed: {
+<pre><code class="javascript">computed: &#123;
   // 利用當日時間戳來計算Ｘ軸所需的 categories 陣列
-  xAxisCategories() {
-    return Array(7).fill(0).map((date ,index) =&gt; {
+  xAxisCategories() &#123;
+    return Array(7).fill(0).map((date ,index) =&gt; &#123;
       return this.todayTimeStamp - 86400000 * index
-    }).reverse()
-  },
+    &#125;).reverse()
+  &#125;,
   // 抓出所有不重複的支出類別
-  expendType() {
+  expendType() &#123;
     let allType = this.fetchData.map(item =&gt; item.category);
     return Array.from(new Set(allType));
-  },
+  &#125;,
   // 把 API 資料 map 成我們需要的格式
-  seriesData() {
-    return this.expendType.map(cate =&gt; {
+  seriesData() &#123;
+    return this.expendType.map(cate =&gt; &#123;
       let itemByCate = this.fetchData.filter(item =&gt; item.category === cate);
-      let points = this.xAxisCategories.map(date =&gt; {
-        return itemByCate.reduce((acc, item) =&gt; {
+      let points = this.xAxisCategories.map(date =&gt; &#123;
+        return itemByCate.reduce((acc, item) =&gt; &#123;
           return item.date === date ? acc + Number(item.amount) : acc
-        }, 0)
-      })
-      return { name: cate, data: points };
-    });
-  },
+        &#125;, 0)
+      &#125;)
+      return &#123; name: cate, data: points &#125;;
+    &#125;);
+  &#125;,
   // 將圖表設定和處理完的資料合併
-  options() {
-    let options = Object.assign(this.chartOptions, {});
+  options() &#123;
+    let options = Object.assign(this.chartOptions, &#123;&#125;);
     options.series = this.seriesData;
     options.xAxis.categories = this.xAxisCategories;
     return options;
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>最後把 <code>options</code> 傳入圖表，並且記得把今天新增的兩個元件掛載到 <code>App.vue</code> 上，就可以看到消費紀錄呈現在圖表上囉。</p>
 <pre><code class="html">&lt;template&gt;
   &lt;div class=&quot;chart-container&quot;&gt;
@@ -306,7 +302,7 @@ Highcharts.setOptions({
 <p><br/><br/></p>
 <p>辛苦各位了，今天的篇幅比較長，不過跟著今天一步步的流程下來，終於完成了一個比較完整的 Highcharts-Vue 應用，而明天我們將利用「事件屬性」來為這個應用再添加一個小功能。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10252336" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10252336">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -322,7 +318,7 @@ Highcharts.setOptions({
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/10/12/highchart/highcharts-28/" data-id="clcsdp5ld002eneqw6ipj11ip" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/10/12/highchart/highcharts-28/" data-id="clo2cteua001hjsnl40je3nsm" class="article-share-link">分享</a>
   </footer>
   
     
@@ -355,7 +351,7 @@ Highcharts.setOptions({
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

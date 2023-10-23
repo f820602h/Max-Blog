@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/20/webApi/webApi-7/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="疫情時代，視訊串流當頭，用視訊鏡頭來做個線上攝影吧！  自從疫情爆發後，各行各業也開始進行居家辦公，使得視訊軟體及相關技術開始受重視，身為前端，我們也可以拿視訊鏡頭來做些好玩有趣的東西，而 ImageCapture 就是其中一個可以運用在這裡的 API。  MediaStream在認識 ImageCapture 之前我們必須要先了解 MediaStream，瀏覽器將獲取的影音資訊稱之為「流」(S">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-09-20T03:38:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.142Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.187Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -117,25 +113,25 @@
 
 <h4 id="Navigator-mediaDevices-getUserMedia"><a href="#Navigator-mediaDevices-getUserMedia" class="headerlink" title="# Navigator.mediaDevices.getUserMedia"></a># Navigator.mediaDevices.getUserMedia</h4><p>而我們要取得 MediaStream 的手段就是要先向使用者獲取設備的授權，這時候就要使用 <code>getUserMedia</code>：</p>
 <pre><code class="javascript">navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then((mediaStream) =&gt; {
+  .getUserMedia(&#123; video: true &#125;)
+  .then((mediaStream) =&gt; &#123;
     /* use the stream */
-  })
-  .catch((err) =&gt; {
+  &#125;)
+  .catch((err) =&gt; &#123;
     /* handle the error */
-  });</code></pre>
-<p>當我們呼叫 <code>getUserMedia</code> 時，必須傳入一個稱為 <code>constraints</code> 的參數，該參數為一個物件，當中需要表示你想取得的 Track，例如上面我們就是傳入 <code>{ video: true }</code>，來取得視訊軌。</p>
+  &#125;);</code></pre>
+<p>當我們呼叫 <code>getUserMedia</code> 時，必須傳入一個稱為 <code>constraints</code> 的參數，該參數為一個物件，當中需要表示你想取得的 Track，例如上面我們就是傳入 <code>&#123; video: true &#125;</code>，來取得視訊軌。</p>
 <p>而 <code>getUserMedia</code> 會回傳 Promise 給我們，當使用者同意授權後就可以在 <code>then</code> 的 Callback 中取得 MediaStream。</p>
 <p><br/><br/></p>
 <h4 id="MediaStream-getVideoTracks"><a href="#MediaStream-getVideoTracks" class="headerlink" title="# MediaStream.getVideoTracks"></a># MediaStream.getVideoTracks</h4><p>當我們取得 MediaStream 後，我們還需要再取得當中的 Track，之後才可以透過 ImageCapture 來操作，這時候就需要使用 MediaStream 自身的 method <code>getVideoTracks</code>。</p>
 <pre><code class="javascript">navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then((mediaStream) =&gt; {
+  .getUserMedia(&#123; video: true &#125;)
+  .then((mediaStream) =&gt; &#123;
     const videoTrack = mediaStream.getVideoTracks()[0];
-  })
-  .catch((err) =&gt; {
+  &#125;)
+  .catch((err) =&gt; &#123;
     console.log(err);
-  });</code></pre>
+  &#125;);</code></pre>
 <p>要注意的是，由於一個 MediaStream 中未必只有一個 VideoTrack，所以 <code>getVideoTracks</code> 回傳的會是陣列，記得要透過 <code>index</code> 索引出來。</p>
 <p><br/><br/></p>
 <h2 id="ImageCapture"><a href="#ImageCapture" class="headerlink" title="ImageCapture"></a>ImageCapture</h2><p>知道如何取得 MediaStreamTrack 後，就可以來認識 ImageCapture 了，它可以讓我們建立一個圖像擷取器，只要提供一個有效的 VideoTrack 給 ImageCapture 就可以進行圖像的擷取：</p>
@@ -145,30 +141,30 @@
 <h4 id="ImageCapture-takePhoto"><a href="#ImageCapture-takePhoto" class="headerlink" title="# ImageCapture.takePhoto"></a># ImageCapture.takePhoto</h4><p>當我們為一個 ImageCapture 綁定了 VideoTrack 後，我們就可以透過 ImageCapture 底下的 methods 來進行圖像擷取了：</p>
 <pre><code class="javascript">let imageCapture;
 navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then((mediaStream) =&gt; {
+  .getUserMedia(&#123; video: true &#125;)
+  .then((mediaStream) =&gt; &#123;
     const videoTrack = mediaStream.getVideoTracks()[0];
     imageCapture = new ImageCapture(videoTrack);
-  })
-  .catch((err) =&gt; {
+  &#125;)
+  .catch((err) =&gt; &#123;
     console.log(err);
-  });
+  &#125;);
 
-document.querySelector(&quot;button&quot;).addEventListener(&quot;click&quot;, function () {
-  imageCapture.takePhoto().then((blob) =&gt; {
+document.querySelector(&quot;button&quot;).addEventListener(&quot;click&quot;, function () &#123;
+  imageCapture.takePhoto().then((blob) =&gt; &#123;
     console.log(blob);
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <p>呼叫 <code>takePhoto</code> 後，它會回傳 Promise，並且我們能在 <code>then</code> 的 Callback 中取得截圖的 Blob 物件。</p>
 <p><br/><br/></p>
 <h4 id="ImageCapture-grabFrame"><a href="#ImageCapture-grabFrame" class="headerlink" title="# ImageCapture.grabFrame"></a># ImageCapture.grabFrame</h4><p>再來要介紹的則是 <code>grabFrame</code>，它和 <code>takePhoto</code> 一樣是擷取 videoTrack 的影像，差別在於它回傳的是 ImageBitmap 物件，而這種物件的好處是可以直接拿來畫在 Canvas 上。</p>
-<pre><code class="javascript">imageCapture.takePhoto().then((blob) =&gt; {
+<pre><code class="javascript">imageCapture.takePhoto().then((blob) =&gt; &#123;
   console.log(blob);
-});
+&#125;);
 
-imageCapture.grabFrame().then((imageBitmap) =&gt; {
+imageCapture.grabFrame().then((imageBitmap) =&gt; &#123;
   console.log(imageBitmap);
-});</code></pre>
+&#125;);</code></pre>
 <blockquote>
 <p>Blob 物件可以夠過 <code>createImageBitmap(blob)</code> 來轉換成 ImageBitmap 物件</p>
 </blockquote>
@@ -188,45 +184,45 @@ var videoTrack;
 var imageCapture;
 
 // 開啟鏡頭
-function openCamera() {
+function openCamera() &#123;
   navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then((stream) =&gt; {
+    .getUserMedia(&#123; video: true &#125;)
+    .then((stream) =&gt; &#123;
       // 取得視訊軌並建立 imageCapture
       videoTrack = stream.getVideoTracks()[0];
       imageCapture = new ImageCapture(videoTrack);
       // 將媒體流設定到 &lt;video&gt; 中顯示播放
       video.srcObject = stream;
       video.play();
-    })
-    .catch((err) =&gt; {
+    &#125;)
+    .catch((err) =&gt; &#123;
       console.log(err);
-    });
-}
+    &#125;);
+&#125;
 
 //擷取畫面
-function capture() {
+function capture() &#123;
   imageCapture
     .takePhoto()
-    .then((blob) =&gt; {
+    .then((blob) =&gt; &#123;
       // 將 Blob 轉成 ImageBitmap
       return createImageBitmap(blob);
-    })
-    .then((imageBitmap) =&gt; {
+    &#125;)
+    .then((imageBitmap) =&gt; &#123;
       // 繪製在 canvas 上
-      const { width, height } = imageBitmap;
+      const &#123; width, height &#125; = imageBitmap;
       const ratio = video.videoWidth / width;
       canvas.setAttribute(&quot;width&quot;, width * ratio);
       canvas.setAttribute(&quot;height&quot;, height * ratio);
       context.drawImage(imageBitmap, 0, 0, width * ratio, height * ratio);
-    });
-}</code></pre>
+    &#125;);
+&#125;</code></pre>
 <p>最後只要在 <code>capture</code> 的時候透過 <code>takePhoto</code> 進行截圖，並將 Blob 轉成 ImageBitmap 後丟到 <code>&lt;canvas&gt;</code> 裡，就大功告成囉。</p>
-<p>完整的 code 我就放在 <strong><a href="https://codepen.io/max-lee/pen/RwgJmJp" target="_blank" rel="noopener">這裡</a></strong>，大家可以看看實際效果。</p>
+<p>完整的 code 我就放在 <strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/RwgJmJp">這裡</a></strong>，大家可以看看實際效果。</p>
 <p><br/><br/></p>
 <p>其實視訊的操作沒有大家想像的那麼困難，簡單幾個 API 就可以做到，今天做的鏡頭截圖其實就可以做在會員的大頭照設定，讓使用者可以直接利用視訊鏡頭拍攝大頭照，相當便利。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10270021" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10270021">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -242,7 +238,7 @@ function capture() {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/20/webApi/webApi-7/" data-id="clcsdp5mt004oneqwasyadrwp" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/20/webApi/webApi-7/" data-id="clo2ctevc003jjsnlgg46hbdz" class="article-share-link">分享</a>
   </footer>
   
     
@@ -275,7 +271,7 @@ function capture() {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

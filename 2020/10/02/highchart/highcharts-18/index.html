@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;bGpzoZr避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  第一天就有跟各位說過，Highcharts 除了豐富的圖表設定外，另一大看點就是可以做到圖表的事件監聽，讓我們的圖表不僅僅只是展示資料，更是一個可以跟使用者互動的介面，所以今天就要來好好講講「事件屬性」。  事件屬性">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/seriesClick.png">
 <meta property="og:image" content="https://maxleebk.com/2020/10/02/highchart/highcharts-18/seriesOver.png">
 <meta property="article:published_time" content="2020-10-02T03:22:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.823Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.807Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -34,7 +34,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -48,10 +48,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -111,56 +107,56 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/bGpzoZr" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/bGpzoZr</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/bGpzoZr">https://codepen.io/max-lee/pen/bGpzoZr</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
 </blockquote>
 <p>第一天就有跟各位說過，Highcharts 除了豐富的圖表設定外，另一大看點就是可以做到圖表的事件監聽，讓我們的圖表不僅僅只是展示資料，更是一個可以跟使用者互動的介面，所以今天就要來好好講講「事件屬性」。</p>
 <hr>
 <h2 id="事件屬性"><a href="#事件屬性" class="headerlink" title="事件屬性"></a>事件屬性</h2><br/>
 
 <p>事件屬性和格式化屬性一樣，分佈在各個圖表區塊當中，不過基本上「圖表事件」、「數據列事件」、「數據點事件」這三個就能囊括八成以上的應用了，下面就大致先讓大家看看有哪些事件名稱吧。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: {
-    events: { // 圖表整體事件屬性
-      load: function() {},
-      redraw: function() {},
-      render: function() {},
-      addSeries: function() {},
-      click: function() {}
-    }
-  },
-  series: [{
-    events: { // 數據列事件屬性，繪圖區設定亦同
-      click: function() {},
-      mouseOver: function() {},
-      mouseOut: function() {},
-      show: function() {},
-      hide: function() {},
-      legendItemClick: function() {}
-    },  
-    data: [{
-      events: { // 數據點事件屬性
-        click: function() {},
-        mouseOver: function() {},
-        mouseOut: function() {},
-        select: function() {},
-        unselect: function() {},
-        update: function() {},
-        remove: function() {}
-      }
-    }]
-  }]
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123;
+    events: &#123; // 圖表整體事件屬性
+      load: function() &#123;&#125;,
+      redraw: function() &#123;&#125;,
+      render: function() &#123;&#125;,
+      addSeries: function() &#123;&#125;,
+      click: function() &#123;&#125;
+    &#125;
+  &#125;,
+  series: [&#123;
+    events: &#123; // 數據列事件屬性，繪圖區設定亦同
+      click: function() &#123;&#125;,
+      mouseOver: function() &#123;&#125;,
+      mouseOut: function() &#123;&#125;,
+      show: function() &#123;&#125;,
+      hide: function() &#123;&#125;,
+      legendItemClick: function() &#123;&#125;
+    &#125;,  
+    data: [&#123;
+      events: &#123; // 數據點事件屬性
+        click: function() &#123;&#125;,
+        mouseOver: function() &#123;&#125;,
+        mouseOut: function() &#123;&#125;,
+        select: function() &#123;&#125;,
+        unselect: function() &#123;&#125;,
+        update: function() &#123;&#125;,
+        remove: function() &#123;&#125;
+      &#125;
+    &#125;]
+  &#125;]
+&#125;);</code></pre>
 <p>其實這些事件屬性都不會很複雜，有部分跟 DOM 元素的事件也大同小異，而且設定上也很簡單，就是給予一個回呼函式 (Call-Back) 就好了，未來只要事件觸發了，Highcharts 就會幫你執行函式囉。</p>
 <br/>
 <br/>
 
 <h4 id="this-和-event-物件"><a href="#this-和-event-物件" class="headerlink" title="# this 和 event 物件"></a># this 和 event 物件</h4><p>在一般 JavaScript 的事件中，<code>this</code> 代表的是被賦予事件監聽的那個 DOM 元素，在 Highcharts 也是類似的，<code>this</code> 代表的就是那個被設定事件的圖表物件、數據列物件或數據點物件。</p>
 <p>相同地，你可以透過參數的設定去接住回呼函式中被 Highcharts 傳入的 <code>event</code> 物件，而不同的事件類型，<code>event</code> 物件會提供不同的屬性內容。</p>
-<pre><code class="javascript">events: {
-  click: function(event) {
+<pre><code class="javascript">events: &#123;
+  click: function(event) &#123;
     console.log(this, event)
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>透過 <code>this</code> 與 <code>event</code> 所提供的內容，我們就可以利用這些資訊來達到許多複雜互動與操作。</p>
 <br/>
 
@@ -193,42 +189,42 @@
 <h4 id="chart-events-addSeries"><a href="#chart-events-addSeries" class="headerlink" title="# chart.events.addSeries"></a># chart.events.addSeries</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
 <p>這個事件的觸發時機比較特別，當有一個新的數據列被加進圖表時會觸發，也就是使用 <code>addSeries()</code> 這個方法的時候會觸發，而它的 <code>event</code> 物件中有一個 <code>options</code> 屬性，有著該次加入的數據列內容。</p>
 <p>另外你也可以在函式中返回 <code>false</code> 就可以阻止這次的新增，如果成功新增也會觸發 <code>redraw</code> 和 <code>render</code> 事件。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: {
-    events: {
-      addSeries: function(event) {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123;
+    events: &#123;
+      addSeries: function(event) &#123;
         console.log(event.options)
         return event.options.data.length &gt;= 5;
         // 如果要被加入的數據列少於五個數據點，就不加入
-      }
-    }
-  }
-});
+      &#125;
+    &#125;
+  &#125;
+&#125;);
 
-myChart.addSeries({
+myChart.addSeries(&#123;
   name: &quot;newSeries&quot;,
   data: [12, 15, 12, 5]
-})
+&#125;)
 
-// console: { name: &quot;newSeries&quot;, data: [12, 15, 12, 5] }</code></pre>
+// console: &#123; name: &quot;newSeries&quot;, data: [12, 15, 12, 5] &#125;</code></pre>
 <br/>
 <br/>
 
 <h4 id="chart-events-click"><a href="#chart-events-click" class="headerlink" title="# chart.events.click"></a># chart.events.click</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
 <p>當你點擊「繪圖區」時會觸發這個事件，它的 <code>event</code> 物件除了有滑鼠事件的相關屬性外，還有提供「座標軸物件」，甚至還有「該點擊處」在圖表中所代表的Ｘ／Ｙ軸數值。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: {
-    events: {
-      click: function(event) {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123;
+    events: &#123;
+      click: function(event) &#123;
         // 拿到點擊處的Ｘ／Ｙ數值，並加進數據列當中
         this.series[0].addPoint([
           event.xAxis[0].value,
           event.yAxis[0].value,
         ])
-      }
-    }
-  }
-});</code></pre>
+      &#125;
+    &#125;
+  &#125;
+&#125;);</code></pre>
 <hr>
 <h2 id="數據列事件"><a href="#數據列事件" class="headerlink" title="數據列事件"></a>數據列事件</h2><br/>
 
@@ -274,15 +270,15 @@ myChart.addSeries({
 <h4 id="series-events-legendItemClick"><a href="#series-events-legendItemClick" class="headerlink" title="# series.events.legendItemClick"></a># series.events.legendItemClick</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
 <p>這個屬性是你只要點擊圖例就會觸發，因此觸發順序應該會是 <code>legendItemClick</code> 才接到 <code>show</code> 或 <code>hide</code>，另外你還可以在回呼函式中返回一個 <code>false</code>，那就會使本次點擊圖例的效果失效。</p>
 <p>它的 <code>event</code> 物件比前兩者多了一個 <code>browserEvent</code>，內容為滑鼠事件的相關屬性。</p>
-<pre><code class="javascript">series: [{
-  events: {
-    legendItemClick: function(event){
+<pre><code class="javascript">series: [&#123;
+  events: &#123;
+    legendItemClick: function(event)&#123;
       // event.target.visible 為數據列目前是否顯示
       // 會使數據點只許隱藏，卻無法再次顯示
       return event.target.visible;
-    } 
-  }
-}] </code></pre>
+    &#125; 
+  &#125;
+&#125;] </code></pre>
 <br/>
 <br/>
 
@@ -311,15 +307,15 @@ myChart.addSeries({
 
 <h4 id="series-data-events-select"><a href="#series-data-events-select" class="headerlink" title="# series.data.events.select"></a># series.data.events.select</h4><p><code>型別: Function</code> <code>預設: undefined</code></p>
 <p>在你選取了數據點時會觸發這個事件，此事件必須在 <code>series.allowPointSelect</code> 開啟的狀態下才能作用，<code>event</code> 物件的內容和 <code>mouse</code> 系列相同。此外你可以透過回傳 <code>false</code> 來取消選取動作：</p>
-<pre><code class="javascript">data: [{
+<pre><code class="javascript">data: [&#123;
   y: 3,
-  events: {
-    select: function(){
+  events: &#123;
+    select: function()&#123;
       // 這個數據點將無法被選取
       return this.y &gt; 5 
-    } 
-  }
-}]</code></pre>
+    &#125; 
+  &#125;
+&#125;]</code></pre>
 <br/>
 <br/>
 
@@ -349,7 +345,7 @@ myChart.addSeries({
 <p>今天把比較主力的幾個事件屬性介紹完畢，非常強烈建議大家到今天的範例裡去玩玩看，我準備的應該算很周全，可以讓大家知道各件事的機制以及觸發順序，明天的話則是要跟大家介紹 Highcharts 裡一些更新資料與設定的方法 (method)。</p>
 <p>像是今天就有稍微帶到 <code>addSeries()</code> 和 <code>update()</code>…等等，在下個章節中都會比較詳細的介紹它們。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10247862" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10247862">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -365,7 +361,7 @@ myChart.addSeries({
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/10/02/highchart/highcharts-18/" data-id="clcsdp5ki001oneqw9bn82enn" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/10/02/highchart/highcharts-18/" data-id="clo2ctetx000tjsnl4a70b9uo" class="article-share-link">分享</a>
   </footer>
   
     
@@ -398,7 +394,7 @@ myChart.addSeries({
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

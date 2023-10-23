@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/13/webApi/webApi-29/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="我的字典裡沒有放棄，因為已鎖定你  現在有不少網站都有地圖相關的功能，而為了解決地圖繪製、路線運算、區域標示…等等複雜的功能，通常大家都會選用第三方的套件或服務，例如 Google Map API、Leaflet、MapBox 之類的，也因為有了這些好用的地圖套件，所以瀏覽器本身的 Geolocation API 可能就容易被遺忘。  Geolocation當然，Geolocation API">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/10/13/webApi/webApi-29/check.png">
 <meta property="article:published_time" content="2021-10-13T11:19:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.030Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.059Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -117,11 +113,11 @@
 <h2 id="Geolocation"><a href="#Geolocation" class="headerlink" title="Geolocation"></a>Geolocation</h2><p>當然，Geolocation API 並沒有上述那些套件的強大功能，它能做的就是取得使用者目前的地理座標位置，不過，要是你的功能並沒有那麼複雜，單單只是想知道用戶位置的話，其他大可不用殺雞焉用牛刀，Geolocation API 就可以滿足你了。</p>
 <p><br/><br/></p>
 <h4 id="Navigator-geolocation"><a href="#Navigator-geolocation" class="headerlink" title="# Navigator.geolocation"></a># Navigator.geolocation</h4><p>Geolocation 的支援度是非常高的，電腦、手機，各家瀏覽器基本上都是可以使用的，不過在使用前你依然可以先進行檢查，若瀏覽器支援的話，只要透過 <code>navigator.geolocation</code> 就能取得 Geolocation 實體。</p>
-<pre><code class="javascript">if (&quot;geolocation&quot; in navigator) {
+<pre><code class="javascript">if (&quot;geolocation&quot; in navigator) &#123;
   console.log(navigator.geolocation);
-} else {
+&#125; else &#123;
   alert(&quot;你的裝置或瀏覽器不支援定位功能&quot;);
-}</code></pre>
+&#125;</code></pre>
 <p><br/><br/></p>
 <h4 id="Geolocation-getCurrentPosition"><a href="#Geolocation-getCurrentPosition" class="headerlink" title="# Geolocation.getCurrentPosition"></a># Geolocation.getCurrentPosition</h4><p>有了 Geolocation 實體後，就可以用 <code>getCurrentPosition</code> method 來取得座標位置了，該方法有三個參數，其中第一個為必傳，後兩個為選填：</p>
 <ul>
@@ -142,31 +138,31 @@
 <blockquote>
 <p><strong>注意</strong>： 若將 <code>enableHighAccuracy</code> 打開，位置資訊的回傳時間將會變長，且可能會使裝置消耗更多電量。</p>
 </blockquote>
-<pre><code class="javascript">function successHandler(position) {
+<pre><code class="javascript">function successHandler(position) &#123;
   console.log(position);
-}
+&#125;
 
-function errorHandler(err) {
+function errorHandler(err) &#123;
   console.log(err);
-}
+&#125;
 
-navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+navigator.geolocation.getCurrentPosition(successHandler, errorHandler, &#123;
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0,
-});</code></pre>
+&#125;);</code></pre>
 <p>由於定位資訊屬於隱私範圍，所以在呼叫 <code>getCurrentPosition</code> 時，它會先確認裝置的授權狀態，若使用者不接受則會發生錯誤，若使用者未表明授權與否，則會出現詢問對話框。</p>
 <img src="check.png" style="max-width: 500px; margin: 24px auto;" />
 
 <p><br/><br/></p>
 <h4 id="Geolocation-watchPosition"><a href="#Geolocation-watchPosition" class="headerlink" title="# Geolocation.watchPosition"></a># Geolocation.watchPosition</h4><p>除了 <code>getCurrentPosition</code> 可以拿到執行當下的使用者定位之外，還有另外一個 method 是 <code>watchPosition</code>，它的功能與參數都與 <code>getCurrentPosition</code> 相同，差別是它會在使用者的位置發生改變時主動觸發 Success CallBack，等於是在監聽使用者的定位。</p>
-<pre><code class="javascript">function successHandler(position) {
+<pre><code class="javascript">function successHandler(position) &#123;
   console.log(position);
-}
+&#125;
 
-function errorHandler(err) {
+function errorHandler(err) &#123;
   console.log(err);
-}
+&#125;
 
 // watchPosition 執行後會回傳一個獨一的 ID
 const geoId = navigator.geolocation.watchPosition(successHandler, errorHandler);</code></pre>
@@ -223,28 +219,28 @@ navigator.geolocation.clearWatch(geoId);</code></pre>
 
 &lt;script&gt;
   const result = document.querySelector(&quot;#result&quot;);
-  function successHandler(position) {
-    const { longitude, latitude } = position.coords;
+  function successHandler(position) &#123;
+    const &#123; longitude, latitude &#125; = position.coords;
 
     // 取得經緯度後傳給後端進行門市的搜尋
-    axios.get(&quot;https://backend/store&quot;, { longitude, latitude }).then((res) =&gt; {
+    axios.get(&quot;https://backend/store&quot;, &#123; longitude, latitude &#125;).then((res) =&gt; &#123;
       const store = res.data;
       result.innerHTML = &quot;離你最近的門市是&quot; + store.name + &quot;地址： &quot; store.address;
-    });
-  }
+    &#125;);
+  &#125;
 
-  function errorHandler(err) {
+  function errorHandler(err) &#123;
     alert(&quot;暫時無法取得您的所在位置，請稍後再試&quot;);
-  }
+  &#125;
 
-  function getPosition() {
+  function getPosition() &#123;
     navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <p><br/><br/></p>
 <p>每每說到裝置定位、座標時，大家第一個想到的可能都是 Google Map 或其他地圖套件，但其實瀏覽器本身就有 Geolocation API 可以幫我們處理簡單的定位功能。所以要是你的功能未必要顯示地圖的話，其實你可以選擇使用它喔。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10281557" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10281557">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -260,7 +256,7 @@ navigator.geolocation.clearWatch(geoId);</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/13/webApi/webApi-29/" data-id="clcsdp5mp004cneqweqgd5ow0" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/13/webApi/webApi-29/" data-id="clo2ctev40036jsnldbfm1dql" class="article-share-link">分享</a>
   </footer>
   
     
@@ -293,7 +289,7 @@ navigator.geolocation.clearWatch(geoId);</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

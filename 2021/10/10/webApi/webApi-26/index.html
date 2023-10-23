@@ -13,14 +13,14 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="就算拖拖拉拉，也可以把待辦事項處理好  昨天雖然已經知道該如何使用 Drag &amp; Drop API 了，不過今天會實際用它來做個「拖拉式待辦清單」，用具體的範例來讓我們更加理解它的運用技巧。  設計概念  # 確立需求與功能 既然是待辦清單，那自然要可以新增待辦事項 每項任務可以透過拖曳來進行狀態的更換（待處理、進行中、已完成） 每項任務可以透過拖曳來進行排序的調換 每項任務可以透過拖曳">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/layout.png">
 <meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/add.gif">
 <meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/drag.gif">
 <meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/sort.gif">
 <meta property="og:image" content="https://maxleebk.com/2021/10/10/webApi/webApi-26/done.gif">
 <meta property="article:published_time" content="2021-10-10T09:39:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.983Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.003Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -37,7 +37,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -51,10 +51,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -160,7 +156,7 @@
 const button = document.querySelector(&quot;button&quot;);
 const todoList = input.parentElement.nextElementSibling;
 
-function createToDo(content) {
+function createToDo(content) &#123;
   const newItem = document.createElement(&quot;li&quot;);
   newItem.classList.add(&quot;item&quot;);
   // 記得要加上 draggable，這樣任務才可以拖曳
@@ -168,63 +164,63 @@ function createToDo(content) {
   newItem.textContent = content;
   todoList.appendChild(newItem);
   input.value = &quot;&quot;;
-}
+&#125;
 
-input.addEventListener(&quot;keydown&quot;, (e) =&gt; {
+input.addEventListener(&quot;keydown&quot;, (e) =&gt; &#123;
   if (!input.value.trim() || e.which !== 13) return;
   createToDo(input.value);
-});
+&#125;);
 
-button.addEventListener(&quot;click&quot;, () =&gt; {
+button.addEventListener(&quot;click&quot;, () =&gt; &#123;
   if (!input.value.trim()) return;
   createToDo(input.value);
-});</code></pre>
+&#125;);</code></pre>
 <img src="add.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <h4 id="拖曳以改變任務狀態"><a href="#拖曳以改變任務狀態" class="headerlink" title="# 拖曳以改變任務狀態"></a># 拖曳以改變任務狀態</h4><p>接著我們要讓任務可以進行「拖曳」，且三個不同的區塊都要可以「被放置」任務，也就是 Drag &amp; Drop API 的部分了，分別把 Drag Source 和 Drop Location 監聽事件的流程包裝成函式，然後在新增任務時把元素加上 <code>drag</code> 相關事件，以及為三個狀態區塊加上 <code>drop</code> 相關事件。</p>
 <pre><code class="javascript">// 用來暫存被 drag 的元素
 let source = null;
-function addDragEvt(element) {
-  element.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+function addDragEvt(element) &#123;
+  element.addEventListener(&quot;dragstart&quot;, (e) =&gt; &#123;
     e.target.classList.add(&quot;dragging&quot;);
     source = e.target;
-  });
-  element.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+  &#125;);
+  element.addEventListener(&quot;dragend&quot;, (e) =&gt; &#123;
     e.target.classList.remove(&quot;dragging&quot;);
     source = null;
-  });
-}
+  &#125;);
+&#125;
 
-function createToDo(content) {
+function createToDo(content) &#123;
   // ...前面省略
   // 記得在 createToDo 中加入這一行來為新增的 li 監聽事件
   addDragEvt(newItem);
   todoList.appendChild(newItem);
   input.value = &quot;&quot;;
-}</code></pre>
-<pre><code class="javascript">function addDropEvt(element) {
-  element.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+&#125;</code></pre>
+<pre><code class="javascript">function addDropEvt(element) &#123;
+  element.addEventListener(&quot;dragover&quot;, (e) =&gt; &#123;
     e.preventDefault();
-  });
-  element.addEventListener(&quot;drop&quot;, (e) =&gt; {
+  &#125;);
+  element.addEventListener(&quot;drop&quot;, (e) =&gt; &#123;
     e.currentTarget.querySelector(&quot;ol&quot;).appendChild(source);
-  });
-}
+  &#125;);
+&#125;
 
 const columns = document.querySelectorAll(&quot;.column&quot;);
-columns.forEach((column) =&gt; {
+columns.forEach((column) =&gt; &#123;
   addDropEvt(column);
-});</code></pre>
+&#125;);</code></pre>
 <img src="drag.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <h4 id="拖曳以改變任務排序"><a href="#拖曳以改變任務排序" class="headerlink" title="# 拖曳以改變任務排序"></a># 拖曳以改變任務排序</h4><p>現在各項任務已經可以通過拖曳放置在不同狀態的區塊了，現在要來處理排序問題了，我們可以先透過 <code>dragover</code> 事件來取得鼠標的位置，得以判斷使用者想要把項目放在哪一個位置，並且利用樣式的改變讓使用者能更清楚知道他放開滑鼠後，任務會被加在哪裡：</p>
-<pre><code class="css">.item {
+<pre><code class="css">.item &#123;
   position: relative;
-}
+&#125;
 .item::before,
-.item::after {
+.item::after &#123;
   content: &quot;&quot;;
   position: absolute;
   display: block;
@@ -232,87 +228,87 @@ columns.forEach((column) =&gt; {
   height: 4px;
   background: lightblue;
   opacity: 0;
-}
-.item.before::before {
+&#125;
+.item.before::before &#123;
   top: -2px;
   left: 0;
   opacity: 1;
-}
-.item.after::after {
+&#125;
+.item.after::after &#123;
   bottom: -2px;
   left: 0;
   opacity: 1;
-}</code></pre>
+&#125;</code></pre>
 <pre><code class="javascript">// 用來暫存被 dragover 的元素
 let overItem = null;
 
 // 重置被 dragover 的元素
-function clearOverItem() {
+function clearOverItem() &#123;
   if (!overItem) return;
   overItem.classList.remove(&quot;before&quot;);
   overItem.classList.remove(&quot;after&quot;);
   overItem = null;
-}
+&#125;
 
-function addDropEvt(element) {
-  element.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+function addDropEvt(element) &#123;
+  element.addEventListener(&quot;dragover&quot;, (e) =&gt; &#123;
     clearOverItem();
     // 如果 dragover 的元素也是任務項目且不是目前被 drag 的 source 時執行
-    if (e.target.getAttribute(&quot;draggable&quot;) &amp;&amp; e.target !== source) {
+    if (e.target.getAttribute(&quot;draggable&quot;) &amp;&amp; e.target !== source) &#123;
       overItem = e.target;
 
-      if (e.offsetY &gt; overItem.offsetHeight / 2) {
+      if (e.offsetY &gt; overItem.offsetHeight / 2) &#123;
         // 如果鼠標在元素的下半部顯示下方的藍條
         overItem.classList.add(&quot;after&quot;);
-      } else {
+      &#125; else &#123;
         // 反之，顯示上方的藍條
         overItem.classList.add(&quot;before&quot;);
-      }
-    }
+      &#125;
+    &#125;
     e.preventDefault();
-  });
+  &#125;);
   //...以下省略
-}</code></pre>
+&#125;</code></pre>
 <img src="sort.gif" style="margin: 24px auto;" />
 
 <p>接著我們只要在修改一下 <code>drop</code> 事件，在當中判斷目前被 <code>dragover</code> 元素的狀態就可以放到對應的位置了：</p>
-<pre><code class="javascript">function addDropEvt(element) {
+<pre><code class="javascript">function addDropEvt(element) &#123;
   //...以上省略
-  element.addEventListener(&quot;drop&quot;, (e) =&gt; {
+  element.addEventListener(&quot;drop&quot;, (e) =&gt; &#123;
     const list = e.currentTarget.querySelector(&quot;ol&quot;);
-    if (overItem) {
-      if (overItem.classList.contains(&quot;before&quot;)) {
+    if (overItem) &#123;
+      if (overItem.classList.contains(&quot;before&quot;)) &#123;
         // 如果 overItem 有 before class 就將 source 移動到它的前面
         list.insertBefore(source, overItem);
-      } else {
+      &#125; else &#123;
         // 反之，有 after class 就將 source 移動到它的後面
         list.insertBefore(source, overItem.nextElementSibling);
-      }
-    } else {
+      &#125;
+    &#125; else &#123;
       // 如果沒有 overItem 也沒有更換狀態就不動作
       if (e.currentTarget.contains(source)) return;
       // 反之，加到最後面
       else list.appendChild(source);
-    }
+    &#125;
     clearOverItem();
-  });
-}</code></pre>
+  &#125;);
+&#125;</code></pre>
 <img src="done.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <h4 id="拖曳以刪除任務"><a href="#拖曳以刪除任務" class="headerlink" title="# 拖曳以刪除任務"></a># 拖曳以刪除任務</h4><p>最後在把刪除的功能給補上，這樣一切就大功告成了。</p>
 <pre><code class="javascript">const del = document.querySelector(&quot;.delete&quot;);
-del.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+del.addEventListener(&quot;dragover&quot;, (e) =&gt; &#123;
   e.preventDefault();
-});
-del.addEventListener(&quot;drop&quot;, (e) =&gt; {
+&#125;);
+del.addEventListener(&quot;drop&quot;, (e) =&gt; &#123;
   source.remove();
   clearOverItem();
-});</code></pre>
+&#125;);</code></pre>
 <p><br/><br/></p>
-<p>整個範例做完後，希望各位對於 Drag &amp; Drop API 能有更深更具體的認識，如果你在動手做之前想先試玩看看的話，我把原始碼放在 <a href="https://codepen.io/max-lee/pen/rNzNXOX" target="_blank" rel="noopener">CodePen</a> 囉，如果文章中的說明看不是很懂的話，也可以在 CodePen 看看，有任何問題或建議也好歡迎各位提出～</p>
+<p>整個範例做完後，希望各位對於 Drag &amp; Drop API 能有更深更具體的認識，如果你在動手做之前想先試玩看看的話，我把原始碼放在 <a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/rNzNXOX">CodePen</a> 囉，如果文章中的說明看不是很懂的話，也可以在 CodePen 看看，有任何問題或建議也好歡迎各位提出～</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10280490" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10280490">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -328,7 +324,7 @@ del.addEventListener(&quot;drop&quot;, (e) =&gt; {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/10/webApi/webApi-26/" data-id="clcsdp5mn0046neqw06rkemsv" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/10/webApi/webApi-26/" data-id="clo2ctev1002zjsnl8ufkd43s" class="article-share-link">分享</a>
   </footer>
   
     
@@ -361,7 +357,7 @@ del.addEventListener(&quot;drop&quot;, (e) =&gt; {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

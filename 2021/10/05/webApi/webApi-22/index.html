@@ -13,13 +13,13 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="當你進入我的眼簾，我們的命運就有了交集～  看到 Observer，應該就知道今天要介紹的又是「觀察者」系列的 API 了，而且這次的觀察者可能比前面的 MutationObserver 和 ResizeObserver 還要實用。只要有了它，Scroll Animation 就只是一塊小蛋糕了。  IntersectionObserverIntersectionObserver 幫我們觀察的是">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/inter.gif">
 <meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/options2.png">
 <meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/rect.png">
 <meta property="og:image" content="https://maxleebk.com/2021/10/05/webApi/webApi-22/infinity.gif">
 <meta property="article:published_time" content="2021-10-05T12:11:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.939Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.951Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -36,7 +36,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -50,10 +50,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -132,24 +128,24 @@
 </ul>
 <br/>
 
-<pre><code class="javascript">const observer = new IntersectionObserver((entries, owner) =&gt; {
+<pre><code class="javascript">const observer = new IntersectionObserver((entries, owner) =&gt; &#123;
   console.log(owner); // IntersectionObserver 實體
-  entries.forEach((entry) =&gt; {
+  entries.forEach((entry) =&gt; &#123;
     console.log(entry); // IntersectionObserverEntry 物件
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <br/>
 
 <p>另外，IntersectionObserver 除了 Callback 之外還有一個可選的 <code>options</code> 參數可以設定：</p>
-<pre><code class="javascript">const callback = function (entries) {
+<pre><code class="javascript">const callback = function (entries) &#123;
   console.log(entries);
-};
+&#125;;
 
-const observer = new IntersectionObserver(callback, {
+const observer = new IntersectionObserver(callback, &#123;
   root: null,
   rootMargin: &quot;0px 0px 0px 0px&quot;,
   threshold: 0.0,
-});</code></pre>
+&#125;);</code></pre>
 <br/>
 
 <p>這個 <code>options</code> 參數須為物件，並接受上面這三個屬性：</p>
@@ -167,26 +163,26 @@ const observer = new IntersectionObserver(callback, {
 
 <p><br/><br/></p>
 <h4 id="IntersectionObserver-observe"><a href="#IntersectionObserver-observe" class="headerlink" title="# IntersectionObserver.observe"></a># IntersectionObserver.observe</h4><p>老樣子，觀察者們都需要我們使用 <code>observe</code> method 來指定觀察對象：</p>
-<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; &#123;
   console.log(entries);
-});
+&#125;);
 
 const div = document.querySelector(&quot;div&quot;);
 observer.observe(div);</code></pre>
 <p><br/><br/></p>
 <h4 id="IntersectionObserver-unobserve"><a href="#IntersectionObserver-unobserve" class="headerlink" title="# IntersectionObserver.unobserve"></a># IntersectionObserver.unobserve</h4><p>若要註銷某元素的觀察，IntersectionObserver 一樣有 <code>unobserve</code> method 可以使用：</p>
-<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; &#123;
   console.log(entries);
-});
+&#125;);
 
 const div = document.querySelector(&quot;div&quot;);
 observer.observe(div);
 observer.unobserve(div);</code></pre>
 <p><br/><br/></p>
 <h4 id="IntersectionObserver-disconnect"><a href="#IntersectionObserver-disconnect" class="headerlink" title="# IntersectionObserver.disconnect"></a># IntersectionObserver.disconnect</h4><p>當然也可以一次性的註銷所有元素的觀察，同樣要記得，IntersectionObserver 實體並不會消失，只是沒有觀測中的元素而已，你依然可以再次使用 <code>observe</code> 來註冊一個新的觀察：</p>
-<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; &#123;
   console.log(entries);
-});
+&#125;);
 const box1 = document.querySelector(&quot;.box1&quot;);
 const box2 = document.querySelector(&quot;.box2&quot;);
 observer.observe(box1);
@@ -205,15 +201,15 @@ observer.observe(box2);</code></pre>
 <ul>
 <li><strong>IntersectionObserverEntry.isIntersecting</strong><br><code>isIntersecting</code> 是當中非常實用的屬性，用來表示目前元素是否與可是範圍（root）相交，也就是目標元素是否進入到可視範圍中。</li>
 </ul>
-<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; {
-  entries.forEach((entry) =&gt; {
-    if (entry.isIntersecting) {
+<pre><code class="javascript">const observer = new IntersectionObserver((entries) =&gt; &#123;
+  entries.forEach((entry) =&gt; &#123;
+    if (entry.isIntersecting) &#123;
       // 目標元素進入 viewport 時執行
-    } else {
+    &#125; else &#123;
       // 目標元素離開 viewport 時執行
-    }
-  });
-});</code></pre>
+    &#125;
+  &#125;);
+&#125;);</code></pre>
 <br/>
 
 <ul>
@@ -256,26 +252,26 @@ observer.observe(box2);</code></pre>
 
 // 這個 function 會一次新增20筆項目到 ul 中
 // 用來模擬獲取資料後渲染畫面
-const getMoreItem = () =&gt; {
+const getMoreItem = () =&gt; &#123;
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i &lt;= 20; i++) {
+  for (let i = 0; i &lt;= 20; i++) &#123;
     const item = document.querySelector(&quot;li:first-child&quot;);
     const newItem = item.cloneNode(true);
     fragment.appendChild(newItem);
-  }
+  &#125;
   ul.appendChild(fragment);
-};
+&#125;;
 
 const observer = new IntersectionObserver(
-  function (entries, observer) {
+  function (entries, observer) &#123;
     // 每當目標元素進入畫面後就新增20筆，並且重置觀察的元素
-    if (entries[0].isIntersecting) {
+    if (entries[0].isIntersecting) &#123;
       getMoreItem();
       observer.unobserve(entries[0].target);
       observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));
-    }
-  },
-  { root: ul } // 觀察窗口為 ul 的元素範圍
+    &#125;
+  &#125;,
+  &#123; root: ul &#125; // 觀察窗口為 ul 的元素範圍
 );
 
 getMoreItem();
@@ -285,7 +281,7 @@ observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));</cod
 <p><br/><br/></p>
 <p>IntersectionObserver 是不是非常方便呢？昨天我們還在用 <code>getBoundingClientRect</code> 來計算元素是否進入畫面，今天已經連計算都不用計算，完全交由「觀察者」來幫忙偵測，我們只要坐等通知就好了，大家快把它學起來，當個懶惰的工程師吧！</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10279046" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10279046">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -301,7 +297,7 @@ observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));</cod
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/05/webApi/webApi-22/" data-id="clcsdp5mj003wneqwdbzhbmwi" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/05/webApi/webApi-22/" data-id="clo2cteux002rjsnleof137q5" class="article-share-link">分享</a>
   </footer>
   
     
@@ -334,7 +330,7 @@ observer.observe(document.querySelector(&quot;li:nth-last-child(2)&quot;));</cod
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2020/10/03/highchart/highcharts-19/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;qBZvgGv  在 Highcharts 中呢，除了五花八門的設定屬性之外，還有不少內建的函式可以操作圖表，這種函式通常都稱之為「方法（Method）」。 圖表最重要的目的在於呈現資料，而資料在網頁中不僅重要卻還時常變化，時常都會利用非同步請求來取得資料，而在請求回應後就需要有辦法改變圖表中的資料或設定，所以今天就是要來">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/10/03/highchart/highcharts-19/dynamic.gif">
 <meta property="article:published_time" content="2020-10-03T02:52:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.827Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.807Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -110,7 +106,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/qBZvgGv" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/qBZvgGv</a></strong></p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/qBZvgGv">https://codepen.io/max-lee/pen/qBZvgGv</a></strong></p>
 </blockquote>
 <p>在 Highcharts 中呢，除了五花八門的設定屬性之外，還有不少內建的函式可以操作圖表，這種函式通常都稱之為「方法（Method）」。</p>
 <p>圖表最重要的目的在於呈現資料，而資料在網頁中不僅重要卻還時常變化，時常都會利用非同步請求來取得資料，而在請求回應後就需要有辦法改變圖表中的資料或設定，所以今天就是要來專門講講這些負責 <strong>更新圖表資料或設定</strong> 的 Method。</p>
@@ -150,29 +146,29 @@ chart.series[0].data[0].remove();</code></pre>
 
 <h4 id="chart-update-options"><a href="#chart-update-options" class="headerlink" title="# chart.update(options)"></a># chart.update(options)</h4><p><code>options: Object</code></p>
 <p>這個 Method 可以更新圖表內的任何設定，包括數據列、座標軸等等都能夠更新，而使用方式便是將要更新<br>的 <code>options</code> 物件以參數傳入，而 Highcharts 一樣會幫你做深層的合併，所以你不需要把未更動的設定再撰寫一遍。</p>
-<pre><code class="javascript">var chart = Highcharts.chart(container, {
-  title: { text: &quot;我的圖表&quot; },
-  credits: { enabled: false },
+<pre><code class="javascript">var chart = Highcharts.chart(container, &#123;
+  title: &#123; text: &quot;我的圖表&quot; &#125;,
+  credits: &#123; enabled: false &#125;,
   series: [
-    { name: &quot;數據列1&quot;, data: [1,2,3] },
-    { name: &quot;數據列2&quot;, data: [4,5,6] }
+    &#123; name: &quot;數據列1&quot;, data: [1,2,3] &#125;,
+    &#123; name: &quot;數據列2&quot;, data: [4,5,6] &#125;
   ]        
-});
+&#125;);
 // 只有第一組數據列會被更新，但第二組並不會消失
-chart.update({
-  title: { text: &quot;我的圖表(已更新)&quot; },
-  series: [{ data: [10,20,30] }]
-});</code></pre>
+chart.update(&#123;
+  title: &#123; text: &quot;我的圖表(已更新)&quot; &#125;,
+  series: [&#123; data: [10,20,30] &#125;]
+&#125;);</code></pre>
 <br/>
 <br/>
 
 <h4 id="chart-addSeries-series"><a href="#chart-addSeries-series" class="headerlink" title="# chart.addSeries(series)"></a># chart.addSeries(series)</h4><p><code>series: Object</code></p>
 <p>昨天其實有簡單帶到這個 Method，它可以在圖表中新增一組新的數據列，只要把新數據列的設定物件傳進參數即可。</p>
-<pre><code class="javascript">chart.addSeries({
+<pre><code class="javascript">chart.addSeries(&#123;
   name: &quot;新數據列&quot;,
-  dataLabels: { enabled: true },
+  dataLabels: &#123; enabled: true &#125;,
   data: [[10,20], [30,40], [50,60]]
-});</code></pre>
+&#125;);</code></pre>
 <hr>
 <h2 id="數據列更新-Method"><a href="#數據列更新-Method" class="headerlink" title="數據列更新 Method"></a>數據列更新 Method</h2><br/>
 
@@ -183,18 +179,18 @@ chart.update({
 
 <h4 id="series-update-options"><a href="#series-update-options" class="headerlink" title="# series.update(options)"></a># series.update(options)</h4><p><code>options: Object</code></p>
 <p>和前面的 <code>chart.update()</code> 是一樣概念，將你要更新的數據列設定物件作為參數傳入函式中，即可改變數據列的設定。</p>
-<pre><code class="javascript">var chart = Highcharts.chart(container, {
+<pre><code class="javascript">var chart = Highcharts.chart(container, &#123;
   series: [
-    { name: &quot;數據列1&quot;, data: [1,2,3] },
-    { name: &quot;數據列2&quot;, data: [4,5,6] }
+    &#123; name: &quot;數據列1&quot;, data: [1,2,3] &#125;,
+    &#123; name: &quot;數據列2&quot;, data: [4,5,6] &#125;
   ]
-});
+&#125;);
 // 第二組數據列將被更新
-chart.series[1].update({
+chart.series[1].update(&#123;
   name: &quot;數據列2(被更新)&quot;,
   color: &quot;red&quot;,
   data: [40, 50, 60]
-});</code></pre>
+&#125;);</code></pre>
 <br/>
 <br/>
 
@@ -205,9 +201,9 @@ chart.series[1].update({
 
 <h4 id="series-setData-data"><a href="#series-setData-data" class="headerlink" title="# series.setData(data)"></a># series.setData(data)</h4><p><code>data: Array</code></p>
 <p>如果僅僅只是要改變數據列的 <code>data</code> 屬性，那可以選擇使用這個 Method，而不需要使用 <code>update()</code>，呼叫時只要傳入新的數據點陣列即可。</p>
-<pre><code class="javascript">var chart = Highcharts.chart(container, {
-  series: [{ data: [1,2,3] }]
-});
+<pre><code class="javascript">var chart = Highcharts.chart(container, &#123;
+  series: [&#123; data: [1,2,3] &#125;]
+&#125;);
 // 數據列的數據將會改變
 chart.series[0].setData([4,5,6]);</code></pre>
 <br/>
@@ -215,15 +211,15 @@ chart.series[0].setData([4,5,6]);</code></pre>
 
 <h4 id="series-addPoint-point"><a href="#series-addPoint-point" class="headerlink" title="# series.addPoint(point)"></a># series.addPoint(point)</h4><p><code>point: Number|Array|Object</code></p>
 <p>看過前面的 <code>addSeries()</code> 之後應該很好理解，就是在你要操作的數據列中新增一個數據點，而傳入的參數可以接受任何形式的數據點格式，形式種類之前在「數據點設定」的章節中有介紹過。</p>
-<pre><code class="javascript">chart.series[0].addPoint({x: 10, y: 10});</code></pre>
+<pre><code class="javascript">chart.series[0].addPoint(&#123;x: 10, y: 10&#125;);</code></pre>
 <br/>
 <br/>
 
 <h4 id="series-removePoint-index"><a href="#series-removePoint-index" class="headerlink" title="# series.removePoint(index)"></a># series.removePoint(index)</h4><p><code>index: Number</code></p>
 <p>在你呼叫這個 Method 時，會從你正在操作的數據列中移除一個數據點，而你必須傳入該數據點的索引值，Highcharts 才知道要移除的是哪一個。</p>
-<pre><code class="javascript">var chart = Highcharts.chart(container, {
-  series: [{ data: [6,7,8,9,10] }]
-});
+<pre><code class="javascript">var chart = Highcharts.chart(container, &#123;
+  series: [&#123; data: [6,7,8,9,10] &#125;]
+&#125;);
 // 第三個數據點將會被移除
 chart.series[0].removePoint(2);</code></pre>
 <hr>
@@ -236,11 +232,11 @@ chart.series[0].removePoint(2);</code></pre>
 
 <h4 id="point-update-options"><a href="#point-update-options" class="headerlink" title="# point.update(options)"></a># point.update(options)</h4><p><code>options: Number|Array|Object</code></p>
 <p>和前面的所有的 <code>update</code> 方法都是一樣的，將你要更新的數據點設定作為參數傳入函式中，即可改變數據點的設定，不過此 Method 的參數可以接受任何數據點設定格式。</p>
-<pre><code class="javascript">var chart = Highcharts.chart(container, {
-  series: [{ data: [10, 11, 12, 13, 14] }]
-});
+<pre><code class="javascript">var chart = Highcharts.chart(container, &#123;
+  series: [&#123; data: [10, 11, 12, 13, 14] &#125;]
+&#125;);
 // 第四個數據點將被更新
-chart.series[0].data[3].update({ y: 20, color: &quot;red&quot; });</code></pre>
+chart.series[0].data[3].update(&#123; y: 20, color: &quot;red&quot; &#125;);</code></pre>
 <br/>
 <br/>
 
@@ -255,12 +251,12 @@ chart.series[0].data[3].update({ y: 20, color: &quot;red&quot; });</code></pre>
 
 <h4 id="series-id-series-data-id"><a href="#series-id-series-data-id" class="headerlink" title="# series.id / series.data.id"></a># series.id / series.data.id</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
 <p>這兩個屬性可以為數據列／數據點設定 ID Name，這樣就可以透過 <code>chart.get()</code> 這個 Method 來直接選取它們。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  series: [{ 
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  series: [&#123; 
     id: &quot;mySeries&quot;,
-    data: [1, 2, {y: 3, id: &quot;myPoint&quot; }]
-  }]
-});
+    data: [1, 2, &#123;y: 3, id: &quot;myPoint&quot; &#125;]
+  &#125;]
+&#125;);
 
 let series = myChart.get(&quot;mySeries&quot;);
 let point = myChart.get(&quot;myPoint&quot;);</code></pre>
@@ -269,7 +265,7 @@ let point = myChart.get(&quot;myPoint&quot;);</code></pre>
 <img src="dynamic.gif" style="max-width: 600px; margin: 24px auto;" />
 
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10248326" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10248326">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -285,7 +281,7 @@ let point = myChart.get(&quot;myPoint&quot;);</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/10/03/highchart/highcharts-19/" data-id="clcsdp5kl001qneqw7imr48nl" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/10/03/highchart/highcharts-19/" data-id="clo2ctety000wjsnl2qshcv5c" class="article-share-link">分享</a>
   </footer>
   
     
@@ -318,7 +314,7 @@ let point = myChart.get(&quot;myPoint&quot;);</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

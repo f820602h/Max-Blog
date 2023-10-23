@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2020/07/25/prototype/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="JavaScript 是一種基於原型，而不是基於類的物件導向語言。由於這個根本的區別，使它在如何創建物件的層級結構，以及如何繼承屬性和它的值上，顯得有點模糊。 – MDN  JavaScript 的原型鏈一直都是大家比較懼怕的一部分，但其實並不是因為它過於艱深，而是因為它的概念很抽象，且初期的前端開發中也不是常常遇到，導致要學習起來會比較困難。 我自己也是花了不少時間在理解，而今天希望可以透過我">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/07/25/prototype/chain.png">
 <meta property="article:published_time" content="2020-07-25T08:55:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.883Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.883Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="原型鏈">
@@ -32,7 +32,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -46,10 +46,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -137,17 +133,17 @@
 </blockquote>
 <p>舉個簡單的例子，貨車可以說是依照汽車的原型製造的，它和汽車有共通的屬性，像是有車門、車輪，需要燃料等等。若是用程式碼來體現這個概念呢？</p>
 <p>下面是一個叫做 <code>Car</code> 的物件，若現在將它作為一個「原型」，並請你以此原型製作出 <strong>六輪雙門柴油貨卡</strong>，你會怎麼做呢？</p>
-<pre><code class="javascript">const Car = {
+<pre><code class="javascript">const Car = &#123;
   wheel: 2,
   door: 4,
   fuel: &quot;汽油&quot;
-};</code></pre>
+&#125;;</code></pre>
 <p>若你不曾接觸過原型鏈或建構函式，你可能會定義一個 <code>truck</code> 物件，然後調整一下屬性的值。<br>這個方法可以得到正確的結果，但它其實在意義上是錯的，因為你是「重新」製造了一個新的物件，而不是「基於」原型建立的。</p>
-<pre><code class="javascript">const truck = {
+<pre><code class="javascript">const truck = &#123;
   wheel: 6,
   door: 2,
   fuel: &quot;柴油&quot;
-};</code></pre>
+&#125;;</code></pre>
 <p>這時候你可能會改成將 <code>truck</code> 賦值為 <code>Car</code> 然後修改屬性的值。<br>但這個方法不只沒有新物件被建立，連 <code>Car</code> 的屬性都會一起被改掉，因為 <code>truck</code> 其實是指向了 <code>Car</code> 的參考。</p>
 <pre><code class="javascript">const Truck = Car;
 Truck.wheel = 6;
@@ -163,20 +159,20 @@ console.log(Car.wheel);  // 6</code></pre>
 <pre><code class="java">Foo foo = new Foo();
 // 以Foo這個類別來建立一個實例foo</code></pre>
 <p>在 Java、C++ 中都會使用 <code>new</code> 這個關鍵字來產生新的實例，而 JavaScript 就也把 <code>new</code> 拿來用了，不過 JavaScript 並沒有「類別」，<code>new</code> 後面該接什麼呢？ JavaScript 的設計者就想到了，既然類別裡都一定要有建構函式，那乾脆 <code>new</code> 後面就接一個函式吧。</p>
-<pre><code class="javascript">function Car(wheel, door, fuel) {
+<pre><code class="javascript">function Car(wheel, door, fuel) &#123;
   this.wheel = wheel,
   this.door = door,
   this.fuel = fuel
-};
+&#125;;
 let truck = new Car(6, 2, &quot;柴油&quot;);</code></pre>
 <p>可以看到 <code>Car</code> 其實只是一個普通的函式，但如果你用 <code>new</code> 運算子來呼叫它的話，JavaScript 就會將它視為建構函式。<br>而 <code>truck</code> 就是透過 <code>Car</code> 新建出來的實例，印出來會長這樣：</p>
 <pre><code class="javascript">// console.log(truck)
-Car {
+Car &#123;
   door: 2
   fuel: &quot;柴油&quot;
   wheel: 6
   __proto__: Object
-}</code></pre>
+&#125;</code></pre>
 <p>你會發現 <code>Car</code> 確實依據我們傳入的參數把 <code>truck</code> 的相關屬性給設定好了，而且在前面標註了 <code>Car</code>，以此說明 <code>truck</code> 是 <code>Car</code> 的實例。</p>
 <hr>
 <h2 id="原型與繼承-Prototype-amp-Inheritance"><a href="#原型與繼承-Prototype-amp-Inheritance" class="headerlink" title="原型與繼承 Prototype &amp; Inheritance"></a>原型與繼承 Prototype &amp; Inheritance</h2></br>
@@ -186,10 +182,10 @@ Car {
 <p style="font-size:12px; line-height:1.5; margin-top: 4px">＊ 訪問器屬性 - 你可以把它當成一種隱藏的內建屬性，所以平常不會注意到。</p>
 
 <pre><code class="javascript">// console.log(Car.prototype)
-{
+&#123;
   constructor: Car(wheel, door, fuel),
   __proto__: Object
-}</code></pre>
+&#125;</code></pre>
 <p><code>Car.prototype</code> 我們可以稱之為 <code>Car</code> 的原型，在原型中會有兩個固定的訪問器屬性：</p>
 <ul>
 <li><strong>__proto__：</strong>後面會再介紹，這裡暫時先跳過。</li>
@@ -204,10 +200,10 @@ console.log(Car === Car.prototype.constructor.prototype.constructor.prototype.co
 <p style="font-size:12px; line-height:1.5; margin-top: 4px">＊ 物件型別(Object) - 例如：物件、陣列、函式、日期等。</p>
 
 <pre><code class="javascript">// console.log(truck.__proto__)
-{
+&#123;
   constructor: Car(wheel, door, fuel),
   __proto__: Object
-}</code></pre>
+&#125;</code></pre>
 <p>把 <code>truck.__proto__</code> 印出來後就會發現它跟 <code>Car.prototype</code> 長得一模一樣，所以我們可以來做個大膽的假設：</p>
 <blockquote>
 <p>身為一個實例，<code>truck</code> 應該繼承 <code>Car</code> 類別的屬性，但 <code>Car</code> 只是建構函式而不是真的類別，所以 JavaScrip 為函式設計了 <code>prototype</code> 屬性，讓實例被創建時，可以繼承建構函式的原型。</p>
@@ -227,12 +223,12 @@ console.log(Car === Car.prototype.constructor.prototype.constructor.prototype.co
 <pre><code class="javascript">Car(1, 1, &quot;空氣&quot;);
 console.log(window.door); // 1</code></pre>
 <p>其實一切的關鍵都在於 <code>new</code>，我們可以用函式來模擬 <code>new</code> 做的事情：</p>
-<pre><code class="javascript">function newObject(Constructor, arguments) {
+<pre><code class="javascript">function newObject(Constructor, arguments) &#123;
   var o = new Object();  // 1. 建立新物件
   o.__proto__ = Constructor.prototype;  // 2. 重新指向原型
   Constructor.apply(o, arguments);  // 3. 初始化物件
   return o; // 4. 回傳新物件
-};
+&#125;;
 let truck = newObject(Car, [6, 2, &quot;柴油&quot;]);</code></pre>
 </br>
 
@@ -248,10 +244,10 @@ let truck = newObject(Car, [6, 2, &quot;柴油&quot;]);</code></pre>
 
 <p><code>new</code> 負責將實例的 <code>__proto__</code> 指向建構函式的原型，但 <code>Car.prototype</code> 中卻又看到另一個 <code>__proto__</code>，它會指向誰呢？</p>
 <pre><code class="javascript">// console.log(Car.prototype.__proto__)
-{
+&#123;
   constructor: Object(),
   // ...其餘省略
-}</code></pre>
+&#125;</code></pre>
 <p>我們把 <code>Car.prototype.__proto__</code> 印出來後發現裡面一樣有 <code>constructor</code>，指向的是 <code>Object</code> 這個建構函式。<br>而這個線索告訴了我們，原來 <code>Car.prototype.__proto__</code> 指向的是 <code>Object</code> 的原型，驗證了一下也確實如此：</p>
 <pre><code class="javascript">console.log(Car.prototype.__proto__ === Object.prototype); // true</code></pre>
 <p>更重要的是物件之間的繼承關係，原來是一個接著一個不斷延續的，看起來就像條鎖鏈一樣。</p>
@@ -264,21 +260,21 @@ truck.__proto__.__proto__.__proto__  // null</code></pre>
 
 <p>到目前為止似乎還沒有感受到 <code>prototype</code> 帶來什麼特別的益處，因為我們還沒有開始利用它，這也是為什麼 <code>Car.prototype</code> 裡面除了訪問器屬性外什麼都沒有的原因。</p>
 <pre><code class="javascript">// console.log(Car.prototype)
-{
+&#123;
   constructor: Car(wheel, door, fuel),
   __proto__: Object
-}</code></pre>
+&#125;</code></pre>
 </br>
 
 <p>假設要為 <code>Car</code> 的實例加上一個 <code>drive</code> 的函式，我們已經知道在建構函式裡多寫行程式碼就可以辦到：</p>
-<pre><code class="javascript">function Car(wheel, door, fuel) {
+<pre><code class="javascript">function Car(wheel, door, fuel) &#123;
   this.wheel = wheel,
   this.door = door,
   this.fuel = fuel
-  this.drive = function() {
-    console.log(`消耗${this.fuel}前進`)
-  }
-};
+  this.drive = function() &#123;
+    console.log(`消耗$&#123;this.fuel&#125;前進`)
+  &#125;
+&#125;;
 let truck = new Car(6, 2, &quot;柴油&quot;);
 let gogoro = new Car(2, 0, &quot;電力&quot;);
 
@@ -287,15 +283,15 @@ gogoro.drive(); // 消耗電力前進</code></pre>
 <p>不過 <code>drive</code> 其實在每個實例中都是做同樣的事情，應該是可以抽出來共享的，如果用上面這種方式寫的話，反而會造成記憶體空間的浪費：</p>
 <pre><code class="javascript">console.log(truck.drive === gogoro.drive); // false</code></pre>
 <p>上面的等式不成立表示兩個實例中的 <code>drive</code> 雖然長得一樣，卻是兩個不同的函式，為了解決這個缺點可以這樣做：</p>
-<pre><code class="javascript">function Car(wheel, door, fuel) {
+<pre><code class="javascript">function Car(wheel, door, fuel) &#123;
   this.wheel = wheel,
   this.door = door,
   this.fuel = fuel
-};
+&#125;;
 
-Car.prototype.drive = function() {
-  console.log(`消耗${this.fuel}前進`);
-};
+Car.prototype.drive = function() &#123;
+  console.log(`消耗$&#123;this.fuel&#125;前進`);
+&#125;;
 
 let truck = new Car(6, 2, &quot;柴油&quot;);
 let gogoro = new Car(2, 0, &quot;電力&quot;);
@@ -309,17 +305,17 @@ console.log(truck.drive === gogoro.drive); // true</code></pre>
 <pre><code class="javascript">truck.hasOwnProperty(&quot;drive&quot;); // true
 console.log(truck.drive === truck.__proto__.drive); // true</code></pre>
 <p>而這也是為什麼當你在 <code>let today = new Date()</code> 後可以使用 <code>getMonth()</code> 或 <code>getDate()</code> 等方法的原因，這些 methods 實際上是在 <code>Date.prototype</code> 裡，甚至下面這些你平常在寫語法背後也是同樣的道理：</p>
-<pre><code class="javascript">let obj = {}; // new Object()
+<pre><code class="javascript">let obj = &#123;&#125;; // new Object()
 let arr = []; // new Array()
-let fn = function(){}; // new Function()</code></pre>
+let fn = function()&#123;&#125;; // new Function()</code></pre>
 <hr>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2></br>
 
 <p>過了今天會發現其實平常我們就已經在「原型鏈」的架構下撰寫 JavaScript 了，或許目前還用不到 JavaScript 的類別(當然不是真的類別)，不過你現在已經知道箇中玄機了，所以假使未來有使用的需要或甚至在面試時被面試官問到，相信你已經可以應付得宜了。</p>
 <p>參考資料：</p>
 <ul>
-<li><a href="https://blog.techbridge.cc/2017/04/22/javascript-prototype/" target="_blank" rel="noopener">該來理解 JavaScript 的原型鏈了 - huli</a></li>
-<li><a href="https://cythilya.github.io/2018/10/26/prototype/" target="_blank" rel="noopener">你懂 JavaScript 嗎？#19 原型（Prototype）- Summer</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.techbridge.cc/2017/04/22/javascript-prototype/">該來理解 JavaScript 的原型鏈了 - huli</a></li>
+<li><a target="_blank" rel="noopener" href="https://cythilya.github.io/2018/10/26/prototype/">你懂 JavaScript 嗎？#19 原型（Prototype）- Summer</a></li>
 </ul>
 
         </div>
@@ -336,7 +332,7 @@ let fn = function(){}; // new Function()</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%9E%8B%E9%8F%88/" rel="tag">原型鏈</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/07/25/prototype/" data-id="clcsdp5fp0008neqw4fayeqna" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/07/25/prototype/" data-id="clo2cteth0008jsnl07grcre2" class="article-share-link">分享</a>
   </footer>
   
     
@@ -369,7 +365,7 @@ let fn = function(){}; // new Function()</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://maxleebk.com/2020/10/01/highchart/highcharts-17/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;NWNeevP  近年來響應式網站已成為主流，尤其當網站需要支援行動裝置的使用時，RWD 的設定勢必要考慮進去，好加在 Highcharts 本來就對各種瀏覽器、裝置、系統有很高的相容性，而且還提供了「響應式設定」讓我們隨視窗大小的改變而修改圖的設定。  響應式設定 - 基本介紹  一般在設計響應式網站時，肯定會使用 CS">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/10/01/highchart/highcharts-17/pie.png">
 <meta property="og:image" content="https://maxleebk.com/2020/10/01/highchart/highcharts-17/legendChange.gif">
 <meta property="article:published_time" content="2020-10-01T05:13:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.727Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.699Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -34,7 +34,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -48,10 +48,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -111,30 +107,30 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/NWNeevP" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/NWNeevP</a></strong></p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/NWNeevP">https://codepen.io/max-lee/pen/NWNeevP</a></strong></p>
 </blockquote>
 <p>近年來響應式網站已成為主流，尤其當網站需要支援行動裝置的使用時，RWD 的設定勢必要考慮進去，好加在 Highcharts 本來就對各種瀏覽器、裝置、系統有很高的相容性，而且還提供了「響應式設定」讓我們隨視窗大小的改變而修改圖的設定。</p>
 <hr>
 <h2 id="響應式設定-基本介紹"><a href="#響應式設定-基本介紹" class="headerlink" title="響應式設定 - 基本介紹"></a>響應式設定 - 基本介紹</h2><br/>
 
 <p>一般在設計響應式網站時，肯定會使用 CSS 的媒體查詢 (Media queries) 來規範元素樣式要在什麼樣的視窗尺寸下做何種變化，而 Highcharts 的「響應式設定」也是類似原理。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  responsive: { // 響應式設定
-    rules: [{
-      condition: {},     // 條件設定
-      chartOptions: {}   // 圖表options物件
-    }] 
-  }
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  responsive: &#123; // 響應式設定
+    rules: [&#123;
+      condition: &#123;&#125;,     // 條件設定
+      chartOptions: &#123;&#125;   // 圖表options物件
+    &#125;] 
+  &#125;
+&#125;);</code></pre>
 <hr>
 <h2 id="響應式設定-條件設定"><a href="#響應式設定-條件設定" class="headerlink" title="響應式設定 - 條件設定"></a>響應式設定 - 條件設定</h2><br/>
 
 <p>Media queries 在撰寫時都會相下面這樣去訂定變化的條件時機，其中 <code>max-width:790px</code> 就是樣式的轉變時機。</p>
 <pre><code class="css">/* 在視窗寬度小於 790px 時，做以下變化 */
-@media screen and (max-width:790px) { 
+@media screen and (max-width:790px) &#123; 
   color: red;
   border: 1px solid #292929;
-}</code></pre>
+&#125;</code></pre>
 <p>而 Highcharts 的「響應式設定」也是一樣的，同樣要定義圖表設定變化的條件，而 <code>condition</code> 屬性可以幫我們做到這件事，不過…</p>
 <br/>
 
@@ -165,17 +161,17 @@
 <br/>
 
 <p>看完屬性的介紹後，應該會發現「響應式設定」真的就和 <code>@media</code> 一樣，只要將條件設定完畢，Highcharts 就會自動偵測圖表的大小了。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  responsive: {
-    rules: [{
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  responsive: &#123;
+    rules: [&#123;
       // 當圖表寬度在 768 ~ 1280 之間，就會發生設定變化
-      condition: {
+      condition: &#123;
         maxWidth: 1280,
         minWidth: 768,
-      }
-    }] 
-  }
-});</code></pre>
+      &#125;
+    &#125;] 
+  &#125;
+&#125;);</code></pre>
 <hr>
 <h2 id="響應式設定-圖表變化"><a href="#響應式設定-圖表變化" class="headerlink" title="響應式設定 - 圖表變化"></a>響應式設定 - 圖表變化</h2><br/>
 
@@ -184,27 +180,27 @@
 
 <h4 id="responsive-rules-chartOptions"><a href="#responsive-rules-chartOptions" class="headerlink" title="# responsive.rules.chartOptions"></a># responsive.rules.chartOptions</h4><p><code>型別: Object</code> <code>預設: undefined</code></p>
 <p>物件內容就是你希望改變的圖表設定及其值，前面所有介紹過的圖表元素設定都可以改變！</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  responsive: {
-    rules: [{
-      condition: {}
-      chartOptions: {
-        chart: {},       // 圖表整體設定
-        credits: {},     // 版權標籤設定
-        title: {},       // 標題設定
-        subtitle: {},    // 副標題設定
-        caption: {},     // 圖表說明設定
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  responsive: &#123;
+    rules: [&#123;
+      condition: &#123;&#125;
+      chartOptions: &#123;
+        chart: &#123;&#125;,       // 圖表整體設定
+        credits: &#123;&#125;,     // 版權標籤設定
+        title: &#123;&#125;,       // 標題設定
+        subtitle: &#123;&#125;,    // 副標題設定
+        caption: &#123;&#125;,     // 圖表說明設定
         colors: [],      // 顏色設定
-        xAxis: [{}],     // Ｘ座標軸設定
-        yAxis: [{}],     // Ｙ座標軸設定
-        legend: {},      // 圖例設定
-        tooltip: {},     // 提示框設定
-        plotOptions: {}, // 繪圖區設定
-        series: [{}]     // 數據列設定
-      }
-    }] 
-  }
-});</code></pre>
+        xAxis: [&#123;&#125;],     // Ｘ座標軸設定
+        yAxis: [&#123;&#125;],     // Ｙ座標軸設定
+        legend: &#123;&#125;,      // 圖例設定
+        tooltip: &#123;&#125;,     // 提示框設定
+        plotOptions: &#123;&#125;, // 繪圖區設定
+        series: [&#123;&#125;]     // 數據列設定
+      &#125;
+    &#125;] 
+  &#125;
+&#125;);</code></pre>
 <p>其實全部列出來才發現，我們已經認識了一大堆的圖表設定，而這些你全部都可以在 <code>chartOptions</code> 裡進行新的設定，而只要 <code>condition</code> 當中的條件發生了，圖表就會被套用這些設定。</p>
 <hr>
 <h2 id="響應式設定-實際使用"><a href="#響應式設定-實際使用" class="headerlink" title="響應式設定 - 實際使用"></a>響應式設定 - 實際使用</h2><br/>
@@ -221,11 +217,11 @@
   [&quot;vivo&quot;, 6.3],
   [&quot;其他&quot;, 17.5]
 ];</code></pre>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  chart: { type: &quot;pie&quot; },
-  title: { text: &quot;手機品牌市佔率&quot; },
-  credits: { enabled: false },
-  legend: {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  chart: &#123; type: &quot;pie&quot; &#125;,
+  title: &#123; text: &quot;手機品牌市佔率&quot; &#125;,
+  credits: &#123; enabled: false &#125;,
+  legend: &#123;
     align: &quot;center&quot;,
     verticalAlign: &quot;middle&quot;,
     layout: &quot;vertical&quot;,
@@ -233,50 +229,50 @@
     x: 260,
     itemMarginTop: 5,
     itemMarginBottom: 5,
-    labelFormat: &quot;{name} {y}%&quot;
-  },
-  plotOptions: {
-    series: {
+    labelFormat: &quot;&#123;name&#125; &#123;y&#125;%&quot;
+  &#125;,
+  plotOptions: &#123;
+    series: &#123;
       showInLegend: true,
-       dataLabels: { enabled: false }
-    }
-  },
-  series: [{ data: phoneData }]
-});</code></pre>
+       dataLabels: &#123; enabled: false &#125;
+    &#125;
+  &#125;,
+  series: [&#123; data: phoneData &#125;]
+&#125;);</code></pre>
 <img src="pie.png" style="max-width: 800px; margin: 24px auto;" />
 
 <p>這樣我們就有一張手機品牌市佔率的圓餅圖了，並且將圖例顯示在圓餅圖的右側，不過如果你有跟著做的話，就會發現當圖表的寬度隨著視窗縮小到一定程度時，圖例就會超出畫面而無法完整顯示，為了解決這樣的「破版」，就來增加「響應式設定」吧！</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   //..省略原設定
-  responsive: {
+  responsive: &#123;
     rules: [
-      {
-        condition: {  maxWidth: 650 },
-        chartOptions: {
-          legend: {
+      &#123;
+        condition: &#123;  maxWidth: 650 &#125;,
+        chartOptions: &#123;
+          legend: &#123;
             verticalAlign: &quot;bottom&quot;,
             layout: &quot;horizontal&quot;,
             floating: false,
             x: 0
-          }
-        }
-      },
-      {
-        condition: { maxWidth: 450 },
-        chartOptions: {
-          legend: { verticalAlign: &quot;top&quot; },
-        }
-      }
+          &#125;
+        &#125;
+      &#125;,
+      &#123;
+        condition: &#123; maxWidth: 450 &#125;,
+        chartOptions: &#123;
+          legend: &#123; verticalAlign: &quot;top&quot; &#125;,
+        &#125;
+      &#125;
     ]
-  }
-});</code></pre>
+  &#125;
+&#125;);</code></pre>
 <p>是否有發現，我在 <code>responsive.rules</code> 增加的是兩組條件與設定呢？就如同 <code>@media</code> 一樣，「響應式設定」並非只能設立一個斷點，所以現在當圖表寬度小於 <code>650px</code> 以及 <code>450px</code> 的時候都會有一次改變，最後的成果就像下面這樣。</p>
 <p><img src="legendChange.gif" alt=""></p>
 <p><br/><br/></p>
 <p>是不是覺得「響應式設定」還蠻有趣的呢？透過它我們可以做到很多的排版上的變化，讓任何尺寸的裝置都可順利的觀看圖表。</p>
 <p>另外也要特別恭喜各位，因為到今天為止，我們已經把所有常見的「基本API」給介紹完了，而接下來的三天則會進入「進階API」的介紹，首當其衝的就是負責互動操作的「事件屬性」。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10247405" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10247405">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -292,7 +288,7 @@
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/10/01/highchart/highcharts-17/" data-id="clcsdp5kf001lneqw2wzocflb" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/10/01/highchart/highcharts-17/" data-id="clo2ctetx000sjsnlcrtlekz2" class="article-share-link">分享</a>
   </footer>
   
     
@@ -325,7 +321,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/17/webApi/webApi-4/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="別再用 setTimeOut、setInterval 寫動畫啦！  如果你有用 js 寫過動畫，那通常你第一個想到的絕對會是 setTimeOut 或 setInterval，讓畫面元素可以在固定的時間間隔進行一點一點的變化，如此就可以形成動畫的效果。但其實這兩個計時器其實都有一些不為人知的小缺點，而今天要介紹的 RequestAnimationFrame 可以讓你不需要擔心這些。  Reque">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-09-17T13:38:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.038Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.067Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -123,10 +119,10 @@
 <h4 id="setTimeOut"><a href="#setTimeOut" class="headerlink" title="# setTimeOut"></a># setTimeOut</h4><p>如果依照每秒 60 幀的需求來使用 <code>setTimeOut</code> 來撰寫動畫的話，大致上都會是這樣寫的：</p>
 <pre><code class="javascript">let timerID;
 const figure = document.querySelector(&quot;#figure&quot;);
-function moveFigure() {
+function moveFigure() &#123;
   figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
   timerID = setTimeout(moveFigure, 1000 / 60);
-}
+&#125;
 moveFigure(); // 動畫開始
 clearTimeout(timerID); // 動畫停止</code></pre>
 <p>我們透過遞迴的方式不斷的呼叫 <code>setTimeout</code> 來幫我們移動元素，而 <code>1000 / 60</code> 就是用來模擬 60Hz 的頻率的。不過使用這樣的方法會有以下缺點。</p>
@@ -135,9 +131,9 @@ clearTimeout(timerID); // 動畫停止</code></pre>
 <p><br/><br/></p>
 <h4 id="setInterval"><a href="#setInterval" class="headerlink" title="# setInterval"></a># setInterval</h4><p>相比 <code>setTimeOut</code> ，可能更多人會用 <code>setInterval</code>，因為它自己就可以不斷重複執行 callback，不用搞什麼遞迴：</p>
 <pre><code class="javascript">const figure = document.querySelector(&quot;#figure&quot;);
-function moveFigure() {
+function moveFigure() &#123;
   figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
-}
+&#125;
 let timerID = setInterval(moveFigure, 1000 / 60);
 moveFigure(); // 動畫開始
 clearInterval(timerID); // 動畫停止</code></pre>
@@ -161,16 +157,16 @@ queue = [&quot;第二次 callback&quot;];</code></pre>
 <h4 id="RequestAnimationFrame-1"><a href="#RequestAnimationFrame-1" class="headerlink" title="# RequestAnimationFrame"></a># RequestAnimationFrame</h4><p>但如果使用今天的主角 RequestAnimationFrame 來製作動畫，那上述缺點就通通沒有了，因為它會自動與螢幕的更新頻率同步，以此來避免掉幀的問題。</p>
 <pre><code class="javascript">let requestID;
 const figure = document.querySelector(&quot;#figure&quot;);
-function moveFigure() {
+function moveFigure() &#123;
   figure.style.left = figure.offsetLeft + 5 + &quot;px&quot;;
   requestID = requestAnimationFrame(moveFigure, 1000 / 60);
-}
+&#125;
 moveFigure(); // 動畫開始
 cancelAnimationFrame(requestID); // 動畫停止</code></pre>
 <p><br/><br/></p>
 <p>如果大家有興趣的話，可以把我們今天的三段 code 拿去試試看，我個人是可以感受到非常明顯的滑順感落差，RequestAnimationFrame 所製作出來的動畫在視覺上會比較舒服。如果你也有同感的話，你可以開始考慮使用它了！</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10267420" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10267420">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -186,7 +182,7 @@ cancelAnimationFrame(requestID); // 動畫停止</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/17/webApi/webApi-4/" data-id="clcsdp5mr004ineqw6wbef39w" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/17/webApi/webApi-4/" data-id="clo2ctev8003cjsnldqpqanq0" class="article-share-link">分享</a>
   </footer>
   
     
@@ -219,7 +215,7 @@ cancelAnimationFrame(requestID); // 動畫停止</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

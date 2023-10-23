@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/01/webApi/webApi-18/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="時間管力大師就是要忙裡偷閒  各位應該知道 JavaScript 是單執行緒(單線程)的程式語言，也就是一次只能處理一件事情。這樣的特性會使得事件的執行必定有個先後順序，這時候就會希望重要的事情能夠排序在前面，剩下比較不重要的任務等空閒時再處理即可，這時候就可以靠 RequestIdleCallback 來幫助我們。  RequestIdleCallbackRequestIdleCallback">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-10-01T07:32:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.923Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.935Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -133,9 +129,9 @@
 <blockquote>
 <p>大部分情況不建議使用 <code>timeout</code>，因為會使用 <code>requestIdleCallback</code> 就代表不想影響主線程的任務進行 。</p>
 </blockquote>
-<pre><code class="javascript">const handlerId = requestIdleCallback(function () {
+<pre><code class="javascript">const handlerId = requestIdleCallback(function () &#123;
   //..做些不住要的事
-}, 500);
+&#125;, 500);
 cancelIdleCallback(handlerId); // 取消requestIdleCallback</code></pre>
 <p><br/><br/></p>
 <h4 id="IdleDeadline"><a href="#IdleDeadline" class="headerlink" title="# IdleDeadline"></a># IdleDeadline</h4><p>而我們傳入的 Callback Function 會被丟進一個由 <code>requestIdleCallback</code> 提供的參數，該參數通常取名為 <code>deadline</code>，並且有兩個屬性可以使用：</p>
@@ -143,40 +139,40 @@ cancelIdleCallback(handlerId); // 取消requestIdleCallback</code></pre>
 <li>didTimeout: 這是一個唯讀屬性，以布林值來表示 Callback 是否是因為 <code>timeout</code> 被觸發的。</li>
 <li>timeRemaining: 它是一個 method，執行後會傳傳一個毫秒數，用來表示當下這一幀的剩餘時間。</li>
 </ul>
-<pre><code class="javascript">requestIdleCallback(function (deadline) {
+<pre><code class="javascript">requestIdleCallback(function (deadline) &#123;
   // 如果你在 requestIdleCallback 中沒有傳入 timeout 參數，didTimeout 必定為 false
   console.log(deadline.didTimeout);
   console.log(deadline.timeRemaining());
-}, 500);</code></pre>
+&#125;, 500);</code></pre>
 <p><br/><br/></p>
 <h4 id="實際測試"><a href="#實際測試" class="headerlink" title="# 實際測試"></a># 實際測試</h4><p>由於 JavaScript 是單執行緒，所以要是我今天進行了一個需要耗費大量時間的任務，那使用者的 UI 操作其實也會受到影響。<br>就像下面這個範例中，在 <code>count</code> 被函式 <code>add</code> 加到 1000000 以前，你不管怎麼敲擊鍵盤，<code>keydown</code> 事件都不會被觸發，因為瀏覽器正在忙著算數：</p>
-<pre><code class="javascript">window.addEventListener(&quot;keydown&quot;, function () {
+<pre><code class="javascript">window.addEventListener(&quot;keydown&quot;, function () &#123;
   console.log(&quot;Hey !!!!!!!!!&quot;);
-});
+&#125;);
 
 let count = 0;
 add();
-function add() {
-  if (count &lt; 10000) {
+function add() &#123;
+  if (count &lt; 10000) &#123;
     console.log(count++);
     add();
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>但是我們只要用 <code>requestIdleCallback</code> 來改寫一下，那狀況就不一樣了，因為這時候 <code>add</code> 這項任務的優先度會往後排，所以當我按下鍵盤時，瀏覽器會先處理 <code>keydown</code> 事件，等到閒置下來後才會繼續進行。</p>
-<pre><code class="javascript">window.addEventListener(&quot;keydown&quot;, function () {
+<pre><code class="javascript">window.addEventListener(&quot;keydown&quot;, function () &#123;
   console.log(&quot;Hey !!!!!!!!!&quot;);
-});
+&#125;);
 
 let count = 0;
 requestIdleCallback(add);
-function add(deadline) {
-  if (deadline.timeRemaining() &gt; 0) {
-    if (count &lt; 10000) {
+function add(deadline) &#123;
+  if (deadline.timeRemaining() &gt; 0) &#123;
+    if (count &lt; 10000) &#123;
       console.log(count++);
       requestIdleCallback(add);
-    }
-  }
-}</code></pre>
+    &#125;
+  &#125;
+&#125;</code></pre>
 <p><br/><br/></p>
 <h4 id="使用情境"><a href="#使用情境" class="headerlink" title="# 使用情境"></a># 使用情境</h4><p>在了解 RequestIdleCallback 的效果後，我第一個想到的實際應用會是 LazyLoad，想像以下，如果我們有個網頁，當中有幾十甚至幾百張的高畫質圖片需要顯示，可想而知瀏覽器的負擔會相當的大，非常有可能會影響頁面的效能與任務執行，但如果們我利用 <code>requestIdleCallback</code> 來處理，就可以在不影響主執行緒的情況下載入圖片。</p>
 <pre><code class="javascript">const images = [
@@ -188,21 +184,21 @@ function add(deadline) {
 ];
 
 requestIdleCallback(loadImage);
-function loadImage(deadline) {
-  if (deadline.timeRemaining() &gt; 0) {
-    if (images.length) {
+function loadImage(deadline) &#123;
+  if (deadline.timeRemaining() &gt; 0) &#123;
+    if (images.length) &#123;
       const imgSrc = images.shift();
       const img = new Image(250, 150);
       img.onload = document.body.appendChild(img);
       img.src = imgSrc;
       requestIdleCallback(loadImage);
-    }
-  }
-}</code></pre>
+    &#125;
+  &#125;
+&#125;</code></pre>
 <p><br/><br/></p>
 <p>不曉得使用過 React 的朋友有沒有了解過 React Fiber 呢？其實它的原理就和 RequestIdleCallback 一樣，將大量沒那麼優先的工作拆成許多小片段，在瑣碎的時間裡慢慢完成，也因為這樣的機制，使得我們可以去中斷它，將一些突發的重要任務(例如使用者的 UI 事件)插在這些小片段中，宛如有另一條執行緒一般。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10276904" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10276904">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -218,7 +214,7 @@ function loadImage(deadline) {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/01/webApi/webApi-18/" data-id="clcsdp5lz003kneqw85jnc4s9" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/01/webApi/webApi-18/" data-id="clo2cteus002ijsnlhhhehm9s" class="article-share-link">分享</a>
   </footer>
   
     
@@ -251,7 +247,7 @@ function loadImage(deadline) {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

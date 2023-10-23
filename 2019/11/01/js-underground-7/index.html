@@ -13,14 +13,14 @@
 <meta property="og:url" content="https://maxleebk.com/2019/11/01/js-underground-7/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本篇為六角學院 - JS地下城攻略文　Github｜Demo    確認需求 讓使用者可以使用滑鼠在畫布上繪圖 畫筆要可以進行基本設定(粗細、顏色) 一些畫布的基本功能(清空、復原、重做) 能夠將畫作下載為圖檔  另外還可以設計一些額外功能作為加分項目  解題攻略  # 準備畫布先查查 MDN，發現原來要先建構 &lt;canvas&gt; 的渲染環境，用 getContext(&#39;2d&amp;">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/6240/1*Os7N1DpSdK-2o7IxTLERww.png">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/6288/1*Mtx3i8B45xDlW3cqikDc2A.png">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/5876/1*nh08sP6qPOrNvnRh-23sNg.png">
 <meta property="og:image" content="https://maxleebk.com/2019/11/01/js-underground-7/color1.png">
 <meta property="og:image" content="https://maxleebk.com/2019/11/01/js-underground-7/color2.png">
 <meta property="article:published_time" content="2019-11-01T12:46:25.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.883Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.883Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Canvas">
@@ -37,7 +37,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -51,10 +51,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -114,7 +110,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本篇為六角學院 - JS地下城攻略文　<a href="https://github.com/f820602h/Canvas" target="_blank" rel="noopener">Github</a>｜<a href="https://f820602h.github.io/Canvas/" target="_blank" rel="noopener">Demo</a></p>
+<p>本篇為六角學院 - JS地下城攻略文　<a target="_blank" rel="noopener" href="https://github.com/f820602h/Canvas">Github</a>｜<a target="_blank" rel="noopener" href="https://f820602h.github.io/Canvas/">Demo</a></p>
 </blockquote>
 </br>
 
@@ -133,12 +129,12 @@
 <pre><code class="javascript">let canvas = document.querySelector(&quot;#draw&quot;);
 let ctx = canvas.getContext(&quot;2d&quot;);</code></pre>
 <p>在來要決定畫布的大小，以供我們畫圖，官方建議用 <code>&lt;canvas&gt;</code> 的 <code>width</code> <code>height</code> 的屬性設定，避免用css修改，不然會有繪圖比例的問題。<br>這次的需求剛好是滿版的畫布，所以就這麼設定吧！</p>
-<pre><code class="javascript">function setSize() {
+<pre><code class="javascript">function setSize() &#123;
   let canvasWidth = window.innerWidth();
   let canvasHeight = window.innerHeight();
   canvas.setAttribute(&quot;width&quot;, canvasWidth);
   canvas.setAttribute(&quot;height&quot;, canvasHeight);
-}</code></pre>
+&#125;</code></pre>
 <p>準備好畫布後，就來簡單畫幾筆吧。</p>
 <pre><code class="javascript">// 開始繪圖
 ctx.beginPath();
@@ -162,16 +158,16 @@ ctx.lineCap = &quot;round&quot;;</code></pre>
 <h4 id="繪畫互動"><a href="#繪畫互動" class="headerlink" title="# 繪畫互動"></a># 繪畫互動</h4><p>畫筆、畫布都有了，但為了讓使用者可以利用滑鼠來繪圖，必須要把上面的畫直線方法來跟滑鼠事件連動。</p>
 <pre><code class="javascript">let lastPointX, lastPointY;
 
-let downHandler = function(e){
+let downHandler = function(e)&#123;
   // 滑鼠按下去時得到座標存在變數中作為等等畫圖的起點
   lastPointX = e.offsetX;
   lastPointY = e.offsetY;
   // 並且為Canvas綁定mousemove和mouseup的事件
   draw.addEventListener(&quot;mousemove&quot;, moveHandler);
   draw.addEventListener(&quot;mouseup&quot;, upHandler);
-};
+&#125;;
 
-let moveHandler = function(e) {
+let moveHandler = function(e) &#123;
   // 滑鼠在移動時我們把新的座標存下來作為終點
   let newPointX = e.offsetX;
   let newPointY = e.offsetY;
@@ -185,13 +181,13 @@ let moveHandler = function(e) {
   // 把終點改為新的起點
   lastPointX = newPointX;
   lastPointY = newPointY;
-};
+&#125;;
 
-let upHandler = function(){
+let upHandler = function()&#123;
   // 滑鼠釋放後把剛剛綁定的事件移除
   draw.removeEventListener(&quot;mousemove&quot;, moveHandler);
   draw.removeEventListener(&quot;mouseup&quot;, upHandler);
-};
+&#125;;
 
 draw.addEventListener(&quot;mousedown&quot;, downHandler)</code></pre>
 <p>透過鼠標的事件綁定，就可以做到類似小畫家的繪圖功能，而實際上畫出來的線條，其實是無數條 <code>１pixel</code> 的直線所串連起來的。<br>簡單來說就是利用滑鼠移動的事件來不斷取得新座標，並且把座標丟進 moveTo() 和 lineTo() 之中，而滑鼠按下和放開只是啟動和關閉的作用。</p>
@@ -213,11 +209,11 @@ draw.addEventListener(&quot;mousedown&quot;, downHandler)</code></pre>
 <pre><code class="javascript">let step = -1;
 let history = [];
 
-let push = function(){
+let push = function()&#123;
   step++;
   if (step &lt;= history.length - 1) history.length = step
   history.push(canvas.toDataURL())
-}
+&#125;
 
 // 記得將push()加入upHandler中</code></pre>
 <p>但為何中間要有一個判斷式呢？我們來思考一下，下面是我們畫圖時的步驟：</p>
@@ -231,7 +227,7 @@ A -&gt; B -&gt; C -&gt; E  [D̶] step = 3
 // 這時候我們重畫了一個Ｅ，它是新的第[3]步，而舊的Ｄ必須被我們覆蓋掉
 // history[A,B,C,E]</code></pre>
 <p>這樣應該就很好理解了，而現在每一筆都被記錄下來了，那該怎麼把紀錄給呼叫回來呢？</p>
-<pre><code class="javascript">let undo = function(){
+<pre><code class="javascript">let undo = function()&#123;
   // 創建一個新的圖像物件
   let lastDraw = new Image;
 
@@ -242,21 +238,21 @@ A -&gt; B -&gt; C -&gt; E  [D̶] step = 3
   lastDraw.src = history[step];
 
   // 把圖片載入後用畫布渲染出來
-  lastDraw.onload = function(){
+  lastDraw.onload = function()&#123;
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(lastDraw, 0, 0);
-  };
-};</code></pre>
+  &#125;;
+&#125;;</code></pre>
 <p>這樣復原就完成了，而重做的概念剛好就是相反的囉。而其實裡面也藏了清除畫布的方法 <code>ctx.clearRect(0,0,canvasWidth,canvasHeight)</code>，這樣清除畫布的功能也一起做好了。</p>
 <p></br></br></p>
 <h4 id="保存作品"><a href="#保存作品" class="headerlink" title="# 保存作品"></a># 保存作品</h4><p>實現復原重做後，保存其實也是一樣道理。</p>
 <pre><code class="javascript">let save = document.querySelector(&quot;#save&quot;);
 
-save.addEventListener(&quot;click&quot;, function() {
+save.addEventListener(&quot;click&quot;, function() &#123;
   let link = canvas.toDataURL(&quot;image/png&quot;);
   this.setAttribute(&quot;href&quot;, link);
   this.setAttribute(&quot;download&quot;, &quot;canvas.png&quot;);
-})</code></pre>
+&#125;)</code></pre>
 <p>在按下保存後，把畫布狀態利用 <code>toDataURL()</code> 編碼並設定在連結中，這樣可以下載了。</p>
 <hr>
 <h2 id="加分功能"><a href="#加分功能" class="headerlink" title="加分功能"></a>加分功能</h2></br>
@@ -265,16 +261,16 @@ save.addEventListener(&quot;click&quot;, function() {
 <pre><code class="javascript">let brushColor = [&quot;#ffffff&quot;,&quot;#000000&quot;,&quot;#9BFFCD&quot;,&quot;#00CC99&quot;,&quot;#01936F&quot;];</code></pre>
 <p><img src="color1.png" alt=""></p>
 <p>不過顏色有深有淺，若打勾圖示固定是黑色的，那在較深的顏色上就會不清楚，所以我們要來判斷目前所選的顏色是深是淺。</p>
-<pre><code class="javascript">let isDark = function(color) {
+<pre><code class="javascript">let isDark = function(color) &#123;
   let rgbArray = [color.substr(1,2), color.substr(3,2), color.substr(5,2)];
 
   let brightness =
-  parseInt(`0x${rgbArray[0]}`) * 0.213 +
-  parseInt(`0x${rgbArray[1]}`) * 0.715 +
-  parseInt(`0x${rgbArray[2]}`) * 0.072
+  parseInt(`0x$&#123;rgbArray[0]&#125;`) * 0.213 +
+  parseInt(`0x$&#123;rgbArray[1]&#125;`) * 0.715 +
+  parseInt(`0x$&#123;rgbArray[2]&#125;`) * 0.072
 
   return brightness &lt; 255 / 2
-}</code></pre>
+&#125;</code></pre>
 <p>先把16進位色碼拆開並轉為10進位數字，然後透過公式就能知道這個顏色是深是淺，也就能給予對應顏色的打勾圖示了。</p>
 <p><img src="color2.png" alt=""></p>
 
@@ -292,7 +288,7 @@ save.addEventListener(&quot;click&quot;, function() {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canvas/" rel="tag">Canvas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS%E5%9C%B0%E4%B8%8B%E5%9F%8E/" rel="tag">JS地下城</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2019/11/01/js-underground-7/" data-id="clcsdp5fe0004neqwhfzd48ao" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2019/11/01/js-underground-7/" data-id="clo2ctetc0004jsnl14nedm2f" class="article-share-link">分享</a>
   </footer>
   
     
@@ -322,7 +318,7 @@ save.addEventListener(&quot;click&quot;, function() {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

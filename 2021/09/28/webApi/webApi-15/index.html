@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/28/webApi/webApi-15/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="親像愛情的限時批～  各位有想過該如何跟其他頁面進行溝通嗎？如果在Ａ頁面點擊了一個按鈕，能不能夠讓Ｂ頁面發生變化或執行動作呢？別說不可能，今天要介紹的 PostMessage 便能夠達成這樣的效果。  PostMessage一般來說，不同的頁面要相互溝通的話，它們的 Domain 必須相同，然後通常就會使用 LocalStorage 搭配 storage 事件來進行溝通，但 PostMessag">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-09-28T09:15:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.903Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -132,36 +128,36 @@ otherPage.postMessage(&quot;Hi,Max&quot;, &quot;https://maxleebk.com/&quot;);</c
 </blockquote>
 <p><br/><br/></p>
 <h4 id="Window-message-Event"><a href="#Window-message-Event" class="headerlink" title="# Window:message Event"></a># Window:message Event</h4><p>訊息有傳送的一方，自然也要有接收的一方，而接收方要順利接到訊息的話，只要在 <code>window</code> 上監聽 <code>message</code> 這個事件即可，而訊息的部分則會被放在 Event 物件的 <code>data</code> 屬性裡:</p>
-<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) &#123;
   console.log(event.data);
-});</code></pre>
+&#125;);</code></pre>
 <p>所以只要你想傳送的網站中，有打開一個這樣的通道，那你就可以透過 PostMessage 來與之溝通，不過接收方也不可能所有的訊息都照單全收，要是我們今天身為接收方，那應該要像下方這樣做一些防禦。</p>
 <p>在 Event 物件中還有一個 <code>origin</code> 屬性，可以用來獲取傳送方的來源，所以我們可以利用它來過濾那些不在信任範圍的網址：</p>
-<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) &#123;
   // 如果訊息不是來自於 IT邦幫忙 那就不執行任何動作
   if (event.origin !== &quot;https://ithelp.ithome.com.tw&quot;) return;
   console.log(event.data);
-});</code></pre>
+&#125;);</code></pre>
 <p>當然了，信息往來總不能只有單向，如果接收方要回信的話，只要利用 Event 物件中的 <code>source</code> 屬性就可以進行訊息的傳送：</p>
-<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) &#123;
   if (event.origin !== &quot;https://ithelp.ithome.com.tw&quot;) return;
   console.log(event.data);
   event.source.postMessage(&quot;hi,IT邦幫忙&quot;, event.origin);
-});</code></pre>
+&#125;);</code></pre>
 <p>透過 PostMessage 訊息的相互傳遞，我們就可以不受同源政策的限制，向其他網域的網頁請求資料了，或利用訊息的格式判定來執行其他頁面的動作等等…</p>
-<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) {
-  axios.get(&quot;/user&quot;, event.data.id).then((res) =&gt; {
+<pre><code class="javascript">addEventListener(&quot;message&quot;, function (event) &#123;
+  axios.get(&quot;/user&quot;, event.data.id).then((res) =&gt; &#123;
     event.source.postMessage(res, event.origin);
-  });
-});
+  &#125;);
+&#125;);
 
-addEventListener(&quot;message&quot;, function (event) {
+addEventListener(&quot;message&quot;, function (event) &#123;
   window[event.data.method](); // 執行指定名稱的全域函式
-});</code></pre>
+&#125;);</code></pre>
 <p><br/><br/></p>
 <p>PostMessage API 是不是非常有趣又神奇呢？或許要遇到頁面溝通的情境並不多，但千萬忽略了它，等到遇到了，它會是非常強大的幫手，而且應用起來也相當簡單，大家如果有興趣，隨手就能寫個簡單的範例。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10275491" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10275491">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -177,7 +173,7 @@ addEventListener(&quot;message&quot;, function (event) {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/28/webApi/webApi-15/" data-id="clcsdp5lr003cneqwf8jlhvgr" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/28/webApi/webApi-15/" data-id="clo2cteup002bjsnlerwfc4y1" class="article-share-link">分享</a>
   </footer>
   
     
@@ -210,7 +206,7 @@ addEventListener(&quot;message&quot;, function (event) {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

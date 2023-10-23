@@ -13,12 +13,12 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="熱線你和我，這是一條情感的線路，屬於你和我。  昨天我們認識了 PostMessage，它可以讓我們在兩個頁面之間傳遞訊息，只要有地址(Domain Origin)，就可以送信給對方，而對方只要有收信的機制就能夠獲得訊息，甚至可以回信。但這有個壞處，也就是當我們建立了收信機制後，可能會有來自四面八方的訊息寄過來，那就必須要做一個過濾的動作。但今天的 MessageChannel 卻可以解決這個問">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/channel.png">
 <meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/post.gif">
 <meta property="og:image" content="https://maxleebk.com/2021/09/29/webApi/webApi-16/post2.gif">
 <meta property="article:published_time" content="2021-09-29T09:15:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.903Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.903Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -35,7 +35,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -49,10 +49,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -135,9 +131,9 @@ console.log(msgChannel.port2);</code></pre>
   let messagePort;
   const iframe = document.querySelector(&quot;iframe&quot;);
 
-  iframe.addEventListener(&quot;load&quot;, function () {
+  iframe.addEventListener(&quot;load&quot;, function () &#123;
     // 建立頻道，並取得 port1、port2
-    const { port1, port2 } = new MessageChannel();
+    const &#123; port1, port2 &#125; = new MessageChannel();
 
     // 將 port1 存在全域變數中
     messagePort = port1;
@@ -145,7 +141,7 @@ console.log(msgChannel.port2);</code></pre>
     // 將 port2 送給 pageB
     const msg = &quot;這是 pageA 送來的手機&quot;;
     iframe.contentWindow.postMessage(msg, location.origin, [port2]);
-  });
+  &#125;);
 &lt;/script&gt;</code></pre>
 <p>雖然已經建立了 MessageChannel，但「送手機」的這一步還是要靠一般的方式送過去，而手機(Port)的部分必須放在之前介紹 <code>postMessage</code> 時沒說的第三個參數中：</p>
 <ul>
@@ -160,18 +156,18 @@ console.log(msgChannel.port2);</code></pre>
   let messagePort;
   const iframe = document.querySelector(&quot;iframe&quot;);
 
-  iframe.addEventListener(&quot;load&quot;, function () {
-    const { port1, port2 } = new MessageChannel();
+  iframe.addEventListener(&quot;load&quot;, function () &#123;
+    const &#123; port1, port2 &#125; = new MessageChannel();
     messagePort = port1;
 
     // 用 port1 監聽 message 事件
-    messagePort.onmessage = function (event) {
+    messagePort.onmessage = function (event) &#123;
       console.log(event.data);
-    };
+    &#125;;
 
     const msg = &quot;這是 pageA 送來的手機&quot;;
     iframe.contentWindow.postMessage(msg, location.origin, [port2]);
-  });
+  &#125;);
 &lt;/script&gt;</code></pre>
 <br/>
 
@@ -182,19 +178,19 @@ console.log(msgChannel.port2);</code></pre>
 &lt;script&gt;
   let messagePort;
   const output = document.querySelector(&quot;.output&quot;);
-  window.addEventListener(&quot;message&quot;, function (event) {
+  window.addEventListener(&quot;message&quot;, function (event) &#123;
     if (!event.ports || !event.ports.length) return;
     // 將訊息文字顯示在頁面上
     output.innerHTML = event.data;
     // 將 port2 存在全域變數中
     messagePort = event.ports[0];
     // 用 port2 監聽 message 事件
-    messagePort.onmessage = function (port_event) {
+    messagePort.onmessage = function (port_event) &#123;
       output.innerHTML = port_event.data;
-    };
+    &#125;;
     // 用 port2 送出訊息
     messagePort.postMessage(&quot;收到手機囉！&quot;);
-  });
+  &#125;);
 &lt;/script&gt;</code></pre>
 <img src="post.gif" style="margin: 24px auto;" />
 
@@ -206,9 +202,9 @@ console.log(msgChannel.port2);</code></pre>
 &lt;script&gt;
   let messagePort;
   // ... 省略其他 code
-  function sendMessage() {
+  function sendMessage() &#123;
     messagePort.postMessage(&quot;來自 pageA 的訊息&quot;);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
 &lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
@@ -216,16 +212,16 @@ console.log(msgChannel.port2);</code></pre>
 &lt;script&gt;
   let messagePort;
   // ... 省略其他 code
-  function sendMessage() {
+  function sendMessage() &#123;
     messagePort.postMessage(&quot;來自 pageB 的訊息&quot;);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <img src="post2.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <p>是不是對 PostMessage 又有新的一層認識呢？但你以為就只有這樣嗎？其實明天還會介紹 BroadcastChannel，除了可以建立專屬熱線之外，還可以建立廣播系統！</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10276002" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10276002">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -241,7 +237,7 @@ console.log(msgChannel.port2);</code></pre>
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/29/webApi/webApi-16/" data-id="clcsdp5lu003fneqw8vql5ee1" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/29/webApi/webApi-16/" data-id="clo2cteuq002djsnl6d3ie02s" class="article-share-link">分享</a>
   </footer>
   
     
@@ -274,7 +270,7 @@ console.log(msgChannel.port2);</code></pre>
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

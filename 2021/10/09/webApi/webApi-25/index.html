@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/09/webApi/webApi-25/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="就是要拖拖拉拉  現在使用手機、平板來瀏覽網站的機會比起電腦來說，實在是多太多了，所以其實 Web API 也不斷針對這樣的趨勢在靠攏，像是我們前期介紹的 Battery API 就是一個案例。 使用者在長期使用行動裝置的情況下，已經習慣了系統 OS 或 APP 的操作，所以對於「拖曳物件」這個手勢動作已經是直覺反應了，而在網站開發中，Drag &amp; Drop API 就是協助我們完成「拖">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/10/09/webApi/webApi-25/move.gif">
 <meta property="article:published_time" content="2021-10-09T13:19:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.979Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.995Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -188,56 +184,56 @@
   &lt;div class=&quot;box&quot; draggable=&quot;true&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;container&quot;&gt;&lt;/div&gt;</code></pre>
-<pre><code class="css">.container {
+<pre><code class="css">.container &#123;
   background: white;
-}
-.container.hover {
+&#125;
+.container.hover &#123;
   background: aliceBlue;
-}
-.box {
+&#125;
+.box &#123;
   background: lightblue;
   cursor: grab;
-}
-.box.dragging {
+&#125;
+.box.dragging &#123;
   background: lightgreen;
   cursor: grabbing;
-}</code></pre>
+&#125;</code></pre>
 <pre><code class="javascript">const boxes = document.querySelectorAll(&quot;.box&quot;);
-boxes.forEach((box) =&gt; {
-  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+boxes.forEach((box) =&gt; &#123;
+  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; &#123;
     e.target.classList.add(&quot;dragging&quot;);
-  });
-  box.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+  &#125;);
+  box.addEventListener(&quot;dragend&quot;, (e) =&gt; &#123;
     e.target.classList.remove(&quot;dragging&quot;);
-  });
-});
+  &#125;);
+&#125;);
 
 const containers = document.querySelectorAll(&quot;.container&quot;);
-containers.forEach((container) =&gt; {
-  container.addEventListener(&quot;dragenter&quot;, (e) =&gt; {
+containers.forEach((container) =&gt; &#123;
+  container.addEventListener(&quot;dragenter&quot;, (e) =&gt; &#123;
     e.target.classList.add(&quot;hover&quot;);
-  });
-  container.addEventListener(&quot;dragleave&quot;, (e) =&gt; {
+  &#125;);
+  container.addEventListener(&quot;dragleave&quot;, (e) =&gt; &#123;
     e.target.classList.remove(&quot;hover&quot;);
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <br/>
 
 <p><strong>- 鼠標位置</strong></p>
 <p>由於 <code>drag</code> 和 <code>dragover</code> 都是不斷觸發的事件，所以我們可以用來追蹤使用者游標的位置：</p>
 <pre><code class="javascript">const boxes = document.querySelectorAll(&quot;.box&quot;);
-boxes.forEach((box) =&gt; {
-  box.addEventListener(&quot;drag&quot;, (e) =&gt; {
-    console.log(`滑鼠在視窗中的座標: ${e.clientX} / ${e.clientY}`);
-  });
-});
+boxes.forEach((box) =&gt; &#123;
+  box.addEventListener(&quot;drag&quot;, (e) =&gt; &#123;
+    console.log(`滑鼠在視窗中的座標: $&#123;e.clientX&#125; / $&#123;e.clientY&#125;`);
+  &#125;);
+&#125;);
 
 const containers = document.querySelectorAll(&quot;.container&quot;);
-containers.forEach((container) =&gt; {
-  container.addEventListener(&quot;dragover&quot;, (e) =&gt; {
-    console.log(`滑鼠在 Drop Location 中的座標: ${e.offsetX} / ${e.offsetY}`);
-  });
-});</code></pre>
+containers.forEach((container) =&gt; &#123;
+  container.addEventListener(&quot;dragover&quot;, (e) =&gt; &#123;
+    console.log(`滑鼠在 Drop Location 中的座標: $&#123;e.offsetX&#125; / $&#123;e.offsetY&#125;`);
+  &#125;);
+&#125;);</code></pre>
 <br/>
 
 <p><strong>- 移動元素</strong></p>
@@ -245,30 +241,30 @@ containers.forEach((container) =&gt; {
 <pre><code class="javascript">let source = null;
 
 const boxes = document.querySelectorAll(&quot;.box&quot;);
-boxes.forEach((box) =&gt; {
-  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; {
+boxes.forEach((box) =&gt; &#123;
+  box.addEventListener(&quot;dragstart&quot;, (e) =&gt; &#123;
     source = e.target;
-  box.addEventListener(&quot;dragend&quot;, (e) =&gt; {
+  box.addEventListener(&quot;dragend&quot;, (e) =&gt; &#123;
     source = null;
-  });
-});
+  &#125;);
+&#125;);
 
 const containers = document.querySelectorAll(&quot;.container&quot;);
-containers.forEach((container) =&gt; {
-  container.addEventListener(&quot;dragover&quot;, (e) =&gt; {
+containers.forEach((container) =&gt; &#123;
+  container.addEventListener(&quot;dragover&quot;, (e) =&gt; &#123;
     e.preventDefault();
-  });
-  container.addEventListener(&quot;drop&quot;, (e) =&gt; {
+  &#125;);
+  container.addEventListener(&quot;drop&quot;, (e) =&gt; &#123;
     e.target.appendChild(source)
     e.target.classList.remove(&quot;hover&quot;);
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <img src="move.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <p>看過以上示範後是不是覺得 Drag &amp; Drop API 還蠻簡單的呢？只要先設定好需要拖曳的元素後，透過幾個事件的交互就可以達到這樣的效果。不過其實很多 API 都是這樣的，使用起來都很容易，但實際上要應用時就容易邏輯卡住，所以為了讓各位能對 Drag &amp; Drop 有更具體的印象，明天就來實際寫一個拖拉的 ToDo List 吧！</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10280217" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10280217">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -284,7 +280,7 @@ containers.forEach((container) =&gt; {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/09/webApi/webApi-25/" data-id="clcsdp5mm0044neqw2qutfug7" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/09/webApi/webApi-25/" data-id="clo2ctev0002yjsnl0kjy7ap2" class="article-share-link">分享</a>
   </footer>
   
     
@@ -317,7 +313,7 @@ containers.forEach((container) =&gt; {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

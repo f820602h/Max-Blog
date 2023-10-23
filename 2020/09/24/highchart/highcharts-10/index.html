@@ -13,14 +13,14 @@
 <meta property="og:url" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;mdPxGyq避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  我們前面的章節其實時不時都會提到數據列，而所謂的數據列指的是「一系列的數據」，這些數據是以某個統一的基準進行統計與計算的，然後在圖表中我們將這一系列的數據畫出合適的圖形。而數據列設定其實就是在設定圖表上這些具體圖形。">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/complex.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/stacking.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/dataLabels.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/stack.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/24/highchart/highcharts-10/donut.png">
 <meta property="article:published_time" content="2020-09-24T01:50:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.715Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.679Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -37,7 +37,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -51,10 +51,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -114,7 +110,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/mdPxGyq" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/mdPxGyq</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/mdPxGyq">https://codepen.io/max-lee/pen/mdPxGyq</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
 </blockquote>
 <p>我們前面的章節其實時不時都會提到數據列，而所謂的數據列指的是「一系列的數據」，這些數據是以某個統一的基準進行統計與計算的，然後在圖表中我們將這一系列的數據畫出合適的圖形。而數據列設定其實就是在設定圖表上這些具體圖形。</p>
 <hr>
@@ -122,9 +118,9 @@
 
 <p>同樣的一組數據列，在不同的圖表中就會用不同圖形呈現，所以數據列設定會根據你的圖表類型有不一樣的屬性，不過我們先介紹所有圖表都通用的屬性，最後再補充一些不同圖表類型的專屬屬性。</p>
 <p><strong>特別注意，同一張圖表中可以有多組數據列，所以是用陣列來做設定，就算只有一組數據列也「不能」省略中括號。</strong></p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  series: [{}] // 數據列設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  series: [&#123;&#125;] // 數據列設定
+&#125;);</code></pre>
 <br/>
 
 <h4 id="series-type"><a href="#series-type" class="headerlink" title="# series.type"></a># series.type</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
@@ -167,14 +163,14 @@
 <h4 id="series-allowPointSelect"><a href="#series-allowPointSelect" class="headerlink" title="# series.allowPointSelect"></a># series.allowPointSelect</h4><p><code>型別: Boolean</code> <code>預設: false</code></p>
 <p>決定數據列上的數據點（point）能否被選取，選取之後該數據點會有外觀上的改變，並且你可以透過 <code>getSelectedPoints</code> 這個函式來取得「被選取的」數據點的相關訊息。</p>
 <pre><code class="javascript">// 在數據列設定裡增加 allowPointSelect 屬性
-var myChart = Highcharts.chart(container, {
-  series: [{ allowPointSelect: true }]
-});
+var myChart = Highcharts.chart(container, &#123;
+  series: [&#123; allowPointSelect: true &#125;]
+&#125;);
 // 在畫面上新增一個按紐，並監聽點擊事件
-document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, function(){
+document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, function()&#123;
   console.log(myChart.getSelectedPoints()); // 數據點相關的訊息
-});</code></pre>
-<p>有興趣的話我也有準備完整的範例：<strong><a href="https://codepen.io/max-lee/pen/MWyVOmP" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/MWyVOmP</a></strong></p>
+&#125;);</code></pre>
+<p>有興趣的話我也有準備完整的範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/MWyVOmP">https://codepen.io/max-lee/pen/MWyVOmP</a></strong></p>
 <br/>
 <br/>
 
@@ -184,38 +180,38 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 <br/>
 
 <h4 id="series-shadow"><a href="#series-shadow" class="headerlink" title="# series.shadow"></a># series.shadow</h4><p><code>型別: Boolean|Object</code> <code>預設: false</code></p>
-<p>你可以為數據列開啟陰影的選項，重現一種不一樣的畫面風格。也可以透過傳入物件來微調陰影的樣式，有需要可以看看 <strong><a href="https://api.highcharts.com/class-reference/Highcharts.ShadowOptionsObject" target="_blank" rel="noopener">官方文件</a></strong>，文章中就不多著墨。</p>
+<p>你可以為數據列開啟陰影的選項，重現一種不一樣的畫面風格。也可以透過傳入物件來微調陰影的樣式，有需要可以看看 <strong><a target="_blank" rel="noopener" href="https://api.highcharts.com/class-reference/Highcharts.ShadowOptionsObject">官方文件</a></strong>，文章中就不多著墨。</p>
 <br/>
 <br/>
 
 <h4 id="series-xAxis-series-yAxis"><a href="#series-xAxis-series-yAxis" class="headerlink" title="# series.xAxis / series.yAxis"></a># series.xAxis / series.yAxis</h4><p><code>型別: Number</code> <code>預設: 0</code></p>
 <p>在「座標軸設定」時有說過，只要在座標軸設定中傳入陣列就可以畫出複數Ｘ軸或複數Ｙ軸，這樣的話勢必要為數據列指定它該以哪一組座標軸作為尺標，而這兩個屬性的作用就是如此，設定時要傳入的是你要指定的座標軸索引值。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
   yAxis: [
-    { }, // 第一組Ｙ軸設定，索引值：0
-    { }  // 第二組Ｙ軸設定，索引值：1
+    &#123; &#125;, // 第一組Ｙ軸設定，索引值：0
+    &#123; &#125;  // 第二組Ｙ軸設定，索引值：1
   ],
   series: [
-    { yAxis: 0 }, // 採用第一組Ｙ軸
-    { yAxis: 1 }  // 採用第二組Ｙ軸
+    &#123; yAxis: 0 &#125;, // 採用第一組Ｙ軸
+    &#123; yAxis: 1 &#125;  // 採用第二組Ｙ軸
   ]
-});</code></pre>
+&#125;);</code></pre>
 <br/>
 <br/>
 
 <h4 id="series-stacking"><a href="#series-stacking" class="headerlink" title="# series.stacking"></a># series.stacking</h4><p><code>型別: String</code> <code>預設: undefined</code></p>
 <p>這個屬性可以決定數據列的堆疊模式，讓數據點的數值疊加上去，很適合用在面積圖或柱狀圖，有純粹疊加數值的 <code>normal</code> 模式，或是計算成百分比的 <code>percent</code> 模式。而在不同的模式下圖表會被賦予不同的意義，所以使用前要仔細思考你的用途是什麼。</p>
-<p>範例：<strong><a href="https://codepen.io/max-lee/pen/yLOjYMj" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/yLOjYMj</a></strong></p>
+<p>範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/yLOjYMj">https://codepen.io/max-lee/pen/yLOjYMj</a></strong></p>
 <p><img src="stacking.png" alt=""></p>
 <hr>
 <h2 id="數據標籤設定"><a href="#數據標籤設定" class="headerlink" title="數據標籤設定"></a>數據標籤設定</h2><br/>
 
-<p>數據標籤是呈現在每個數據點附近用來明確標示個數據點數值的文字標籤，可以讓觀看者不用對照座標軸就能立即獲得資料數據。由於數據標籤的屬性不少都跟前面介紹的圖表元素重複了，所以我們下面就只介紹一些比較重要的，想看完整內容再請大家到 <strong><a href="https://api.highcharts.com/highcharts/series.line.dataLabels" target="_blank" rel="noopener">官方文件</a></strong>。</p>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  series: [{
-    dataLabels: {} // 數據標籤設定
-  }],
-});</code></pre>
+<p>數據標籤是呈現在每個數據點附近用來明確標示個數據點數值的文字標籤，可以讓觀看者不用對照座標軸就能立即獲得資料數據。由於數據標籤的屬性不少都跟前面介紹的圖表元素重複了，所以我們下面就只介紹一些比較重要的，想看完整內容再請大家到 <strong><a target="_blank" rel="noopener" href="https://api.highcharts.com/highcharts/series.line.dataLabels">官方文件</a></strong>。</p>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  series: [&#123;
+    dataLabels: &#123;&#125; // 數據標籤設定
+  &#125;],
+&#125;);</code></pre>
 <img src="dataLabels.png" style="max-width: 600px; margin: 12px auto;" alt="其中一個數據列加上數據標籤" />
 
 <h4 id="series-dataLabels-enabled"><a href="#series-dataLabels-enabled" class="headerlink" title="# series.dataLabels.enabled"></a># series.dataLabels.enabled</h4><p><code>型別: Boolean</code> <code>預設: true|false</code></p>
@@ -253,23 +249,23 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 <br/>
 
 <h4 id="series-dashStyle"><a href="#series-dashStyle" class="headerlink" title="# series.dashStyle"></a># series.dashStyle</h4><p><code>型別: String</code> <code>預設: &quot;Solid&quot;</code></p>
-<p>可以改變線條類圖表中「線」的線條樣式，所有樣式可以看 <strong><a href="https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-dashstyle-all/" target="_blank" rel="noopener">官方範例</a></strong>。</p>
+<p>可以改變線條類圖表中「線」的線條樣式，所有樣式可以看 <strong><a target="_blank" rel="noopener" href="https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-dashstyle-all/">官方範例</a></strong>。</p>
 <br/>
 <br/>
 
 <h4 id="series-marker"><a href="#series-marker" class="headerlink" title="# series.marker"></a># series.marker</h4><p><code>型別: Object</code> <code>預設: 請見下方</code></p>
-<p>Marker 指的是線條類圖表中標記「數據點」的符號，預設是實心圓，而你可以透過一組物件來調整他的樣式。下面我們只介紹幾個重要的，要了解所有屬性請看 <strong><a href="https://api.highcharts.com/highcharts/series.line.marker" target="_blank" rel="noopener">官方文件</a></strong>。</p>
-<p>簡單的範例：<strong><a href="https://codepen.io/max-lee/pen/zYqjGya" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/zYqjGya</a></strong></p>
-<pre><code class="javascript">series: [{
-  marker: {
+<p>Marker 指的是線條類圖表中標記「數據點」的符號，預設是實心圓，而你可以透過一組物件來調整他的樣式。下面我們只介紹幾個重要的，要了解所有屬性請看 <strong><a target="_blank" rel="noopener" href="https://api.highcharts.com/highcharts/series.line.marker">官方文件</a></strong>。</p>
+<p>簡單的範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/zYqjGya">https://codepen.io/max-lee/pen/zYqjGya</a></strong></p>
+<pre><code class="javascript">series: [&#123;
+  marker: &#123;
     enabled: true,          // 是否要顯示 marker
     fillColor: undefined,   // 圖形的填色，預設繼承數據列顏色
     lineWidth: 0,           // 圖形的外框粗細
     lineColor: &quot;#ffffff&quot;,   // 圖形的外框填色，改為 undefined 則繼承數據列顏色
     radius: 4,              // 圖形的半徑
     symbol: &quot;circle&quot;        // 決定圖形的形狀，有&quot;circle&quot;,&quot;square&quot;,&quot;diamond&quot;,&quot;triangle&quot;,&quot;triangle-down&quot;
-  }
-}],</code></pre>
+  &#125;
+&#125;],</code></pre>
 <hr>
 <h2 id="長條類圖表專屬設定"><a href="#長條類圖表專屬設定" class="headerlink" title="長條類圖表專屬設定"></a>長條類圖表專屬設定</h2><br/>
 
@@ -290,7 +286,7 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 
 <h4 id="series-stack"><a href="#series-stack" class="headerlink" title="# series.stack"></a># series.stack</h4><p><code>型別: Number</code> <code>預設: undefined</code></p>
 <p>這個屬性其他類型的圖表也有，但用在長條類圖表中效果是最好的，當你開啟 <code>stacking</code> 時，這個屬性可以決定堆疊的分組方式。</p>
-<p>你可以調整看看這個範例的 <code>stack</code> 屬性：<strong><a href="https://codepen.io/max-lee/pen/PoNeqMZ" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/PoNeqMZ</a></strong></p>
+<p>你可以調整看看這個範例的 <code>stack</code> 屬性：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/PoNeqMZ">https://codepen.io/max-lee/pen/PoNeqMZ</a></strong></p>
 <p><img src="stack.png" alt=""></p>
 <hr>
 <h2 id="圓餅圖專屬設定"><a href="#圓餅圖專屬設定" class="headerlink" title="圓餅圖專屬設定"></a>圓餅圖專屬設定</h2><br/>
@@ -302,7 +298,7 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 
 <h4 id="series-size-series-innerSize"><a href="#series-size-series-innerSize" class="headerlink" title="# series.size / # series.innerSize"></a># series.size / # series.innerSize</h4><p><code>型別: Number|String</code> <code>預設: null</code></p>
 <p>你可以用像素(可省略單位)或百分比調整圓餅圖的尺寸，甚至可以用 <code>innerSize</code> 設定圓餅圖的內圈空白，來讓圓餅圖改為甜甜圈圖。</p>
-<p>有興趣可以看看範例：<strong><a href="https://codepen.io/max-lee/pen/eYZrYQo" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/eYZrYQo</a></strong></p>
+<p>有興趣可以看看範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/eYZrYQo">https://codepen.io/max-lee/pen/eYZrYQo</a></strong></p>
 <img src="donut.png" style="max-width: 600px; margin: 12px auto;" alt="" />
 
 <br/>
@@ -315,12 +311,12 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 
 <h4 id="series-dataLabels-connectorWidth"><a href="#series-dataLabels-connectorWidth" class="headerlink" title="# series.dataLabels.connectorWidth"></a># series.dataLabels.connectorWidth</h4><p><code>型別: Number|String</code> <code>預設: 30</code></p>
 <p>如果圓餅圖中某幾個數據點所佔的百分比較低時會導致扇形面積較小，讓數據標籤難以顯示，所以 Highcharts 會將某些標籤的距離拉遠並用連接線標示，而你可以用這個屬性來調整連間線的粗細。</p>
-<p>另外還可以透過 <code>connectorColor</code>、<code>connectorShape</code> 來調整連接線的顏色和形狀，有興趣的話再到 <strong><a href="https://api.highcharts.com/highcharts/series.pie.dataLabels" target="_blank" rel="noopener">官方文件</a></strong> 看看，這邊就不細說了。</p>
+<p>另外還可以透過 <code>connectorColor</code>、<code>connectorShape</code> 來調整連接線的顏色和形狀，有興趣的話再到 <strong><a target="_blank" rel="noopener" href="https://api.highcharts.com/highcharts/series.pie.dataLabels">官方文件</a></strong> 看看，這邊就不細說了。</p>
 <p><br/><br/></p>
 <p>今天介紹了數據列中比較常用的一些屬性，不過 Highcharts 的圖表類型實在太多了，每種數據列的設定都不太一樣，請原諒我沒辦法全部介紹，但這種大型的 library 本來就是邊做邊查，所以剩下的屬性就留給大家慢慢發掘吧！</p>
 <p>至於明天，終於要輪到整個圖表的靈魂「數據點」的設定了！</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10243081" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10243081">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -336,7 +332,7 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/09/24/highchart/highcharts-10/" data-id="clcsdp5jw0019neqw3cy8cq79" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/09/24/highchart/highcharts-10/" data-id="clo2cteto000gjsnl7d65dfkz" class="article-share-link">分享</a>
   </footer>
   
     
@@ -369,7 +365,7 @@ document.querySelector(&quot;button&quot;).adEventListener(&quot;click&quot;, fu
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

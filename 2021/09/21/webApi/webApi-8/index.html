@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/21/webApi/webApi-8/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="DesignMode 讓整個網站都是你的 textarea。  今天要介紹的 API 非常簡單明瞭，簡單到有點偷懶的嫌疑了，但其實等我們連同後面兩天的內容介紹完後，今天的 DesignMode 才可以發揮它的真正實力，今天我們就先簡單暸解一下它的效果就好。  DesignModeDesignMode 翻譯成中文就是設計模式，但要設計什麼呢？設計整個網頁。你沒聽錯，DesignMode 的設定可以">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/09/21/webApi/webApi-8/design-mode.gif">
 <meta property="article:published_time" content="2021-09-21T13:38:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.142Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.187Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -132,15 +128,15 @@
 <pre><code class="html">&lt;iframe src=&quot;./iframe.html&quot;&gt;&lt;/iframe&gt;
 &lt;button onClick=&quot;getHtml()&quot;&gt;Get HTML&lt;/button&gt;
 &lt;script&gt;
-  window.onload = function () {
+  window.onload = function () &#123;
     const iframeDocument = document.querySelector(&quot;iframe&quot;).contentDocument;
     iframeDocument.designMode = &quot;on&quot;;
-  };
+  &#125;;
 
-  function getHtml() {
+  function getHtml() &#123;
     const iframeDocument = document.querySelector(&quot;iframe&quot;).contentDocument;
     console.log(iframeDocument.body.innerHTML);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <img src="design-mode.gif" style="margin: 24px auto;" />
 
@@ -157,7 +153,7 @@
 <p><br/><br/></p>
 <p>其實我們已經在文章中點出了 DesignMode 的真實實力該如何發揮了，那就是透過一些手法，讓我們可以對編輯中的文字進行一些樣式的設定，如此以來 DesignMode 就會是名副其實的設計模式了。而這樣的工具，我們會在認識 Selection 與 Clipboard 之後，再來動手寫寫看。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10270710" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10270710">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -173,7 +169,7 @@
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/21/webApi/webApi-8/" data-id="clcsdp5mu004qneqw03nkgxtt" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/21/webApi/webApi-8/" data-id="clo2ctevd003ljsnl0e063uz4" class="article-share-link">分享</a>
   </footer>
   
     
@@ -206,7 +202,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

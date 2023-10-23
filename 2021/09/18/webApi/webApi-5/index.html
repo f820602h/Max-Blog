@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/18/webApi/webApi-5/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="一起來延伸視野，迎接更大的畫面吧！  今天要介紹的 FullScreen API 會被忽略的原因可能是因會需要使用到它的情境比較少，但如果你撰寫網站的經驗有累積到一定程度的話，應該或多或少還是有需要它的可能性。雖然使用度沒有那麼高，不過我們還是把它整理到我們的系列文章中一起分享給大家吧。  FullScreen  FullScreen API 主要是幫我們處理全螢幕顯示的功能，大部分都會運用在影">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/09/18/webApi/webApi-5/fullscreen.gif">
 <meta property="article:published_time" content="2021-09-18T06:38:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:39.038Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:28.067Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -131,61 +127,61 @@
 <h4 id="Element-requestFullscreen"><a href="#Element-requestFullscreen" class="headerlink" title="# Element.requestFullscreen"></a># Element.requestFullscreen</h4><p>這個的話就是主要用來開啟全螢幕的 API 了，這裡的 Element 代表的是 DOM 元素，所以看到這裡可以發現 FullScreen API 並沒有提供一個全域物件，FullScreen API 反而是多個不同 methods 的總稱。</p>
 <p>要使用的話就是先選定要全螢幕的元素，然後呼叫：</p>
 <pre><code class="javascript">const images = document.querySelectorAll(&quot;img&quot;);
-images.forEach((img) =&gt; {
-  img.addEventListener(&quot;click&quot;, function () {
+images.forEach((img) =&gt; &#123;
+  img.addEventListener(&quot;click&quot;, function () &#123;
     this.requestFullscreen();
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <p>這邊要注意的是 <code>requestFullscreen</code> 不能直接在頁面載入時呼叫，如果你這麼做會接到瀏覽器的錯誤警告，<code>API can only be initiated by a user gesture</code>，跟你說該 API 只能被使用者的手勢觸發，也就是說我們必須要透過事件的方式處理。</p>
 <p>另外 <code>requestFullscreen</code> 其實會回傳 Promise，當全螢幕顯示完畢後就會被 <code>resolve</code>，所以你可以做到這樣的效果：</p>
 <pre><code class="javascript">const images = document.querySelectorAll(&quot;img&quot;);
-images.forEach((img) =&gt; {
-  img.addEventListener(&quot;click&quot;, function () {
-    this.requestFullscreen().then(() =&gt; {
+images.forEach((img) =&gt; &#123;
+  img.addEventListener(&quot;click&quot;, function () &#123;
+    this.requestFullscreen().then(() =&gt; &#123;
       this.src = &quot;ugly.jpg&quot;;
-    });
-  });
-});</code></pre>
+    &#125;);
+  &#125;);
+&#125;);</code></pre>
 <img src="fullscreen.gif" style="margin: 24px auto;" />
 
 <p><br/><br/></p>
 <h4 id="Document-exitFullscreen"><a href="#Document-exitFullscreen" class="headerlink" title="# Document.exitFullscreen"></a># Document.exitFullscreen</h4><p>有開啟全螢幕，自然就會有關閉的部分，基本上使用者可以自己按 ESC 鍵離開全螢幕模式，不過你也可以透過 <code>exitFullscreen</code> 來觸發這件事，例如讓 Enter 鍵也可以關閉：</p>
-<pre><code class="javascript">document.addEventListener(&quot;keydown&quot;, function (e) {
+<pre><code class="javascript">document.addEventListener(&quot;keydown&quot;, function (e) &#123;
   if (e.keyCode == 13)
-    document.exitFullscreen().then(() =&gt; {
+    document.exitFullscreen().then(() =&gt; &#123;
       alert(document.fullscreen);
-    });
-});</code></pre>
+    &#125;);
+&#125;);</code></pre>
 <p>當然了，<code>exitFullscreen</code> 也是會回傳 Promise 的，可以使用 <code>then</code> 來串接。不過要注意 <code>exitFullscreen</code> 這個 method 是在 Document 底下喔！</p>
 <p><br/><br/></p>
 <h4 id="Document-fullscreenElement"><a href="#Document-fullscreenElement" class="headerlink" title="# Document.fullscreenElement"></a># Document.fullscreenElement</h4><p><code>fullscreenElement</code> 是一個唯讀的屬性，它會指向目前正在全螢幕模式的元素。</p>
 <pre><code class="javascript">const images = document.querySelector(&quot;img&quot;);
-images.addEventListener(&quot;click&quot;, function () {
-  this.requestFullscreen().then(() =&gt; {
+images.addEventListener(&quot;click&quot;, function () &#123;
+  this.requestFullscreen().then(() =&gt; &#123;
     console.log(this === document.fullscreenElement); // true
-  });
-});</code></pre>
+  &#125;);
+&#125;);</code></pre>
 <p><br/><br/></p>
 <h4 id="瀏覽器支援度"><a href="#瀏覽器支援度" class="headerlink" title="# 瀏覽器支援度"></a># 瀏覽器支援度</h4><p>看完今天的介紹後，你可能覺得全螢幕是一個非常基本的功能，但其實 FullScreen API 在瀏覽器中的支援度還不是非常完整，所以當我們想要使用的時候可能要做一些額外的處理：</p>
 <pre><code class="javascript">document.fullscreenEnabled =
   document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen;
 
-function requestFullscreen(element) {
-  if (element.requestFullscreen) {
+function requestFullscreen(element) &#123;
+  if (element.requestFullscreen) &#123;
     element.requestFullscreen();
-  } else if (element.mozRequestFullScreen) {
+  &#125; else if (element.mozRequestFullScreen) &#123;
     element.mozRequestFullScreen();
-  } else if (element.webkitRequestFullScreen) {
+  &#125; else if (element.webkitRequestFullScreen) &#123;
     element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-  }
-}
+  &#125;
+&#125;
 
-if (document.fullscreenEnabled) {
+if (document.fullscreenEnabled) &#123;
   requestFullscreen(document.documentElement);
-}</code></pre>
+&#125;</code></pre>
 <p>目前是 IE11 和 Safari 還需要加上前綴詞，且另外 iphone 是完全不支援的，也希望之後 FullScreen API 的支援度可以越來越完善，我們前端工程師才不用寫這些冗長的 code。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10268620" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10268620">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -201,7 +197,7 @@ if (document.fullscreenEnabled) {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/18/webApi/webApi-5/" data-id="clcsdp5ms004kneqwg1nj7qvi" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/18/webApi/webApi-5/" data-id="clo2cteva003fjsnl70zy86ju" class="article-share-link">分享</a>
   </footer>
   
     
@@ -234,7 +230,7 @@ if (document.fullscreenEnabled) {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

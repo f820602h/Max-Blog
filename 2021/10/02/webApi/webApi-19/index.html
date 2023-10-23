@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2021/10/02/webApi/webApi-19/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="我的改變，你看得見！  在開發網頁過程中，我們最常做的事情就是對資料進行修改後運用在 DOM 元素上，像是新增 &#x2F; 刪除節點、調整樣式、改寫內容或是屬性(attribute)的調整，而這些「修改 DOM」的動作通常散落在程式碼的各個角落，發生時機也並不相同，在這樣的情況下，我們能不能追蹤這些動作呢？  MutationObserverMutationObserver API 就是用來解決上述問題">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2021-10-02T09:19:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.923Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.935Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -31,7 +31,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -45,10 +45,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -124,9 +120,9 @@
 </ul>
 <br/>
 
-<pre><code class="javascript">const observer = new MutationObserver(function (mutations, owner) {
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations, owner) &#123;
   console.log(mutation, owner);
-});</code></pre>
+&#125;);</code></pre>
 <p><br/><br/></p>
 <h4 id="MutationObserver-observe"><a href="#MutationObserver-observe" class="headerlink" title="# MutationObserver.observe"></a># MutationObserver.observe</h4><p>我們可以把剛剛 <code>new</code> 出來的 MutationObserver 實體譬喻成一個「觀察者」，當這位觀察者監測到節點變動，他就會執行設定好的任務(callback)，但他目前並未被指派要觀察哪一個元素，所以我們要透過 <code>observe</code> 這個 method 來指定「被觀察的對象」，其中需要傳入兩個參數：</p>
 <br/>
@@ -181,22 +177,22 @@
 </tbody></table>
 <br/>
 
-<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) &#123;
   console.log(mutations);
-});
+&#125;);
 
 const div = document.querySelector(&quot;div&quot;);
-observer.observe(div, {
+observer.observe(div, &#123;
   childList: true,
   attributes: true,
   characterData: true,
-});</code></pre>
+&#125;);</code></pre>
 <p>如此一來，只要元素有被觀察到我們所指定項目的變動，MutationObserver 就會去執行 Callback。</p>
 <p><br/><br/></p>
 <h4 id="MutationObserver-disconnect"><a href="#MutationObserver-disconnect" class="headerlink" title="# MutationObserver.disconnect"></a># MutationObserver.disconnect</h4><p>另外還可以透過 <code>disconnect</code> 來註銷目前已經被觀察的 DOM，但 MutationObserver 實體並不會消失，只是暫時不再進行觀察，直到你又使用 <code>observe</code> 來註冊一個被觀察對象。</p>
-<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) &#123;
   console.log(mutations);
-});
+&#125;);
 
 observer.disconnect();</code></pre>
 <p><br/><br/></p>
@@ -209,18 +205,18 @@ observer.disconnect();</code></pre>
 <p>這是為了避免大量 DOM 操作所帶來的效能問題，也因此，MutationObserver 會將該程序時間內所有的變動記錄下來並包裝成陣列給我們。</p>
 </li>
 </ul>
-<pre><code class="javascript">const observer = new MutationObserver(function (mutations) {
-  mutations.forEach((record) =&gt; {
+<pre><code class="javascript">const observer = new MutationObserver(function (mutations) &#123;
+  mutations.forEach((record) =&gt; &#123;
     console.log(record); // MutationRecord 物件
-  });
-});
+  &#125;);
+&#125;);
 
 const div = document.querySelector(&quot;div&quot;);
-observer.observe(div, {
+observer.observe(div, &#123;
   childList: true,
   attributes: true,
   characterData: true,
-});
+&#125;);
 
 div.textContent = &quot;example&quot;;
 div.style.background = &quot;pink&quot;;
@@ -230,7 +226,7 @@ div.style.background = &quot;pink&quot;;
 <br/>
 
 <ul>
-<li><strong>接著來看一下 MutationRecord 中有哪些屬性：</strong><br>以下這些並非全部的屬性，只介紹了幾個比較實用的，如果想知道完整內容的話可以看<a href="https://developer.mozilla.org/zh-TW/docs/Web/API/MutationObserver#mutationobserverinit" target="_blank" rel="noopener">這裡</a>。</li>
+<li><strong>接著來看一下 MutationRecord 中有哪些屬性：</strong><br>以下這些並非全部的屬性，只介紹了幾個比較實用的，如果想知道完整內容的話可以看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/MutationObserver#mutationobserverinit">這裡</a>。</li>
 </ul>
 <table>
 <thead>
@@ -285,29 +281,29 @@ div.style.background = &quot;pink&quot;;
   const div = document.querySelector(&quot;div&quot;);
 
   // 當 DOM 變動時我們想做的事情
-  function onDomMutation(info) {
+  function onDomMutation(info) &#123;
     console.log(info);
-  }
+  &#125;
 
-  function changeContent() {
+  function changeContent() &#123;
     const oldValue = div.textContent;
     div.textContent = &quot;Hi I&#39;m Tom&quot;;
-    onDomMutation({
+    onDomMutation(&#123;
       target: div,
       oldValue,
       type: &quot;characterData&quot;,
-    });
-  }
+    &#125;);
+  &#125;
 
-  function changeColor() {
+  function changeColor() &#123;
     const oldValue = div.style;
     div.style.color = &quot;red&quot;;
-    onDomMutation({
+    onDomMutation(&#123;
       target: div,
       oldValue,
       type: &quot;attributes&quot;,
-    });
-  }
+    &#125;);
+  &#125;
 &lt;/script&gt;</code></pre>
 <p><strong>其實透過上面這樣的寫法依然可以做到類似的效果，但我認為 MutationObserver 最主要的優點是「減少耦合」，就像之前介紹的 CustomEvent 一樣，透過「觀察者模式」的 Design Patterns 來讓原本是許多「一對一的依賴關係」整合成單個「一對多的依賴關係」。</strong></p>
 <pre><code class="html">&lt;button onclick=&quot;changeContent()&quot;&gt;改變內容&lt;/button&gt;
@@ -316,30 +312,30 @@ div.style.background = &quot;pink&quot;;
 
 &lt;script&gt;
   const div = document.querySelector(&quot;div&quot;);
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach((record) =&gt; {
+  const observer = new MutationObserver(function (mutations) &#123;
+    mutations.forEach((record) =&gt; &#123;
       console.log(record);
-    });
-  });
+    &#125;);
+  &#125;);
 
-  observer.observe(div, {
+  observer.observe(div, &#123;
     childList: true,
     attributes: true,
     characterData: true,
-  });
+  &#125;);
 
-  function changeContent() {
+  function changeContent() &#123;
     div.textContent = &quot;Hi I&#39;m Tom&quot;;
-  }
+  &#125;
 
-  function changeColor() {
+  function changeColor() &#123;
     div.style.color = &quot;red&quot;;
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <p><br/><br/></p>
-<p>不曉得經過這樣的解釋後，各位有沒有理解使用 MutationObserver 的好處呢？後面我們還會陸續介紹幾個也是採用「觀察者模式(Observer Pattern)」的 API，可以期待一下喔。另外有使用過 Vue 的朋友，你知道 <code>$nextTick</code> 其實就是基於 MutationObserver 實踐出來的喔，有興趣的人可以去看看<a href="https://github.com/vuejs/vue/blob/2.6/src/core/util/next-tick.js" target="_blank" rel="noopener">原始碼</a>。</p>
+<p>不曉得經過這樣的解釋後，各位有沒有理解使用 MutationObserver 的好處呢？後面我們還會陸續介紹幾個也是採用「觀察者模式(Observer Pattern)」的 API，可以期待一下喔。另外有使用過 Vue 的朋友，你知道 <code>$nextTick</code> 其實就是基於 MutationObserver 實踐出來的喔，有興趣的人可以去看看<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue/blob/2.6/src/core/util/next-tick.js">原始碼</a>。</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10277536" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10277536">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -355,7 +351,7 @@ div.style.background = &quot;pink&quot;;
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/10/02/webApi/webApi-19/" data-id="clcsdp5mf003mneqwbwag9cug" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/10/02/webApi/webApi-19/" data-id="clo2cteut002kjsnla9r2968y" class="article-share-link">分享</a>
   </footer>
   
     
@@ -388,7 +384,7 @@ div.style.background = &quot;pink&quot;;
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

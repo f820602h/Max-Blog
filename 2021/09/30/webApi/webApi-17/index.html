@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2021/09/30/webApi/webApi-17/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="里長辦公室廣播：張君雅小妹妹，恁兜欸泡麵已經煮好了！  前兩天已經認識了 PostMessage 和建立專屬頻道的 MessageChannel，它們都是進行點對點的溝通，但如果想要一次跟多個頁面溝通時怎麼辦了，這時 BroadcastChannel 就能派上用場了。  BroadcastChannelBroadcastChannel 就如同一個無線對講機系統，訊息是播放在一個廣播頻道中，任何頁">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2021/09/30/webApi/webApi-17/broadcast.gif">
 <meta property="article:published_time" content="2021-09-30T14:32:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.915Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.919Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="WebApi">
@@ -33,7 +33,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -47,10 +47,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -124,9 +120,9 @@
 channel.postMessage(&quot;你已成功加入頻道!&quot;, location.origin);</code></pre>
 <p>要收到訊息的話就用 BroadcastChannel 監聽 <code>message</code> 即可：</p>
 <pre><code class="javascript">const channel = new BroadcastChannel(&quot;max_channel&quot;);
-channel.onmessage = function (event) {
+channel.onmessage = function (event) &#123;
   console.log(event.data);
-};</code></pre>
+&#125;;</code></pre>
 <p><br/><br/></p>
 <h4 id="頻道溝通"><a href="#頻道溝通" class="headerlink" title="# 頻道溝通"></a># 頻道溝通</h4><p>這時候其他頁面只要使用同樣的頻道名稱建立一個 BroadcastChannel，並且一樣透過該頻道來傳送／接收訊息，這樣所有頻道中的頁面就都可以相互溝通了。</p>
 <pre><code class="html">&lt;!-- 這裡是 main.html --&gt;
@@ -135,12 +131,12 @@ channel.onmessage = function (event) {
 &lt;iframe src=&quot;pageB.html&quot; width=&quot;480&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;
 &lt;script&gt;
   const channel = new BroadcastChannel(&quot;max_channel&quot;);
-  channel.onmessage = function (event) {
+  channel.onmessage = function (event) &#123;
     console.log(event.data);
-  };
-  function sendMessage() {
+  &#125;;
+  function sendMessage() &#123;
     channel.postMessage(&quot;你已成功加入頻道!&quot;, location.origin);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
 &lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
@@ -148,26 +144,26 @@ channel.onmessage = function (event) {
 &lt;script&gt;
   const output = document.querySelector(&quot;.output&quot;);
   const channel = new BroadcastChannel(&quot;max_channel&quot;);
-  channel.onmessage = function (event) {
+  channel.onmessage = function (event) &#123;
     const output = document.querySelector(&quot;.output&quot;);
     output.innerHTML = event.data;
-  };
-  function sendMessage() {
+  &#125;;
+  function sendMessage() &#123;
     channel.postMessage(&quot;pageA 發送訊息！&quot;, location.origin);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
 &lt;button onclick=&quot;sendMessage()&quot;&gt;send message&lt;/button&gt;
 &lt;div class=&quot;output&quot;&gt;pageB content&lt;/div&gt;
 &lt;script&gt;
   const channel = new BroadcastChannel(&quot;max_channel&quot;);
-  channel.onmessage = function (event) {
+  channel.onmessage = function (event) &#123;
     const output = document.querySelector(&quot;.output&quot;);
     output.innerHTML = event.data;
-  };
-  function sendMessage() {
+  &#125;;
+  function sendMessage() &#123;
     channel.postMessage(&quot;pageB 發送訊息！&quot;, location.origin);
-  }
+  &#125;
 &lt;/script&gt;</code></pre>
 <img src="broadcast.gif" style="margin: 24px auto;" />
 
@@ -181,55 +177,55 @@ channel.onmessage = function (event) {
   const channel = new BroadcastChannel(&quot;max_channel&quot;);
 
   // 發送頻道名稱
-  allIframe.forEach((iframe) =&gt; {
-    iframe.addEventListener(&quot;load&quot;, function () {
+  allIframe.forEach((iframe) =&gt; &#123;
+    iframe.addEventListener(&quot;load&quot;, function () &#123;
       this.contentWindow.postMessage(channel.name, location.origin);
-    });
-  });
+    &#125;);
+  &#125;);
 
-  channel.onmessage = function (event) {
+  channel.onmessage = function (event) &#123;
     console.log(event.data);
-  };
+  &#125;;
 &lt;/script&gt;</code></pre>
 <pre><code class="html">&lt;!-- 這裡是 pageA.html --&gt;
 &lt;div class=&quot;output&quot;&gt;pageA content&lt;/div&gt;
 &lt;script&gt;
   let channel;
-  window.addEventListener(&quot;message&quot;, function (event) {
+  window.addEventListener(&quot;message&quot;, function (event) &#123;
     if (event.origin !== location.origin) return;
     channel = new BroadcastChannel(event.data);
 
-    channel.onmessage = function (bc_event) {
+    channel.onmessage = function (bc_event) &#123;
       const output = document.querySelector(&quot;.output&quot;);
       output.innerHTML = event.data;
-    };
+    &#125;;
 
     channel.postMessage(&quot;pageA 加入頻道&quot;, location.origin);
-  });
+  &#125;);
 &lt;/script&gt;</code></pre>
 <pre><code class="html">&lt;!-- 這裡是 pageB.html --&gt;
 &lt;div class=&quot;output&quot;&gt;pageB content&lt;/div&gt;
 &lt;script&gt;
   let channel;
-  window.addEventListener(&quot;message&quot;, function (event) {
+  window.addEventListener(&quot;message&quot;, function (event) &#123;
     if (event.origin !== location.origin) return;
     channel = new BroadcastChannel(event.data);
 
-    channel.onmessage = function (bc_event) {
+    channel.onmessage = function (bc_event) &#123;
       const output = document.querySelector(&quot;.output&quot;);
       output.innerHTML = event.data;
-    };
+    &#125;;
 
     channel.postMessage(&quot;pageB 加入頻道&quot;, location.origin);
-  });
+  &#125;);
 &lt;/script&gt;</code></pre>
 <blockquote>
 <p>補充：如果有頁面想要與廣播頻道斷開連結的話，只要拿建立的頻道執行 <code>close()</code> 即可，關閉後頻道還是存在，只是該頁面不再接收頻道的訊息。</p>
 </blockquote>
 <p><br/><br/></p>
-<p>這三天我們已經完全認識了 PostMessage，了解到它不但可以傳送訊息，還可以建立私訊或群組的通訊模式，而這項技術其實時常會用在 <a href="https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 中，但因為它的範疇有點龐大，所以這次的系列文章不會介紹到，有興趣的朋友可以再自行研究～</p>
+<p>這三天我們已經完全認識了 PostMessage，了解到它不但可以傳送訊息，還可以建立私訊或群組的通訊模式，而這項技術其實時常會用在 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers">Web Worker</a> 中，但因為它的範疇有點龐大，所以這次的系列文章不會介紹到，有興趣的朋友可以再自行研究～</p>
 <hr>
-<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10276437" target="_blank" rel="noopener">iT 邦幫忙</a> -</p>
+<p>- 此篇文章為「iT 邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10276437">iT 邦幫忙</a> -</p>
 
         </div>
       
@@ -245,7 +241,7 @@ channel.onmessage = function (event) {
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/13th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">13th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebApi/" rel="tag">WebApi</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2021/09/30/webApi/webApi-17/" data-id="clcsdp5lv003hneqw6w9fa7y9" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2021/09/30/webApi/webApi-17/" data-id="clo2cteur002fjsnlak2bgk82" class="article-share-link">分享</a>
   </footer>
   
     
@@ -278,7 +274,7 @@ channel.onmessage = function (event) {
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

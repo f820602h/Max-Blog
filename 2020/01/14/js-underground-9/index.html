@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://maxleebk.com/2020/01/14/js-underground-9/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本篇為六角學院 - JS地下城攻略文　Github｜Demo    確認需求 根據資料產生畫面 抽獎機率需考慮獎項數量而非種類 輪盤指針的旋轉角度 抽中的獎品減少並不再被抽到  這次比較需要思考的應該會是機率的計算以及指針旋轉的度數計算。  解題攻略  # 扇形切版純 CSS 要做出扇型一直都是蠻麻煩的，網上其實都查得到很多作法，這邊提供我的結構以及樣式。 &lt;div class&#x3D;&amp;quot">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://cdn-images-1.medium.com/max/2598/1*Ax_ixX4Hrwu2373gUrTgAw.jpeg">
 <meta property="article:published_time" content="2020-01-14T12:46:25.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.883Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.883Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="JS地下城">
@@ -32,7 +32,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -46,10 +46,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -109,7 +105,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本篇為六角學院 - JS地下城攻略文　<a href="https://github.com/f820602h/Lucky-Wheel/" target="_blank" rel="noopener">Github</a>｜<a href="https://f820602h.github.io/Lucky-Wheel/" target="_blank" rel="noopener">Demo</a></p>
+<p>本篇為六角學院 - JS地下城攻略文　<a target="_blank" rel="noopener" href="https://github.com/f820602h/Lucky-Wheel/">Github</a>｜<a target="_blank" rel="noopener" href="https://f820602h.github.io/Lucky-Wheel/">Demo</a></p>
 </blockquote>
 </br>
 
@@ -125,78 +121,78 @@
 
 <h4 id="扇形切版"><a href="#扇形切版" class="headerlink" title="# 扇形切版"></a># 扇形切版</h4><p>純 CSS 要做出扇型一直都是蠻麻煩的，網上其實都查得到很多作法，這邊提供我的結構以及樣式。</p>
 <pre><code class="html">&lt;div class=&quot;fan&quot;&gt;&lt;div class=&quot;inner&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
-<pre><code class="css">.fan {
+<pre><code class="css">.fan &#123;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
   clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)
-}
-.inner {
+&#125;
+.inner &#123;
   width: 50%;
   height: 100%;
   background: #5858B9;
   transform-origin: right center;
   transform: rotate(60deg);
-}</code></pre>
+&#125;</code></pre>
 <p><img src="https://cdn-images-1.medium.com/max/2598/1*Ax_ixX4Hrwu2373gUrTgAw.jpeg" alt=""></p>
 <p>我是使用 <code>clip-path</code> 搭配 <code>rotate</code> 來做到這樣的效果，旋轉幾度這個扇形就會是幾度，最後只要根據需求來跑相對應的迴圈次數，為 <code>.fan</code> 也加上 <code>rotate</code> 就可以將扇形拼成一個圓了。</p>
 <p></br></br></p>
 <h4 id="資料管理"><a href="#資料管理" class="headerlink" title="# 資料管理"></a># 資料管理</h4><p>網站其實就是一堆的資料的顯示與互動。以本題目為例，每年老闆都會提供一份「尾牙獎品清單」這樣的資料，而我們的工作便是確保畫面與資料的一致性，所以每當有獎品增減，我們都要去改動畫面並且確認功能沒有因此而壞掉，這樣其實是非常繁複沒有效率的，所以我們要設計成由「資料驅動畫面」，未來就算資料更動了，我們也不用特地去調整畫面。</p>
 <p>首先要做的第一步就是資料管理，而一般網頁上最常見的資料格式就是 <code>JSON</code>，我們可以把獎品清單整理成以下格式：</p>
 <pre><code class="json">[
-  {
+  &#123;
     &quot;text&quot;: &quot;Movie&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;movie_filter&lt;/i&gt;&quot;,
     &quot;num&quot;: 0
-  },
-  {
+  &#125;,
+  &#123;
     &quot;text&quot;: &quot;Wish&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;cake&lt;/i&gt;&quot;,
     &quot;num&quot;: 5
-  },
-  {
+  &#125;,
+  &#123;
     &quot;text&quot;: &quot;Anything&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;star&lt;/i&gt;&quot;,
     &quot;num&quot;: 5
-  },
-  {
+  &#125;,
+  &#123;
     &quot;text&quot;: &quot;Child&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;child_care&lt;/i&gt;&quot;,
     &quot;num&quot;: 4
-  },
-  {
+  &#125;,
+  &#123;
     &quot;text&quot;: &quot;Flight&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;flight&lt;/i&gt;&quot;,
     &quot;num&quot;: 1
-  },
-  {
+  &#125;,
+  &#123;
     &quot;text&quot;: &quot;wifi&quot;,
     &quot;icon&quot;: &quot;&lt;i class=&#39;material.icons&#39;&gt;wifi&lt;/i&gt;&quot;,
     &quot;num&quot;: 5
-  },
+  &#125;,
 ]</code></pre>
 <p>接著把 <code>JSON</code> 資料存成 <code>.json</code> 檔，然後再用 <code>AJAX</code> 去取得資料。</p>
 <pre><code class="javascript">let data;
-$.get(&#39;db.json&#39;, function(res) { 
+$.get(&#39;db.json&#39;, function(res) &#123; 
   data = res 
-};</code></pre>
+&#125;;</code></pre>
 <p><code>JSON</code> 資料會是一個陣列，所以我們可以使用一些陣列的方法來處理它，像是用 <code>forEach</code> 迴圈來新增元素：</p>
 <pre><code class="javascript">// 根據資料長度計算每個扇型要占多少度數
 let preAngle = 360 / data.length;
 let wheel = $(&#39;.wheel&#39;);
 
 // 跑forEach迴圈
-data.forEach((item, index) =&gt; {
+data.forEach((item, index) =&gt; &#123;
   let fan = $(&#39;&lt;div class=&quot;fan&quot;&gt;&lt;/div&gt;&#39;);
   let inner = $(&#39;&lt;div class=&quot;inner&quot;&gt;&lt;/div&gt;&#39;);
 
-  fan.css(&#39;transform&#39;, `rotate(${preAngle * index}deg)`);
-  inner.css(&#39;transform&#39;, `rotate(${preAngle}deg)`);
+  fan.css(&#39;transform&#39;, `rotate($&#123;preAngle * index&#125;deg)`);
+  inner.css(&#39;transform&#39;, `rotate($&#123;preAngle&#125;deg)`);
 
   fan.append(inner);
   wheel.append(fan);
-});</code></pre>
+&#125;);</code></pre>
 <p>現在程式就會根據資料來製作輪盤了，不管資料是多是少都能自動計算並產生畫面，當然我裡面省略的很多，例如文字和圖示的顯示以及扇型起始角度的調整，不過相信各位勇者都能舉一反三的 !</p>
 <p></br></br></p>
 <h4 id="機率處理"><a href="#機率處理" class="headerlink" title="# 機率處理"></a># 機率處理</h4><p>再來是處理機率的問題，我們要先知道「抽獎機率需考慮獎項數量而非種類」是甚麼意思，假設獎項種共有 6 種，但是數量是 25 個，那每個獎品被抽到的機率應該是 1/25 而不是 1/6，所以數量越多的獎品應該要越容易被抽中。</p>
@@ -206,38 +202,38 @@ let wheel = $(&#39;.wheel&#39;);
 // 宣告一個陣列
 let giftBox = []
 
-data.forEach((item, index) =&gt; {
+data.forEach((item, index) =&gt; &#123;
   // 在forEach中加上迴圈，讓每個獎品根據其數量往giftBox添加
-  for (let i = 0; i &lt; item.num; i++) {
+  for (let i = 0; i &lt; item.num; i++) &#123;
   　giftBox.push(index)
-  }
+  &#125;
 
   let fan = $(&#39;&lt;div class=&quot;fan&quot;&gt;&lt;/div&gt;&#39;);
   let inner = $(&#39;&lt;div class=&quot;inner&quot;&gt;&lt;/div&gt;&#39;);
 
-  fan.css(&#39;transform&#39;, `rotate(${preAngle * index}deg)`);
-  inner.css(&#39;transform&#39;, `rotate(${preAngle}deg)`);
+  fan.css(&#39;transform&#39;, `rotate($&#123;preAngle * index&#125;deg)`);
+  inner.css(&#39;transform&#39;, `rotate($&#123;preAngle&#125;deg)`);
 
   fan.append(inner);
   wheel.append(fan);
-});</code></pre>
+&#125;);</code></pre>
 <p>迴圈跑完後的 <code>giftBox</code> 應該會長這個樣子…</p>
 <pre><code class="javascript">console.log(giftBox)
 // [1,1,1,1,1,2,2,2,2,2,3,3,3,3,4,5,5,5,5,5]</code></pre>
 <p>之後我們可以設計成，按下按鈕後就從陣列 <code>pop</code> 出一個獎品就可以了。<br>不過現在的獎項排列太整齊了，沒有隨機性，所以我們可以在每次抽獎前先打亂順序，就像是把抽獎箱搖一搖：</p>
-<pre><code class="javascript">let shuffle = function(a, b) {
+<pre><code class="javascript">let shuffle = function(a, b) &#123;
   return Math.random() &gt; 0.5 ? -1 : 1;
-};
-$(&quot;button&quot;).click(function(){
+&#125;;
+$(&quot;button&quot;).click(function()&#123;
   let giftIndex = giftBox.sort(shuffle).pop();
-});</code></pre>
+&#125;);</code></pre>
 <p>這樣抽獎功能就符合自然機率了，而且因為 <code>pop</code> 會實際改動陣列本身，所以被抽走的獎品自然就從陣列裡移除不會再被抽到囉。</p>
 <p></br></br></p>
 <h4 id="指針旋轉"><a href="#指針旋轉" class="headerlink" title="# 指針旋轉"></a># 指針旋轉</h4><p>抽出獎項後我們要讓指針轉動，沒錯，先抽獎再轉指針，畫面只是一種氣氛啦！</p>
 <p>還記得我們剛剛亂數抽出的 <code>giftIndex</code> 嗎？它代表的是 <code>JSON</code> 資料裡的索引，只要拿去陣列裡查詢就可以知道抽到的是什麼獎品，而且 <code>giftIndex</code> 乘以先前計算的 <code>preAngle</code> 就可以知道指針要轉多少角度了。</p>
 <pre><code class="javascript">let gift;
 let startAngle;
-$(&quot;button&quot;).click(function(){
+$(&quot;button&quot;).click(function()&#123;
   // 舉個例子:假如我們亂數抽出的gift是2
   // 那可以知道抽出的是data[2]的獎品，也就是Anything
   let giftIndex = giftBox.sort(shuffle).pop();
@@ -254,9 +250,9 @@ $(&quot;button&quot;).click(function(){
   startAngle = giftIndex * preAngle;
 
   // 最後為指針設定樣式
-  $(&#39;.hand&#39;).css({transform: `rotate(${goAngle}deg)`})
-});</code></pre>
-<p>這樣主要的幾個重點需求就都完成了，過程中我有省略了一些部分，如果有問題的話再可以看看完整的 <a href="https://github.com/f820602h/Lucky-Wheel/" target="_blank" rel="noopener">程式碼</a>。<br>相信各位勇者都是非常聰慧的！加油！</p>
+  $(&#39;.hand&#39;).css(&#123;transform: `rotate($&#123;goAngle&#125;deg)`&#125;)
+&#125;);</code></pre>
+<p>這樣主要的幾個重點需求就都完成了，過程中我有省略了一些部分，如果有問題的話再可以看看完整的 <a target="_blank" rel="noopener" href="https://github.com/f820602h/Lucky-Wheel/">程式碼</a>。<br>相信各位勇者都是非常聰慧的！加油！</p>
 
         </div>
       
@@ -272,7 +268,7 @@ $(&quot;button&quot;).click(function(){
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS%E5%9C%B0%E4%B8%8B%E5%9F%8E/" rel="tag">JS地下城</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/01/14/js-underground-9/" data-id="clcsdp5fl0006neqw5six47cm" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/01/14/js-underground-9/" data-id="clo2ctete0006jsnlbqk2a9ug" class="article-share-link">分享</a>
   </footer>
   
     
@@ -305,7 +301,7 @@ $(&quot;button&quot;).click(function(){
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

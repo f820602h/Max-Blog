@@ -13,11 +13,11 @@
 <meta property="og:url" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="本章節範例：https:&#x2F;&#x2F;codepen.io&#x2F;max-lee&#x2F;pen&#x2F;gOroOjd避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。  有時候圖表上的數據列（series）未必只有一組，會使得我們必須協助觀看者分辨每一組數據列所代表的身份或資料內容，以我們員工年齡分佈的案例來說，假如人資想要與其他公司的資料進行比較時，那我們的圖表就必須要加上圖例。  圖">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="og:image" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/layout.png">
 <meta property="og:image" content="https://maxleebk.com/2020/09/20/highchart/highcharts-6/gutter.png">
 <meta property="article:published_time" content="2020-09-20T02:26:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.875Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.871Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Highcharts">
@@ -34,7 +34,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -48,10 +48,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -111,7 +107,7 @@
       
         <div class="article-entry" itemprop="articleBody">
           <blockquote>
-<p>本章節範例：<strong><a href="https://codepen.io/max-lee/pen/gOroOjd" target="_blank" rel="noopener">https://codepen.io/max-lee/pen/gOroOjd</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
+<p>本章節範例：<strong><a target="_blank" rel="noopener" href="https://codepen.io/max-lee/pen/gOroOjd">https://codepen.io/max-lee/pen/gOroOjd</a></strong><br>避免文章篇幅過長，沒辦法每個屬性都利用圖片示意，所以記得善用範例來測試不太了解的屬性。</p>
 </blockquote>
 <p>有時候圖表上的數據列（series）未必只有一組，會使得我們必須協助觀看者分辨每一組數據列所代表的身份或資料內容，以我們員工年齡分佈的案例來說，假如人資想要與其他公司的資料進行比較時，那我們的圖表就必須要加上圖例。</p>
 <hr>
@@ -123,9 +119,9 @@
 <li><strong>圖例的順序與你設定的數據列在陣列裡的索引值有關</strong></li>
 <li><strong>圖例是可以點擊的，用途是將對應的數據列進行顯示或隱藏</strong></li>
 </ul>
-<pre><code class="javascript">var myChart = Highcharts.chart(container, {
-  legend: {} // 圖例設定
-});</code></pre>
+<pre><code class="javascript">var myChart = Highcharts.chart(container, &#123;
+  legend: &#123;&#125; // 圖例設定
+&#125;);</code></pre>
 <br/>
 
 <h4 id="legend-enabled"><a href="#legend-enabled" class="headerlink" title="# legend.enabled"></a># legend.enabled</h4><p><code>型別: Boolean</code> <code>預設: undefined</code></p>
@@ -165,11 +161,11 @@
 <br/>
 
 <h4 id="legend-border系列"><a href="#legend-border系列" class="headerlink" title="# legend.border系列"></a># legend.border系列</h4><p>因為 <code>border</code> 的相關設定在 <strong><a href="/2020/09/17/highcharts-4/#chart-borderWidth-chart-plotBorderWidth">圖表整體設定</a></strong> 提過了，所以這邊就只放預設值給大家參考。</p>
-<pre><code class="javascript">legend: {
+<pre><code class="javascript">legend: &#123;
   borderWidth: 0,         // Number
   borderRadius: 0,        // Number
   borderColor: &quot;#999999&quot;  // String
-}</code></pre>
+&#125;</code></pre>
 <br/>
 <br/>
 
@@ -195,21 +191,21 @@
 <br/>
 
 <h4 id="legend-itemStyle-legend-itemHoverStyle-legend-itemHiddenStyle"><a href="#legend-itemStyle-legend-itemHoverStyle-legend-itemHiddenStyle" class="headerlink" title="# legend.itemStyle / legend.itemHoverStyle / legend.itemHiddenStyle"></a># legend.itemStyle / legend.itemHoverStyle / legend.itemHiddenStyle</h4><p><code>型別: Object</code> <code>預設: 如下顯示</code></p>
-<pre><code class="javascript">legend: {
-  itemStyle: {
+<pre><code class="javascript">legend: &#123;
+  itemStyle: &#123;
     color: &quot;#333333&quot;,
     cursor: &quot;pointer&quot;,
     fontSize: &quot;12px&quot;,
     fontWeight: &quot;bold&quot;,
     textOverflow: &quot;ellipsis&quot;
-  },
-  itemHoverStyle: {
+  &#125;,
+  itemHoverStyle: &#123;
     color: &quot;#000000&quot;
-  },
-  itemHiddenStyle: {
+  &#125;,
+  itemHiddenStyle: &#123;
     color: &quot;#cccccc&quot;
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>圖例本身有 <code>normal</code>、<code>hover</code>、<code>hidden</code> 三種狀態，而這三種狀態下的樣式你都可以作調整，剛好對應的就是這三個屬性，用法和之前介紹的樣式屬性都一樣，如果需要複習的話可以 <strong><a href="/2020/09/18/highcharts-5//#title-style">按這邊</a></strong>。</p>
 <br/>
 <br/>
@@ -238,7 +234,7 @@
 <p><br/><br/></p>
 <p>經過三天的設定介紹，目前累積屬性也不少，但其實可以發現同樣概念的屬性不斷在重複，所以應該大家應還消化得了吧？那圖例設定的部分就到這裡，而明天要介紹的圖表元素是「提示框」。</p>
 <hr>
-<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a href="https://ithelp.ithome.com.tw/articles/10240463" target="_blank" rel="noopener">iT邦幫忙</a> -</p>
+<p>- 此篇文章為「iT邦幫忙鐵人賽」參賽文章，同步發表於 <a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10240463">iT邦幫忙</a> -</p>
 
         </div>
       
@@ -254,7 +250,7 @@
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/12th%E9%90%B5%E4%BA%BA%E8%B3%BD/" rel="tag">12th鐵人賽</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Highcharts/" rel="tag">Highcharts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/09/20/highchart/highcharts-6/" data-id="clcsdp5li002qneqw5krs3mce" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/09/20/highchart/highcharts-6/" data-id="clo2cteug001sjsnlhnhies7j" class="article-share-link">分享</a>
   </footer>
   
     
@@ -287,7 +283,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>

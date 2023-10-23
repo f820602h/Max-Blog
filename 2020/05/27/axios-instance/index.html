@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://maxleebk.com/2020/05/27/axios-instance/index.html">
 <meta property="og:site_name" content="Max&#39;s Blog">
 <meta property="og:description" content="自從用前端框架開始開發後，就沒在用 JQuery Ajax 了，取而代之的是 Axios   Axios 不僅輕量，而且直接幫我們把非同步操作包裝成 Promise 物件，所以我們可以直接使用 Promise API 像 then()、catch()。 雖然自己在用 Axios 的時候，都是直接 improt 進來就開始 axios.get、axios.post，不過後來在工作中接觸到了更好管理">
-<meta property="og:locale" content="zh">
+<meta property="og:locale">
 <meta property="article:published_time" content="2020-05-27T12:46:25.000Z">
-<meta property="article:modified_time" content="2023-01-12T00:54:38.711Z">
+<meta property="article:modified_time" content="2023-10-23T03:44:27.679Z">
 <meta property="article:author" content="Max Lee">
 <meta property="article:tag" content="Vus.js">
 <meta property="article:tag" content="Axios">
@@ -30,7 +30,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container">
@@ -44,10 +44,6 @@
         <h1 id="logo-wrap">
           <a href="/" id="logo">Max&#39;s Blog</a>
         </h1>
-        
-          <h2 id="subtitle-wrap">
-            <a href="/" id="subtitle">Max Your Mind</a>
-          </h2>
         
       </div>
     </div>
@@ -125,12 +121,12 @@
 import axios from &quot;axios&quot;;
 
 // baseURL是你API的主要Domain，只後發請求時只要填相對路徑就可以了
-const instance = axios.create({
+const instance = axios.create(&#123;
   baseURL: &#39;https://your.api.domain.tw/&#39;,
-  headers: { &#39;Content-Type&#39;: &#39;application/json&#39; },
+  headers: &#123; &#39;Content-Type&#39;: &#39;application/json&#39; &#125;,
   timeout: 20000
-});</code></pre>
-<p>Request Config 其實有不少屬性可以設定，但一般常見的是上面這些，詳細的說明 <a href="https://github.com/axios/axios#request-config" target="_blank" rel="noopener">官方</a> 都有介紹，這邊就不再贅述。</p>
+&#125;);</code></pre>
+<p>Request Config 其實有不少屬性可以設定，但一般常見的是上面這些，詳細的說明 <a target="_blank" rel="noopener" href="https://github.com/axios/axios#request-config">官方</a> 都有介紹，這邊就不再贅述。</p>
 <p></br></br></p>
 <h4 id="攔截器"><a href="#攔截器" class="headerlink" title="# 攔截器"></a># 攔截器</h4><p>攔截器的設置可以讓我們在發出 <code>request</code> 或接到 <code>response</code> 之前做一些事情，例如改變 <code>response</code> 回來的資料格式，或是根據不同 <code>request</code> 來添加不同的 config 等等。</p>
 <ul>
@@ -142,14 +138,14 @@ const instance = axios.create({
 </ul>
 <pre><code class="javascript">// 此處的instance為我們create的實體
 instance.interceptors.request.use(
-  function (config) {
+  function (config) &#123;
     // Do something before request is sent
     return config;
-  },
-  function (error) {
+  &#125;,
+  function (error) &#123;
     // Do something with request error
     return Promise.reject(error);
-  }
+  &#125;
 );</code></pre>
 </br>
 
@@ -158,13 +154,13 @@ instance.interceptors.request.use(
 </ul>
 <pre><code class="javascript">// 此處的instance為我們create的實體
 instance.interceptors.response.use(
-  function (response) {
+  function (response) &#123;
     // Do something with response data
     return response;
-  },
-  function (error) {
-    if (error.response){
-      switch (error.response.status) {
+  &#125;,
+  function (error) &#123;
+    if (error.response)&#123;
+      switch (error.response.status) &#123;
         case 404:
           console.log(&quot;你要找的頁面不存在&quot;)
           break;
@@ -175,66 +171,66 @@ instance.interceptors.response.use(
 
         default
           console.log(error.message)
-      }
-    } 
-    if (!window.navigator.onLine) {
+      &#125;
+    &#125; 
+    if (!window.navigator.onLine) &#123;
       alert(&quot;網路出了點問題，請重新連線後重整網頁&quot;);
       return;
-    }
+    &#125;
     return Promise.reject(error);
-  }
+  &#125;
 );</code></pre>
 <p>這樣設定後，就可以在 <code>response</code> 回應錯誤時做相關的處理，例如導頁就是常見的處理方式。<br>以上就是攔截器的主要用途和應用，預計之後會再寫一篇說明該如何用攔截器來取消 <code>request</code>。</p>
 <p></br></br></p>
 <h4 id="封裝請求"><a href="#封裝請求" class="headerlink" title="# 封裝請求"></a># 封裝請求</h4><p>有了主設定以及攔截器，<code>axios instance</code> 就設計得差不多了，一般來說你已經可以把實體 <code>export</code> 出去使用了，但為了更有系統性的管理後端提供的 API，我們可以設計成 <code>function</code> 再 <code>export</code> 出去。</p>
 <pre><code class="javascript">// 此處的instance為我們create的實體
-export default function(method, url, data = null, config) {
+export default function(method, url, data = null, config) &#123;
   method = method.toLowerCase();
-  switch (method) {
+  switch (method) &#123;
     case &quot;post&quot;:
       return instance.post(url, data, config);
     case &quot;get&quot;:
-      return instance.get(url, { params: data });
+      return instance.get(url, &#123; params: data &#125;);
     case &quot;delete&quot;:
-      return instance.delete(url, { params: data });
+      return instance.delete(url, &#123; params: data &#125;);
     case &quot;put&quot;:
       return instance.put(url, data);
     case &quot;patch&quot;:
       return instance.patch(url, data);
     default:
-      console.log(`未知的 method: ${method}`);
+      console.log(`未知的 method: $&#123;method&#125;`);
       return false;
-  }
-}</code></pre>
+  &#125;
+&#125;</code></pre>
 <p>這樣就可以透過判斷參數來回傳相對應的 <code>method</code>，而且我們也已經把發送請求的格式寫好了。<br>今天假設我們有一些與使用者相關的 API 好了，我們就可以把這個函式 <code>import</code> 進來，把 API 一支支地列出。</p>
 <pre><code class="javascript">// user.js
 import req from &quot;./api&quot;;
 
-export const userSignUp = (signUpData) =&gt; {
+export const userSignUp = (signUpData) =&gt; &#123;
   return req(&quot;post&quot;, &quot;/user/sign-in&quot;, signUpData)
-}
+&#125;
 
-export const userLogIn = (logInData) =&gt; {
+export const userLogIn = (logInData) =&gt; &#123;
   return req(&quot;post&quot;, &quot;/user/log-in&quot;, logInData)
-}
+&#125;
 
-export const userLogOut = () =&gt; {
+export const userLogOut = () =&gt; &#123;
   return req(&quot;get&quot;, &quot;/user/log-out&quot;)
-}
+&#125;
 
-export const userDelete = (userNo) =&gt; {
+export const userDelete = (userNo) =&gt; &#123;
   return req(&quot;delete&quot;, &quot;/user/delete&quot;, userNo)
-}</code></pre>
+&#125;</code></pre>
 <p>而實際要呼叫API的時候，只要把它 <code>import</code> 進來就可以用囉～</p>
-<pre><code class="javascript">import { userLogIn } from &quot;./user&quot;;
+<pre><code class="javascript">import &#123; userLogIn &#125; from &quot;./user&quot;;
 
 userLogIn()
-  .than(res =&gt; {
+  .than(res =&gt; &#123;
     console.log(&quot;登入成功&quot;);
-  })
-  .catch(error =&gt; {
+  &#125;)
+  .catch(error =&gt; &#123;
     // response攔截器會先執行，除非你漏接了，才會進到catch
-  })</code></pre>
+  &#125;)</code></pre>
 <p>這樣統一、集中且有條理地管理API是不是很清爽呢！</p>
 
         </div>
@@ -251,7 +247,7 @@ userLogIn()
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axios/" rel="tag">Axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vus-js/" rel="tag">Vus.js</a></li></ul>
 
     </div>
-    <a data-url="https://maxleebk.com/2020/05/27/axios-instance/" data-id="clcsdp5f90002neqwfz34cybu" class="article-share-link">分享</a>
+    <a data-url="https://maxleebk.com/2020/05/27/axios-instance/" data-id="clo2ctet90002jsnl3zib4f7k" class="article-share-link">分享</a>
   </footer>
   
     
@@ -284,7 +280,7 @@ userLogIn()
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>
