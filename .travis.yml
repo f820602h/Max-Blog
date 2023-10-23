@@ -1,12 +1,12 @@
 language: node_js
 
-node_js: 
+node_js:
   - "12"
 
 cache:
-    apt: true
-    directories:
-        - node_modules
+  apt: true
+  directories:
+    - node_modules
 
 before_install:
   - echo install hexo
@@ -23,7 +23,7 @@ before_script:
   - ls -l
 
 script:
-  - echo 開始部署...
+  - echo 開始部署..
   - git init
   - git config --global user.name "f820602h"
   - git config --global user.email "f820602h@gmail.com"
