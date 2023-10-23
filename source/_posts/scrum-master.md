@@ -32,7 +32,7 @@ tags: [Agile, Scrum]
 
 首先我想用一張簡單的曲線圖來說明一下我這六個月的成長階段，透過這張圖可以看出，我經歷了三個階段，而這三個階段的轉變時機則是透過「Scrum 讀書會」促成的，後面我便會從這三個階段及兩個轉捩點來說說我的經歷。
 
-> 這邊也提前先說明一下，圖上的「Scrum 讀書會」是由產品團隊的一位成員發起的一次活動，邀請所有團隊成員提前閱讀 2020 新發布的 [Scrum Guide](https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Chinese-Traditional.pdf) 以及 2022 [Regional Scrum Gathering](https://rsg.taipei/about/#organiser) 活動的[前導影片](https://www.youtube.com/watch?v=24DXcoFmCHc)，最後在讀書會當天各自提出見解與問題來進行交流討論。
+> 這邊也提前先說明一下，圖上的「Scrum 讀書會」是由產品團隊的一位成員發起的活動，邀請所有團隊成員提前閱讀 2020 新發布的 [Scrum Guide](https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Chinese-Traditional.pdf) 以及 2022 [Regional Scrum Gathering](https://rsg.taipei/about/#organiser) 活動的[前導影片](https://www.youtube.com/watch?v=24DXcoFmCHc)，最後在讀書會當天各自提出見解與問題來進行交流討論。
 
 <br/>
 
